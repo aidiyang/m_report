@@ -1,18 +1,18 @@
 Model {
-  Name			  "Estimator_UKF"
+  Name			  "estimator_ukf"
   Version		  7.0
   MdlSubVersion		  0
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.149"
+    ComputedModelVersion    "1.180"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
   SavedCharacterEncoding  "windows-1252"
   SaveDefaultBlockParams  on
-  SampleTimeColors	  on
+  SampleTimeColors	  off
   LibraryLinkDisplay	  "none"
   WideLines		  off
   ShowLineDimensions	  on
@@ -44,9 +44,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Apr 20 11:49:15 2013"
+  LastModifiedDate	  "Sat Apr 20 18:00:09 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:149>"
+  ModelVersionFormat	  "1.%<AutoIncrement:180>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -99,11 +99,11 @@ Model {
       Version		      "1.3.0"
       Array {
 	Type			"Handle"
-	Dimension		8
+	Dimension		7
 	Simulink.SolverCC {
 	  $ObjectID		  2
 	  Version		  "1.3.0"
-	  StartTime		  "0.0"
+	  StartTime		  "1"
 	  StopTime		  "10.0"
 	  AbsTol		  "auto"
 	  FixedStep		  "ts"
@@ -458,19 +458,6 @@ Model {
 	    PropName		    "Components"
 	  }
 	}
-	hdlcoderui.hdlcc {
-	  $ObjectID		  11
-	  Description		  "HDL Coder custom configuration component"
-	  Version		  "1.3.0"
-	  Name			  "HDL Coder"
-	  Array {
-	    Type		    "Cell"
-	    Dimension		    1
-	    Cell		    ""
-	    PropName		    "HDLConfigFile"
-	  }
-	  HDLCActiveTab		  "0"
-	}
 	PropName		"Components"
       }
       Name		      "Configuration"
@@ -556,11 +543,6 @@ Model {
       OutputAfterFinalValue   "Extrapolation"
     }
     Block {
-      BlockType		      Fcn
-      Expr		      "sin(u[1])"
-      SampleTime	      "-1"
-    }
-    Block {
       BlockType		      Gain
       Gain		      "1"
       Multiplication	      "Element-wise(K.*u)"
@@ -583,9 +565,6 @@ Model {
     Block {
       BlockType		      Goto
       IconDisplay	      "Tag"
-    }
-    Block {
-      BlockType		      Ground
     }
     Block {
       BlockType		      If
@@ -613,16 +592,6 @@ Model {
       LatchByDelayingOutsideSignal off
       LatchByCopyingInsideSignal off
       Interpolate	      on
-    }
-    Block {
-      BlockType		      Logic
-      Operator		      "AND"
-      Inputs		      "2"
-      IconShape		      "rectangular"
-      AllPortsSameDT	      on
-      OutDataTypeMode	      "Logical (see Configuration Parameters: Optimization)"
-      LogicDataType	      "uint(8)"
-      SampleTime	      "-1"
     }
     Block {
       BlockType		      Math
@@ -797,15 +766,6 @@ Model {
       FramePeriod	      "inf"
     }
     Block {
-      BlockType		      RelationalOperator
-      Operator		      ">="
-      InputSameDT	      on
-      LogicOutDataTypeMode    "Logical (see Configuration Parameters: Optimization)"
-      LogicDataType	      "uint(8)"
-      ZeroCross		      on
-      SampleTime	      "-1"
-    }
-    Block {
       BlockType		      Trigonometry
       Operator		      "sin"
       OutputSignalType	      "auto"
@@ -831,8 +791,8 @@ Model {
     FontAngle		    "normal"
   }
   System {
-    Name		    "Estimator_UKF"
-    Location		    [322, 82, 977, 994]
+    Name		    "estimator_ukf"
+    Location		    [1170, 82, 1910, 1011]
     Open		    off
     ModelBrowserVisibility  on
     ModelBrowserWidth	    304
@@ -863,21 +823,16 @@ Model {
       ZeroCross		      on
     }
     Block {
-      BlockType		      Ground
-      Name		      "Ground"
-      Position		      [140, 625, 160, 645]
-    }
-    Block {
       BlockType		      SubSystem
       Name		      "Input Noise SS"
       Ports		      [1, 1]
-      Position		      [200, 616, 260, 654]
+      Position		      [155, 434, 225, 466]
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
       System {
 	Name			"Input Noise SS"
-	Location		[1170, 82, 1910, 1011]
+	Location		[1308, 82, 1910, 1011]
 	Open			off
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200
@@ -1362,6 +1317,8 @@ Model {
 	ListType		AxesTitles
 	axes1			"%<SignalLabel>"
       }
+      YMin		      "-2e-009"
+      YMax		      "1.25e-009"
       DataFormat	      "StructureWithTime"
       SampleTime	      "0"
     }
@@ -1371,7 +1328,7 @@ Model {
       Ports		      [1]
       Position		      [560, 519, 590, 551]
       Floating		      off
-      Location		      [1, 48, 1921, 1039]
+      Location		      [5, 48, 1925, 1039]
       Open		      off
       NumInputPorts	      "1"
       List {
@@ -1404,11 +1361,6 @@ Model {
       OutputSizes	      "1"
     }
     Block {
-      BlockType		      Terminator
-      Name		      "Terminator"
-      Position		      [315, 625, 335, 645]
-    }
-    Block {
       BlockType		      ToWorkspace
       Name		      "To Workspace"
       Position		      [605, 420, 665, 450]
@@ -1437,7 +1389,7 @@ Model {
       System {
 	Name			"UKFDis"
 	Location		[1181, 89, 1836, 1001]
-	Open			off
+	Open			on
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	315
 	ScreenColor		"white"
@@ -1626,7 +1578,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function Estimator_UKF 2"
+		  Tag			  "Stateflow S-Function estimator_ukf 2"
 		  Ports			  [3, 2]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -1890,7 +1842,7 @@ Model {
 		  System {
 		    Name		    "F(X)"
 		    Location		    [1170, 82, 1910, 1011]
-		    Open		    on
+		    Open		    off
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    200
 		    ScreenColor		    "white"
@@ -1933,7 +1885,7 @@ Model {
 		    BlockType		    Constant
 		    Name		    "Constant"
 		    Position		    [220, 19, 305, 51]
-		    Value		    "zeros(m+14,2*n+1)"
+		    Value		    "zeros(m+12,2*n+1)"
 		    VectorParams1D	    off
 		    OutDataType		    "sfix(16)"
 		    OutScaling		    "2^0"
@@ -1969,7 +1921,7 @@ Model {
 		    Location		    [636, 204, 1558, 1133]
 		    Open		    off
 		    ModelBrowserVisibility  on
-		    ModelBrowserWidth	    200
+		    ModelBrowserWidth	    331
 		    ScreenColor		    "white"
 		    PaperOrientation	    "landscape"
 		    PaperPositionMode	    "auto"
@@ -2011,20 +1963,10 @@ Model {
 		    OutputSizes		    "1"
 		    }
 		    Block {
-		    BlockType		    Selector
-		    Name		    "dtheta"
-		    Ports		    [1, 1]
-		    Position		    [245, 227, 280, 253]
-		    InputPortWidth	    "62"
-		    IndexOptions	    "Index vector (dialog)"
-		    Indices		    "[35:37]"
-		    OutputSizes		    "1"
-		    }
-		    Block {
 		    BlockType		    SubSystem
 		    Name		    "dyn_model"
-		    Ports		    [2, 2]
-		    Position		    [135, 163, 215, 212]
+		    Ports		    [2, 3]
+		    Position		    [135, 165, 215, 215]
 		    MinAlgLoopOccurrences   off
 		    RTWSystemCode	    "Auto"
 		    FunctionWithSeparateData off
@@ -2083,19 +2025,24 @@ Model {
 		    }
 		    }
 		    Block {
-		    BlockType		    Constant
-		    Name		    "Constant"
-		    Position		    [235, 690, 265, 720]
-		    Value		    "zeros(16,4)"
-		    VectorParams1D	    off
-		    OutDataType		    "sfix(16)"
-		    OutScaling		    "2^0"
+		    BlockType		    BusSelector
+		    Name		    "Bus\nSelector1"
+		    Ports		    [1, 1]
+		    Position		    [430, 594, 435, 626]
+		    ShowName		    off
+		    OutputSignals	    "Htm"
+		    Port {
+		    PortNumber		    1
+		    Name		    "<Htm>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
 		    }
 		    Block {
 		    BlockType		    Display
 		    Name		    "Display"
 		    Ports		    [1]
-		    Position		    [895, 288, 985, 392]
+		    Position		    [865, 293, 955, 397]
 		    Decimation		    "1"
 		    Lockdown		    off
 		    }
@@ -2120,13 +2067,6 @@ Model {
 		    Position		    [325, 337, 350, 353]
 		    CloseFcn		    "tagdialog Close"
 		    GotoTag		    "dq"
-		    }
-		    Block {
-		    BlockType		    Goto
-		    Name		    "Goto1"
-		    Position		    [140, 231, 165, 249]
-		    GotoTag		    "q"
-		    TagVisibility	    "local"
 		    }
 		    Block {
 		    BlockType		    Goto
@@ -2421,7 +2361,7 @@ Model {
 		    BlockType		    Selector
 		    Name		    "Selector"
 		    Ports		    [1, 1]
-		    Position		    [70, 286, 100, 304]
+		    Position		    [70, 291, 100, 309]
 		    InputPortWidth	    "62"
 		    IndexOptions	    "Index vector (dialog)"
 		    Indices		    "[1:31]"
@@ -2435,6 +2375,26 @@ Model {
 		    InputPortWidth	    "62"
 		    IndexOptions	    "Index vector (dialog)"
 		    Indices		    "[32:62]"
+		    OutputSizes		    "1"
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "Selector2"
+		    Ports		    [1, 1]
+		    Position		    [630, 611, 660, 629]
+		    InputPortWidth	    "6"
+		    IndexOptions	    "Index vector (dialog)"
+		    Indices		    "[4:6]"
+		    OutputSizes		    "1"
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "Selector3"
+		    Ports		    [1, 1]
+		    Position		    [605, 516, 635, 534]
+		    InputPortWidth	    "14"
+		    IndexOptions	    "Index vector (dialog)"
+		    Indices		    "[1:12]"
 		    OutputSizes		    "1"
 		    }
 		    Block {
@@ -2477,11 +2437,6 @@ Model {
 		    BlockType		    Terminator
 		    Name		    "Terminator"
 		    Position		    [285, 305, 305, 325]
-		    }
-		    Block {
-		    BlockType		    Terminator
-		    Name		    "Terminator1"
-		    Position		    [465, 695, 485, 715]
 		    }
 		    Block {
 		    BlockType		    SubSystem
@@ -3001,9 +2956,1240 @@ Model {
 		    }
 		    Block {
 		    BlockType		    SubSystem
+		    Name		    "ang rate"
+		    Ports		    [2, 1]
+		    Position		    [495, 599, 590, 641]
+		    MinAlgLoopOccurrences   off
+		    RTWSystemCode	    "Auto"
+		    FunctionWithSeparateData off
+		    System {
+		    Name		    "ang rate"
+		    Location		    [262, 82, 1902, 1027]
+		    Open		    off
+		    ModelBrowserVisibility  on
+		    ModelBrowserWidth	    304
+		    ScreenColor		    "white"
+		    PaperOrientation	    "landscape"
+		    PaperPositionMode	    "auto"
+		    PaperType		    "A4"
+		    PaperUnits		    "centimeters"
+		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+		    TiledPageScale	    1
+		    ShowPageBoundaries	    off
+		    ZoomFactor		    "100"
+		    Block {
+		    BlockType		    Inport
+		    Name		    "Htm"
+		    Position		    [100, 338, 130, 352]
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Inport
+		    Name		    "x"
+		    Position		    [165, 403, 195, 417]
+		    Port		    "2"
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Product
+		    Name		    "Divide"
+		    Ports		    [3, 1]
+		    Position		    [640, 288, 700, 402]
+		    Inputs		    "/**"
+		    Multiplication	    "Matrix(*)"
+		    CollapseMode	    "All dimensions"
+		    InputSameDT		    off
+		    OutDataTypeMode	    "Inherit via internal rule"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^-10"
+		    RndMeth		    "Floor"
+		    SaturateOnIntegerOverflow off
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "H_sb"
+		    Ports		    [1, 1]
+		    Position		    [180, 332, 215, 358]
+		    NumberOfDimensions	    "2"
+		    InputPortWidth	    "31"
+		    IndexOptions	    "Index vector (dialog),Select all"
+		    Indices		    "[17:20],[1:3]"
+		    OutputSizes		    "1,1"
+		    }
+		    Block {
+		    BlockType		    Product
+		    Name		    "Product"
+		    Ports		    [2, 1]
+		    Position		    [820, 171, 865, 229]
+		    Multiplication	    "Matrix(*)"
+		    CollapseMode	    "All dimensions"
+		    InputSameDT		    off
+		    OutDataTypeMode	    "Inherit via internal rule"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    SaturateOnIntegerOverflow off
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "Selector"
+		    Ports		    [1, 1]
+		    Position		    [445, 398, 485, 422]
+		    InputPortWidth	    "62"
+		    IndexOptions	    "Index vector (dialog)"
+		    Indices		    "[32:37]"
+		    OutputSizes		    "1"
+		    Port {
+		    PortNumber		    1
+		    Name		    "v_b"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "Selector5"
+		    Ports		    [1, 1]
+		    Position		    [390, 293, 430, 317]
+		    InputPortWidth	    "62"
+		    IndexOptions	    "Index vector (dialog)"
+		    Indices		    "[4:6]"
+		    OutputSizes		    "1"
+		    }
+		    Block {
+		    BlockType		    SubSystem
+		    Name		    "T"
+		    Ports		    [1, 1]
+		    Position		    [470, 289, 520, 321]
+		    MinAlgLoopOccurrences   off
+		    RTWSystemCode	    "Auto"
+		    FunctionWithSeparateData off
+		    System {
+		    Name		    "T"
+		    Location		    [217, 82, 957, 1011]
+		    Open		    off
+		    ModelBrowserVisibility  on
+		    ModelBrowserWidth	    200
+		    ScreenColor		    "white"
+		    PaperOrientation	    "landscape"
+		    PaperPositionMode	    "auto"
+		    PaperType		    "A4"
+		    PaperUnits		    "centimeters"
+		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+		    TiledPageScale	    1
+		    ShowPageBoundaries	    off
+		    ZoomFactor		    "100"
+		    Block {
+		    BlockType		    Inport
+		    Name		    "eulVec"
+		    Position		    [40, 168, 70, 182]
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Constant
+		    Name		    "0"
+		    Position		    [660, 79, 705, 111]
+		    Value		    "zeros(3)"
+		    VectorParams1D	    off
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Comb"
+		    Ports		    [3, 1]
+		    Position		    [600, 150, 630, 240]
+		    NumInputs		    "3"
+		    Mode		    "Multidimensional array"
+		    ConcatenateDimension    "2"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Comb1"
+		    Ports		    [2, 1]
+		    Position		    [825, 17, 855, 108]
+		    Mode		    "Multidimensional array"
+		    ConcatenateDimension    "2"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Comb2"
+		    Ports		    [2, 1]
+		    Position		    [825, 142, 855, 233]
+		    Mode		    "Multidimensional array"
+		    ConcatenateDimension    "2"
+		    }
+		    Block {
+		    BlockType		    Demux
+		    Name		    "Demux"
+		    Ports		    [1, 3]
+		    Position		    [120, 146, 125, 204]
+		    BackgroundColor	    "black"
+		    ShowName		    off
+		    Outputs		    "3"
+		    DisplayOption	    "bar"
+		    Port {
+		    PortNumber		    2
+		    Name		    "theta"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    Port {
+		    PortNumber		    3
+		    Name		    "phi"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    }
+		    Block {
+		    BlockType		    Gain
+		    Name		    "Gain"
+		    Position		    [325, 460, 355, 490]
+		    Gain		    "-1"
+		    ParameterDataTypeMode   "Inherit via internal rule"
+		    ParameterDataType	    "sfix(16)"
+		    ParameterScaling	    "2^0"
+		    OutDataTypeMode	    "Inherit via internal rule"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    SaturateOnIntegerOverflow off
+		    }
+		    Block {
+		    BlockType		    Product
+		    Name		    "Product"
+		    Ports		    [2, 1]
+		    Position		    [425, 466, 450, 504]
+		    CollapseMode	    "All dimensions"
+		    InputSameDT		    off
+		    OutDataTypeMode	    "Inherit via internal rule"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    SaturateOnIntegerOverflow off
+		    }
+		    Block {
+		    BlockType		    Product
+		    Name		    "Product1"
+		    Ports		    [2, 1]
+		    Position		    [425, 529, 450, 571]
+		    CollapseMode	    "All dimensions"
+		    InputSameDT		    off
+		    OutDataTypeMode	    "Inherit via internal rule"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    SaturateOnIntegerOverflow off
+		    }
+		    Block {
+		    BlockType		    Terminator
+		    Name		    "Terminator"
+		    Position		    [175, 100, 195, 120]
+		    }
+		    Block {
+		    BlockType		    Trigonometry
+		    Name		    "Trigonometric\nFunction"
+		    Ports		    [1, 1]
+		    Position		    [195, 255, 225, 285]
+		    Port {
+		    PortNumber		    1
+		    Name		    "sin(phi)"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    }
+		    Block {
+		    BlockType		    Trigonometry
+		    Name		    "Trigonometric\nFunction1"
+		    Ports		    [1, 1]
+		    Position		    [190, 180, 220, 210]
+		    Operator		    "cos"
+		    Port {
+		    PortNumber		    1
+		    Name		    "cos(phi)"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    }
+		    Block {
+		    BlockType		    Trigonometry
+		    Name		    "Trigonometric\nFunction2"
+		    Ports		    [1, 1]
+		    Position		    [200, 480, 230, 510]
+		    Operator		    "cos"
+		    Port {
+		    PortNumber		    1
+		    Name		    "cos(theta)"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    }
+		    Block {
+		    BlockType		    Trigonometry
+		    Name		    "Trigonometric\nFunction3"
+		    Ports		    [1, 1]
+		    Position		    [315, 400, 345, 430]
+		    Port {
+		    PortNumber		    1
+		    Name		    "sin(theta)"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    }
+		    Block {
+		    BlockType		    Constant
+		    Name		    "col1"
+		    Position		    [465, 49, 510, 81]
+		    Value		    "[1 0 0]'"
+		    VectorParams1D	    off
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "col2"
+		    Ports		    [3, 1]
+		    Position		    [470, 150, 500, 240]
+		    NumInputs		    "3"
+		    Mode		    "Multidimensional array"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "col3"
+		    Ports		    [3, 1]
+		    Position		    [485, 420, 515, 510]
+		    NumInputs		    "3"
+		    Mode		    "Multidimensional array"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "col4"
+		    Ports		    [2, 1]
+		    Position		    [955, 82, 985, 173]
+		    Mode		    "Multidimensional array"
+		    }
+		    Block {
+		    BlockType		    Constant
+		    Name		    "cons"
+		    Position		    [260, 124, 305, 156]
+		    Value		    "0"
+		    VectorParams1D	    off
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Constant
+		    Name		    "p"
+		    Position		    [660, 19, 705, 51]
+		    Value		    "eye(3)"
+		    VectorParams1D	    off
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Outport
+		    Name		    "T"
+		    Position		    [1075, 123, 1105, 137]
+		    IconDisplay		    "Port number"
+		    }
+		    Line {
+		    SrcBlock		    "col3"
+		    SrcPort		    1
+		    Points		    [30, 0; 0, -240]
+		    DstBlock		    "Comb"
+		    DstPort		    3
+		    }
+		    Line {
+		    SrcBlock		    "Product1"
+		    SrcPort		    1
+		    Points		    [5, 0; 0, -55]
+		    DstBlock		    "col3"
+		    DstPort		    3
+		    }
+		    Line {
+		    SrcBlock		    "Product"
+		    SrcPort		    1
+		    Points		    [5, 0; 0, -20]
+		    DstBlock		    "col3"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "Gain"
+		    SrcPort		    1
+		    DstBlock		    "Product"
+		    DstPort		    1
+		    }
+		    Line {
+		    Name		    "sin(theta)"
+		    Labels		    [0, 0]
+		    SrcBlock		    "Trigonometric\nFunction3"
+		    SrcPort		    1
+		    Points		    [120, 0]
+		    DstBlock		    "col3"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Demux"
+		    SrcPort		    1
+		    Points		    [15, 0; 0, -45]
+		    DstBlock		    "Terminator"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "col2"
+		    SrcPort		    1
+		    DstBlock		    "Comb"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "col1"
+		    SrcPort		    1
+		    Points		    [50, 0; 0, 100]
+		    DstBlock		    "Comb"
+		    DstPort		    1
+		    }
+		    Line {
+		    Name		    "cos(theta)"
+		    Labels		    [0, 0]
+		    SrcBlock		    "Trigonometric\nFunction2"
+		    SrcPort		    1
+		    Points		    [70, 0]
+		    Branch {
+		    Labels		    [1, 0]
+		    Points		    [0, 45]
+		    DstBlock		    "Product1"
+		    DstPort		    1
+		    }
+		    Branch {
+		    DstBlock		    "Product"
+		    DstPort		    2
+		    }
+		    }
+		    Line {
+		    Name		    "theta"
+		    Labels		    [0, 0]
+		    SrcBlock		    "Demux"
+		    SrcPort		    2
+		    Points		    [25, 0; 0, 240]
+		    Branch {
+		    DstBlock		    "Trigonometric\nFunction3"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, 80]
+		    DstBlock		    "Trigonometric\nFunction2"
+		    DstPort		    1
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "cons"
+		    SrcPort		    1
+		    Points		    [60, 0; 0, 25]
+		    DstBlock		    "col2"
+		    DstPort		    1
+		    }
+		    Line {
+		    Name		    "sin(phi)"
+		    Labels		    [0, 0]
+		    SrcBlock		    "Trigonometric\nFunction"
+		    SrcPort		    1
+		    Points		    [65, 0]
+		    Branch {
+		    Labels		    [1, 0]
+		    Points		    [0, 205]
+		    DstBlock		    "Gain"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [75, 0; 0, -45]
+		    DstBlock		    "col2"
+		    DstPort		    3
+		    }
+		    }
+		    Line {
+		    Name		    "cos(phi)"
+		    Labels		    [0, 0]
+		    SrcBlock		    "Trigonometric\nFunction1"
+		    SrcPort		    1
+		    Points		    [30, 0]
+		    Branch {
+		    Labels		    [1, 0]
+		    DstBlock		    "col2"
+		    DstPort		    2
+		    }
+		    Branch {
+		    Labels		    [1, 0]
+		    Points		    [0, 365]
+		    DstBlock		    "Product1"
+		    DstPort		    2
+		    }
+		    }
+		    Line {
+		    Name		    "phi"
+		    Labels		    [0, 0]
+		    SrcBlock		    "Demux"
+		    SrcPort		    3
+		    Points		    [40, 0]
+		    Branch {
+		    Points		    [0, 75]
+		    DstBlock		    "Trigonometric\nFunction"
+		    DstPort		    1
+		    }
+		    Branch {
+		    DstBlock		    "Trigonometric\nFunction1"
+		    DstPort		    1
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "eulVec"
+		    SrcPort		    1
+		    DstBlock		    "Demux"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "p"
+		    SrcPort		    1
+		    Points		    [55, 0; 0, 5]
+		    DstBlock		    "Comb1"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "0"
+		    SrcPort		    1
+		    Points		    [50, 0]
+		    Branch {
+		    Points		    [0, -10]
+		    DstBlock		    "Comb1"
+		    DstPort		    2
+		    }
+		    Branch {
+		    Points		    [0, 70]
+		    DstBlock		    "Comb2"
+		    DstPort		    1
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "Comb"
+		    SrcPort		    1
+		    Points		    [0, 15]
+		    DstBlock		    "Comb2"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "Comb1"
+		    SrcPort		    1
+		    Points		    [45, 0; 0, 40]
+		    DstBlock		    "col4"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Comb2"
+		    SrcPort		    1
+		    Points		    [45, 0; 0, -40]
+		    DstBlock		    "col4"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "col4"
+		    SrcPort		    1
+		    DstBlock		    "T"
+		    DstPort		    1
+		    }
+		    }
+		    }
+		    Block {
+		    BlockType		    Display
+		    Name		    "Tdisp"
+		    Ports		    [1]
+		    Position		    [580, 707, 820, 773]
+		    Decimation		    "1"
+		    Lockdown		    off
+		    }
+		    Block {
+		    BlockType		    Reference
+		    Name		    "Trafo3D\nAdjoint"
+		    Ports		    [1, 1]
+		    Position		    [275, 330, 320, 360]
+		    BackgroundColor	    "lightBlue"
+		    SourceBlock		    "robotics/Trafo3D\nAdjoint"
+		    SourceType		    ""
+		    ShowPortLabels	    "FromPortIcon"
+		    SystemSampleTime	    "-1"
+		    FunctionWithSeparateData off
+		    RTWMemSecFuncInitTerm   "Inherit from model"
+		    RTWMemSecFuncExecute    "Inherit from model"
+		    RTWMemSecDataConstants  "Inherit from model"
+		    RTWMemSecDataInternal   "Inherit from model"
+		    RTWMemSecDataParameters "Inherit from model"
+		    }
+		    Block {
+		    BlockType		    SubSystem
+		    Name		    "Trafo3D\nInverse Adjoint"
+		    Ports		    [1, 1]
+		    Position		    [615, 169, 695, 201]
+		    BackgroundColor	    "lightBlue"
+		    MinAlgLoopOccurrences   off
+		    RTWSystemCode	    "Auto"
+		    FunctionWithSeparateData off
+		    MaskDescription	    "Adjoint matrix for a given frame."
+		    MaskIconFrame	    on
+		    MaskIconOpaque	    on
+		    MaskIconRotate	    "none"
+		    MaskIconUnits	    "autoscale"
+		    System {
+		    Name		    "Trafo3D\nInverse Adjoint"
+		    Location		    [210, 82, 950, 1011]
+		    Open		    off
+		    ModelBrowserVisibility  on
+		    ModelBrowserWidth	    200
+		    ScreenColor		    "white"
+		    PaperOrientation	    "landscape"
+		    PaperPositionMode	    "auto"
+		    PaperType		    "A4"
+		    PaperUnits		    "centimeters"
+		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+		    TiledPageScale	    1
+		    ShowPageBoundaries	    off
+		    ZoomFactor		    "100"
+		    Block {
+		    BlockType		    Inport
+		    Name		    "H"
+		    Position		    [40, 153, 70, 167]
+		    IconDisplay		    "Port number"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Constant
+		    Name		    "0"
+		    Position		    [315, 273, 335, 297]
+		    Value		    "zeros(3,3)"
+		    VectorParams1D	    off
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    SubSystem
+		    Name		    "Cross-Product"
+		    Ports		    [2, 1]
+		    Position		    [245, 206, 305, 244]
+		    BackgroundColor	    "lightBlue"
+		    AncestorBlock	    "robotics/Cross-Product"
+		    MinAlgLoopOccurrences   off
+		    RTWSystemCode	    "Auto"
+		    FunctionWithSeparateData off
+		    MaskDescription	    "Vector Cross Product, compatible also with matrices: out = crossProduct(v, m), where m may be a vector or a 3xn matrix"
+		    MaskIconFrame	    on
+		    MaskIconOpaque	    on
+		    MaskIconRotate	    "none"
+		    MaskIconUnits	    "autoscale"
+		    System {
+		    Name		    "Cross-Product"
+		    Location		    [314, 374, 897, 712]
+		    Open		    off
+		    ModelBrowserVisibility  on
+		    ModelBrowserWidth	    200
+		    ScreenColor		    "white"
+		    PaperOrientation	    "landscape"
+		    PaperPositionMode	    "auto"
+		    PaperType		    "A4"
+		    PaperUnits		    "centimeters"
+		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+		    TiledPageScale	    1
+		    ShowPageBoundaries	    off
+		    ZoomFactor		    "100"
+		    Block {
+		    BlockType		    Inport
+		    Name		    "m"
+		    Position		    [30, 13, 60, 27]
+		    IconDisplay		    "Port number"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Inport
+		    Name		    "v"
+		    Position		    [30, 153, 60, 167]
+		    Port		    "2"
+		    IconDisplay		    "Port number"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Gain
+		    Name		    "Gain"
+		    Position		    [200, 145, 230, 175]
+		    ShowName		    off
+		    Gain		    "-1"
+		    ParameterDataType	    "sfix(16)"
+		    ParameterScaling	    "2^0"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Gain
+		    Name		    "Gain1"
+		    Position		    [200, 195, 230, 225]
+		    ShowName		    off
+		    Gain		    "-1"
+		    ParameterDataType	    "sfix(16)"
+		    ParameterScaling	    "2^0"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Gain
+		    Name		    "Gain2"
+		    Position		    [200, 245, 230, 275]
+		    ShowName		    off
+		    Gain		    "-1"
+		    ParameterDataType	    "sfix(16)"
+		    ParameterScaling	    "2^0"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Matrix\nConcatenation1"
+		    Ports		    [3, 1]
+		    Position		    [315, 105, 335, 145]
+		    ShowName		    off
+		    NumInputs		    "3"
+		    Mode		    "Multidimensional array"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Matrix\nConcatenation2"
+		    Ports		    [3, 1]
+		    Position		    [320, 35, 340, 75]
+		    ShowName		    off
+		    NumInputs		    "3"
+		    Mode		    "Multidimensional array"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Matrix\nConcatenation3"
+		    Ports		    [3, 1]
+		    Position		    [315, 175, 335, 215]
+		    ShowName		    off
+		    NumInputs		    "3"
+		    Mode		    "Multidimensional array"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Matrix\nConcatenation4"
+		    Ports		    [3, 1]
+		    Position		    [385, 103, 420, 147]
+		    ShowName		    off
+		    NumInputs		    "3"
+		    Mode		    "Multidimensional array"
+		    ConcatenateDimension    "2"
+		    }
+		    Block {
+		    BlockType		    Product
+		    Name		    "Product"
+		    Ports		    [2, 1]
+		    Position		    [460, 51, 505, 84]
+		    Multiplication	    "Matrix(*)"
+		    CollapseMode	    "All dimensions"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    RndMeth		    "Floor"
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "Selector"
+		    Ports		    [1, 1]
+		    Position		    [110, 141, 150, 179]
+		    ShowName		    off
+		    InputPortWidth	    "3"
+		    IndexOptions	    "Index vector (dialog)"
+		    Indices		    "[1]"
+		    OutputSizes		    "1"
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "Selector1"
+		    Ports		    [1, 1]
+		    Position		    [110, 191, 150, 229]
+		    ShowName		    off
+		    InputPortWidth	    "3"
+		    IndexOptions	    "Index vector (dialog)"
+		    Indices		    "[2]"
+		    OutputSizes		    "1"
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "Selector2"
+		    Ports		    [1, 1]
+		    Position		    [110, 241, 150, 279]
+		    ShowName		    off
+		    InputPortWidth	    "3"
+		    IndexOptions	    "Index vector (dialog)"
+		    Indices		    "[3]"
+		    OutputSizes		    "1"
+		    }
+		    Block {
+		    BlockType		    Constant
+		    Name		    "zero"
+		    Position		    [120, 25, 150, 55]
+		    Value		    "0"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Outport
+		    Name		    "out"
+		    Position		    [530, 63, 560, 77]
+		    IconDisplay		    "Port number"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Line {
+		    SrcBlock		    "zero"
+		    SrcPort		    1
+		    Points		    [0, 0; 130, 0]
+		    Branch {
+		    DstBlock		    "Matrix\nConcatenation2"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, 85]
+		    Branch {
+		    DstBlock		    "Matrix\nConcatenation1"
+		    DstPort		    2
+		    }
+		    Branch {
+		    Points		    [0, 85]
+		    DstBlock		    "Matrix\nConcatenation3"
+		    DstPort		    3
+		    }
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "Selector"
+		    SrcPort		    1
+		    Points		    [0, 0; 20, 0]
+		    Branch {
+		    DstBlock		    "Gain"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, -20]
+		    DstBlock		    "Matrix\nConcatenation1"
+		    DstPort		    3
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "Selector1"
+		    SrcPort		    1
+		    Points		    [0, 0; 20, 0]
+		    Branch {
+		    DstBlock		    "Gain1"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, -30]
+		    DstBlock		    "Matrix\nConcatenation3"
+		    DstPort		    1
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "Selector2"
+		    SrcPort		    1
+		    Points		    [0, 0; 10, 0]
+		    Branch {
+		    DstBlock		    "Gain2"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, -205]
+		    DstBlock		    "Matrix\nConcatenation2"
+		    DstPort		    2
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "Gain1"
+		    SrcPort		    1
+		    Points		    [20, 0; 0, -140]
+		    DstBlock		    "Matrix\nConcatenation2"
+		    DstPort		    3
+		    }
+		    Line {
+		    SrcBlock		    "Gain2"
+		    SrcPort		    1
+		    Points		    [40, 0; 0, -150]
+		    DstBlock		    "Matrix\nConcatenation1"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Matrix\nConcatenation2"
+		    SrcPort		    1
+		    Points		    [15, 0; 0, 55]
+		    DstBlock		    "Matrix\nConcatenation4"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Matrix\nConcatenation1"
+		    SrcPort		    1
+		    DstBlock		    "Matrix\nConcatenation4"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "Matrix\nConcatenation3"
+		    SrcPort		    1
+		    Points		    [20, 0; 0, -55]
+		    DstBlock		    "Matrix\nConcatenation4"
+		    DstPort		    3
+		    }
+		    Line {
+		    SrcBlock		    "Gain"
+		    SrcPort		    1
+		    Points		    [60, 0; 0, 35]
+		    DstBlock		    "Matrix\nConcatenation3"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "v"
+		    SrcPort		    1
+		    Points		    [0, 0; 15, 0]
+		    Branch {
+		    DstBlock		    "Selector"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, 50]
+		    Branch {
+		    DstBlock		    "Selector1"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, 50]
+		    DstBlock		    "Selector2"
+		    DstPort		    1
+		    }
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "Product"
+		    SrcPort		    1
+		    DstBlock		    "out"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "m"
+		    SrcPort		    1
+		    Points		    [380, 0]
+		    DstBlock		    "Product"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Matrix\nConcatenation4"
+		    SrcPort		    1
+		    Points		    [20, 0]
+		    DstBlock		    "Product"
+		    DstPort		    2
+		    }
+		    }
+		    }
+		    Block {
+		    BlockType		    Gain
+		    Name		    "Gain"
+		    Position		    [325, 210, 345, 240]
+		    Gain		    "-1"
+		    ParameterDataTypeMode   "Inherit via internal rule"
+		    ParameterDataType	    "sfix(16)"
+		    ParameterScaling	    "2^0"
+		    OutDataTypeMode	    "Inherit via internal rule"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    SaturateOnIntegerOverflow off
+		    }
+		    Block {
+		    BlockType		    Math
+		    Name		    "Math\nFunction"
+		    Ports		    [1, 1]
+		    Position		    [185, 145, 215, 175]
+		    Operator		    "transpose"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Matrix\nConcatenation"
+		    Ports		    [2, 1]
+		    Position		    [390, 149, 445, 191]
+		    ShowName		    off
+		    Mode		    "Multidimensional array"
+		    ConcatenateDimension    "2"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Matrix\nConcatenation1"
+		    Ports		    [2, 1]
+		    Position		    [495, 159, 550, 201]
+		    ShowName		    off
+		    Mode		    "Multidimensional array"
+		    }
+		    Block {
+		    BlockType		    Concatenate
+		    Name		    "Matrix\nConcatenation2"
+		    Ports		    [2, 1]
+		    Position		    [380, 270, 425, 330]
+		    ShowName		    off
+		    Mode		    "Multidimensional array"
+		    ConcatenateDimension    "2"
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "R"
+		    Ports		    [1, 1]
+		    Position		    [110, 145, 165, 175]
+		    NumberOfDimensions	    "2"
+		    InputPortWidth	    "3"
+		    IndexOptions	    "Index vector (dialog),Index vector (dialog)"
+		    Indices		    "[1,2,3],[1 2 3]"
+		    OutputSizes		    "1"
+		    }
+		    Block {
+		    BlockType		    Selector
+		    Name		    "p"
+		    Ports		    [1, 1]
+		    Position		    [110, 220, 165, 250]
+		    NumberOfDimensions	    "2"
+		    InputPortWidth	    "3"
+		    IndexOptions	    "Index vector (dialog),Index vector (dialog)"
+		    Indices		    "[1 2 3],4"
+		    OutputSizes		    "1"
+		    }
+		    Block {
+		    BlockType		    Outport
+		    Name		    "inv(AdH)"
+		    Position		    [610, 173, 640, 187]
+		    IconDisplay		    "Port number"
+		    OutDataType		    "sfix(16)"
+		    OutScaling		    "2^0"
+		    }
+		    Line {
+		    SrcBlock		    "R"
+		    SrcPort		    1
+		    DstBlock		    "Math\nFunction"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "p"
+		    SrcPort		    1
+		    DstBlock		    "Cross-Product"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "H"
+		    SrcPort		    1
+		    Points		    [15, 0]
+		    Branch {
+		    DstBlock		    "R"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, 75]
+		    DstBlock		    "p"
+		    DstPort		    1
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "0"
+		    SrcPort		    1
+		    DstBlock		    "Matrix\nConcatenation2"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Matrix\nConcatenation"
+		    SrcPort		    1
+		    DstBlock		    "Matrix\nConcatenation1"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Cross-Product"
+		    SrcPort		    1
+		    DstBlock		    "Gain"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Matrix\nConcatenation2"
+		    SrcPort		    1
+		    Points		    [25, 0; 0, -110]
+		    DstBlock		    "Matrix\nConcatenation1"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "Matrix\nConcatenation1"
+		    SrcPort		    1
+		    DstBlock		    "inv(AdH)"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Math\nFunction"
+		    SrcPort		    1
+		    Points		    [5, 0]
+		    Branch {
+		    DstBlock		    "Matrix\nConcatenation"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, 55]
+		    Branch {
+		    DstBlock		    "Cross-Product"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, 100]
+		    DstBlock		    "Matrix\nConcatenation2"
+		    DstPort		    2
+		    }
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "Gain"
+		    SrcPort		    1
+		    Points		    [0, -45]
+		    DstBlock		    "Matrix\nConcatenation"
+		    DstPort		    2
+		    }
+		    }
+		    }
+		    Block {
+		    BlockType		    Display
+		    Name		    "d(xe) disp"
+		    Ports		    [1]
+		    Position		    [980, 265, 1065, 385]
+		    Decimation		    "1"
+		    Lockdown		    off
+		    }
+		    Block {
+		    BlockType		    Display
+		    Name		    "velbase disp"
+		    Ports		    [1]
+		    Position		    [590, 494, 690, 626]
+		    Decimation		    "1"
+		    Lockdown		    off
+		    }
+		    Block {
+		    BlockType		    Outport
+		    Name		    "d(xe)"
+		    Position		    [915, 193, 945, 207]
+		    IconDisplay		    "Port number"
+		    }
+		    Line {
+		    Name		    "v_b"
+		    Labels		    [0, 0]
+		    SrcBlock		    "Selector"
+		    SrcPort		    1
+		    Points		    [90, 0]
+		    Branch {
+		    Points		    [5, 0; 0, -25]
+		    DstBlock		    "Divide"
+		    DstPort		    3
+		    }
+		    Branch {
+		    Points		    [-10, 0; 0, 150]
+		    DstBlock		    "velbase disp"
+		    DstPort		    1
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "T"
+		    SrcPort		    1
+		    Points		    [25, 0]
+		    Branch {
+		    Points		    [0, 435]
+		    DstBlock		    "Tdisp"
+		    DstPort		    1
+		    }
+		    Branch {
+		    DstBlock		    "Divide"
+		    DstPort		    1
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "H_sb"
+		    SrcPort		    1
+		    Points		    [30, 0]
+		    Branch {
+		    DstBlock		    "Trafo3D\nAdjoint"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, -160]
+		    DstBlock		    "Trafo3D\nInverse Adjoint"
+		    DstPort		    1
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "x"
+		    SrcPort		    1
+		    Points		    [165, 0]
+		    Branch {
+		    DstBlock		    "Selector"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, -105]
+		    DstBlock		    "Selector5"
+		    DstPort		    1
+		    }
+		    }
+		    Line {
+		    SrcBlock		    "Divide"
+		    SrcPort		    1
+		    Points		    [55, 0; 0, -130]
+		    DstBlock		    "Product"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "Selector5"
+		    SrcPort		    1
+		    DstBlock		    "T"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Htm"
+		    SrcPort		    1
+		    DstBlock		    "H_sb"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Trafo3D\nAdjoint"
+		    SrcPort		    1
+		    DstBlock		    "Divide"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "Trafo3D\nInverse Adjoint"
+		    SrcPort		    1
+		    DstBlock		    "Product"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Product"
+		    SrcPort		    1
+		    Points		    [20, 0]
+		    Branch {
+		    DstBlock		    "d(xe)"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, 125]
+		    DstBlock		    "d(xe) disp"
+		    DstPort		    1
+		    }
+		    }
+		    Annotation {
+		    Name		    "xe = [pos of endeffector, ori of endeffector]"
+		    Position		    [980, 432]
+		    }
+		    }
+		    }
+		    Block {
+		    BlockType		    SubSystem
 		    Name		    "contact constranints"
 		    Ports		    [2, 1]
-		    Position		    [425, 475, 520, 570]
+		    Position		    [465, 475, 560, 570]
 		    MinAlgLoopOccurrences   off
 		    RTWSystemCode	    "Auto"
 		    FunctionWithSeparateData off
@@ -3047,7 +4233,7 @@ Model {
 		    BlockType		    Display
 		    Name		    "Display1"
 		    Ports		    [1]
-		    Position		    [350, 28, 445, 192]
+		    Position		    [350, 27, 435, 143]
 		    Decimation		    "1"
 		    Lockdown		    off
 		    }
@@ -3707,7 +4893,7 @@ Model {
 		    DstPort		    1
 		    }
 		    Branch {
-		    Points		    [0, -120]
+		    Points		    [0, -145]
 		    DstBlock		    "Display1"
 		    DstPort		    1
 		    }
@@ -3997,202 +5183,6 @@ Model {
 		    }
 		    }
 		    Block {
-		    BlockType		    SubSystem
-		    Name		    "kinem transfromation"
-		    Ports		    [1, 1]
-		    Position		    [320, 684, 415, 726]
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
-		    Name		    "kinem transfromation"
-		    Location		    [1230, 82, 1910, 1011]
-		    Open		    off
-		    ModelBrowserVisibility  on
-		    ModelBrowserWidth	    200
-		    ScreenColor		    "white"
-		    PaperOrientation	    "landscape"
-		    PaperPositionMode	    "auto"
-		    PaperType		    "A4"
-		    PaperUnits		    "centimeters"
-		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-		    TiledPageScale	    1
-		    ShowPageBoundaries	    off
-		    ZoomFactor		    "100"
-		    Block {
-		    BlockType		    Inport
-		    Name		    "Htm"
-		    Position		    [20, 49, 55, 61]
-		    NamePlacement	    "alternate"
-		    IconDisplay		    "Port number"
-		    }
-		    Block {
-		    BlockType		    Gain
-		    Name		    "Gain1"
-		    Position		    [425, 30, 465, 60]
-		    Gain		    "-1/2"
-		    ParameterDataTypeMode   "Inherit via internal rule"
-		    ParameterDataType	    "sfix(16)"
-		    ParameterScaling	    "2^0"
-		    OutDataTypeMode	    "Inherit via internal rule"
-		    OutDataType		    "sfix(16)"
-		    OutScaling		    "2^0"
-		    SaturateOnIntegerOverflow off
-		    }
-		    Block {
-		    BlockType		    Reference
-		    Name		    "RPY Euler"
-		    Ports		    [1, 2]
-		    Position		    [165, 35, 235, 75]
-		    BackgroundColor	    "lightBlue"
-		    SourceBlock		    "robotics/RPY Euler"
-		    SourceType		    ""
-		    ShowPortLabels	    "FromPortIcon"
-		    SystemSampleTime	    "-1"
-		    FunctionWithSeparateData off
-		    RTWMemSecFuncInitTerm   "Inherit from model"
-		    RTWMemSecFuncExecute    "Inherit from model"
-		    RTWMemSecDataConstants  "Inherit from model"
-		    RTWMemSecDataInternal   "Inherit from model"
-		    RTWMemSecDataParameters "Inherit from model"
-		    th			    "0.9999"
-		    }
-		    Block {
-		    BlockType		    Reference
-		    Name		    "RPY Euler1"
-		    Ports		    [1, 2]
-		    Position		    [170, 115, 240, 155]
-		    BackgroundColor	    "lightBlue"
-		    SourceBlock		    "robotics/RPY Euler"
-		    SourceType		    ""
-		    ShowPortLabels	    "FromPortIcon"
-		    SystemSampleTime	    "-1"
-		    FunctionWithSeparateData off
-		    RTWMemSecFuncInitTerm   "Inherit from model"
-		    RTWMemSecFuncExecute    "Inherit from model"
-		    RTWMemSecDataConstants  "Inherit from model"
-		    RTWMemSecDataInternal   "Inherit from model"
-		    RTWMemSecDataParameters "Inherit from model"
-		    th			    "0.9999"
-		    }
-		    Block {
-		    BlockType		    Selector
-		    Name		    "Selector"
-		    Ports		    [1, 1]
-		    Position		    [95, 42, 135, 68]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "3"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[1:3],1"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Selector
-		    Name		    "Selector1"
-		    Ports		    [1, 1]
-		    Position		    [95, 122, 135, 148]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "3"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[5:7],1"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Sum
-		    Name		    "Sum3"
-		    Ports		    [2, 1]
-		    Position		    [385, 35, 405, 55]
-		    ShowName		    off
-		    IconShape		    "round"
-		    Inputs		    "|++"
-		    CollapseMode	    "All dimensions"
-		    InputSameDT		    off
-		    OutDataTypeMode	    "Inherit via internal rule"
-		    OutDataType		    "sfix(16)"
-		    OutScaling		    "2^0"
-		    SaturateOnIntegerOverflow off
-		    }
-		    Block {
-		    BlockType		    Terminator
-		    Name		    "Terminator"
-		    Position		    [310, 135, 330, 155]
-		    }
-		    Block {
-		    BlockType		    Terminator
-		    Name		    "Terminator1"
-		    Position		    [310, 55, 330, 75]
-		    }
-		    Block {
-		    BlockType		    Outport
-		    Name		    "p_base"
-		    Position		    [490, 38, 520, 52]
-		    IconDisplay		    "Port number"
-		    }
-		    Line {
-		    SrcBlock		    "Htm"
-		    SrcPort		    1
-		    Points		    [20, 0]
-		    Branch {
-		    DstBlock		    "Selector"
-		    DstPort		    1
-		    }
-		    Branch {
-		    DstBlock		    "Selector1"
-		    DstPort		    1
-		    }
-		    }
-		    Line {
-		    SrcBlock		    "RPY Euler"
-		    SrcPort		    1
-		    DstBlock		    "Sum3"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Sum3"
-		    SrcPort		    1
-		    DstBlock		    "Gain1"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Gain1"
-		    SrcPort		    1
-		    DstBlock		    "p_base"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "RPY Euler1"
-		    SrcPort		    1
-		    Points		    [150, 0]
-		    DstBlock		    "Sum3"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "RPY Euler1"
-		    SrcPort		    2
-		    DstBlock		    "Terminator"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "RPY Euler"
-		    SrcPort		    2
-		    DstBlock		    "Terminator1"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Selector"
-		    SrcPort		    1
-		    DstBlock		    "RPY Euler"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Selector1"
-		    SrcPort		    1
-		    DstBlock		    "RPY Euler1"
-		    DstPort		    1
-		    }
-		    }
-		    }
-		    Block {
 		    BlockType		    Outport
 		    Name		    "acc(k)"
 		    Position		    [910, 443, 940, 457]
@@ -4200,9 +5190,16 @@ Model {
 		    }
 		    Block {
 		    BlockType		    Outport
-		    Name		    "v_cont"
-		    Position		    [640, 518, 670, 532]
+		    Name		    "gyro"
+		    Position		    [755, 613, 785, 627]
 		    Port		    "2"
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Outport
+		    Name		    "v_cont"
+		    Position		    [685, 518, 715, 532]
+		    Port		    "3"
 		    IconDisplay		    "Port number"
 		    }
 		    Line {
@@ -4276,13 +5273,20 @@ Model {
 		    Branch {
 		    Points		    [0, 40]
 		    Branch {
+		    DstBlock		    "gravity comp"
+		    DstPort		    2
+		    }
+		    Branch {
 		    Points		    [0, 80]
+		    Branch {
 		    DstBlock		    "contact constranints"
 		    DstPort		    2
 		    }
 		    Branch {
-		    DstBlock		    "gravity comp"
-		    DstPort		    2
+		    Points		    [0, 65]
+		    DstBlock		    "Bus\nSelector1"
+		    DstPort		    1
+		    }
 		    }
 		    }
 		    }
@@ -4291,7 +5295,7 @@ Model {
 		    SrcPort		    1
 		    Points		    [0, -5]
 		    Branch {
-		    Points		    [0, -20]
+		    Points		    [0, -15]
 		    DstBlock		    "Selector"
 		    DstPort		    1
 		    }
@@ -4303,24 +5307,23 @@ Model {
 		    }
 		    Branch {
 		    Points		    [0, 160]
+		    Branch {
 		    DstBlock		    "contact constranints"
 		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, 130]
+		    DstBlock		    "ang rate"
+		    DstPort		    2
+		    }
 		    }
 		    }
 		    }
 		    Line {
 		    SrcBlock		    "Selector"
 		    SrcPort		    1
-		    Points		    [20, 0]
-		    Branch {
-		    Points		    [5, 0; 0, 5]
 		    DstBlock		    "Robot_sfun"
 		    DstPort		    1
-		    }
-		    Branch {
-		    DstBlock		    "Goto1"
-		    DstPort		    1
-		    }
 		    }
 		    Line {
 		    SrcBlock		    "Selector1"
@@ -4356,18 +5359,6 @@ Model {
 		    DstPort		    2
 		    }
 		    Line {
-		    SrcBlock		    "kinem transfromation"
-		    SrcPort		    1
-		    DstBlock		    "Terminator1"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Constant"
-		    SrcPort		    1
-		    DstBlock		    "kinem transfromation"
-		    DstPort		    1
-		    }
-		    Line {
 		    SrcBlock		    "Divide"
 		    SrcPort		    1
 		    Points		    [25, 0; 0, 145]
@@ -4383,13 +5374,39 @@ Model {
 		    DstPort		    1
 		    }
 		    Branch {
-		    Points		    [0, -110]
+		    Points		    [0, -105]
 		    DstBlock		    "Display"
 		    DstPort		    1
 		    }
 		    }
 		    Line {
 		    SrcBlock		    "contact constranints"
+		    SrcPort		    1
+		    DstBlock		    "Selector3"
+		    DstPort		    1
+		    }
+		    Line {
+		    Name		    "<Htm>"
+		    Labels		    [0, 0]
+		    SrcBlock		    "Bus\nSelector1"
+		    SrcPort		    1
+		    DstBlock		    "ang rate"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "ang rate"
+		    SrcPort		    1
+		    DstBlock		    "Selector2"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Selector2"
+		    SrcPort		    1
+		    DstBlock		    "gyro"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Selector3"
 		    SrcPort		    1
 		    DstBlock		    "v_cont"
 		    DstPort		    1
@@ -4436,21 +5453,15 @@ Model {
 		    }
 		    }
 		    Branch {
-		    Points		    [0, 70]
-		    Branch {
+		    Points		    [0, 75]
 		    DstBlock		    "dyn_model"
 		    DstPort		    1
-		    }
-		    Branch {
-		    Points		    [0, 65]
-		    DstBlock		    "dtheta"
-		    DstPort		    1
-		    }
 		    }
 		    }
 		    Line {
 		    SrcBlock		    "u"
 		    SrcPort		    1
+		    Points		    [-5, 0]
 		    DstBlock		    "dyn_model"
 		    DstPort		    2
 		    }
@@ -4475,18 +5486,18 @@ Model {
 		    DstPort		    2
 		    }
 		    Line {
-		    SrcBlock		    "dtheta"
-		    SrcPort		    1
-		    Points		    [25, 0; 0, -75]
+		    SrcBlock		    "dyn_model"
+		    SrcPort		    3
+		    Points		    [150, 0]
 		    DstBlock		    "Matrix\nConcatenate"
-		    DstPort		    4
+		    DstPort		    5
 		    }
 		    Line {
 		    SrcBlock		    "dyn_model"
 		    SrcPort		    2
-		    Points		    [150, 0]
+		    Points		    [90, 0; 0, -25]
 		    DstBlock		    "Matrix\nConcatenate"
-		    DstPort		    5
+		    DstPort		    4
 		    }
 		    }
 		    }
@@ -4812,7 +5823,7 @@ Model {
 	  BlockType		  Display
 	  Name			  "Display"
 	  Ports			  [1]
-	  Position		  [520, 495, 610, 615]
+	  Position		  [575, 48, 660, 172]
 	  Decimation		  "1"
 	  Lockdown		  off
 	}
@@ -4979,7 +5990,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function Estimator_UKF 1"
+		  Tag			  "Stateflow S-Function estimator_ukf 1"
 		  Ports			  [3, 2]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -5230,7 +6241,7 @@ Model {
 		    BlockType		    SubSystem
 		    Name		    "dyn_model"
 		    Ports		    [2, 1]
-		    Position		    [270, 73, 350, 122]
+		    Position		    [270, 88, 350, 137]
 		    MinAlgLoopOccurrences   off
 		    RTWSystemCode	    "Auto"
 		    FunctionWithSeparateData off
@@ -5335,7 +6346,7 @@ Model {
 		    OutputSizes		    "1"
 		    Port {
 		    PortNumber		    1
-		    Name		    "omega"
+		    Name		    "v_b"
 		    RTWStorageClass	    "Auto"
 		    DataLoggingNameMode	    "SignalName"
 		    }
@@ -5817,15 +6828,15 @@ Model {
 		    BlockType		    Display
 		    Name		    "d(xe) disp"
 		    Ports		    [1]
-		    Position		    [910, 238, 990, 302]
+		    Position		    [910, 235, 995, 355]
 		    Decimation		    "1"
 		    Lockdown		    off
 		    }
 		    Block {
 		    BlockType		    Display
-		    Name		    "omega disp"
+		    Name		    "velbase disp"
 		    Ports		    [1]
-		    Position		    [590, 496, 680, 574]
+		    Position		    [590, 494, 690, 626]
 		    Decimation		    "1"
 		    Lockdown		    off
 		    }
@@ -5836,19 +6847,19 @@ Model {
 		    IconDisplay		    "Port number"
 		    }
 		    Line {
-		    Name		    "omega"
+		    Name		    "v_b"
 		    Labels		    [0, 0]
 		    SrcBlock		    "Selector"
 		    SrcPort		    1
 		    Points		    [90, 0]
 		    Branch {
-		    Points		    [5, 0; 0, -30]
+		    Points		    [5, 0; 0, -25]
 		    DstBlock		    "Divide"
 		    DstPort		    3
 		    }
 		    Branch {
-		    Points		    [-10, 0; 0, 125]
-		    DstBlock		    "omega disp"
+		    Points		    [-10, 0; 0, 150]
+		    DstBlock		    "velbase disp"
 		    DstPort		    1
 		    }
 		    }
@@ -5862,7 +6873,6 @@ Model {
 		    DstPort		    1
 		    }
 		    Branch {
-		    Points		    [75, 0]
 		    DstBlock		    "Divide"
 		    DstPort		    1
 		    }
@@ -6018,7 +7028,7 @@ Model {
 		    Block {
 		    BlockType		    Goto
 		    Name		    "Goto1"
-		    Position		    [425, 501, 450, 519]
+		    Position		    [505, 496, 530, 514]
 		    GotoTag		    "Htm"
 		    TagVisibility	    "local"
 		    }
@@ -7036,7 +8046,7 @@ Model {
 		    Labels		    [0, 0]
 		    SrcBlock		    "Bus\nSelector1"
 		    SrcPort		    2
-		    Points		    [50, 0]
+		    Points		    [65, 0; 0, 40]
 		    DstBlock		    "Goto1"
 		    DstPort		    1
 		    }
@@ -7095,12 +8105,14 @@ Model {
 		    Line {
 		    SrcBlock		    "dyn_model"
 		    SrcPort		    1
+		    Points		    [0, -15]
 		    DstBlock		    "Assignment"
 		    DstPort		    2
 		    }
 		    Line {
 		    SrcBlock		    "Selector"
 		    SrcPort		    1
+		    Points		    [65, 0]
 		    DstBlock		    "dyn_model"
 		    DstPort		    1
 		    }
@@ -7136,7 +8148,7 @@ Model {
 		    Line {
 		    SrcBlock		    "u(k)"
 		    SrcPort		    1
-		    Points		    [60, 0; 0, -35]
+		    Points		    [60, 0; 0, -20]
 		    DstBlock		    "dyn_model"
 		    DstPort		    2
 		    }
@@ -7752,7 +8764,7 @@ Model {
 	      FunctionWithSeparateData off
 	      System {
 		Name			"DoubleSupport trial"
-		Location		[802, 418, 1300, 718]
+		Location		[445, 82, 1236, 1011]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -7809,6 +8821,16 @@ Model {
 		  Mode			  "Multidimensional array"
 		}
 		Block {
+		  BlockType		  Selector
+		  Name			  "Selector"
+		  Ports			  [1, 1]
+		  Position		  [330, 176, 370, 214]
+		  InputPortWidth	  "70"
+		  IndexOptions		  "Index vector (dialog)"
+		  Indices		  "[1:68]"
+		  OutputSizes		  "1"
+		}
+		Block {
 		  BlockType		  Terminator
 		  Name			  "Terminator"
 		  Position		  [210, 110, 230, 130]
@@ -7816,7 +8838,7 @@ Model {
 		Block {
 		  BlockType		  Outport
 		  Name			  "y_cont"
-		  Position		  [320, 178, 350, 192]
+		  Position		  [450, 188, 480, 202]
 		  IconDisplay		  "Port number"
 		  OutDataType		  "sfix(16)"
 		  OutScaling		  "2^0"
@@ -7830,8 +8852,7 @@ Model {
 		Line {
 		  SrcBlock		  "Matrix\nConcatenate"
 		  SrcPort		  1
-		  Points		  [0, -10]
-		  DstBlock		  "y_cont"
+		  DstBlock		  "Selector"
 		  DstPort		  1
 		}
 		Line {
@@ -7853,6 +8874,12 @@ Model {
 		  Points		  [20, 0; 0, -130]
 		  DstBlock		  "Matrix\nConcatenate"
 		  DstPort		  3
+		}
+		Line {
+		  SrcBlock		  "Selector"
+		  SrcPort		  1
+		  DstBlock		  "y_cont"
+		  DstPort		  1
 		}
 	      }
 	    }
@@ -8214,17 +9241,18 @@ Model {
 	  Ports			  [2]
 	  Position		  [520, 160, 555, 200]
 	  Floating		  off
-	  Location		  [798, 77, 1742, 1052]
+	  Location		  [144, 56, 1088, 1031]
 	  Open			  off
 	  NumInputPorts		  "2"
+	  ZoomMode		  "yonly"
 	  List {
 	    ListType		    AxesTitles
 	    axes1		    "%<SignalLabel>"
 	    axes2		    "%<SignalLabel>"
 	  }
-	  TimeRange		  "30"
-	  YMin			  "-15~-10"
-	  YMax			  "15~50"
+	  TimeRange		  "0.1"
+	  YMin			  "-22.5~-1.25"
+	  YMax			  "12.5~1.5"
 	  SaveName		  "ScopeData2"
 	  DataFormat		  "StructureWithTime"
 	  SampleTime		  "0"
@@ -8274,7 +9302,7 @@ Model {
 		DstPort			1
 	      }
 	      Branch {
-		Points			[0, 375]
+		Points			[0, -70]
 		DstBlock		"Display"
 		DstPort			1
 	      }
@@ -8438,8 +9466,8 @@ Model {
     Line {
       SrcBlock		      "From\nWorkspace"
       SrcPort		      1
-      DstBlock		      "UKFDis"
-      DstPort		      2
+      DstBlock		      "Input Noise SS"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "Selector"
@@ -8474,16 +9502,10 @@ Model {
       }
     }
     Line {
-      SrcBlock		      "Ground"
-      SrcPort		      1
-      DstBlock		      "Input Noise SS"
-      DstPort		      1
-    }
-    Line {
       SrcBlock		      "Input Noise SS"
       SrcPort		      1
-      DstBlock		      "Terminator"
-      DstPort		      1
+      DstBlock		      "UKFDis"
+      DstPort		      2
     }
   }
 }
@@ -8497,10 +9519,12 @@ Model {
 Stateflow {
   machine {
     id			    1
-    name		    "Estimator_UKF"
+    name		    "estimator_ukf"
     created		    "13-Mar-2013 09:22:41"
     isLibrary		    0
     firstTarget		    20
+    debug {
+    }
     sfVersion		    67014000.000001
   }
   chart {
