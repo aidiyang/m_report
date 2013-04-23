@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.180"
+    ComputedModelVersion    "1.182"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,9 +44,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Apr 20 18:00:09 2013"
+  LastModifiedDate	  "Tue Apr 23 11:28:19 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:180>"
+  ModelVersionFormat	  "1.%<AutoIncrement:182>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -1389,7 +1389,7 @@ Model {
       System {
 	Name			"UKFDis"
 	Location		[1181, 89, 1836, 1001]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	315
 	ScreenColor		"white"
@@ -1511,11 +1511,6 @@ Model {
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
 	      MaskType		      "Stateflow"
 	      MaskDescription	      "Embedded MATLAB block"
 	      MaskDisplay	      "disp('ut_sigmas');"
@@ -2543,14 +2538,14 @@ Model {
 		    Block {
 		    BlockType		    From
 		    Name		    "From2"
-		    Position		    [255, 322, 280, 338]
+		    Position		    [255, 307, 280, 323]
 		    CloseFcn		    "tagdialog Close"
 		    GotoTag		    "F_R"
 		    }
 		    Block {
 		    BlockType		    From
 		    Name		    "From3"
-		    Position		    [265, 467, 290, 483]
+		    Position		    [255, 427, 280, 443]
 		    CloseFcn		    "tagdialog Close"
 		    GotoTag		    "F_L"
 		    }
@@ -2579,42 +2574,9 @@ Model {
 		    }
 		    Block {
 		    BlockType		    Selector
-		    Name		    "J_bl"
-		    Ports		    [1, 1]
-		    Position		    [260, 361, 290, 379]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[1:6],"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Selector
-		    Name		    "J_br"
-		    Ports		    [1, 1]
-		    Position		    [255, 216, 285, 234]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[1:6],"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Selector
-		    Name		    "J_l"
-		    Ports		    [1, 1]
-		    Position		    [260, 411, 290, 429]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[7:31],"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Selector
 		    Name		    "J_lLeg"
 		    Ports		    [1, 1]
-		    Position		    [170, 386, 200, 404]
+		    Position		    [250, 366, 280, 384]
 		    NumberOfDimensions	    "2"
 		    InputPortWidth	    "37"
 		    IndexOptions	    "Select all,Index vector (dialog)"
@@ -2623,39 +2585,14 @@ Model {
 		    }
 		    Block {
 		    BlockType		    Selector
-		    Name		    "J_r"
-		    Ports		    [1, 1]
-		    Position		    [255, 271, 285, 289]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[7:31],"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Selector
 		    Name		    "J_rLeg"
 		    Ports		    [1, 1]
-		    Position		    [165, 241, 195, 259]
+		    Position		    [245, 246, 275, 264]
 		    NumberOfDimensions	    "2"
 		    InputPortWidth	    "37"
 		    IndexOptions	    "Select all,Index vector (dialog)"
 		    Indices		    ",[1:6]"
 		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Concatenate
-		    Name		    "Matrix\nConcatenate1"
-		    Ports		    [2, 1]
-		    Position		    [445, 239, 485, 286]
-		    Mode		    "Multidimensional array"
-		    }
-		    Block {
-		    BlockType		    Concatenate
-		    Name		    "Matrix\nConcatenate2"
-		    Ports		    [2, 1]
-		    Position		    [450, 379, 490, 426]
-		    Mode		    "Multidimensional array"
 		    }
 		    Block {
 		    BlockType		    Concatenate
@@ -2668,7 +2605,7 @@ Model {
 		    BlockType		    Product
 		    Name		    "Product1"
 		    Ports		    [2, 1]
-		    Position		    [355, 217, 385, 248]
+		    Position		    [360, 243, 400, 292]
 		    Multiplication	    "Matrix(*)"
 		    CollapseMode	    "All dimensions"
 		    InputSameDT		    off
@@ -2681,33 +2618,7 @@ Model {
 		    BlockType		    Product
 		    Name		    "Product2"
 		    Ports		    [2, 1]
-		    Position		    [355, 272, 385, 303]
-		    Multiplication	    "Matrix(*)"
-		    CollapseMode	    "All dimensions"
-		    InputSameDT		    off
-		    OutDataTypeMode	    "Inherit via internal rule"
-		    OutDataType		    "sfix(16)"
-		    OutScaling		    "2^0"
-		    SaturateOnIntegerOverflow off
-		    }
-		    Block {
-		    BlockType		    Product
-		    Name		    "Product3"
-		    Ports		    [2, 1]
-		    Position		    [365, 362, 395, 393]
-		    Multiplication	    "Matrix(*)"
-		    CollapseMode	    "All dimensions"
-		    InputSameDT		    off
-		    OutDataTypeMode	    "Inherit via internal rule"
-		    OutDataType		    "sfix(16)"
-		    OutScaling		    "2^0"
-		    SaturateOnIntegerOverflow off
-		    }
-		    Block {
-		    BlockType		    Product
-		    Name		    "Product4"
-		    Ports		    [2, 1]
-		    Position		    [365, 412, 395, 443]
+		    Position		    [365, 363, 405, 412]
 		    Multiplication	    "Matrix(*)"
 		    CollapseMode	    "All dimensions"
 		    InputSameDT		    off
@@ -2748,36 +2659,6 @@ Model {
 		    }
 		    }
 		    Line {
-		    SrcBlock		    "J_rLeg"
-		    SrcPort		    1
-		    Points		    [25, 0]
-		    Branch {
-		    Points		    [0, -25]
-		    DstBlock		    "J_br"
-		    DstPort		    1
-		    }
-		    Branch {
-		    Points		    [0, 30]
-		    DstBlock		    "J_r"
-		    DstPort		    1
-		    }
-		    }
-		    Line {
-		    SrcBlock		    "J_lLeg"
-		    SrcPort		    1
-		    Points		    [35, 0]
-		    Branch {
-		    Points		    [0, -25]
-		    DstBlock		    "J_bl"
-		    DstPort		    1
-		    }
-		    Branch {
-		    Points		    [0, 25]
-		    DstBlock		    "J_l"
-		    DstPort		    1
-		    }
-		    }
-		    Line {
 		    SrcBlock		    "FTS"
 		    SrcPort		    1
 		    Points		    [30, 0]
@@ -2809,94 +2690,21 @@ Model {
 		    SrcPort		    1
 		    Points		    [15, 0]
 		    Branch {
+		    Points		    [0, -75]
 		    DstBlock		    "J_rLeg"
 		    DstPort		    1
 		    }
 		    Branch {
-		    Points		    [0, 65]
+		    Points		    [0, 45]
 		    DstBlock		    "J_lLeg"
 		    DstPort		    1
 		    }
 		    }
 		    Line {
-		    SrcBlock		    "J_br"
-		    SrcPort		    1
-		    DstBlock		    "Product1"
-		    DstPort		    1
-		    }
-		    Line {
 		    SrcBlock		    "From2"
 		    SrcPort		    1
-		    Points		    [25, 0; 0, -40]
-		    Branch {
-		    Points		    [0, -50]
+		    Points		    [25, 0; 0, -35]
 		    DstBlock		    "Product1"
-		    DstPort		    2
-		    }
-		    Branch {
-		    Points		    [0, 5]
-		    DstBlock		    "Product2"
-		    DstPort		    2
-		    }
-		    }
-		    Line {
-		    SrcBlock		    "J_r"
-		    SrcPort		    1
-		    DstBlock		    "Product2"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "J_bl"
-		    SrcPort		    1
-		    DstBlock		    "Product3"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "From3"
-		    SrcPort		    1
-		    Points		    [25, 0; 0, -40]
-		    Branch {
-		    Points		    [0, -50]
-		    DstBlock		    "Product3"
-		    DstPort		    2
-		    }
-		    Branch {
-		    DstBlock		    "Product4"
-		    DstPort		    2
-		    }
-		    }
-		    Line {
-		    SrcBlock		    "J_l"
-		    SrcPort		    1
-		    DstBlock		    "Product4"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Product3"
-		    SrcPort		    1
-		    Points		    [35, 0]
-		    DstBlock		    "Matrix\nConcatenate2"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Product4"
-		    SrcPort		    1
-		    Points		    [35, 0]
-		    DstBlock		    "Matrix\nConcatenate2"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "Product1"
-		    SrcPort		    1
-		    Points		    [40, 0]
-		    DstBlock		    "Matrix\nConcatenate1"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Product2"
-		    SrcPort		    1
-		    Points		    [40, 0]
-		    DstBlock		    "Matrix\nConcatenate1"
 		    DstPort		    2
 		    }
 		    Line {
@@ -2919,20 +2727,6 @@ Model {
 		    DstPort		    1
 		    }
 		    Line {
-		    SrcBlock		    "Matrix\nConcatenate1"
-		    SrcPort		    1
-		    Points		    [30, 0; 0, 30]
-		    DstBlock		    "Add"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "Matrix\nConcatenate2"
-		    SrcPort		    1
-		    Points		    [40, 0; 0, -60]
-		    DstBlock		    "Add"
-		    DstPort		    3
-		    }
-		    Line {
 		    SrcBlock		    "Add"
 		    SrcPort		    1
 		    DstBlock		    "u(k)"
@@ -2951,6 +2745,39 @@ Model {
 		    SrcPort		    1
 		    DstBlock		    "J'"
 		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "J_rLeg"
+		    SrcPort		    1
+		    DstBlock		    "Product1"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Product1"
+		    SrcPort		    1
+		    Points		    [75, 0; 0, 25]
+		    DstBlock		    "Add"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "J_lLeg"
+		    SrcPort		    1
+		    DstBlock		    "Product2"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "From3"
+		    SrcPort		    1
+		    Points		    [50, 0; 0, -35]
+		    DstBlock		    "Product2"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "Product2"
+		    SrcPort		    1
+		    Points		    [70, 0; 0, -45]
+		    DstBlock		    "Add"
+		    DstPort		    3
 		    }
 		    }
 		    }
@@ -5923,11 +5750,6 @@ Model {
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
 	      MaskType		      "Stateflow"
 	      MaskDescription	      "Embedded MATLAB block"
 	      MaskDisplay	      "disp('ut_sigmas');"
@@ -6248,7 +6070,7 @@ Model {
 		    System {
 		    Name		    "dyn_model"
 		    Location		    [1230, 82, 1910, 994]
-		    Open		    off
+		    Open		    on
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    260
 		    ScreenColor		    "white"
@@ -6269,7 +6091,7 @@ Model {
 		    Block {
 		    BlockType		    Inport
 		    Name		    "u_in(k)"
-		    Position		    [290, 388, 320, 402]
+		    Position		    [300, 393, 330, 407]
 		    Port		    "2"
 		    IconDisplay		    "Port number"
 		    }
@@ -7389,7 +7211,7 @@ Model {
 		    BlockType		    SubSystem
 		    Name		    "Trans FTS-Base"
 		    Ports		    [2, 1]
-		    Position		    [440, 390, 535, 450]
+		    Position		    [460, 390, 530, 450]
 		    MinAlgLoopOccurrences   off
 		    RTWSystemCode	    "Auto"
 		    FunctionWithSeparateData off
@@ -7416,8 +7238,8 @@ Model {
 		    }
 		    Block {
 		    BlockType		    Inport
-		    Name		    "J(k)"
-		    Position		    [25, 323, 55, 337]
+		    Name		    "kin"
+		    Position		    [15, 323, 45, 337]
 		    Port		    "2"
 		    IconDisplay		    "Port number"
 		    }
@@ -7435,6 +7257,20 @@ Model {
 		    SaturateOnIntegerOverflow off
 		    }
 		    Block {
+		    BlockType		    BusSelector
+		    Name		    "Bus\nSelector"
+		    Ports		    [1, 1]
+		    Position		    [70, 313, 75, 347]
+		    ShowName		    off
+		    OutputSignals	    "J"
+		    Port {
+		    PortNumber		    1
+		    Name		    "<J>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    }
+		    Block {
 		    BlockType		    Constant
 		    Name		    "Constant"
 		    Position		    [290, 151, 340, 169]
@@ -7447,7 +7283,7 @@ Model {
 		    BlockType		    Selector
 		    Name		    "FTS"
 		    Ports		    [1, 1]
-		    Position		    [240, 81, 270, 99]
+		    Position		    [225, 81, 255, 99]
 		    InputPortWidth	    "37"
 		    IndexOptions	    "Index vector (dialog)"
 		    Indices		    "[1:12]"
@@ -7476,14 +7312,14 @@ Model {
 		    Block {
 		    BlockType		    From
 		    Name		    "From2"
-		    Position		    [255, 322, 280, 338]
+		    Position		    [255, 307, 280, 323]
 		    CloseFcn		    "tagdialog Close"
 		    GotoTag		    "F_R"
 		    }
 		    Block {
 		    BlockType		    From
 		    Name		    "From3"
-		    Position		    [265, 467, 290, 483]
+		    Position		    [255, 427, 280, 443]
 		    CloseFcn		    "tagdialog Close"
 		    GotoTag		    "F_L"
 		    }
@@ -7505,49 +7341,16 @@ Model {
 		    BlockType		    Math
 		    Name		    "J'"
 		    Ports		    [1, 1]
-		    Position		    [80, 315, 110, 345]
+		    Position		    [100, 315, 130, 345]
 		    Operator		    "transpose"
 		    OutDataType		    "sfix(16)"
 		    OutScaling		    "2^0"
 		    }
 		    Block {
 		    BlockType		    Selector
-		    Name		    "J_bl"
-		    Ports		    [1, 1]
-		    Position		    [260, 361, 290, 379]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[1:6],"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Selector
-		    Name		    "J_br"
-		    Ports		    [1, 1]
-		    Position		    [255, 216, 285, 234]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[1:6],"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Selector
-		    Name		    "J_l"
-		    Ports		    [1, 1]
-		    Position		    [260, 411, 290, 429]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[7:31],"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Selector
 		    Name		    "J_lLeg"
 		    Ports		    [1, 1]
-		    Position		    [170, 386, 200, 404]
+		    Position		    [250, 366, 280, 384]
 		    NumberOfDimensions	    "2"
 		    InputPortWidth	    "37"
 		    IndexOptions	    "Select all,Index vector (dialog)"
@@ -7556,39 +7359,14 @@ Model {
 		    }
 		    Block {
 		    BlockType		    Selector
-		    Name		    "J_r"
-		    Ports		    [1, 1]
-		    Position		    [255, 271, 285, 289]
-		    NumberOfDimensions	    "2"
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog),Select all"
-		    Indices		    "[7:31],"
-		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Selector
 		    Name		    "J_rLeg"
 		    Ports		    [1, 1]
-		    Position		    [165, 241, 195, 259]
+		    Position		    [245, 246, 275, 264]
 		    NumberOfDimensions	    "2"
 		    InputPortWidth	    "37"
 		    IndexOptions	    "Select all,Index vector (dialog)"
 		    Indices		    ",[1:6]"
 		    OutputSizes		    "1,1"
-		    }
-		    Block {
-		    BlockType		    Concatenate
-		    Name		    "Matrix\nConcatenate1"
-		    Ports		    [2, 1]
-		    Position		    [445, 239, 485, 286]
-		    Mode		    "Multidimensional array"
-		    }
-		    Block {
-		    BlockType		    Concatenate
-		    Name		    "Matrix\nConcatenate2"
-		    Ports		    [2, 1]
-		    Position		    [450, 379, 490, 426]
-		    Mode		    "Multidimensional array"
 		    }
 		    Block {
 		    BlockType		    Concatenate
@@ -7601,7 +7379,7 @@ Model {
 		    BlockType		    Product
 		    Name		    "Product1"
 		    Ports		    [2, 1]
-		    Position		    [355, 217, 385, 248]
+		    Position		    [360, 243, 400, 292]
 		    Multiplication	    "Matrix(*)"
 		    CollapseMode	    "All dimensions"
 		    InputSameDT		    off
@@ -7614,33 +7392,7 @@ Model {
 		    BlockType		    Product
 		    Name		    "Product2"
 		    Ports		    [2, 1]
-		    Position		    [355, 272, 385, 303]
-		    Multiplication	    "Matrix(*)"
-		    CollapseMode	    "All dimensions"
-		    InputSameDT		    off
-		    OutDataTypeMode	    "Inherit via internal rule"
-		    OutDataType		    "sfix(16)"
-		    OutScaling		    "2^0"
-		    SaturateOnIntegerOverflow off
-		    }
-		    Block {
-		    BlockType		    Product
-		    Name		    "Product3"
-		    Ports		    [2, 1]
-		    Position		    [365, 362, 395, 393]
-		    Multiplication	    "Matrix(*)"
-		    CollapseMode	    "All dimensions"
-		    InputSameDT		    off
-		    OutDataTypeMode	    "Inherit via internal rule"
-		    OutDataType		    "sfix(16)"
-		    OutScaling		    "2^0"
-		    SaturateOnIntegerOverflow off
-		    }
-		    Block {
-		    BlockType		    Product
-		    Name		    "Product4"
-		    Ports		    [2, 1]
-		    Position		    [365, 412, 395, 443]
+		    Position		    [365, 363, 405, 412]
 		    Multiplication	    "Matrix(*)"
 		    CollapseMode	    "All dimensions"
 		    InputSameDT		    off
@@ -7653,7 +7405,7 @@ Model {
 		    BlockType		    Selector
 		    Name		    "tau"
 		    Ports		    [1, 1]
-		    Position		    [250, 176, 280, 194]
+		    Position		    [235, 176, 265, 194]
 		    InputPortWidth	    "37"
 		    IndexOptions	    "Index vector (dialog)"
 		    Indices		    "[13:37]"
@@ -7681,39 +7433,9 @@ Model {
 		    }
 		    }
 		    Line {
-		    SrcBlock		    "J_rLeg"
-		    SrcPort		    1
-		    Points		    [25, 0]
-		    Branch {
-		    Points		    [0, -25]
-		    DstBlock		    "J_br"
-		    DstPort		    1
-		    }
-		    Branch {
-		    Points		    [0, 30]
-		    DstBlock		    "J_r"
-		    DstPort		    1
-		    }
-		    }
-		    Line {
-		    SrcBlock		    "J_lLeg"
-		    SrcPort		    1
-		    Points		    [35, 0]
-		    Branch {
-		    Points		    [0, -25]
-		    DstBlock		    "J_bl"
-		    DstPort		    1
-		    }
-		    Branch {
-		    Points		    [0, 25]
-		    DstBlock		    "J_l"
-		    DstPort		    1
-		    }
-		    }
-		    Line {
 		    SrcBlock		    "FTS"
 		    SrcPort		    1
-		    Points		    [15, 0]
+		    Points		    [30, 0]
 		    Branch {
 		    Points		    [0, -25]
 		    DstBlock		    "F_R"
@@ -7740,103 +7462,24 @@ Model {
 		    Line {
 		    SrcBlock		    "J'"
 		    SrcPort		    1
-		    Points		    [35, 0]
+		    Points		    [15, 0]
 		    Branch {
+		    Points		    [0, -75]
 		    DstBlock		    "J_rLeg"
 		    DstPort		    1
 		    }
 		    Branch {
-		    Points		    [0, 65]
+		    Points		    [0, 45]
 		    DstBlock		    "J_lLeg"
 		    DstPort		    1
 		    }
 		    }
 		    Line {
-		    SrcBlock		    "J_br"
-		    SrcPort		    1
-		    DstBlock		    "Product1"
-		    DstPort		    1
-		    }
-		    Line {
 		    SrcBlock		    "From2"
 		    SrcPort		    1
-		    Points		    [25, 0; 0, -40]
-		    Branch {
-		    Points		    [0, -50]
+		    Points		    [25, 0; 0, -35]
 		    DstBlock		    "Product1"
 		    DstPort		    2
-		    }
-		    Branch {
-		    Points		    [0, 5]
-		    DstBlock		    "Product2"
-		    DstPort		    2
-		    }
-		    }
-		    Line {
-		    SrcBlock		    "J_r"
-		    SrcPort		    1
-		    DstBlock		    "Product2"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "J_bl"
-		    SrcPort		    1
-		    DstBlock		    "Product3"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "From3"
-		    SrcPort		    1
-		    Points		    [25, 0; 0, -40]
-		    Branch {
-		    Points		    [0, -50]
-		    DstBlock		    "Product3"
-		    DstPort		    2
-		    }
-		    Branch {
-		    DstBlock		    "Product4"
-		    DstPort		    2
-		    }
-		    }
-		    Line {
-		    SrcBlock		    "J_l"
-		    SrcPort		    1
-		    DstBlock		    "Product4"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Product3"
-		    SrcPort		    1
-		    Points		    [35, 0]
-		    DstBlock		    "Matrix\nConcatenate2"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Product4"
-		    SrcPort		    1
-		    Points		    [35, 0]
-		    DstBlock		    "Matrix\nConcatenate2"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "Product1"
-		    SrcPort		    1
-		    Points		    [40, 0]
-		    DstBlock		    "Matrix\nConcatenate1"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Product2"
-		    SrcPort		    1
-		    Points		    [40, 0]
-		    DstBlock		    "Matrix\nConcatenate1"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "J(k)"
-		    SrcPort		    1
-		    DstBlock		    "J'"
-		    DstPort		    1
 		    }
 		    Line {
 		    SrcBlock		    "tau"
@@ -7858,24 +7501,57 @@ Model {
 		    DstPort		    1
 		    }
 		    Line {
-		    SrcBlock		    "Matrix\nConcatenate1"
-		    SrcPort		    1
-		    Points		    [30, 0; 0, 30]
-		    DstBlock		    "Add"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "Matrix\nConcatenate2"
-		    SrcPort		    1
-		    Points		    [40, 0; 0, -60]
-		    DstBlock		    "Add"
-		    DstPort		    3
-		    }
-		    Line {
 		    SrcBlock		    "Add"
 		    SrcPort		    1
 		    DstBlock		    "u(k)"
 		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "kin"
+		    SrcPort		    1
+		    DstBlock		    "Bus\nSelector"
+		    DstPort		    1
+		    }
+		    Line {
+		    Name		    "<J>"
+		    Labels		    [0, 0]
+		    SrcBlock		    "Bus\nSelector"
+		    SrcPort		    1
+		    DstBlock		    "J'"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "J_rLeg"
+		    SrcPort		    1
+		    DstBlock		    "Product1"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Product1"
+		    SrcPort		    1
+		    Points		    [75, 0; 0, 25]
+		    DstBlock		    "Add"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "J_lLeg"
+		    SrcPort		    1
+		    DstBlock		    "Product2"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "From3"
+		    SrcPort		    1
+		    Points		    [50, 0; 0, -35]
+		    DstBlock		    "Product2"
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "Product2"
+		    SrcPort		    1
+		    Points		    [70, 0; 0, -45]
+		    DstBlock		    "Add"
+		    DstPort		    3
 		    }
 		    }
 		    }
@@ -8030,14 +7706,14 @@ Model {
 		    Line {
 		    SrcBlock		    "u_in(k)"
 		    SrcPort		    1
-		    Points		    [100, 0]
+		    Points		    [0, 5]
 		    DstBlock		    "Trans FTS-Base"
 		    DstPort		    1
 		    }
 		    Line {
 		    SrcBlock		    "Trans FTS-Base"
 		    SrcPort		    1
-		    Points		    [5, 0]
+		    Points		    [10, 0]
 		    DstBlock		    "Sum1"
 		    DstPort		    2
 		    }
@@ -9523,8 +9199,6 @@ Stateflow {
     created		    "13-Mar-2013 09:22:41"
     isLibrary		    0
     firstTarget		    20
-    debug {
-    }
     sfVersion		    67014000.000001
   }
   chart {
