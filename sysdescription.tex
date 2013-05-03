@@ -1,0 +1,159 @@
+\documentclass[12pt]{article}
+% Kalman Filtering forumulation
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{fixltx2e}
+
+\def\dfdx#1#2{\frac{\partial {#1}}{\partial {#2}}}
+\begin{document}
+\newpage
+\section{System Description}
+General state space representation of a non linear system
+\begin{equation}
+	\begin{split}
+	\dot{x} = f(x,u)\\
+	y = h(x,u)
+	\end{split}
+\end{equation}
+General form of equations of motion of \emph{Toro}
+\begin{equation}
+	\begin{split}
+	\ddot{q} = M(q)^{-1}(&-C(q,\dot{q})\dot{q} - g(q) + J_{l}^{T}F_{l} + J_{r}^{T}F_{r} + \tau) \\
+	q &= [q_{base}^{T}, q_{joint}^{T}]^{T}
+	\end{split}
+\end{equation}
+
+\begin{equation}
+	\begin{split}
+	\dot{x} = &
+	\begin{pmatrix}
+	T(\theta)^{-1}Ad_{sb}\dot{q}_{base} \in \Re^{6 \times 1}  \\
+	\dot{q}_{joint} \in \Re^{25 \times 1} \\
+	M(x)^{-1}(-C(x,\dot{x})\dot{x} -g(x) + + J_{l}^{T}F_{l} + J_{r}^{T}F_{r} + \tau) \in \Re^{31 \times 1}	
+	\end{pmatrix}
+	\\&x = [q^{T},\dot{q}^{T}]^{T}
+	\\&\theta = [\theta_{x},\theta_{y},\theta_{z}]^{T}
+	\end{split}
+\end{equation}
+\begin{itemize}
+\item $$M \in \Re^{31 \times 31}$$
+\item $$C \in \Re^{31 \times 31}$$
+\item $$g \in \Re^{31 \times 1}$$
+\item $$J_{l},J_{r} \in \Re^{6 \times 31}$$
+\item $$\tau \in \Re^{25 \times 1}$$
+\end{itemize}
+\textbf{Computing derivatives with respect to states(Jacobian)} 
+
+Derivatives of floating base velocites
+Let
+$$g = T(\theta)^{-1}.Ad_{sb}$$
+
+\[
+ \dfdx{\dot{q}_{base,j}}{x_{i}} = 
+  \begin{cases}
+   g.adj_{J}.\dot{q}_{base} & \text{if } i \leq 3 \\
+  -T(\theta)^{-1}.\dfdx{T}{x_{i}}.g.\dot{q}_{base} + g.adj_{J}.\dot{q}_{base} & \text{if } i > 3 \text{ or } i \leq 6 \\
+   g.adj_{J}.\dot{q}_{base} & \text{if } i > 6 \text{ or } i \leq 31 \\
+   g_{col}(i-31) & \text{if } i > 31 \text{ or } i \leq 37 \\
+   
+  \end{cases}
+\]
+Derivatives of joint velocities
+\[
+\dfdx{\dot{q}_{joint,j}}{x_{i}} = 
+	\begin{cases}
+	1 & \text{if } i = j \\
+	0 & \text{if } i \neq j  \\
+	\end{cases}
+\]
+Derivatives of accelerations, Let
+$$\Lambda = M(q)^{-1}(-C(q,\dot{q})\dot{q} - g(q) + J_{l}^{T}F_{l} + J_{r}^{T}F_{r} + \tau)$$
+\[
+\dfdx{\ddot{q}_{j}}{x_{i}} = 
+	\begin{cases}
+	-M^{-1}.\dfdx{M}{x_{i}}.M^{-1}.\Lambda + M^{-1}.(-\dfdx{C}{x_{i}}.\dot{q} -\dfdx{g}{x_{i}}  + \dfdx{Jr^{T}}{x_{i}}.F_{r} + \dfdx{Jl^{T}}{x_{i}}.F_{l}) & \text{if } i \leq 31 \\
+	-M^{-1}.\dfdx{M}{x_{i}}.M^{-1}.\Lambda + M^{-1}.(-\dfdx{C}{x_{i}}.\dot{q}-C_{col}(i-31)  -\dfdx{g}{x_{i}}  + \dfdx{Jr^{T}}{x_{i}}.F_{r} + \dfdx{Jl^{T}}{x_{i}}.F_{l}) & \text{if } i > 31  \\
+	\end{cases}
+\]
+System Jacobian matrix
+\begin{equation}
+A = 
+\begin{pmatrix}
+\dfdx{\dot{q}_{base}}{x} \\
+\dfdx{\dot{q}_{joint}}{x} \\
+\dfdx{\ddot{q}}{x}
+\end{pmatrix}
+\in \Re^{31 \times 31}
+\end{equation}
+Measurements are
+\begin{equation}
+y= 
+	\begin{pmatrix}
+	q_{joint} \\
+	\dot{q}_{joint} \\
+	\ddot{x}_{base} \\
+	\dot{\theta}_{base}\\
+	\dot{q}_{cont}
+	\end{pmatrix}
+\end{equation}
+Gravity compensation for IMU
+$$
+\ddot{x}_{base} = \Lambda_{1,2,3} + R_{sb}^{T}.
+\begin{pmatrix}
+0\\0\\9.81
+\end{pmatrix}
+$$
+Transformation for angular velocities of floating base
+$$\dot{\theta}_{base} = Ad_{sb}^{-1}.T(\theta)^{-1}Ad_{sb}\dot{q}_{base}$$
+Contact constraint equation 
+$$\dot{q}_{rf} = J_{rf}.\dot{q},$$ $$\dot{q}_{lf} = J_{lf}.\dot{q}$$
+\textbf{Computing the Jacobian for measurement equation}
+ \[
+ \dfdx{q_{joint}}{x_{i}} =
+ \begin{cases}
+ 1 & \text{if } 7 \leq i \leq 31 \\
+ 0 & \text{otherwise}
+ \end{cases}
+ \]
+  \[
+ \dfdx{\dot{q}_{joint}}{x_{i}} =
+ \begin{cases}
+ 1 & \text{if } 38 \leq i \leq 62 \\
+ 0 & \text{otherwise}
+ \end{cases}
+ \]
+$$ \dfdx{\ddot{x}_{base}}{x_{i}} = \dfdx{\ddot{q}_{1,2,3}}{x_{i}} + \left(\dfdx{R}{x_{i}}\right)^{T}.[0,0,9.81]^{T} $$
+$$\dfdx{\dot{\theta}_{base}}{x_{i}} = -adj_{J}.Ad_{sb}^{-1}.g.\dot{q}_{base} + Ad_{sb}^{-1}.\dfdx{\dot{q}_{base}}{x_{i}}$$
+\[
+\dfdx{\dot{q}_{rf}}{x_{i}} = 
+	\begin{cases}
+	\dfdx{J_{rf}}{x_{i}}.\dot{q} & \text{if } 1 \leq i \leq 31 \\
+	colomn(J_{rf},i) 	& \text{if } 32 \leq i \leq 37
+	\end{cases}
+\]
+\[
+\dfdx{\dot{q}_{lf}}{x_{i}} = 
+	\begin{cases}
+	\dfdx{J_{lf}}{x_{i}}.\dot{q} & \text{if } 1 \leq i \leq 31 \\
+	colomn(J_{lf},i) 	& \text{if } 32 \leq i \leq 37
+	\end{cases}
+\]
+\begin{equation}
+C = 
+	\begin{pmatrix}
+	 \dfdx{q_{joint}}{x_{i}} \\
+	 \dfdx{\dot{q}_{joint}}{x_{i}}\\
+	 \dfdx{\ddot{x}_{base}}{x_{i}}\\
+	 \dfdx{\dot{\theta}_{base}}{x_{i}}\\
+	 \dfdx{\dot{q}_{base}}{x_{i}}\\
+	 \dfdx{\dot{q}_{lf}}{x_{i}}
+	\end{pmatrix}
+\end{equation}
+Continuous state space representation of the system
+\begin{equation}\label{xx}
+	\begin{split}
+	\hat{x_{k}}^{-} &= f(\hat{x_{k-1}},u_{k}) \\ 
+	y_{k} &= h(\hat{x_{k-1}}^{-},u_{k})\\
+	\end{split}
+\end{equation}
+\end{document}
