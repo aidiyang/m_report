@@ -1,0 +1,303 @@
+\documentclass[a4paper,11pt,twoside,DIV10,english,numbers=noendperiod]{scrbook}
+\usepackage[a4paper,left=3.5cm,right=2.5cm,bottom=3.5cm,top=3cm]{geometry}
+%{report}
+
+% ~~~~~~~~~~~~~~~my packages~~~~~~~~~~~`
+% Multiline comments
+\usepackage{verbatim}
+%\usepackage[llncsdoc]{llncsdoc}
+\usepackage{makeidx}  % allows for indexgeneration
+
+%\usepackage{fullpage}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage[latin1]{inputenc}
+\usepackage[numbers,square]{natbib}
+\usepackage{scrhack}
+%Kapitel�berschriften in Gro�buchstaben
+\setkomafont{chapter}{\normalfont \scshape \Huge}
+\setkomafont{section}{\normalfont \bfseries \LARGE}
+\setkomafont{subsection}{\normalfont \bfseries \Large}
+\setkomafont{subsubsection}{\normalfont \bfseries \large}
+\setkomafont{paragraph}{\normalfont \bfseries \large}
+%Pallanoid Schriftart verwenden
+\usepackage{mathpazo}
+
+%Auswahl der Schriftart erm�gliche, damit Titelpage in Times und Rest in Pazo
+\usepackage[T1]{fontenc}
+\newcommand{\changefont}[3]{
+\fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
+
+\usepackage{scalefnt}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\titleformat{\chapter}[display]
+{\mdseries\huge\scshape}
+{	\filleft
+	\begingroup
+		\scalefont{3}
+			{\bfseries{\thechapter}}
+	\endgroup}
+{0ex}
+{%\titlerule
+\vspace{1ex}%
+\filright}
+[\vspace{1ex}%
+\titlerule]
+
+% Leere Seite ohne Seitennummer, naechste Seite rechts
+\newcommand{\blankpage}{
+ \clearpage{\pagestyle{empty}\cleardoublepage}
+}
+
+% Keine einzelnen Zeilen beim Anfang eines Abschnitts (Schusterjungen)
+\clubpenalty = 10000
+% Keine einzelnen Zeilen am Ende eines Abschnitts (Hurenkinder)
+\widowpenalty = 10000 \displaywidowpenalty = 10000
+
+%\usepackage[pdftex]{graphicx,color}
+\usepackage{amsmath,amssymb,subfigure}
+
+% Zeilenabstand einstellen %
+\renewcommand{\baselinestretch}{1.25}
+%\usepackage{setspace}
+%\onehalfspacing
+
+% Floating-Umgebungen anpassen %
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+
+% Theorem-Umgebungen
+\usepackage[amsmath,thmmarks]{ntheorem}
+
+% Caption Packet
+\usepackage[margin=0pt,font=small,labelfont=bf]{caption}
+
+% URLs
+\usepackage{url}
+
+% Bibtex deutsch
+%\usepackage{bibgerm}
+
+%\usepackage{abstract}
+
+% Algorithmen
+
+\usepackage{float}
+\usepackage[ pdftex, plainpages=false, pdfpagelabels, hypertexnames=true, linktocpage=true, bookmarksopen=true, bookmarksopenlevel=1] {hyperref}
+\usepackage[chapter]{algorithm}
+\usepackage{algorithmic}
+
+\setcounter{equation}{0}
+% Theorem-Optionen %
+\theoremseparator{.}
+\theoremstyle{change}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{satz}[theorem]{Satz}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{korollar}[theorem]{Korollar}
+\newtheorem{proposition}[theorem]{Proposition}
+% Ohne Numerierung
+\theoremstyle{nonumberplain}
+\renewtheorem{theorem*}{Theorem}
+\renewtheorem{satz*}{Satz}
+\renewtheorem{lemma*}{Lemma}
+\renewtheorem{korollar*}{Korollar}
+\renewtheorem{proposition*}{Proposition}
+% Definitionen mit \upshape
+\theorembodyfont{\upshape}
+\theoremstyle{change}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{nonumberplain}
+\renewtheorem{definition*}{Definition}
+% Kursive Schrift
+\theoremheaderfont{\itshape}
+\newtheorem{notation}{Notation}
+\newtheorem{konvention}{Konvention}
+\newtheorem{bezeichnung}{Bezeichnung}
+\theoremsymbol{\ensuremath{\Box}}
+\newtheorem{beweis}{Beweis}
+\theoremsymbol{}
+\theoremstyle{change}
+\theoremheaderfont{\bfseries}
+\newtheorem{bemerkung}[theorem]{Bemerkung}
+\newtheorem{beobachtung}[theorem]{Beobachtung}
+\newtheorem{beispiel}[theorem]{Beispiel}
+\newtheorem{problem}{Problem}
+\theoremstyle{nonumberplain}
+\renewtheorem{bemerkung*}{Bemerkung}
+\renewtheorem{beispiel*}{Beispiel}
+\renewtheorem{problem*}{Problem}
+
+% Algorithmen anpassen %
+\renewcommand{\algorithmicrequire}[1]{\textbf{Eingabe:}#1\\}
+\renewcommand{\algorithmicensure}[1]{\textbf{Ausgabe:}#1\\}
+\floatname{algorithm}{Algorithmus}
+\renewcommand{\listalgorithmname}{Algorithmenverzeichnis}
+
+%Silbentrennung
+\hyphenation{De-zi-mal-trenn-zeichen In-stal-la-ti-ons-as-sis-tent Ist-Schwer-punkt-po-si-tion}
+
+\newcommand{\modelica}[3]{\vspace*{.75cm}
+													\begin{addmargin}[0.5cm]{0.5cm} 
+														\begin{minipage}{\linewidth}
+															\noindent\rule[1ex]{\textwidth}{1pt}\\
+															\noindent{\textbf{#1}\hfill\footnotesize(\textit{Modelica}-Quelltext - Auszug aus \ref{#2} auf Seite \pageref{#2})\normalsize}\\
+															\noindent\rule[1ex]{\textwidth}{1pt}														
+															\begin{flushleft}
+																\hangindent=0.5cm #3	\\
+															\end{flushleft}															
+															\noindent\rule[1ex]{\textwidth}{1pt}\\
+														
+														\end{minipage}
+													\end{addmargin}
+													%\vspace*{.75cm}
+												 }
+
+\begin{document}
+%\raggedbottom
+	%\frontmatter
+
+	\setcounter{secnumdepth}{3}
+	\setcounter{tocdepth}{3}
+
+	%\pagestyle{headings}  % switches on printing of running heads
+	\pagenumbering{roman}
+	
+	%Schriftart f�r Titelseite auf TIMES
+	\changefont{ptm}{m}{n}
+	
+	
+\begin{titlepage}
+
+ \sffamily
+
+ \vspace*{-2cm}
+
+ \begin{minipage}{0.48\linewidth}
+  \includegraphics[width=1.0\textwidth]{Bilder/tud_logo_rgb}
+ \end{minipage}
+ 
+ \vspace*{1.7cm}
+ \begin{center}
+  \noindent{
+ \begin{minipage}{0.55\linewidth}
+	\hrulefill
+  \vspace{2.0cm}
+ \end{minipage}}
+ \hfil
+ \begin{minipage}{0.4\linewidth}
+  % empty
+ \end{minipage}
+ \begin{minipage}{0.15\linewidth}
+  % empty
+ \end{minipage}
+ \hfil
+ \begin{minipage}{0.55\linewidth}
+  \begin{center}
+    \Large\textbf{Master Thesis}
+  \end{center}
+  \begin{center}
+    \large{Estimation of Underactuated Degrees of Freedom(DOF's) in Humanoid Robots}\\[3ex]
+  \end{center}
+  \vspace{0.75cm}
+  \begin{center}
+    \normalsize{Rajesh Rajendran}\\
+ 
+ \small{rajesh.rajendran@tu-dortmund.de}\\[2ex]
+    \large{\today}
+  \end{center}
+ \end{minipage}
+ \hfil
+ \begin{minipage}{0.05\linewidth}
+  % empty
+ \end{minipage}
+ \begin{minipage}{0.55\linewidth}
+ \vspace{2.0cm}
+  \hrulefill
+ \end{minipage}
+ \end{center}
+ \vspace*{2cm}
+
+ \vfill
+ 			\rmfamily
+ 			\changefont{ppl}{m}{n}
+ 			\begin{table} [H]
+				\centering
+				\normalsize
+				\begin{tabular}{p{0.53\textwidth}p{0.41\textwidth}}
+					Examiner: & \\
+					Name of first examiner & Name of second examiner\\
+			  	&\\	
+			  	Abteilung Informationstechnik\newline Institut f\"{u}r Roboterforschung  & Lehrstuhl des Zweitgutachters\newline Fakult\"{a}t f\"{u}r Informatik\\
+
+			  \end{tabular}
+			 \end{table}
+			 
+				\rmfamily
+ 				\changefont{ppl}{m}{n}
+
+ \end{titlepage}
+ 
+    %Schriftart wieder zur\"{u}ck auf pazo
+    \changefont{ppl}{m}{n}
+
+
+
+    \blankpage
+    \newpage
+    \tableofcontents
+    \cleardoublepage
+
+    \pagenumbering{arabic}
+    \parindent 0pt
+    \input{Makros.tex}
+    \input{testpage.tex}
+
+    %%%%%%%%%%%
+    % Kapitel %
+    %%%%%%%%%%%
+
+    \input{Kapitel/Einleitung/einleitung.tex}
+    \input{Kapitel/Grundlagen/grundlagen.tex}
+    \input{Kapitel/Grundlagen/kalman_filtering.tex}
+    \input{Kapitel/Grundlagen/state_estimation.tex}
+    %\input{Kapitel/Zusammenfassung/zusammenfassung.tex}
+
+    %%%%%%%%%%
+    % Anhang %
+    %%%%%%%%%%
+
+    \appendix
+	%\printindex
+    %Abbildungsverzeichnis
+    \listoffigures
+    \addcontentsline{toc}{chapter}{List of figures}
+    %\addcontentsline{lof}{figure}{List of figures}
+    \cleardoublepage
+    %list of tables
+    %\listoftables
+    %\addcontentsline{lot}{tables}{List of tables}
+    % Literaturverzeichnis
+    \addcontentsline{toc}{chapter}{\bibname}
+    %\bibliographystyle{gerplain}
+    %\bibliographystyle{unsrt}
+    \bibliographystyle{alphadin}
+    \bibliography{literatur}
+		
+    % Erklaerung
+    \newpage
+    \thispagestyle{myheadings}
+    \markboth{}{ERKL\"{A}RUNG}
+    \addcontentsline{toc}{chapter}{Erkl\"{a}rung}
+    \include{Kapitel/erklaerung}
+
+%%%%%%%
+% END %
+%%%%%%%
+\end{document}
+
+
+

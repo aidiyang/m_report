@@ -1,0 +1,11 @@
+Ordner Bilder
+
+****************************************
+
+Bilder bzw. Grafiken sollten in einem PDF-Dokument
+grundsätzlich als Vektorgrafiken eingebunden werden,
+damit auch unterschiedliche Zoom-Stufen nicht zu 
+einer "pixeligen" Abbildung führen. Matlab
+beispielsweise kann mit Hilfe von Skripten 
+Abbildungen im PDF-Format speichern, aber auch
+OpenOffice kann PDF exportieren. 

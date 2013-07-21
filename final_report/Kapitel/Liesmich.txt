@@ -1,0 +1,9 @@
+Ordner Kapitel
+
+****************************************
+
+In diesem Ordner werden die einzelnen 
+Kapitel in Unterordnern, benannt nach
+dem entsprechenden Abschnitt abgelegt. 
+Die hier dargestellte Aufteilung stellt
+allerdings nur einen Vorschlag dar.
