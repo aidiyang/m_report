@@ -1,2 +1,29 @@
-\chapter{Kalman Filtering}
-Kalman filter is a state estimation principle that is used for determining the internal states of the system from the series of measurements observed over time. For linear systems Kalman filter is proved to be the optimal state estimator.
+\section{Kalman Filter}
+Kalman filter is a statistical state estimation algorithm which estimates the internal state of the system from the noisy measurements. It was designed by Rudolph E. Kalman in 1960 for discrete time linear systems. It is basically a predictor-corrector type estimator that is optimal in the sense that it minimizes the estimated error covariance. Since the measurements occur and the states are estimated at discrete points of time, it is easily implementable in digital computers. Kalman filters are extensively used in the area of autonomous and guided navigation.
+
+\subsection{Kalman gain}
+Given a discrete time linear system affected by random noise
+\begin{equation}
+\begin{split}
+x_{k} &= Ax_{k-1} + Bu_k + w_{k-1}\\
+y_k &= Hx_k + v_k
+\end{split}
+\end{equation}
+where the random variables $w_k$,$v_k$ represent the process and measurement noise. Both the random variables are assumed to be zero mean Gaussian white noises. Let $Q,R$ be the covariance of process and measurement noise. Let us assume, 
+\begin{equation}\label{eqn:kf_err}
+e_k^- = x_k - \hat{x_k}^- 
+\end{equation} be the error between the actual and predicted value of the state. The error covariance is given by 
+\begin{equation}\label{eqn:kf_P}
+P_k^- = E[e_k^- {e_k^-}^T]
+\end{equation} Kalman filter corrects it estimate based on the predicted state and measured output data by 
+\begin{equation} \label{eqn:kf_correct}
+\hat{x_k} = \hat{x_k}^- + K(y_k - H\hat{x_k}^-)
+\end{equation}
+Kalman gain is computed by substituting Equation \ref{eqn:kf_correct} in Equation \ref{eqn:kf_err} to compute the $e_k^-$. Computed $e_k^-$ is substituted in Equation \ref{eqn:kf_P} and the expected values are computed to find the error covariance $P_k^-$. Finally \emph{K} is computed by taking the derivative of trace of $P_k^-$ and equating it to zero $$ \dfdx{trace(P_k^-)}{K} = 0 $$ solving the above equation for \emph{K}. One form of \emph{K} that minimizes Equation \ref{eqn:kf_correct}
+\begin{equation} \label{eqn:kf_gain}
+ K_k = P_k^- H^T(H P_k^- H^T + R)^{-1}
+\end{equation}
+From the Equation \ref{eqn:kf_gain} as measurement covariance \emph{R} approaches zero, Kalman gain \emph{K} lays more trust on actual measurement $y_k$. On the other hand if $P_k^-$ approaches zero, predicted measurement $H\hat{x_k}^-$ is trusted more.
+
+\subsection{Extended Kalman filter}
+Since most of the systems in practice are non linear in nature Kalman filter is  non-linear systems by extending the actual algorithm. This type of kalman filter algorithms are called Extended kalman filters. There are also a new class of kalman filter algorithm which works on Bayasian principle, they are called unscented Kalman filters.
