@@ -7,6 +7,12 @@
 \def\dfdx#1#2{\frac{\partial {#1}}{\partial {#2}}}
 \begin{document}
 \newpage
+\section{Modelling}
+This chapter discusses two modelling approaches used in the Kalman filter.
+% Multi body system 
+In the first approach, the robot is modelled as multi body dynamic system in which the motion of the robot is caused by application of torques at the respective joints.
+% sensor fusion
+In the second approach a simplified model of a inertial navigation system is considered to estimate the motion of the robot.
 \section{System Description}
 \emph{Toro} is modelled as floating base dynamic model.
 \begin{equation}
@@ -19,7 +25,7 @@
 	q &= (q_{f}^{T}, q_{j}^{T})^{T} \in \Re^{31}\\
 	\end{split}
 \end{equation}
-\emph{q} is the generalized coordinates. The coordinates of the floating base $q_{f}$ are defined with reference to spatial frame, whereas $q_{j}$ are defined with reference to body frame. $q_{f} = (p_{f}^{T},\theta_{f}^{T})^{T}$, where $p_{f}=(x,y,z)^{T}$ is a vector representing  the position of origin of floating base in spatial frame and $\theta_{f}=(\theta_{x},\theta_{y},\theta_{z})^{T}$ is a vector of Euler angles that describes the rotation of base frame with respect to spatial frame.$q_{j} \in \Re^{25}$ is the vector of joint angles. $\dot{q} =  (\hat{V}_{f}^{b},\dot{q_{j}})^{T} \in \Re^{31}$ is the vector of generalized velocities. $\hat{V}_{f}^{b} \in \Re^{6}$ is the velocity of floating base in body frame. $\dot{q}_{j} \in \Re^{25}$ is the vector of joint velocities. $\ddot{q}\in \Re^{31}$ is the vector of generalized accelerations. $M(q)\in \Re^{31 \times 31}$ is the inertia matrix, $C(q,\dot{q})\in \Re^{31 \times 31}$ is the matrix accounting for centrifugal and Coriolis forces. $g(q) \in \Re^{31}$ is the gravity vector. $\tau \in \Re^{31}$ is the vector of actuating torques acting on $q_{j}$, where the first six components are zero because those degrees of freedom corresponding to $q_{f}$ are not actuated.$(J_{br}^{fb})^{T},(J_{bl}^{fb})^{T} \in \Re^{31 \times 6}$ are the Jacobian matrices transforming the wrenches $F_{r}^{fb},F_{l}^{fb} \in \Re^{6}$ applied in the right and left foot to joint torques.
+\emph{q} is the generalized coordinates. The coordinates of the floating base $q_{f}$ are defined with reference to spatial frame, whereas $q_{j}$ are defined with reference to body frame. $q_{f} = (p_{f}^{T},\theta_{f}^{T})^{T}$, where $p_{f}=(x,y,z)^{T}$ is a vector representing  the position of origin of floating base in spatial frame and $\theta_{f}=(\theta_{x},\theta_{y},\theta_{z})^{T}$ is a vector of Euler angles that describes the rotation of base frame with respect to spatial frame.$q_{j} \in \Re^{25}$ is the vector of joint angles. $\dot{q} =  (\hat{V}_{f}^{b},\dot{q_{j}})^{T} \in \Re^{31}$ is the vector of generalized velocities. $\hat{V}_{f}^{b} = (v_f^b,\omega_f^b)^T \in \Re^{6}$ is the body twist. $\dot{q}_{j} \in \Re^{25}$ is the vector of joint velocities. $\ddot{q}\in \Re^{31}$ is the vector of generalized accelerations. $M(q)\in \Re^{31 \times 31}$ is the inertia matrix, $C(q,\dot{q})\in \Re^{31 \times 31}$ is the matrix accounting for centrifugal and Coriolis forces. $g(q) \in \Re^{31}$ is the gravity vector. $\tau \in \Re^{31}$ is the vector of actuating torques acting on $q_{j}$, where the first six components are zero because those degrees of freedom corresponding to $q_{f}$ are not actuated.$(J_{br}^{fb})^{T},(J_{bl}^{fb})^{T} \in \Re^{31 \times 6}$ are the Jacobian matrices transforming the wrenches $F_{r}^{fb},F_{l}^{fb} \in \Re^{6}$ applied in the right and left foot to joint torques.
 \paragraph{State Space representation:}
 General state space representation of a non linear system
 \begin{equation}
@@ -36,20 +42,23 @@ State space representation of \emph{Toro}
 	\begin{split}
 	\dot{x} = &
 	\begin{pmatrix}
-	T_{A}(\theta_{f})^{-1}Ad_{sb}\hat{V}_{f}^{b}\\
+	R_{sb}\dot{p}_f\\
+	T(\theta_{f})^{-1}R_{sb}\omega_f^b \\
 	\dot{q}_{j}\\
 	M(q)^{-1}(-C(q,\dot{q})\dot{q} -g(q) + (J_{bl}^{b})^{T}F_{l}^{b} +(J_{br}^{b})^{T}F_{r}^{b} + \tau)	
 	\end{pmatrix}
 	\\&	y = 
 	\begin{pmatrix}
-	q_{j} \\ \dot{q}_{j} \\ \ddot{p}_{f} \\ \dot{\theta}_{f}^{s}\\ p_{c}^{b}\\ \hat{V}_{c}^{b}
+	q_{j} \\ \dot{q}_{j} \\ \ddot{p}_{f}^b \\ \omega_{f}^{b}\\ p_{c}^{b}\\ \hat{V}_{c}^{b}
 	\end{pmatrix}
 	\\ \text{where, }\\ x &= (q^{T},\dot{q}^{T})^{T} \in \Re^{62}\\
-		T_{A}(\theta_{f}) &=
-	\begin{pmatrix}
-	\textbf{I} &\textbf{0} \\
-	\textbf{0} &T(\theta_{f})
-	\end{pmatrix} 
+	%\begin{comment}
+	%	T_{A}(\theta_{f}) &=
+	%\begin{pmatrix}
+	%\textbf{I} &\textbf{0} \\
+	%\textbf{0} &T(\theta_{f})
+	%\end{pmatrix} 
+	%\end{comment}
 	\\T(\theta_{f}) &=
 	\begin{pmatrix}
 	1 &0 &\sin(\theta_{y})\\
@@ -60,7 +69,7 @@ State space representation of \emph{Toro}
 	\begin{pmatrix}
 	0 \\ 0 \\ 9.81
 	\end{pmatrix}\\
-	\dot{\theta}_{f}^{b} &= R_{sb}^{T}T(\theta_{f})^{-1}R_{sb}\omega_{f}^{b}\\
+	%\dot{\theta}_{f}^{b} &= R_{sb}^{T}T(\theta_{f})^{-1}R_{sb}\omega_{f}^{b}\\
 	p_{c}^{b} &= (p_{a,r}^{b}, p_{b,r}^{b}, p_{a,l}^{b}, p_{b,l}^{b} )^{T} \\
 	 \text{ i.e } &p_{a,r}^{b} = H_{sr}^{-1} p_{a,r}^{s},p_{b,r}^{b} = H_{sr}^{-1} p_{b,r}^{s},p_{a,l}^{b} = H_{sl}^{-1} p_{a,l}^{s},p_{b,l}^{b} = H_{sb}^{-1} p_{b,l}^{s}  \\
 	\hat{V}_{c}^{b} &= (\hat{V}_{r}^{b},\hat{V}_{l}^{b})^{T} \text{ i.e } \hat{V}_{r}^{b} = J_{r}\dot{q} \text{ and } \hat{V}_{l}^{b} = J_{l}\dot{q}
@@ -70,7 +79,7 @@ State space representation of \emph{Toro}
 \item $T(\theta_{f})$ is the matrix that transforms the angular velocity $\omega_{f}^{s}$ to the time derivative of Euler angles $\dot{\theta}_{f}^{s}$. i.e $\omega_{f}^{s}=T(\theta_{f}) \dot{\theta}_{f}^{s}$. 
 \item $Ad_{sb} \in \Re^{6 \times 6}$ is the adjoint transformation matrix that transforms the body velocity to spatial velocity. 
 \item $\ddot{p}_{f}^{b}$ is the vector of Cartesian accelerations of the floating base in body frame (measured by IMU).	$\ddot{q}(1,2,3)$ is the first three elements of $\ddot{q}$ computed by Eq. \ref{eq:motion}. $R_{sb}^{T}(0,0,9.81)^{T}$ is the term added to compensate for the gravity measured by IMU. 
-\item $\dot{\theta}_{f}^{b} $ is the vector of angular rates of floating base in body frame (measured by Gyroscope). 
+\item $\omega_{f}^{b} $ is the vector of angular rates of floating base in body frame (measured by Gyroscope). 
 \item $p_{c}^{b}$ is the vector of position constraints of right and left foot. These positions constraints are the static points on the foot of the robot. $H_{sx}$ is the homogeneous transformation matrix from frame \emph{x} to spatial frame. $p_{a,r}^{s}, p_{b,r}^{s}, p_{a,l}^{s}, p_{b,l}^{s}$ are known points which are constant with respect to spatial frame.
 \item $\hat{V}_{c}^{b}$ are velocity constraints on right and left foot.
 \end{itemize}
@@ -94,6 +103,8 @@ C\\ CA \\ CA^{2}\\ \vdots \\ CA^{n-1}
 \end{pmatrix}
 , rank(obs) =n
 \end{equation}
+%Let $g_{sb} = T_{A}(\theta_{f})^{-1}Ad_{sb}$, then from Eq. \ref{eq:toro},
+%$$\alpha = g_{sb} \hat{V}_{f}^{b}$$
 Let $g_{sb} = T_{A}(\theta_{f})^{-1}Ad_{sb}$, then from Eq. \ref{eq:toro},
 $$\alpha = g_{sb} \hat{V}_{f}^{b}$$
 \begin{equation}
