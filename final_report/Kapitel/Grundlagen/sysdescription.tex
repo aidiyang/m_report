@@ -13,7 +13,8 @@ This chapter discusses two modelling approaches used in the Kalman filter.
 In the first approach, the robot is modelled as multi body dynamic system in which the motion of the robot is caused by application of torques at the respective joints.
 % sensor fusion
 In the second approach a simplified model of a inertial navigation system is considered to estimate the motion of the robot.
-\section{System Description}
+\section{Multi body system}
+Humanoid robots consists of group of rigid bodies that are joined together to resemble the human skeletal structure. As human beings are driven by the muscular system, humanoids are driven by \emph{Toro} is driven by the electric, hydraulic or pneumatic actuators, which apply torques at the joints of the robot. The dynamics of robots describes how the robots moves in response to the actuator forces or torques. The dynamics of the robot is defined by deriving the  equations of motion of the system. In general there are several approaches in deriving equations of motion of rigid body dynamic system. Lagrangian approach is discussed in detail.
 \emph{Toro} is modelled as floating base dynamic model.
 \begin{equation}
 	\label{eq:motion}
