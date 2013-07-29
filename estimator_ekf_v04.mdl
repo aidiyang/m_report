@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.527"
+    ComputedModelVersion    "1.528"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,9 +44,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sun Jul 21 14:47:09 2013"
+  LastModifiedDate	  "Fri Jul 26 19:59:22 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:527>"
+  ModelVersionFormat	  "1.%<AutoIncrement:528>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -912,7 +912,7 @@ Model {
 	  System {
 	    Name		    "contact measurements"
 	    Location		    [2457, 450, 3729, 1148]
-	    Open		    on
+	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -6789,7 +6789,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function TA = fcn(x_in)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nox = x_in(4);\noy = x_in(5);\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%%{\nT = [1      0           sin(oy);...\n     0 cos(ox) -cos(oy)*sin(ox);...\n     0 sin(ox)  cos(oy)*cos(ox)];\n\n\ndTx = [0,         0,                0 ;...\n       0,  -sin(ox),  -cos(oy)*cos(ox);...\n       0,   cos(ox),  -cos(oy)*sin(ox)];\ndTy = [0,         0,           cos(oy);...\n       0,         0,   sin(oy)*sin(ox);...\n       0,         0,  -sin(oy)*cos(ox)];\n%%}\n\n%{\nT = [1      0   -sin(oy);...\n     0  cos(ox)  cos(oy)*sin(ox);...\n     0 -sin(ox)  cos(oy)*cos(ox)];\n \n%T_A = [eye(3,6);zeros(3),T];\n\ndTx = [0         0                0 ;\n       0   -sin(ox)  cos(oy)*cos(ox);\n       0   -cos(ox) -cos(oy)*sin(ox)];\ndTy = [0       0        -cos(oy);\n       0       0        -sin(oy)*sin(ox);\n       0       0        -sin(oy)*cos(ox)];\n%}\n\n%TA = [ T_A; zeros(3*6,6); [zeros(3,6); [zeros(3) dTx]] ; [zeros(3,6); [zeros(3) dTy]]; zeros(57*6,6) ];\n\nTA = [ T; dTx;dTy;zeros(3,3)];"
+      script		      "function TA = fcn(x_in)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nox = x_in(4);\noy = x_in(5);\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%%{\nT = [1      0           sin(oy);...\n     0 cos(ox) -cos(oy)*sin(ox);...\n     0 sin(ox)  cos(oy)*cos(ox)];\n\n\ndTx = [0,         0,                0 ;...\n       0,  -sin(ox),  -cos(oy)*cos(ox);...\n       0,   cos(ox),  -cos(oy)*sin(ox)];\ndTy = [0,         0,           cos(oy);...\n       0,         0,   sin(oy)*sin(ox);...\n       0,         0,  -sin(oy)*cos(ox)];\n%%}\n\n%{\ndo = Tb * wb\nwb is the body angular velocities\n\nT=[\n[  cos(oy)*cos(oz),          sin(oz),                0]\n[ -cos(oy)*sin(oz),          cos(oz),                0]\n[          sin(oy),                0,                1]];\n\ninvT = invTxyz =\n\n[          cos(oz)/cos(oy),         -sin(oz)/cos(oy),                        0]\n[                  sin(oz),                  cos(oz),                        0]\n[ -cos(oz)*sin(oy)/cos(oy),  sin(oz)*sin(oy)/cos(oy),                        1]\n\n%}\n\n\n\n\n\n\n%{\nT = [1      0   -sin(oy);...\n     0  cos(ox)  cos(oy)*sin(ox);...\n     0 -sin(ox)  cos(oy)*cos(ox)];\n \n%T_A = [eye(3,6);zeros(3),T];\n\ndTx = [0         0                0 ;\n       0   -sin(ox)  cos(oy)*cos(ox);\n       0   -cos(ox) -cos(oy)*sin(ox)];\ndTy = [0       0        -cos(oy);\n       0       0        -sin(oy)*sin(ox);\n       0       0        -sin(oy)*cos(ox)];\n%}\n\n%TA = [ T_A; zeros(3*6,6); [zeros(3,6); [zeros(3) dTx]] ; [zeros(3,6); [zeros(3) dTy]]; zeros(57*6,6) ];\n\nTA = [ T; dTx;dTy;zeros(3,3)];"
       editorLayout	      "100 M4x1[1916 28 1928 1169]"
     }
   }
@@ -7424,7 +7424,7 @@ Stateflow {
     eml {
       isEML		      1
       script		      "function [y,H]= fcn(M_in,C_in,g_in,J_in,H_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nq = x_in(1:dof);\ndq = x_in(dof+(1:dof));\nomega = dq(4:6);\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%TA = TA_in(1*6+ind6,:);\n\n% Gyroscopic measurements\n%gyro = Rfb'*( TA(4:6,4:6) \\ (Rfb*omega) ); % ~~~~~~~~~~~~~~~~~~~~~~~~Not sure weather this is correct ????????????\n gyro = omega;                                          % Should the gyroscope be necessarily rotated ???\n\n%{\n% Inertia correction\n\ngacc = [ 0 0 -9.81 0 0 0]';\nerrrf = Irf * (Adrf\\gacc) ;\nerrlf = Ilf * (Adlf\\gacc);\n\n% Computation of accelerations\nacc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\n% Gravity compensation for IMU\nimu_bias = [ 0.005 0 0]';\nimu = acc(1:3) + Rfb'*[0 0 9.81]'+imu_bias;\n%}\n \n%Internal sensors\n%jnt = [q(7:31);dq(7:31)];\njnt = q(7:31);\n\n% Velocity measurements for foot contact\n%v_rf = Jr*v; \n%v_lf = Jl*v;\n%msr_vcont = [v_rf;v_lf];\n\n% Position of the contact points\n% Contact Model:\n%        y       b---------c\n%        |       |      .o |\n%    x_ _|       a---------d\n%\n% CD --> AB === Fx: 20 --> -20\n% AB --> CD === Fx: -20 --> 20\n\ncontact_AB = [ 0.13 0.0475 0 1 0.13 -0.0475 0 1]';\ncontact_CD = [ -0.06 -0.0475 0 1 -0.06 0.0475 0 1]';\n\n% zmp computation\nzmprf_x = ( -Frf(5) -0.1189 * Frf(1) ) / Frf(3);\nzmplf_x = ( -Flf(5) -0.1189 * Flf(1) ) / Flf(3);\n\nzmp_x = (zmprf_x * Frf(3) + zmplf_x * Flf(3))/ (Frf(3)+Flf(3));\n\n% front edge limit = 0.12\n% back edge limit = -0.055\nif zmp_x < 0.12\n    p1 = contact_CD(1*4+ind4);\n    p2 = contact_CD(2*4+ind4);\nelse\n    p1 = contact_AB(1*4+ind4);\n    p2 = contact_AB(2*4+ind4);\nend\n\n p1rf_s = Hrf * p1;\n p2rf_s = Hrf * p2;\n p1lf_s = Hlf * p1;\n p2lf_s = Hlf * p2;\n\npcont = [ p1rf_s(1:3) ; p2rf_s(1:3) ; p1lf_s(1:3) ; p2lf_s(1:3) ];\n\n\nvcont = [ Jrf ; Jlf ] * dq;\n\n%measurement equation \ny = [ jnt ; gyro ; pcont ; vcont ];\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\n%dimu = zeros(3,dof*2);\ndgyro = [ zeros(3,dof+3),eye(3,28) ];\ndpcont = zeros(12,dof*2);\ndvcont = zeros(12,dof*2);\n\nfor i = 1:62\n    %dM   = M_in(i*dof+(1:dof),:);\n    %dC   = C_in(i*dof+(1:dof),:);\n    %dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    %dHfb = H_in(i*20+(5*4+ind4),:);\n    %dRfb  = dHfb( 1:3, 1:3);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    %dRrf = dHrf(1:3,1:3);\n    %dprf = Skew(dHrf(1:3,4));\n    %dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    %dRlf = dHlf(1:3,1:3);\n    %dplf = Skew(dHlf(1:3,4));\n    %dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    %df   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n    %                                         + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n    %                                         - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n    %                                         - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) )));\n                                         \n      \n    dp1rf_s = dHrf*p1 ; dp2rf_s = dHrf*p2 ; dp1lf_s = dHlf*p1 ; dp2lf_s = dHlf*p2;\n    dpcont(:,i) =[ dp1rf_s(1:3) ; dp2rf_s(1:3) ; dp1lf_s(1:3) ; dp2lf_s(1:3) ];\n    %dvcont(:,i) = [ dJrf * dq; dJlf * dq; ];\n    dvcont(:,i) = [ dJrf; dJlf ] * dq;\n\n    \n    if i > dof\n        %df = df + M \\ (- C(:,i-31));\n        dvcont(:,i) = dvcont(:,i) + [ Jrf(:,i-31); Jlf(:,i-31); ];\n    end\n    %dimu(1:3,i) = df(1:3) + dRfb'*[0 0 9.81]';\nend\n\n%djnt = [ [zeros(25,6),eye(25,25),zeros(25,31)]; [zeros(25,37),eye(25,25)] ];\ndjnt = [zeros(25,6),eye(25,25),zeros(25,31)];\n\n% dgyro(1,35) = 1; \n% dgyro(2,36) = 1;\n% dgyro(3,37) = 1;\n% Measurement matrix\nH = [ djnt ; dgyro ; dpcont ; dvcont];\n\n\n\n\n\n\n\n\n\n"
-      editorLayout	      "100 M4x1[2350 372 1080 750]"
+      editorLayout	      "100 M4x1[438 155 1080 750]"
     }
   }
   junction {

@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.311"
+    ComputedModelVersion    "1.313"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,9 +44,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sun Jul 21 14:28:13 2013"
+  LastModifiedDate	  "Wed Jul 24 03:42:23 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:311>"
+  ModelVersionFormat	  "1.%<AutoIncrement:313>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -654,12 +654,7 @@ Model {
       SampleTime	      "-1"
     }
     Block {
-      BlockType		      RandomNumber
-      Mean		      "0"
-      Variance		      "1"
-      Seed		      "0"
-      SampleTime	      "-1"
-      VectorParams1D	      on
+      BlockType		      Reference
     }
     Block {
       BlockType		      Selector
@@ -854,7 +849,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -863,7 +858,7 @@ Model {
 	  Cov			  "[1e-5]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Sum
@@ -952,7 +947,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -961,7 +956,7 @@ Model {
 	  Cov			  "[1e-9]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Reference
@@ -972,7 +967,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -981,7 +976,7 @@ Model {
 	  Cov			  "[1e-5]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Reference
@@ -992,7 +987,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -1001,7 +996,7 @@ Model {
 	  Cov			  "[1e-7]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Reference
@@ -1012,7 +1007,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -1021,7 +1016,7 @@ Model {
 	  Cov			  "[1e-7]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Mux
@@ -2947,7 +2942,7 @@ Model {
 	  System {
 	    Name		    "Predictor"
 	    Location		    [1920, 54, 3840, 1153]
-	    Open		    off
+	    Open		    on
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -3212,7 +3207,7 @@ Model {
 	      System {
 		Name			"prop_fun"
 		Location		[1175, 82, 1915, 1011]
-		Open			off
+		Open			on
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
 		ScreenColor		"white"
@@ -3249,7 +3244,7 @@ Model {
 		  System {
 		    Name		    "F(X)"
 		    Location		    [2633, 220, 3762, 1149]
-		    Open		    off
+		    Open		    on
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    320
 		    ScreenColor		    "white"
@@ -3324,7 +3319,7 @@ Model {
 		    System {
 		    Name		    "dyn_model"
 		    Location		    [503, 94, 1915, 894]
-		    Open		    off
+		    Open		    on
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    325
 		    ScreenColor		    "white"
@@ -5705,7 +5700,7 @@ Model {
 		    SrcPort		    1
 		    Points		    [105, 0; 0, -10]
 		    Branch {
-		    Points		    [115, 0; 0, -75]
+		    Points		    [115, 0]
 		    DstBlock		    "Sum2"
 		    DstPort		    2
 		    }
@@ -8829,7 +8824,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function T = fcn(x_in)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n\nox = x_in(4);\noy = x_in(5);\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%{\nT = [1      0           sin(oy);...\n     0 cos(ox) -cos(oy)*sin(ox);...\n     0 sin(ox)  cos(oy)*cos(ox)];\n\nT_A = [eye(3,6);zeros(3),T];\n\ndTx = [0,0,0 ;0,-sin(ox),-cos(oy)*cos(ox);0,cos(ox),-cos(oy)*sin(ox)];\ndTy = [0,0,cos(oy);0,0,sin(oy)*sin(ox);0,0, -sin(oy)*cos(ox)];\n%}\nT = [1      0   -sin(oy);...\n     0  cos(ox)  cos(oy)*sin(ox);...\n     0 -sin(ox)  cos(oy)*cos(ox)];\n \n"
+      script		      "function T = fcn(x_in)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n\nox = x_in(4);\noy = x_in(5);\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%%{\nT = [1      0           sin(oy);...\n     0 cos(ox) -cos(oy)*sin(ox);...\n     0 sin(ox)  cos(oy)*cos(ox)];\n\n%T_A = [eye(3,6);zeros(3),T];\n\n%dTx = [0,0,0 ;0,-sin(ox),-cos(oy)*cos(ox);0,cos(ox),-cos(oy)*sin(ox)];\n%dTy = [0,0,cos(oy);0,0,sin(oy)*sin(ox);0,0, -sin(oy)*cos(ox)];\n%%}\n% T = [1      0   -sin(oy);...\n%      0  cos(ox)  cos(oy)*sin(ox);...\n%      0 -sin(ox)  cos(oy)*cos(ox)];\n%  \n"
       editorLayout	      "100 M4x1[1915 16 1920 1137]"
     }
   }
