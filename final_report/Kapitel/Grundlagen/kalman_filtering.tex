@@ -26,4 +26,53 @@ Kalman gain is computed by substituting Equation \ref{eqn:kf_correct} in Equatio
 From the Equation \ref{eqn:kf_gain} as measurement covariance \emph{R} approaches zero, Kalman gain \emph{K} lays more trust on actual measurement $y_k$. On the other hand if $P_k^-$ approaches zero, predicted measurement $H\hat{x_k}^-$ is trusted more.
 
 \subsection{Extended Kalman filter}
-Since most of the systems in practice are non linear in nature Kalman filter is  non-linear systems by extending the actual algorithm. This type of kalman filter algorithms are called Extended kalman filters. There are also a new class of kalman filter algorithm which works on Bayasian principle, they are called unscented Kalman filters.
+Most of the real world estimation scenarios are non linear in nature. Kalman filter algorithm cannot be applied to the non linear systems. \emph{NASA Ames} devised a method to apply Kalman filter for non linear systems which is called the Extended Kalman filter(EKF). In EKF the non linear system is linearised by multivariate Taylor series expansion of the non linear function. 
+
+Given a discrete time non linear system,
+\begin{equation}
+\begin{split}
+x_{k} &= f(x_{k-1},u_k,w_{k-1})\\
+y_k &= h(x_k,u_k,v_k)
+\end{split}
+\end{equation}
+\emph{x,y} denotes the vector of system's state and output. \emph{w,v} represents the process and measurement covariance noise. \emph{f} is the non linear function that relates the previous state to the current state and \emph{h} is the non linear function that relates the output and state. 
+
+In practice the individual values of noise $w_k$ and $v_k$ at each time step \emph{k} is not known. So one can compute the approximated state and measurement vector without them as 
+\begin{equation}
+\begin{split}
+\hat{x}_k^- &= f(\hat{x}_{k-1},u_{k},0)\\
+\hat{y}_k^- &= h(\hat{x}_k^-,u_{k},0)
+\end{split}
+\end{equation}
+$\hat{x}_k^-$ and $\hat{y}_k^-$ are the \emph{priori} estimates of state and measurements at time step \emph{k} computed from \emph{posteriori} estimate of state $\hat{x}_{k-1}$ from previous time step \emph{k-1}.
+
+$A_k$ and $H_k$ be the Jacobian matrices that results taking partial derivative of \emph{f} and \emph{h} with respect to \emph{x}  at time instant \emph{k}. $W_k$ and $V_k$ be the Jacobian matrices that results taking partial derivative of \emph{f} with respect to \emph{w} and \emph{h} with respect to \emph{v} at time step \emph{k}.
+\begin{equation}
+\begin{split}
+A_k(i,j) &= \dfdx{f_i}{x_j}(\hat{x}_{k-1},u_k,0)\\
+C_k(i,j) &= \dfdx{h_i}{x_j}(\hat{x}_k^-,u_k,0)\\
+W_k(i,j) &= \dfdx{f_i}{w_j}(\hat{x}_{k-1},u_k,0)\\
+V_k(i,j) &= \dfdx{h_i}{v_j}(\hat{x}_k^-,u_k,0)\\
+\end{split}
+\end{equation}
+At each time step these Jacobian matrices are evaluated with current predicted states $\hat{x}_k^-$.
+\subsubsection{Algorithm}
+\textbf{Predict}
+\begin{equation}
+\begin{split}
+%\text{Project the state}\\
+\hat{x}_k^- &= f(\hat{x}_{k-1},u_k,0)\\
+%\text{Procject the covarience}\\
+P_k^- &= A_kP_{k-1}A_k^T + W_kQ_{k-1}W_k^T\\
+\end{split}
+\end{equation}
+\textbf{Correct}\\
+\begin{equation}
+\begin{split}
+K_k &= P_k^-H^T(H_kP_k^-H_k^T + V_kR_kV_k^T)^{-1}\\
+\hat{x}_k &= \hat{x}_k^- + K_k(y_k-h(x_k^-,u_k,0))\\
+P_k &= (I- K_kH_k)P_k^-
+\end{split}
+\end{equation}
+% The result of th It has to be extended is  non-linear systems by extending the actual algorithm. This type of kalman filter algorithms %are called Extended kalman filters. There are also a new class of kalman filter algorithm which works on Bayasian principle, they are %called unscented Kalman filters.
+\subsection{Unscented Kalman filter}
