@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.528"
+    ComputedModelVersion    "1.537"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,9 +44,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jul 26 19:59:22 2013"
+  LastModifiedDate	  "Fri Aug  2 17:49:34 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:528>"
+  ModelVersionFormat	  "1.%<AutoIncrement:537>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -4035,9 +4035,9 @@ Model {
 	    }
 	    Block {
 	      BlockType		      SubSystem
-	      Name		      "Measurements1"
+	      Name		      "Measurements"
 	      Ports		      [9, 2]
-	      Position		      [480, 117, 625, 473]
+	      Position		      [485, 117, 630, 473]
 	      PermitHierarchicalResolution "ExplicitOnly"
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
@@ -4053,12 +4053,11 @@ Model {
 	      Port {
 		PortNumber		2
 		Name			"H"
-		PropagatedSignals	"H"
 		RTWStorageClass		"Auto"
 		DataLoggingNameMode	"SignalName"
 	      }
 	      System {
-		Name			"Measurements1"
+		Name			"Measurements"
 		Location		[257, 457, 812, 717]
 		Open			off
 		ModelBrowserVisibility	on
@@ -4146,7 +4145,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function estimator_ekf_v04 5"
+		  Tag			  "Stateflow S-Function estimator_ekf_v04 3"
 		  Ports			  [9, 3]
 		  Position		  [180, 118, 230, 362]
 		  FunctionName		  "sf_sfun"
@@ -4186,11 +4185,72 @@ Model {
 		  IconDisplay		  "Port number"
 		}
 		Line {
-		  Name			  "H"
-		  Labels		  [0, 0]
+		  SrcBlock		  "Irf"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  8
+		}
+		Line {
+		  SrcBlock		  "u_in"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  7
+		}
+		Line {
+		  SrcBlock		  "x_in"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  6
+		}
+		Line {
+		  SrcBlock		  "Ilf"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  9
+		}
+		Line {
+		  SrcBlock		  "H_in"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  5
+		}
+		Line {
+		  SrcBlock		  "J_in"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  4
+		}
+		Line {
+		  SrcBlock		  "g_in"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  3
+		}
+		Line {
+		  SrcBlock		  "C_in"
+		  SrcPort		  1
+		  Points		  [120, 0]
+		  DstBlock		  " SFunction "
+		  DstPort		  2
+		}
+		Line {
 		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "H"
+		  SrcPort		  1
+		  Points		  [0, 220]
+		  DstBlock		  " Demux "
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  " Demux "
+		  SrcPort		  1
+		  DstBlock		  " Terminator "
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "M_in"
+		  SrcPort		  1
+		  Points		  [120, 0]
+		  DstBlock		  " SFunction "
 		  DstPort		  1
 		}
 		Line {
@@ -4202,73 +4262,12 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "M_in"
-		  SrcPort		  1
-		  Points		  [120, 0]
-		  DstBlock		  " SFunction "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " Demux "
-		  SrcPort		  1
-		  DstBlock		  " Terminator "
-		  DstPort		  1
-		}
-		Line {
+		  Name			  "H"
+		  Labels		  [0, 0]
 		  SrcBlock		  " SFunction "
-		  SrcPort		  1
-		  Points		  [0, 220]
-		  DstBlock		  " Demux "
+		  SrcPort		  3
+		  DstBlock		  "H"
 		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "C_in"
-		  SrcPort		  1
-		  Points		  [120, 0]
-		  DstBlock		  " SFunction "
-		  DstPort		  2
-		}
-		Line {
-		  SrcBlock		  "g_in"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  3
-		}
-		Line {
-		  SrcBlock		  "J_in"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  4
-		}
-		Line {
-		  SrcBlock		  "H_in"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  5
-		}
-		Line {
-		  SrcBlock		  "Ilf"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  9
-		}
-		Line {
-		  SrcBlock		  "x_in"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  6
-		}
-		Line {
-		  SrcBlock		  "u_in"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  7
-		}
-		Line {
-		  SrcBlock		  "Irf"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  8
 		}
 	      }
 	    }
@@ -4594,7 +4593,7 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector"
 	      SrcPort		      1
-	      DstBlock		      "Measurements1"
+	      DstBlock		      "Measurements"
 	      DstPort		      1
 	    }
 	    Line {
@@ -4602,8 +4601,8 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector"
 	      SrcPort		      2
-	      Points		      [70, 0]
-	      DstBlock		      "Measurements1"
+	      Points		      [70, 0; 0, 5]
+	      DstBlock		      "Measurements"
 	      DstPort		      2
 	    }
 	    Line {
@@ -4611,8 +4610,8 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector"
 	      SrcPort		      3
-	      Points		      [70, 0]
-	      DstBlock		      "Measurements1"
+	      Points		      [70, 0; 0, 10]
+	      DstBlock		      "Measurements"
 	      DstPort		      3
 	    }
 	    Line {
@@ -4626,8 +4625,8 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector1"
 	      SrcPort		      1
-	      Points		      [70, 0]
-	      DstBlock		      "Measurements1"
+	      Points		      [70, 0; 0, 15]
+	      DstBlock		      "Measurements"
 	      DstPort		      4
 	    }
 	    Line {
@@ -4635,8 +4634,8 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector1"
 	      SrcPort		      2
-	      Points		      [70, 0]
-	      DstBlock		      "Measurements1"
+	      Points		      [70, 0; 0, 20]
+	      DstBlock		      "Measurements"
 	      DstPort		      5
 	    }
 	    Line {
@@ -4668,21 +4667,21 @@ Model {
 	      }
 	      Branch {
 		Points			[180, 0; 0, 25]
-		DstBlock		"Measurements1"
+		DstBlock		"Measurements"
 		DstPort			6
 	      }
 	    }
 	    Line {
 	      Name		      "H"
 	      Labels		      [0, 0]
-	      SrcBlock		      "Measurements1"
+	      SrcBlock		      "Measurements"
 	      SrcPort		      2
 	      Points		      [0, -5]
 	      DstBlock		      "Measurement update"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Measurements1"
+	      SrcBlock		      "Measurements"
 	      SrcPort		      1
 	      Points		      [0, 5]
 	      DstBlock		      "yhat_(k)"
@@ -4691,8 +4690,8 @@ Model {
 	    Line {
 	      SrcBlock		      "u(k)"
 	      SrcPort		      1
-	      Points		      [315, 0]
-	      DstBlock		      "Measurements1"
+	      Points		      [315, 0; 0, 5]
+	      DstBlock		      "Measurements"
 	      DstPort		      7
 	    }
 	    Line {
@@ -4723,14 +4722,14 @@ Model {
 	      SrcBlock		      "inertia"
 	      SrcPort		      1
 	      Points		      [35, 0; 0, -20]
-	      DstBlock		      "Measurements1"
+	      DstBlock		      "Measurements"
 	      DstPort		      8
 	    }
 	    Line {
 	      SrcBlock		      "inertia1"
 	      SrcPort		      1
 	      Points		      [70, 0; 0, -20]
-	      DstBlock		      "Measurements1"
+	      DstBlock		      "Measurements"
 	      DstPort		      9
 	    }
 	  }
@@ -4746,7 +4745,7 @@ Model {
 	  System {
 	    Name		    "predictor"
 	    Location		    [1920, 54, 3840, 1153]
-	    Open		    on
+	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -7056,8 +7055,8 @@ Stateflow {
   }
   chart {
     id			    19
-    name		    "Extended kalman filter/predictor/Time Update"
-    windowPosition	    [435.75 143.25 200.25 189.75]
+    name		    "Extended kalman filter/corrector/Measurements"
+    windowPosition	    [465.75 113.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3840 1200 1.25]
     treeNode		    [0 20 0 0]
@@ -7065,10 +7064,12 @@ Stateflow {
     firstJunction	    21
     viewObj		    19
     machine		    1
+    subviewS {
+    }
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    23
-    chartFileNumber	    4
+    chartFileNumber	    3
     disableImplicitCasting  1
     eml {
       name		      "fcn"
@@ -7087,8 +7088,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [A,x_k]= fcn(M_in,C_in,g_in,J_in,H_in,TA_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndt = 1e-3;\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n%q = x_in(1:dof);\ndq = x_in(dof+(1:dof));\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\nTA = TA_in(1:3,:);\ninvTA = TA \\ eye(3,3);\n% Transformation from body to spacial frame:\n%Adfb = Adjoint(Hfb);\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% Transformation for the velocites of floating base\nvfb = dq(1:3);\nwfb = dq(4:6);\n\ndp = Rfb * vfb;\ndo = invTA * (Rfb*wfb);\n\nvel = [dp; do; dq(7:31)];\n\n%vel = [Vfb_s; dq(7:31)];%~~~~~~~ First Attempt\n\ngacc = [ 0 0 -9.81 0 0 0]';\n% errrf = Irf * (Adrf\\gacc) ;\n% errlf = Ilf * (Adlf\\gacc);\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\n%acc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nx_dot = [vel;acc];   \n\n% Computing second order derivative terms for base\n% p - position of floating base o-orientation of floating base\n\nx_k = x_in + dt*x_dot ;\n\n\n% Computation of Jacobian for velocities of Floating base\n\ndqdx = [zeros(25,37),eye(25)];                               %%%%%%%%%%%%%%%%\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndpdx = zeros(3,2*dof);\ndodx = zeros(3,2*dof);\n\ndacc = zeros(dof,2*dof);\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    dHfb  = H_in(i*20+(5*4+ind4),:); \n    dRfb  = dHfb( 1:3, 1:3);\n \n    dpdx(:,i) = dRfb*vfb;\n    %dodx(:,i) = TA \\ ( dRfb*wfb) ;\n    dodx(:,i) = invTA * ( dRfb*wfb) ;\n\n    if i > 3 && i < 6\n        \n    dTA   = TA_in((i-3)*3+(1:3),:);\n    % dodx(:,i) = TA\\ (-dTA*do );\n    dodx(:,i) = dodx(:,i) + invTA * (-dTA*do );\n    \n    end \n\n%     dacc(:,i)   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n%                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n%                                              - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n%                                              - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) ) ));\n      dacc(:,i)   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));\n    \n    if i > dof\n        if i <= dof+3\n            dpdx(:,i) = dpdx(:,i) + Rfb(:,i-dof);         \n        elseif i<= dof+6\n            %dodx(:,i) = dodx(:,i) + TA\\Rfb(:,i-(dof+3)); \n            dodx(:,i) = dodx(:,i) + invTA * Rfb(:,i-(dof+3)); \n        end\n        %dacc(:,i) = dacc(:,i) + M \\ (- C(:,i-31));\n        dacc(:,i) = dacc(:,i) + invM * (- C(:,i-31));\n\n    end\nend\n\ndvel = [ dpdx ; dodx ; dqdx ];\n\nA = eye(62) + dt * [dvel;dacc] ;"
-      editorLayout	      "100 M4x1[1916 28 1928 1169]"
+      script		      "function [y,H]= fcn(M_in,C_in,g_in,J_in,H_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nq = x_in(1:dof);\ndq = x_in(dof+(1:dof));\nomega = dq(4:6);\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%TA = TA_in(1*6+ind6,:);\n\n% Gyroscopic measurements\n%gyro = Rfb'*( TA(4:6,4:6) \\ (Rfb*omega) ); % ~~~~~~~~~~~~~~~~~~~~~~~~Not sure weather this is correct ????????????\n gyro = omega;                                          % Should the gyroscope be necessarily rotated ???\n\n%{\n% Inertia correction\n\ngacc = [ 0 0 -9.81 0 0 0]';\nerrrf = Irf * (Adrf\\gacc) ;\nerrlf = Ilf * (Adlf\\gacc);\n\n% Computation of accelerations\nacc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\n% Gravity compensation for IMU\nimu_bias = [ 0.005 0 0]';\nimu = acc(1:3) + Rfb'*[0 0 9.81]'+imu_bias;\n%}\n \n%Internal sensors\n%jnt = [q(7:31);dq(7:31)];\njnt = q(7:31);\n\n% Velocity measurements for foot contact\n%v_rf = Jr*v; \n%v_lf = Jl*v;\n%msr_vcont = [v_rf;v_lf];\n\n% Position of the contact points\n% Contact Model:\n%        y       b---------c\n%        |       |      .o |\n%    x_ _|       a---------d\n%\n% CD --> AB === Fx: 20 --> -20\n% AB --> CD === Fx: -20 --> 20\n\ncontact_AB = [ 0.13 0.0475 0 1 0.13 -0.0475 0 1]';\ncontact_CD = [ -0.06 -0.0475 0 1 -0.06 0.0475 0 1]';\n\n% zmp computation\nzmprf_x = ( -Frf(5) -0.1189 * Frf(1) ) / Frf(3);\nzmplf_x = ( -Flf(5) -0.1189 * Flf(1) ) / Flf(3);\n\nzmp_x = (zmprf_x * Frf(3) + zmplf_x * Flf(3))/ (Frf(3)+Flf(3));\n\n% front edge limit = 0.12\n% back edge limit = -0.055\nif zmp_x < 0.12\n    p1 = contact_CD(1*4+ind4);\n    p2 = contact_CD(2*4+ind4);\nelse\n    p1 = contact_AB(1*4+ind4);\n    p2 = contact_AB(2*4+ind4);\nend\n\n p1rf_s = Hrf * p1;\n p2rf_s = Hrf * p2;\n p1lf_s = Hlf * p1;\n p2lf_s = Hlf * p2;\n\npcont = [ p1rf_s(1:3) ; p2rf_s(1:3) ; p1lf_s(1:3) ; p2lf_s(1:3) ];\n\n\nvcont = [ Jrf ; Jlf ] * dq;\n\n%measurement equation \ny = [ jnt ; gyro ; pcont ; vcont ];\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\n%dimu = zeros(3,dof*2);\ndgyro = [ zeros(3,dof+3),eye(3,28) ];\ndpcont = zeros(12,dof*2);\ndvcont = zeros(12,dof*2);\n\nfor i = 1:62\n    %dM   = M_in(i*dof+(1:dof),:);\n    %dC   = C_in(i*dof+(1:dof),:);\n    %dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    %dHfb = H_in(i*20+(5*4+ind4),:);\n    %dRfb  = dHfb( 1:3, 1:3);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    %dRrf = dHrf(1:3,1:3);\n    %dprf = Skew(dHrf(1:3,4));\n    %dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    %dRlf = dHlf(1:3,1:3);\n    %dplf = Skew(dHlf(1:3,4));\n    %dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    %df   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n    %                                         + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n    %                                         - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n    %                                         - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) )));\n                                         \n      \n    dp1rf_s = dHrf*p1 ; dp2rf_s = dHrf*p2 ; dp1lf_s = dHlf*p1 ; dp2lf_s = dHlf*p2;\n    dpcont(:,i) =[ dp1rf_s(1:3) ; dp2rf_s(1:3) ; dp1lf_s(1:3) ; dp2lf_s(1:3) ];\n    %dvcont(:,i) = [ dJrf * dq; dJlf * dq; ];\n    dvcont(:,i) = [ dJrf; dJlf ] * dq;\n\n    \n    if i > dof\n        %df = df + M \\ (- C(:,i-31));\n        dvcont(:,i) = dvcont(:,i) + [ Jrf(:,i-31); Jlf(:,i-31); ];\n    end\n    %dimu(1:3,i) = df(1:3) + dRfb'*[0 0 9.81]';\nend\n\n%djnt = [ [zeros(25,6),eye(25,25),zeros(25,31)]; [zeros(25,37),eye(25,25)] ];\ndjnt = [zeros(25,6),eye(25,25),zeros(25,31)];\n\n% dgyro(1,35) = 1; \n% dgyro(2,36) = 1;\n% dgyro(3,37) = 1;\n% Measurement matrix\nH = [ djnt ; dgyro ; dpcont ; dvcont];\n\n\n\n\n\n\n\n\n\n"
+      editorLayout	      "100 M4x1[1945 25 1080 750]"
     }
   }
   junction {
@@ -7121,30 +7122,8 @@ Stateflow {
   }
   data {
     id			    23
-    name		    "A"
-    linkNode		    [19 0 24]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    24
     name		    "M_in"
-    linkNode		    [19 23 25]
+    linkNode		    [19 0 24]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7164,9 +7143,9 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
-    id			    25
-    name		    "x_k"
-    linkNode		    [19 24 26]
+    id			    24
+    name		    "y"
+    linkNode		    [19 23 25]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -7187,8 +7166,30 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
-    id			    26
+    id			    25
     name		    "C_in"
+    linkNode		    [19 24 26]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    26
+    name		    "g_in"
     linkNode		    [19 25 27]
     scope		    INPUT_DATA
     machine		    1
@@ -7210,7 +7211,7 @@ Stateflow {
   }
   data {
     id			    27
-    name		    "g_in"
+    name		    "J_in"
     linkNode		    [19 26 28]
     scope		    INPUT_DATA
     machine		    1
@@ -7232,7 +7233,7 @@ Stateflow {
   }
   data {
     id			    28
-    name		    "J_in"
+    name		    "H_in"
     linkNode		    [19 27 29]
     scope		    INPUT_DATA
     machine		    1
@@ -7254,7 +7255,7 @@ Stateflow {
   }
   data {
     id			    29
-    name		    "H_in"
+    name		    "x_in"
     linkNode		    [19 28 30]
     scope		    INPUT_DATA
     machine		    1
@@ -7276,7 +7277,7 @@ Stateflow {
   }
   data {
     id			    30
-    name		    "TA_in"
+    name		    "u_in"
     linkNode		    [19 29 31]
     scope		    INPUT_DATA
     machine		    1
@@ -7298,7 +7299,7 @@ Stateflow {
   }
   data {
     id			    31
-    name		    "x_in"
+    name		    "Irf"
     linkNode		    [19 30 32]
     scope		    INPUT_DATA
     machine		    1
@@ -7320,9 +7321,9 @@ Stateflow {
   }
   data {
     id			    32
-    name		    "u_in"
+    name		    "H"
     linkNode		    [19 31 33]
-    scope		    INPUT_DATA
+    scope		    OUTPUT_DATA
     machine		    1
     props {
       array {
@@ -7335,37 +7336,15 @@ Stateflow {
 	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
+      frame		      SF_FRAME_NO
     }
     dataType		    "inherited"
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
     id			    33
-    name		    "Irf"
-    linkNode		    [19 32 34]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    34
     name		    "Ilf"
-    linkNode		    [19 33 0]
+    linkNode		    [19 32 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7385,58 +7364,58 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   instance {
-    id			    35
-    name		    "Extended kalman filter/predictor/Time Update"
+    id			    34
+    name		    "Extended kalman filter/corrector/Measurements"
     machine		    1
     chart		    19
   }
   chart {
-    id			    36
-    name		    "Extended kalman filter/corrector/Measurements1"
-    windowPosition	    [450.75 128.25 200.25 189.75]
+    id			    35
+    name		    "Extended kalman filter/predictor/Time Update"
+    windowPosition	    [435.75 143.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3840 1200 1.25]
-    treeNode		    [0 37 0 0]
-    firstTransition	    39
-    firstJunction	    38
-    viewObj		    36
+    treeNode		    [0 36 0 0]
+    firstTransition	    38
+    firstJunction	    37
+    viewObj		    35
     machine		    1
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    40
-    chartFileNumber	    5
+    firstData		    39
+    chartFileNumber	    4
     disableImplicitCasting  1
     eml {
       name		      "fcn"
     }
   }
   state {
-    id			    37
+    id			    36
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    36
-    treeNode		    [36 0 0 0]
+    chart		    35
+    treeNode		    [35 0 0 0]
     superState		    SUBCHART
-    subviewer		    36
+    subviewer		    35
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [y,H]= fcn(M_in,C_in,g_in,J_in,H_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nq = x_in(1:dof);\ndq = x_in(dof+(1:dof));\nomega = dq(4:6);\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%TA = TA_in(1*6+ind6,:);\n\n% Gyroscopic measurements\n%gyro = Rfb'*( TA(4:6,4:6) \\ (Rfb*omega) ); % ~~~~~~~~~~~~~~~~~~~~~~~~Not sure weather this is correct ????????????\n gyro = omega;                                          % Should the gyroscope be necessarily rotated ???\n\n%{\n% Inertia correction\n\ngacc = [ 0 0 -9.81 0 0 0]';\nerrrf = Irf * (Adrf\\gacc) ;\nerrlf = Ilf * (Adlf\\gacc);\n\n% Computation of accelerations\nacc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\n% Gravity compensation for IMU\nimu_bias = [ 0.005 0 0]';\nimu = acc(1:3) + Rfb'*[0 0 9.81]'+imu_bias;\n%}\n \n%Internal sensors\n%jnt = [q(7:31);dq(7:31)];\njnt = q(7:31);\n\n% Velocity measurements for foot contact\n%v_rf = Jr*v; \n%v_lf = Jl*v;\n%msr_vcont = [v_rf;v_lf];\n\n% Position of the contact points\n% Contact Model:\n%        y       b---------c\n%        |       |      .o |\n%    x_ _|       a---------d\n%\n% CD --> AB === Fx: 20 --> -20\n% AB --> CD === Fx: -20 --> 20\n\ncontact_AB = [ 0.13 0.0475 0 1 0.13 -0.0475 0 1]';\ncontact_CD = [ -0.06 -0.0475 0 1 -0.06 0.0475 0 1]';\n\n% zmp computation\nzmprf_x = ( -Frf(5) -0.1189 * Frf(1) ) / Frf(3);\nzmplf_x = ( -Flf(5) -0.1189 * Flf(1) ) / Flf(3);\n\nzmp_x = (zmprf_x * Frf(3) + zmplf_x * Flf(3))/ (Frf(3)+Flf(3));\n\n% front edge limit = 0.12\n% back edge limit = -0.055\nif zmp_x < 0.12\n    p1 = contact_CD(1*4+ind4);\n    p2 = contact_CD(2*4+ind4);\nelse\n    p1 = contact_AB(1*4+ind4);\n    p2 = contact_AB(2*4+ind4);\nend\n\n p1rf_s = Hrf * p1;\n p2rf_s = Hrf * p2;\n p1lf_s = Hlf * p1;\n p2lf_s = Hlf * p2;\n\npcont = [ p1rf_s(1:3) ; p2rf_s(1:3) ; p1lf_s(1:3) ; p2lf_s(1:3) ];\n\n\nvcont = [ Jrf ; Jlf ] * dq;\n\n%measurement equation \ny = [ jnt ; gyro ; pcont ; vcont ];\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\n%dimu = zeros(3,dof*2);\ndgyro = [ zeros(3,dof+3),eye(3,28) ];\ndpcont = zeros(12,dof*2);\ndvcont = zeros(12,dof*2);\n\nfor i = 1:62\n    %dM   = M_in(i*dof+(1:dof),:);\n    %dC   = C_in(i*dof+(1:dof),:);\n    %dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    %dHfb = H_in(i*20+(5*4+ind4),:);\n    %dRfb  = dHfb( 1:3, 1:3);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    %dRrf = dHrf(1:3,1:3);\n    %dprf = Skew(dHrf(1:3,4));\n    %dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    %dRlf = dHlf(1:3,1:3);\n    %dplf = Skew(dHlf(1:3,4));\n    %dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    %df   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n    %                                         + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n    %                                         - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n    %                                         - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) )));\n                                         \n      \n    dp1rf_s = dHrf*p1 ; dp2rf_s = dHrf*p2 ; dp1lf_s = dHlf*p1 ; dp2lf_s = dHlf*p2;\n    dpcont(:,i) =[ dp1rf_s(1:3) ; dp2rf_s(1:3) ; dp1lf_s(1:3) ; dp2lf_s(1:3) ];\n    %dvcont(:,i) = [ dJrf * dq; dJlf * dq; ];\n    dvcont(:,i) = [ dJrf; dJlf ] * dq;\n\n    \n    if i > dof\n        %df = df + M \\ (- C(:,i-31));\n        dvcont(:,i) = dvcont(:,i) + [ Jrf(:,i-31); Jlf(:,i-31); ];\n    end\n    %dimu(1:3,i) = df(1:3) + dRfb'*[0 0 9.81]';\nend\n\n%djnt = [ [zeros(25,6),eye(25,25),zeros(25,31)]; [zeros(25,37),eye(25,25)] ];\ndjnt = [zeros(25,6),eye(25,25),zeros(25,31)];\n\n% dgyro(1,35) = 1; \n% dgyro(2,36) = 1;\n% dgyro(3,37) = 1;\n% Measurement matrix\nH = [ djnt ; dgyro ; dpcont ; dvcont];\n\n\n\n\n\n\n\n\n\n"
-      editorLayout	      "100 M4x1[438 155 1080 750]"
+      script		      "function [A,x_k]= fcn(M_in,C_in,g_in,J_in,H_in,TA_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndt = 1e-3;\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n%q = x_in(1:dof);\ndq = x_in(dof+(1:dof));\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\nTA = TA_in(1:3,:);\ninvTA = TA \\ eye(3,3);\n% Transformation from body to spacial frame:\n%Adfb = Adjoint(Hfb);\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% Transformation for the velocites of floating base\nvfb = dq(1:3);\nwfb = dq(4:6);\n\ndp = Rfb * vfb;\ndo = invTA * (Rfb*wfb);\n\nvel = [dp; do; dq(7:31)];\n\n%vel = [Vfb_s; dq(7:31)];%~~~~~~~ First Attempt\n\ngacc = [ 0 0 -9.81 0 0 0]';\n% errrf = Irf * (Adrf\\gacc) ;\n% errlf = Ilf * (Adlf\\gacc);\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\n%acc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nx_dot = [vel;acc];   \n\n% Computing second order derivative terms for base\n% p - position of floating base o-orientation of floating base\n\nx_k = x_in + dt*x_dot ;\n\n\n% Computation of Jacobian for velocities of Floating base\n\ndqdx = [zeros(25,37),eye(25)];                               %%%%%%%%%%%%%%%%\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndpdx = zeros(3,2*dof);\ndodx = zeros(3,2*dof);\n\ndacc = zeros(dof,2*dof);\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    dHfb  = H_in(i*20+(5*4+ind4),:); \n    dRfb  = dHfb( 1:3, 1:3);\n \n    dpdx(:,i) = dRfb*vfb;\n    %dodx(:,i) = TA \\ ( dRfb*wfb) ;\n    dodx(:,i) = invTA * ( dRfb*wfb) ;\n\n    if i > 3 && i < 6\n        \n    dTA   = TA_in((i-3)*3+(1:3),:);\n    % dodx(:,i) = TA\\ (-dTA*do );\n    dodx(:,i) = dodx(:,i) + invTA * (-dTA*do );\n    \n    end \n\n%     dacc(:,i)   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n%                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n%                                              - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n%                                              - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) ) ));\n      dacc(:,i)   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));\n    \n    if i > dof\n        if i <= dof+3\n            dpdx(:,i) = dpdx(:,i) + Rfb(:,i-dof);         \n        elseif i<= dof+6\n            %dodx(:,i) = dodx(:,i) + TA\\Rfb(:,i-(dof+3)); \n            dodx(:,i) = dodx(:,i) + invTA * Rfb(:,i-(dof+3)); \n        end\n        %dacc(:,i) = dacc(:,i) + M \\ (- C(:,i-31));\n        dacc(:,i) = dacc(:,i) + invM * (- C(:,i-31));\n\n    end\nend\n\ndvel = [ dpdx ; dodx ; dqdx ];\n\nA = eye(62) + dt * [dvel;dacc] ;"
+      editorLayout	      "100 M4x1[1916 28 1928 1169]"
     }
   }
   junction {
-    id			    38
+    id			    37
     position		    [23.5747 49.5747 7]
-    chart		    36
-    linkNode		    [36 0 0]
-    subviewer		    36
+    chart		    35
+    linkNode		    [35 0 0]
+    subviewer		    35
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    39
+    id			    38
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -7444,21 +7423,43 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      38
+      id		      37
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    36
-    linkNode		    [36 0 0]
+    chart		    35
+    linkNode		    [35 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    36
+    subviewer		    35
     drawStyle		    SMART
     executionOrder	    1
   }
   data {
+    id			    39
+    name		    "A"
+    linkNode		    [35 0 40]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
     id			    40
     name		    "M_in"
-    linkNode		    [36 0 41]
+    linkNode		    [35 39 41]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7479,8 +7480,8 @@ Stateflow {
   }
   data {
     id			    41
-    name		    "y"
-    linkNode		    [36 40 42]
+    name		    "x_k"
+    linkNode		    [35 40 42]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -7503,7 +7504,7 @@ Stateflow {
   data {
     id			    42
     name		    "C_in"
-    linkNode		    [36 41 43]
+    linkNode		    [35 41 43]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7525,7 +7526,7 @@ Stateflow {
   data {
     id			    43
     name		    "g_in"
-    linkNode		    [36 42 44]
+    linkNode		    [35 42 44]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7547,7 +7548,7 @@ Stateflow {
   data {
     id			    44
     name		    "J_in"
-    linkNode		    [36 43 45]
+    linkNode		    [35 43 45]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7569,7 +7570,7 @@ Stateflow {
   data {
     id			    45
     name		    "H_in"
-    linkNode		    [36 44 46]
+    linkNode		    [35 44 46]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7590,8 +7591,8 @@ Stateflow {
   }
   data {
     id			    46
-    name		    "x_in"
-    linkNode		    [36 45 47]
+    name		    "TA_in"
+    linkNode		    [35 45 47]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7612,8 +7613,8 @@ Stateflow {
   }
   data {
     id			    47
-    name		    "u_in"
-    linkNode		    [36 46 48]
+    name		    "x_in"
+    linkNode		    [35 46 48]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7634,8 +7635,8 @@ Stateflow {
   }
   data {
     id			    48
-    name		    "Irf"
-    linkNode		    [36 47 49]
+    name		    "u_in"
+    linkNode		    [35 47 49]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7656,9 +7657,9 @@ Stateflow {
   }
   data {
     id			    49
-    name		    "H"
-    linkNode		    [36 48 50]
-    scope		    OUTPUT_DATA
+    name		    "Irf"
+    linkNode		    [35 48 50]
+    scope		    INPUT_DATA
     machine		    1
     props {
       array {
@@ -7671,7 +7672,7 @@ Stateflow {
 	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
+      frame		      SF_FRAME_INHERITED
     }
     dataType		    "inherited"
     complexity		    SF_COMPLEX_INHERITED
@@ -7679,7 +7680,7 @@ Stateflow {
   data {
     id			    50
     name		    "Ilf"
-    linkNode		    [36 49 0]
+    linkNode		    [35 49 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7700,9 +7701,9 @@ Stateflow {
   }
   instance {
     id			    51
-    name		    "Extended kalman filter/corrector/Measurements1"
+    name		    "Extended kalman filter/predictor/Time Update"
     machine		    1
-    chart		    36
+    chart		    35
   }
   target {
     id			    52
