@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.5.31)  29 JUL 2013 23:02
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.5.31)  30 AUG 2013 19:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -716,7 +716,7 @@ LaTeX Font Info:    Try loading font information for T1+cmss on input line 175.
 (/usr/share/texmf/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-<Bilder/tud_logo_rgb.png, id=54, 338.9463pt x 54.6843pt>
+<Bilder/tud_logo_rgb.png, id=95, 338.9463pt x 54.6843pt>
 File: Bilder/tud_logo_rgb.png Graphic file (type png)
 
 <use Bilder/tud_logo_rgb.png>
@@ -781,7 +781,7 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 ] [4
 
 
-] (./Makros.tex) (./testpage.tex)
+] (./Makros.tex)
 (./Kapitel/Einleitung/einleitung.tex
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/ppl/bx/sc' in size <62.22002> not available
@@ -790,7 +790,7 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 4.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 4.
-<Bilder/Abbildung.pdf, id=93, 597.23125pt x 421.575pt>
+<Bilder/Abbildung.pdf, id=144, 597.23125pt x 421.575pt>
 File: Bilder/Abbildung.pdf Graphic file (type pdf)
 
 <use Bilder/Abbildung.pdf>
@@ -802,7 +802,7 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10> not available
 ]
 [2 <./Bilder/Abbildung.pdf>]
 Chapter 2.
-<Bilder/system_observer.pdf, id=113, 597.23125pt x 845.1575pt>
+<Bilder/system_observer.pdf, id=164, 597.23125pt x 845.1575pt>
 File: Bilder/system_observer.pdf Graphic file (type pdf)
 
 <use Bilder/system_observer.pdf> [3
@@ -859,118 +859,271 @@ gnored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.10 \chapter
-             {Modelling}pdfTeX warning (ext4): destination with the same identi
-fier (name{equation.2.1.11}) has been already used, duplicate ignored
+l.4 \chapter
+            {Multi body system model}pdfTeX warning (ext4): destination with th
+e same identifier (name{equation.2.1.11}) has been already used, duplicate igno
+red
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.10 \chapter
-             {Modelling}pdfTeX warning (ext4): destination with the same identi
-fier (name{equation.2.1.12}) has been already used, duplicate ignored
+l.4 \chapter
+            {Multi body system model}pdfTeX warning (ext4): destination with th
+e same identifier (name{equation.2.1.12}) has been already used, duplicate igno
+red
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.10 \chapter
-             {Modelling}]
+l.4 \chapter
+            {Multi body system model}]
 Chapter 3.
 [7
 
 
-] <Bilder/model_biped.png, id=171, 339.5913pt x 352.22116pt>
-File: Bilder/model_biped.png Graphic file (type png)
+] <Bilder/model_biped.pdf, id=222, 597.23125pt x 845.1575pt>
+File: Bilder/model_biped.pdf Graphic file (type pdf)
 
-<use Bilder/model_biped.png> [8pdfTeX warning (ext4): destination with the same
- identifier (name{equation.3.1.3}) has been already used, duplicate ignored
+<use Bilder/model_biped.pdf>
+<Bilder/rbody_dof.pdf, id=225, 597.23125pt x 845.1575pt>
+File: Bilder/rbody_dof.pdf Graphic file (type pdf)
+
+<use Bilder/rbody_dof.pdf>
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 10.42007pt on input line 37.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 37.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 10.42007pt on input line 37.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 37.
+
+
+Package natbib Warning: Author undefined for citation`mur94' 
+(natbib)                on page 8 on input line 41.
+
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 9.37807pt on input line 42.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 7.29405pt on input line 42.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 42.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 9.37807pt on input line 42.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 7.29405pt on input line 42.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 42.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 42.
+(/usr/share/texmf/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+) [8 <./Bilder/model_biped.pdf>]
+[9 <./Bilder/rbody_dof.pdf>]
+<Bilder/TORO_kinematic.pdf, id=280, 845.1575pt x 597.23125pt>
+File: Bilder/TORO_kinematic.pdf Graphic file (type pdf)
+
+<use Bilder/TORO_kinematic.pdf> [10 <./Bilder/TORO_kinematic.pdf>] [11pdfTeX wa
+rning (ext4): destination with the same identifier (name{equation.3.1.7}) has b
+een already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.49 \paragraph{State Space representation:}
-                                             <./Bilder/model_biped.png (PNG cop
-y)>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [9pdfTeX warning (ext4): destination with the same identifier (name{equation.3
-.1.4}) has been already used, duplicate ignored
+l.154 \end{equation}
+                    ] [12pdfTeX warning (ext4): destination with the same ident
+ifier (name{equation.3.1.10}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.97 	\end{equation}
-                    ]
-Overfull \hbox (30.91083pt too wide) in paragraph at lines 101--102
-\T1/ppl/m/n/10.95 sured by IMU). $[]\OT1/zplm/m/n/10.95 (\OT1/ppl/m/n/10.95 1, 
-2, 3\OT1/zplm/m/n/10.95 )$ \T1/ppl/m/n/10.95 is the first three el-e-ments of $
-[]$ com-puted by Eq. []3.3[]. $\OML/zplm/m/it/10.95 R[]\OT1/zplm/m/n/10.95 (\OT
-1/ppl/m/n/10.95 0, 0, 9.81\OT1/zplm/m/n/10.95 )[]$
+l.191 ...ach state is independent $$W_k = I_{3}$$.
+                                                   Substituting the value of...
+] [13pdfTeX warning (ext4): destination with the same identifier (name{equation
+.3.2.12}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.238 \item \emph
+                 {j} in the subscript represents the row dimension and  \emp...
+]
+Overfull \hbox (16.39337pt too wide) detected at line 293
+[] \OT1/zplm/m/n/10.95 = []
  []
 
-[10pdfTeX warning (ext4): destination with the same identifier (name{equation.3
-.1.5}) has been already used, duplicate ignored
+
+Overfull \hbox (33.10394pt too wide) in paragraph at lines 297--298
+\T1/ppl/m/n/10.95 The sys-tem ma-trix $\OML/zplm/m/it/10.95 A[]$ \T1/ppl/m/n/10
+.95 in Equa-tion []3.12[] is for-mu-lated by com-bin-ing Equa-tions []3.14[],[]
+3.15[],[]3.16[]
+ []
+
+[14]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [15pdfTeX warning (ext4): destination with the same identifier (name{equation.
+3.3.19}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.104 \item $
-             \hat{V}_{c}^{b}$ are velocity constraints on right and left foot.]
-[11pdfTeX warning (ext4): destination with the same identifier (name{equation.3
-.1.6}) has been already used, duplicate ignored
+l.342 \end{equation}
+                    ]
+
+LaTeX Warning: Reference `eq:dtoro_lambda' on page 16 undefined on input line 3
+83.
+
+[16pdfTeX warning (ext4): destination with the same identifier (name{equation.3
+.3.20}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.159 \]
-        ] [12] [13]) [14] (./Ausarbeitung.lof)
-\tf@lof=\write5
-\openout5 = `Ausarbeitung.lof'.
+l.387 \end{equation}
+                    ] [17]) (./Kapitel/Grundlagen/simple_model.tex [18pdfTeX wa
+rning (ext4): destination with the same identifier (name{equation.3.3.28}) has 
+been already used, duplicate ignored
 
- [15
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.1 \chapter
+            {Simple model}]
+Chapter 4.
+
+Overfull \hbox (0.17496pt too wide) in paragraph at lines 3--4
+\T1/ppl/m/n/10.95 ac-celerom-e-ter mea-sures ac-cel-er-a-tions $\OML/zplm/m/it/
+10.95 a[]\OT1/ppl/m/n/10.95 , \OML/zplm/m/it/10.95 a[]\OT1/ppl/m/n/10.95 , \OML
+/zplm/m/it/10.95 a[]$ \T1/ppl/m/n/10.95 act-ing along the three Carte-sian axes
+. Like-
+ []
+
+) (./Kapitel/Zusammenfassung/appendix.tex
+Underfull \vbox (badness 1325) has occurred while \output is active []
+
+ [19
 
 
-] [16
+pdfTeX warning (ext4): destination with the same identifier (name{equation.4.0.
+1}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.1 \chapter
+            {Appendix}] [20]
+Chapter 5.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21
 
 
 ]
-No file Ausarbeitung.bbl.
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [22pdfTeX warning (ext4): destination with the same identifier (name{equation.
+5.3.1}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.78 \end{equation}
+                   pdfTeX warning (ext4): destination with the same identifier 
+(name{equation.5.3.2}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.78 \end{equation}
+                   ] [23pdfTeX warning (ext4): destination with the same identi
+fier (name{equation.5.3.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.125 \item $
+             R^T \dot{R}$ is a skew symmetric matrix \citep[Chapter 2]{mur94}.p
+dfTeX warning (ext4): destination with the same identifier (name{equation.5.3.4
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.125 \item $
+             R^T \dot{R}$ is a skew symmetric matrix \citep[Chapter 2]{mur94}.p
+dfTeX warning (ext4): destination with the same identifier (name{equation.5.3.5
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.125 \item $
+             R^T \dot{R}$ is a skew symmetric matrix \citep[Chapter 2]{mur94}.]
+
+Underfull \vbox (badness 2384) has occurred while \output is active []
+
+ [24pdfTeX warning (ext4): destination with the same identifier (name{equation.
+5.4.6}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.176 \end{equation}
+                    ]) [25pdfTeX warning (ext4): destination with the same iden
+tifier (name{equation.5.4.7}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.278     \listoffigures
+                        ] [26
+
+
+] (./Ausarbeitung.lof)
+\tf@lof=\write5
+\openout5 = `Ausarbeitung.lof'.
+
+ [27] [28
+
+
+]
+(./Ausarbeitung.bbl) [29
+
+
+]
 \openout2 = `Kapitel/erklaerung.aux'.
 
-(./Kapitel/erklaerung.tex [17
+ (./Kapitel/erklaerung.tex [30
 
 
 
-])
+] [31])
 \tf@thm=\write6
 \openout6 = `Ausarbeitung.thm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 301.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 301.
- (./Ausarbeitung.aux (./Kapitel/erklaerung.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 301.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 305.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 305.
+
+(./Ausarbeitung.aux (./Kapitel/erklaerung.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 305.
 Package rerunfilecheck Info: File `Ausarbeitung.out' has not changed.
-(rerunfilecheck)             Checksum: A6A0C58C341FACF0F4E699A7DDC8C345;755.
+(rerunfilecheck)             Checksum: 95E9C44954F7924329A26A51F028CC12;1389.
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 11139 strings out of 493747
- 164657 string characters out of 3148626
- 300724 words of memory out of 3500000
- 14056 multiletter control sequences out of 15000+200000
- 48799 words of font info for 93 fonts, out of 3000000 for 9000
+ 11351 strings out of 493747
+ 168005 string characters out of 3148626
+ 302863 words of memory out of 3500000
+ 14194 multiletter control sequences out of 15000+200000
+ 72311 words of font info for 144 fonts, out of 3000000 for 9000
  717 hyphenation exceptions out of 8191
- 38i,22n,43p,1515b,398s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fonts/enc/dvi
-ps/cm-super/cm-super-t1.enc}</usr/share/texmf/fonts/type1/public/amsfonts/cm/cm
+ 38i,22n,43p,1480b,476s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/
+fonts/enc/dvips/base/8r.enc}</usr/share/texmf/fonts/type1/public/amsfonts/cm/cm
 ex10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
 e/texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf/fonts/type1/
 public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/mathpazo/fpl
 mr.pfb></usr/share/texmf/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/tex
-mf/fonts/type1/public/cm-super/sfss1000.pfb></usr/share/texmf/fonts/type1/publi
-c/cm-super/sfss1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfss1200.
+mf/fonts/type1/public/cm-super/sfss1095.pfb></usr/share/texmf/fonts/type1/publi
+c/cm-super/sfss1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfss2074.
 pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsx1095.pfb></usr/share/texm
-f/fonts/type1/public/cm-super/sfsx1440.pfb></usr/share/texmf/fonts/type1/urw/pa
-latino/uplb8a.pfb></usr/share/texmf/fonts/type1/urw/palatino/uplr8a.pfb></usr/s
-hare/texmf/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf/fonts/type1/ur
-w/palatino/uplri8a.pfb>
-Output written on Ausarbeitung.pdf (21 pages, 322800 bytes).
+f/fonts/type1/public/cm-super/sfsx2488.pfb></usr/share/texmf/fonts/type1/public
+/cm-super/sftt0900.pfb></usr/share/texmf/fonts/type1/urw/palatino/uplb8a.pfb></
+usr/share/texmf/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf/fonts/typ
+e1/urw/palatino/uplr8a.pfb></usr/share/texmf/fonts/type1/urw/palatino/uplri8a.p
+fb>
+Output written on Ausarbeitung.pdf (35 pages, 518174 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 273 compressed objects within 3 object streams
- 70 named destinations out of 1000 (max. 500000)
- 131 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 571 PDF objects out of 1000 (max. 8388607)
+ 487 compressed objects within 5 object streams
+ 126 named destinations out of 1000 (max. 500000)
+ 227 words of extra memory for PDF output out of 10000 (max. 10000000)
 

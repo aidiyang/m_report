@@ -44,34 +44,77 @@
 \newlabel{eqn:kf_gain}{{\relax 2.7}{5}{Kalman gain\relax }{equation.2.1.7}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Extended Kalman filter}{5}{subsection.2.1.2}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.2.1}Algorithm}{6}{subsubsection.2.1.2.1}}
+\newlabel{eq:ekf_predict}{{\relax 2.11}{6}{Algorithm\relax }{equation.2.1.11}{}}
+\newlabel{eq:ekf_correct}{{\relax 2.12}{6}{Algorithm\relax }{equation.2.1.12}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Unscented Kalman filter}{6}{subsection.2.1.3}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Modelling}{7}{chapter.3}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Multi body system model}{7}{chapter.3}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
+\newlabel{chap:multi_mdl}{{3}{7}{Multi body system model\relax }{chapter.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}Multi body system}{7}{section.3.1}}
+\citation{mur94}
 \@writefile{lof}{\contentsline {figure}{\numberline {\relax 3.1}{\ignorespaces Simplified lower body model of biped\relax }}{8}{figure.caption.5}}
 \newlabel{fig:biped_simplelow}{{\relax 3.1}{8}{Simplified lower body model of biped\relax \relax }{figure.caption.5}{}}
-\newlabel{eq:motion}{{\relax 3.3}{8}{Multi body system\relax }{equation.3.1.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{State Space representation:}{9}{paragraph*.6}}
-\newlabel{eq:dyn_nl}{{\relax 3.4}{9}{State Space representation:\relax }{equation.3.1.4}{}}
-\newlabel{eq:toro}{{\relax 3.5}{10}{State Space representation:\relax }{equation.3.1.5}{}}
-\@writefile{toc}{\contentsline {paragraph}{Observability:}{11}{paragraph*.7}}
-\newlabel{eq:dyn_l}{{\relax 3.6}{11}{Observability:\relax }{equation.3.1.6}{}}
-\newlabel{eq:dtoro_alpha}{{\relax 3.8}{11}{Observability:\relax }{equation.3.1.8}{}}
-\newlabel{eq:dtoro_dq}{{\relax 3.9}{12}{Observability:\relax }{equation.3.1.9}{}}
-\newlabel{eq:dtoro_lambda}{{\relax 3.10}{12}{Observability:\relax }{equation.3.1.10}{}}
-\newlabel{eq:sys_A}{{\relax 3.11}{12}{Observability:\relax }{equation.3.1.11}{}}
-\newlabel{eq:dmsr_q}{{\relax 3.12}{12}{Observability:\relax }{equation.3.1.12}{}}
-\newlabel{eq:dmsr_dq}{{\relax 3.13}{12}{Observability:\relax }{equation.3.1.13}{}}
-\newlabel{eq:dmsr_dacc}{{\relax 3.14}{13}{Observability:\relax }{equation.3.1.14}{}}
-\newlabel{eq:dmsr_dtheta}{{\relax 3.15}{13}{Observability:\relax }{equation.3.1.15}{}}
-\newlabel{eq:dmsr_dpc}{{\relax 3.16}{13}{Observability:\relax }{equation.3.1.16}{}}
-\newlabel{eq:dmsr_dvc}{{\relax 3.17}{13}{Observability:\relax }{equation.3.1.17}{}}
-\@writefile{toc}{\contentsline {chapter}{List of figures}{15}{appendix*.8}}
+\newlabel{eq:dyn_mul_bdy}{{\relax 3.2}{8}{Multi body system\relax }{equation.3.1.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {\relax 3.2}{\ignorespaces Degrees of freedom of a rigid body}}{9}{figure.caption.6}}
+\newlabel{fig:rbody}{{\relax 3.2}{9}{Degrees of freedom of a rigid body\relax }{figure.caption.6}{}}
+\newlabel{eq:dyn_rig_bdy}{{\relax 3.3}{9}{Multi body system\relax }{equation.3.1.3}{}}
+\newlabel{eq:dyn_rig_bdy_sh}{{\relax 3.4}{9}{Multi body system\relax }{equation.3.1.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {\relax 3.3}{\ignorespaces Kinematic chain of \emph  {Toro} \relax $\@@underline {\hbox {Explain the joints symbols}}\mathsurround \z@ $\relax \relax }}{10}{figure.caption.7}}
+\newlabel{fig:toro_kin}{{\relax 3.3}{10}{Kinematic chain of \emph {Toro} \underline {Explain the joints symbols}\relax \relax }{figure.caption.7}{}}
+\newlabel{eq:dyn_biped}{{\relax 3.5}{10}{Multi body system\relax }{equation.3.1.5}{}}
+\newlabel{eq:dyn_sbiped}{{\relax 3.6}{10}{Multi body system\relax }{equation.3.1.6}{}}
+\newlabel{eq:motion}{{\relax 3.7}{11}{Multi body system\relax }{equation.3.1.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Space representation:}{11}{subsection.3.1.1}}
+\newlabel{eq:newton_motion}{{\relax 3.8}{11}{Space representation:\relax }{equation.3.1.8}{}}
+\newlabel{eq:body_vel}{{\relax 3.9}{12}{Space representation:\relax }{equation.3.1.9}{}}
+\newlabel{eq:transfo_angvel}{{\relax 3.10}{12}{Space representation:\relax }{equation.3.1.10}{}}
+\newlabel{eq:toro}{{\relax 3.11}{12}{Space representation:\relax }{equation.3.1.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Prediction Step}{13}{section.3.2}}
+\newlabel{eq:predict}{{\relax 3.12}{13}{Prediction Step\relax }{equation.3.2.12}{}}
+\newlabel{eq:toro_dis}{{\relax 3.13}{13}{Prediction Step\relax }{equation.3.2.13}{}}
+\newlabel{eq:dpdx}{{\relax 3.14}{13}{Prediction Step\relax }{equation.3.2.14}{}}
+\newlabel{eq:dthetadx}{{\relax 3.15}{14}{Prediction Step\relax }{equation.3.2.15}{}}
+\newlabel{eq:dqdx}{{\relax 3.16}{14}{Prediction Step\relax }{equation.3.2.16}{}}
+\newlabel{eq:dydx}{{\relax 3.17}{14}{Prediction Step\relax }{equation.3.2.17}{}}
+\newlabel{eq:sys_mat}{{\relax 3.18}{15}{Prediction Step\relax }{equation.3.2.18}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Update Step}{15}{section.3.3}}
+\newlabel{eq:correct}{{\relax 3.19}{15}{Update Step\relax }{equation.3.3.19}{}}
+\newlabel{eq:dmsr_q}{{\relax 3.21}{16}{Update Step\relax }{equation.3.3.21}{}}
+\newlabel{eq:dmsr_dq}{{\relax 3.22}{16}{Update Step\relax }{equation.3.3.22}{}}
+\newlabel{eq:dmsr_dacc}{{\relax 3.23}{16}{Update Step\relax }{equation.3.3.23}{}}
+\newlabel{eq:dmsr_dtheta}{{\relax 3.24}{17}{Update Step\relax }{equation.3.3.24}{}}
+\newlabel{eq:dmsr_dpc}{{\relax 3.25}{17}{Update Step\relax }{equation.3.3.25}{}}
+\newlabel{eq:dmsr_dvc}{{\relax 3.26}{17}{Update Step\relax }{equation.3.3.26}{}}
+\@writefile{toc}{\contentsline {paragraph}{Observability:}{18}{paragraph*.8}}
+\newlabel{eq:dyn_l}{{\relax 3.28}{18}{Observability:\relax }{equation.3.3.28}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Simple model}{19}{chapter.4}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\newlabel{chap:simp_mdl}{{4}{19}{Simple model\relax }{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Prediction model}{20}{section.4.1}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Appendix}{21}{chapter.5}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Symbols}{21}{section.5.1}}
+\newlabel{sec:symbols}{{5.1}{21}{Symbols\relax }{section.5.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Abbreviation}{22}{section.5.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Rotation matrix}{22}{section.5.3}}
+\newlabel{sec:rot_mat}{{5.3}{22}{Rotation matrix\relax }{section.5.3}{}}
+\newlabel{eq:rot_full}{{\relax 5.2}{22}{Rotation matrix\relax }{equation.5.3.2}{}}
+\newlabel{eq:rot_simp}{{\relax 5.4}{23}{Rotation matrix\relax }{equation.5.3.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Transformation of angular velocity to Euler rates}{23}{section.5.4}}
+\newlabel{sec:avel_trfm}{{5.4}{23}{Transformation of angular velocity to Euler rates\relax }{section.5.4}{}}
+\citation{mur94}
+\@writefile{toc}{\contentsline {chapter}{List of figures}{27}{appendix*.9}}
 \bibstyle{alphadin}
-\bibdata{literatur}
+\bibdata{thesis}
+\bibcite{mur94}{{MLS94}{}{{}}{{}}}
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{29}{appendix*.9}}
 \@input{Kapitel/erklaerung.aux}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{17}{appendix*.8}}
-\@writefile{toc}{\contentsline {chapter}{Erkl\"{a}rung}{17}{appendix*.8}}
+\@writefile{toc}{\contentsline {chapter}{Erkl\"{a}rung}{30}{appendix*.10}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
 \ttl@finishall
