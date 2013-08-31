@@ -320,26 +320,46 @@ P_{k+1} &= (I- K_{k+1}H_{k+1})P_{k+1}^-
 \end{equation}
 The measurements of \emph{Toro} are Cartisian accelerations($acc^b$) of the hip measured by IMU, angular velocity($\omega^b)$ of the hip measured by the gyroscope, joint angles($q_j$) and joint velocities($\dot{q_j}$) measured by joint encoders.
 \begin{equation}
-\begin{split}
-     y_{sens} &= 
+     y_{sens} = \begin{bmatrix} \ddot{p}^b \\ \omega^b \\ q_j \\ \dot{q}_j \end{bmatrix} =
 	\begin{bmatrix}
-	acc^b+R grav \\ \hat{\omega}^{b}\\ q_{j} \\ \dot{q}_{j} 
-	\end{bmatrix}\\
+	acc^b+R^T \begin{bmatrix}0 \\0 \\-9.81 \end{bmatrix} \\ \hat{\omega}^{b}\\ q_{j} \\ \dot{q}_{j} 
+	\end{bmatrix}
+\end{equation}
+\begin{itemize}
+    \item The simplified model of IMU is $$ acc^b= \begin{bmatrix} acc^b_x \\ acc^b_y \\ acc^b_z \end{bmatrix} = R^T( \begin{bmatrix}\ddot{p}_x \\ \ddot{p}_y \\ \ddot{p}_z \end{bmatrix} - \begin{bmatrix}0 \\0 \\-9.81 \end{bmatrix})$$ \emph{R} is the rotational matrix that transforms a vector in body coordinate frame to spatial frame.
+\end{itemize}
+\begin{figure}
+    \begin{center}
+    %trim option's parameter order: left bottom right top
+    \includegraphics[trim= 20mm 150mm 20mm 50mm,scale=0.80]{Bilder/foot_topview.pdf}
+    \caption{Toro feet viewed from top}
+    \label{fig:biped_feet}
+    \end{center}
+\end{figure}
+Along with the sensor measurements kinematic constraints are also considered as mesurement. When a foot is in contact with the ground the velocity of the foot is zero. Figure \ref{fig:biped_feet} shows the contact points considered for measurements. The corner points of each foot are measured with respect to spatial frame \emph{S} as shown in Figure \ref{fig:biped_feet} before starting the experiment and they are assumed to be constant throughout the experiment. The contact points of the robot does not change throughout the experiment, since we are considering the case where the robot is tilting around one edge of the foot. 
+\begin{equation}
+    \begin{split}
     y_{kin} &=
     \begin{bmatrix}
     p_{contact} \\ V_{contact}
-    \end{bmatrix}
-	\\ \text{where, }\\ x &= (q^{T},\dot{q}^{T})^{T} \in \Re^{62}\\
-	\ddot{p}_{f}^{b} &= \ddot{q}(1,2,3)^{T} + R_{sb}^{T} 
-	\begin{pmatrix}
-	0 \\ 0 \\ 9.81
-	\end{pmatrix}\\
-	%\dot{\theta}_{f}^{b} &= R_{sb}^{T}T(\theta_{f})^{-1}R_{sb}\omega_{f}^{b}\\
-	p_{c}^{b} &= (p_{a,r}^{b}, p_{b,r}^{b}, p_{a,l}^{b}, p_{b,l}^{b} )^{T} \\
-	 \text{ i.e } &p_{a,r}^{b} = H_{sr}^{-1} p_{a,r}^{s},p_{b,r}^{b} = H_{sr}^{-1} p_{b,r}^{s},p_{a,l}^{b} = H_{sl}^{-1} p_{a,l}^{s},p_{b,l}^{b} = H_{sb}^{-1} p_{b,l}^{s}  \\
-	\hat{V}_{c}^{b} &= (\hat{V}_{r}^{b},\hat{V}_{l}^{b})^{T} \text{ i.e } \hat{V}_{r}^{b} = J_{r}\dot{q} \text{ and } \hat{V}_{l}^{b} = J_{l}\dot{q}
-\end{split}    
-\end{equation}    
+    \end{bmatrix}\\
+    p_{contact} &= \begin{bmatrix}p_{RF}\\ p_{LF}\end{bmatrix}\\
+     V_{contact} &= \begin{bmatrix} V_{RF}^b \\ V_{LF}^b \end{bmatrix} = \begin{bmatrix} J_r(y)^T \dot{q} \\ J_l(y)^T\dot{q} \end{bmatrix}
+    \end{split}
+\end{equation}
+\begin{itemize}
+\item $p_{RF},p_{LF}$ are the vectors of contact points in right foot and left foot defined with respect to spatial frame.
+\item $J_r(y), J_l(y)$ are the Jacobians of right and left foot that relates the joint velocity to the velocity of right and left foot respectively. \underline{[Appendix Define Body Jacobian]}
+\end{itemize}
+\begin{equation}
+    \begin{split}
+    p_{RF} &= \begin{bmatrix} p_{A,RF}\\ p_{B,RF}\\ p_{C,RF}\\ p_{D,RF}\end{bmatrix}= \begin{bmatrix} H_{RF}p_{A}\\  H_{RF}p_{B}\\  H_{RF}p_{C}\\  H_{RF}p_{D}\end{bmatrix} \\
+    p_{LF} &= \begin{bmatrix} p_{A,LF}\\ p_{B,LF}\\ p_{C,LF}\\ p_{D,LF}\end{bmatrix}= \begin{bmatrix} H_{LF}p_{A}\\  H_{LF}p_{B}\\  H_{LF}p_{C}\\  H_{LF}p_{D}\end{bmatrix} \\
+    \end{split}
+\end{equation}
+\begin{itemize}
+\item $H_{RF},H_{LF}$ are the homogeneous transformation matrices of the right and left foot.\underline{Appendix Homogeneous Transformation Matrix}
+\end{itemize}
 \begin{comment}
 \item $\omega_{f}^{b} $ is the vector of angular rates of floating base in body frame (measured by Gyroscope). 
 \item $\ddot{p}_{f}^{b}$ is the vector of Cartesian accelerations of the floating base in body frame (measured by IMU).	$\ddot{q}(1,2,3)$ is the first three elements of $\ddot{q}$ computed by Eq. \ref{eq:motion}. $R_{sb}^{T}(0,0,9.81)^{T}$ is the term added to compensate for the gravity measured by IMU. 
