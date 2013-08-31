@@ -58,6 +58,7 @@ mI &0 \\ 0 &\Im
 \begin{equation}
 \label{eq:dyn_rig_bdy_sh}
 M_x^b \ddot{x}_f^b + C_x^b\dot{x}_f^b+g_x^b = W^b
+<<<<<<< HEAD
 \end{equation}
 To be consistent with the multi body system dynamics formulation in Equation \ref{eq:dyn_mul_bdy} Newton Euler Equation \ref{eq:dyn_rig_bdy} is reformulated into Equation \ref{eq:dyn_rig_bdy_sh}. $x_f^b$ is a vector that represents six degrees of freedom of the rigid body. $\dot{x}_f^b$ represents the body twist. $\ddot{x}_f^b$ represents the acceleration in body frame(i.e it represents the time derivative of body twist). $M_x^b$ represents the inertia matrix of the rigid body in body coordinates. $C_x^b$ is the matrix representing the Coriolis and centrifugal forces acting on the system in body coordinates. $g_x^b$ is the vector representing the gravitational forces acting on the body in body coordinates. $W^b$ is the external force applied to the center of mass of the body. \footnote[2]{Inertia, Coriolis and gravity are assumed to be given with respect to the body coordinate frame for the rest of the report}.
 
@@ -100,6 +101,50 @@ where $y = [x_f,q]^T$ is the combined state variables of the biped. $M(y),C(y),g
 \end{center}
 \end{figure}
 
+=======
+\end{equation}
+To be consistent with the multi body system dynamics formulation in Equation \ref{eq:dyn_mul_bdy} Newton Euler Equation \ref{eq:dyn_rig_bdy} is reformulated into Equation \ref{eq:dyn_rig_bdy_sh}. $x_f^b$ is a vector that represents six degrees of freedom of the rigid body. $\dot{x}_f^b$ represents the body twist. $\ddot{x}_f^b$ represents the acceleration in body frame(i.e it represents the time derivative of body twist). $M_x^b$ represents the inertia matrix of the rigid body in body coordinates. $C_x^b$ is the matrix representing the Coriolis and centrifugal forces acting on the system in body coordinates. $g_x^b$ is the vector representing the gravitational forces acting on the body in body coordinates. $W^b$ is the external force applied to the center of mass of the body. \footnote[2]{Inertia, Coriolis and gravity are assumed to be given with respect to the body coordinate frame for the rest of the report}.
+
+The dynamics of biped in Figure \ref{fig:biped_simplelow} is composed of both multi body dynamics in the form of legs and rigid body dynamics in form of base. Combining Equation \ref{eq:dyn_rig_bdy_sh} and Equation \ref{eq:dyn_mul_bdy} gives the equation of the biped.
+\begin{equation} \label{eq:dyn_biped}
+\begin{bmatrix}
+M_x &M_{xq} \\ M_{qx} &M_q
+\end{bmatrix}
+\begin{bmatrix}
+\ddot{x}_f \\ \ddot{q}
+\end{bmatrix}
++
+\begin{bmatrix}
+C_x &C_{xq} \\ C_{qx} &C_q
+\end{bmatrix}
+\begin{bmatrix}
+\dot{x}_f \\ \dot{q}
+\end{bmatrix}
++
+\begin{bmatrix}
+g_x \\ g_q
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 \\ \tau
+\end{bmatrix}
++ (J_r^b)^T W_r^b + (J_l^b)^T W_l^b
+\end{equation}
+\underline{Explanation of the terms in the equation are part of appendix}.
+Equation \ref{eq:dyn_biped} can be written in a simplified form as
+\begin{equation} \label{eq:dyn_sbiped}
+M(y)\ddot{y} + C(y,\dot{y})\dot{y} + g(y) = W_{act} + W_{ext}
+\end{equation}
+where $y = [x_f,q]^T$ is the combined state variables of the biped. $M(y),C(y),g(y)$ are combined Inertia, Coriolis and gravity parameters of the biped.
+\begin{figure}
+\begin{center}
+\includegraphics[trim= 70mm 10mm 40mm 10mm,clip,scale=0.7]{Bilder/TORO_kinematic.pdf}
+\caption{Kinematic chain of \emph{Toro} \underline{Explain the joints symbols}}
+\label{fig:toro_kin}
+\end{center}
+\end{figure}
+
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 \emph{Toro} is modelled as floating base dynamic model. \emph{Toro} is made up of 25 rotary joints that are actuated by electrical motors. It can be seen from Figure \ref{fig:toro_kin} that floating base acts as the root of the kinematic chain. Legs and torso branches out of the floating base. Equation of motion for \emph{Toro} can be formulated in similar fashion as biped Equation \ref{eq:dyn_sbiped}, where the dynamics of the upper body is also combined to it. The forward dynamics of \emph{Toro} 
 \begin{equation}
 	\label{eq:motion}
@@ -200,6 +245,7 @@ The model is discretized for the implementation of EKF. Since the time step for 
 \begin{equation}
 \label{eq:toro_dis}
 	\begin{bmatrix}
+<<<<<<< HEAD
 	\hat{p}_{k+1}^- \\ \hat{\theta}_{k+1}^- \\ \hat{q}_{k+1}^- \\ \hat{\dot{y}}_{k+1}^-
 	\end{bmatrix}
 	 =   
@@ -216,10 +262,29 @@ $$ f(\hat{x}_k,u_{k+1}) =
 	M(\hat{y}_{k})^{-1}(-C(\hat{y}_{k},\hat{\dot{y}}_{k})\hat{\dot{y}}_{k} -g(\hat{y}_{k}) +  J_r(\hat{y}_{k})^{T}W_{r,k+1} +J_l(\hat{y}_{k})^{T}W_{l,k+1} + \tau_{k+1})	
 	\end{bmatrix} $$
 $\hat{x}(t_k) = \hat{x}(k \Delta t) = \hat{x}_k$ represents the state x at \emph{kth} sampling instant. $\hat{x}_{k+1} = \hat{x}(k \Delta t + \Delta t)$ represents the state of the system at the next sampling instant. $u_{k+1}$ is the input at sampling instant $k+1$. It is assumed that the value of the input remains constant in the interval between two sampling instant. This assumption is valid because of the zero order hold mechanism in sensor circuitry.
+=======
+	p_{k+1} \\ \theta_{k+1} \\ q_{k+1} \\ \dot{y}_{k+1}
+	\end{bmatrix}
+	 =   
+	 \begin{bmatrix}
+	 p_{k} \\ \theta_{k} \\ q_{k} \\ \dot{y}_{k}
+	\end{bmatrix}	  
+	+ \Delta t f(x_k,u_{k+1}) \\
+\end{equation}
+$$ f(x_k,u_{k+1}) = 
+	\begin{bmatrix}
+	R v^b_k\\	
+	T(\theta_k)^{-1} \omega_k^b\\
+	\dot{q_k}\\
+	M(y_k)^{-1}(-C(y_k,\dot{y}_k)\dot{y}_k -g(y_k) +  J_r(y_k)^{T}W_{r,k+1} +J_l(y_k)^{T}W_{l,k+1} + \tau_{k+1})	
+	\end{bmatrix} $$
+$x(t_k) = x(k \Delta t) = x_k$ represents the state x at \emph{kth} sampling instant. $x_{k+1} = x(k \Delta t + \Delta t)$ represents the state of the system at the next sampling instant. $u_{k+1}$ is the input at sampling instant $k+1$. It is assumed that the value of the input remains constant in the interval between two sampling instant. This assumption is valid because of the zero order hold mechanism in sensor circuitry.
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 
 Equation \ref{eq:toro_dis} is used to predict the state $\hat{x}_k$ in Equation \ref{eq:predict}. For the computation of state covariance matrix $P_k^-$ in Equation \ref{eq:predict}, the \underline{Jacobian Matrix} is computed for Equation \ref{eq:toro_dis}. \underline{The Jacobian} computation of the different parts of the equation is follows,
 From Equation \ref{eq:toro_dis}
 \begin{enumerate}
+<<<<<<< HEAD
 \item $ \hat{p}_{k+1}^- = \hat{p}_k + \Delta t Rv_b$, $ \hat{p}_k = [\hat{p}_{x,k},\hat{p}_{y,k},\hat{p}_{z,k}]$
 \begin{equation}
 \label{eq:dpdx}
@@ -232,11 +297,26 @@ From Equation \ref{eq:toro_dis}
    &\Delta t \dfdx{R}{x_i}v_b & \text{if }(3 < i \leq 6)\\
    &\textbf{0}_{3 \times 1} &\text{if}(6 < i \leq 31) \text{ or } (35 < i \leq 62) \\
    &col(R,i-31) & \text{if } 31 < i \leq 34 \\
+=======
+\item $ p_{k+1} = p_k + \Delta t Rv_b$, $ p = [p_x,p_y,p_z]$
+\begin{equation}
+\label{eq:dpdx}
+\dfdx{p_{j,k+1}}{x} = \left(\dfdx{p_{j,k+1}}{x_{1}}, \dfdx{p_{j,k+1}}{x_{2}}, \cdots , \dfdx{p_{j,k+1}}{x_{62}}\right) \in \Re^{3 \times 62}
+\end{equation}
+\[
+ \dfdx{p_{k+1}}{x_{i}} =  \left\lbrace
+  \!\begin{aligned}
+   &e_i & \text{if }(i=j)\\
+   &\Delta t \dfdx{R}{x_i}v_b & \text{if }(3 > i \leq 6)\\
+   &\textbf{0}_{3 \times 1} &\text{if}(6 > i \leq 31) \text{ or } (35 > i \leq 62) \\
+   &col(R,i-31) & \text{if } 31 > i \leq 34 \\
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
   \end{aligned} \right.
 \]
 \begin{itemize}
 \item \emph{j} in the subscript represents the row dimension and  \emph{i} represents the column dimension of the matrix in Equation \ref{eq:dpdx}
 \item $col(X,i)$ - represents the \emph{ith} column of matrix $X$.
+<<<<<<< HEAD
 \item $\dfdx{R}{x_i}$ is the partial derivative of \emph{R} with respect to the state $\hat{x}_k$ (i.e euler angles [Appendix \ref{sec:rot_mat}]), $e_i$ is the unit vectors in direction of coordinate axis and  $\textbf{0}_{3 \times 1}$ is the zero vector of dimensions $3 \times 1$ [Appendix \ref{sec:symbols}].
 \end{itemize}
 
@@ -266,10 +346,42 @@ From Equation \ref{eq:toro_dis}
 \dfdx{\hat{q}_{k+1}^-}{x_{i}} = 
 	\begin{cases}
 	l_{25,i} & \text{if } (6 < i \leq 31) \text{ or } (38 < i \leq 62) \\
+=======
+\item $\dfdx{R}{x_i}$ is the partial derivative of \emph{R} with respect to the state $x_k$ (i.e euler angles [Appendix \ref{sec:rot_mat}]), $e_i$ is the unit vectors in direction of coordinate axis and  $\textbf{0}_{3 \times 1}$ is the zero vector of dimensions $3 \times 1$[Appendix \ref{sec:symbols}].
+\end{itemize}
+
+\item $\theta_{k+1} = \theta_k + \Delta t T(\theta_k)^{-1} \omega_k^b$
+\begin{equation}
+\label{eq:dthetadx}
+\dfdx{\theta_{j,k+1}}{x} = \left(\dfdx{\theta_{j,k+1}}{x_{1}}, \dfdx{\theta_{j,k+1}}{x_{2}}, \cdots , \dfdx{\theta_{j,k+1}}{x_{62}}\right) \in \Re^{3 \times 62}
+\end{equation}
+\[
+ \dfdx{\theta_{k+1}}{x_{i}} = \left\lbrace
+  \!\begin{aligned}
+   &\textbf{0}_{3 \times 1} &\text{if}(0 > i \leq 3) \text{ or }(6 > i \leq 31) \text{ or } (35 > i \leq 62) \\
+   &e_{i-3} + \Delta t \dfdx{T(\theta_k)^{-1}}{x_i}\omega_k^b & \text{if}3> \text{i} \leq 6 \\
+   &col(T(\theta_k)^{-1},i-34) & \text{if } 31 > i \leq 34 \\
+  \end{aligned} \right.
+\]
+\begin{itemize}
+\item $\dfdx{T(\theta_f)^{-1}}{x_i}$ is the partial derivative of inverse of transformation matrix with respect to state [Appendix \ref{sec:avel_trfm}] 
+\end{itemize}
+
+\item $q_{k+1} = q_k + \Delta t \dot{q}_k $
+\begin{equation}
+\label{eq:dqdx}
+\dfdx{q_{k+1}}{x} = \left(\dfdx{q_{k+1}}{x_{1}}, \dfdx{q_{k+1}}{x_{2}}, \cdots , \dfdx{q_{k+1}}{x_{62}}\right) \in \Re^{25 \times 62}
+\end{equation}
+\[
+\dfdx{q_{k+1}}{x_{i}} = 
+	\begin{cases}
+	l_{i,25} & \text{if } (6 > i \leq 31) \text{ or } (38 > i \leq 62) \\
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 	0 & \text{otherwise}   \\
 	\end{cases}
 \]
 \begin{itemize}
+<<<<<<< HEAD
 \item $l_{25,i}$ is a colomn vector of length 25 with 1 in the \emph{ith} position and zeros in other position [Appendix \ref{sec:symbols}].
 \end{itemize}
 \item $\hat{\dot{y}}_{k+1}^- = \hat{\dot{y}}_{k}+ \Delta t \Lambda $
@@ -288,38 +400,79 @@ where,
 	& + M_k^{-1}\left(\dfdx{J_{l,k}^{b}}{x_{i}}\right)^{T}W_{l,k+1}
 	\end{aligned} \right\}& \text{if } 0 < i \leq 31 \\
 &l_{31,(i-31)}-M_k^{-1}\dfdx{M_k}{x_{i}}\Lambda + M_k^{-1}\left(-\dfdx{C_k}{x_{i}}\hat{\dot{y}}_{k}- col(C_k,i-31)\right) & \text{if } i < 31  \\
+=======
+\item $l_{i,25}$ is a colomn vector of length 25 with 1 in the \emph{ith} position and zeros in other position [Appendix \ref{sec:symbols}].
+\end{itemize}
+\item $\dot{y}_{k+1} = \dot{y}_{k}+ \Delta t \Lambda $
+$$\Lambda = M(y_k)^{-1}(-C(y_k,\dot{y}_k)\dot{y_k} - g(y_k) + J_r(y_k)^{T}W_{r,k+1} +J_l(y_k)^{T}W_{l,k+1} + \tau_{k+1})$$
+ \begin{equation}
+ \label{eq:dydx}
+\dfdx{y_{k+1}}{x} = \left(\dfdx{y_{k+1}}{x_{1}}, \dfdx{y_{k+1}}{x_{2}}, \cdots , \dfdx{y_{k+1}}{x_{62}}\right) \in \Re^{31 \times 62}
+\end{equation}
+where,
+\[
+\dfdx{\dot{y}_{k+1}}{x_{i}} = 
+\left\{ 
+\!\begin{aligned}
+	& \left. \!\begin{aligned}
+	-M_k^{-1}\dfdx{M_k}{x_{i}}\Lambda + &M_k^{-1}\left(-\dfdx{C_k}{x_{i}}\dot{y}_k -\dfdx{g_k}{x_{i}}        + \left(\dfdx{J_{r,k}^{b}}{x_{i}}\right)^{T}W_{r,k+1}\right) \\
+	& + M_k^{-1}\left(\dfdx{J_{l,k}^{b}}{x_{i}}\right)^{T}W_{l,k+1}
+	\end{aligned} \right\}& \text{if } 0 > i \leq 31 \\
+&l_{i-31,31}-M_k^{-1}\dfdx{M_k}{x_{i}}\Lambda + M_k^{-1}\left(-\dfdx{C_k}{x_{i}}\dot{y}_k- col(C_k,i-31)\right) & \text{if } i > 31  \\
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 \end{aligned}
 \right.
 \]
 \begin{itemize}
+<<<<<<< HEAD
 \item $M_k= M(\hat{y}_{k}),C_k=C(\hat{y}_{k},\hat{\dot{y}}_k),J_{r,k}=J_r(\hat{y}_{k}),J_{l,k}=J_l(\hat{y}_{k})$
+=======
+\item $M_k= M(y_k),C_k=C(y_k),J_{r,k}=J_r(y_k),J_{l,k}=J_l(y_k)$
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 \end{itemize}
 The system matrix $A_k$ in Equation \ref{eq:predict} is formulated by combining Equations \ref{eq:dpdx},\ref{eq:dthetadx},\ref{eq:dqdx} and \ref{eq:dydx}
 \begin{equation}
 \label{eq:sys_mat}
 A_k = \left(
 \begin{aligned}
+<<<<<<< HEAD
 \dfdx{\hat{p}_{k+1}^-}{x} \\
 \dfdx{\hat{\theta}_{k+1}^-}{x} \\
 \dfdx{\hat{q}_{k+1}^-}{x}\\
 \dfdx{\hat{\dot{y}}_{k+1}^-}{x}
+=======
+\dfdx{p_{k+1}}{x} \\
+\dfdx{\theta_{k+1}}{x} \\
+\dfdx{q_{k+1}}{x}\\
+\dfdx{\dot{y}_{k+1}}{x}
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 \end{aligned} \right)
 \in \Re^{62 \times 62}
 \end{equation}
 Substituting Equations \ref{eq:toro_dis} and \ref{eq:sys_mat} in \ref{eq:predict} and substituting the values of process covariance $Q_k$ completes the prediction stage of EKF.
 
 \section{Update Step}
+<<<<<<< HEAD
 The update equation of the EKF is given in Equation \ref{eq:ekf_correct}. The measurement equation of the system is given by $$\hat{y}_{k+1} = h(\hat{x}_{k+1}^-,u_{k+1},0)$$.For the sake of simplicity let us assume the measurement of noise are independent. $$V_k = I_3$$. Substituting the assumption in \ref{eq:ekf_correct}
 \begin{equation}
 \label{eq:correct}
 \begin{split}
 K_{k+1} &= P_{k+1}^-H_{k+1}^T(H_{k+1}P_{k+1}^-H_{k+1}^T + R_{k+1})^{-1}\\
 \hat{x}_{k+1} &= \hat{x}_{k+1}^- + K_{k+1}(y_{k+1}-\hat{y}_{k+1})\\
+=======
+The update equation of the EKF is given in Equation \ref{eq:ekf_correct}. For the sake of simplicity let us assume the measurement of noise are independent. $$V_k = I_3$$. Substituting the assumption in \ref{eq:ekf_correct}
+\begin{equation}
+\label{eq:correct}
+\begin{split}
+K_{k+1} &= P_{k+1}^-H^T(H_{k+1}P_{k+1}^-H_{k+1}^T + R_{k+1})^{-1}\\
+\hat{x}_{k+1} &= \hat{x}_{k+1}^- + K_{k+1}(y_{k+1}-h(x_{k+1}^-,u_{k+1},0))\\
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 P_{k+1} &= (I- K_{k+1}H_{k+1})P_{k+1}^-
 \end{split}
 \end{equation}
 The measurements of \emph{Toro} are Cartisian accelerations($acc^b$) of the hip measured by IMU, angular velocity($\omega^b)$ of the hip measured by the gyroscope, joint angles($q_j$) and joint velocities($\dot{q_j}$) measured by joint encoders.
 \begin{equation}
+<<<<<<< HEAD
     \label{eq:y_sens}
      y_{sens} = \begin{bmatrix} acc^b \\ \omega^b \\ q_j \\ \dot{q}_j \end{bmatrix} 
 \end{equation}
@@ -327,6 +480,15 @@ The measurements of \emph{Toro} are Cartisian accelerations($acc^b$) of the hip 
     \item The simplified model of IMU is $$ acc^b= \begin{bmatrix} acc^b_x \\ acc^b_y \\ acc^b_z \end{bmatrix} =  \begin{bmatrix}\ddot{p}_x^b \\ \ddot{p}_y^b \\ \ddot{p}_z^b \end{bmatrix} - R^T \begin{bmatrix}0 \\0 \\-9.81 \end{bmatrix}$$ \emph{R} is the rotational matrix that transforms a vector in body coordinate frame to spatial frame.
     \item $\ddot{p}^b$ is computed from the forward dynamic equation \ref{eq:motion} using the predicted values of the state
     \item $\omega_{f}^{b} $ is the vector of angular rates of the hip(floating base) measured by gyroscope. The measurements are in the frame attached to the hip. 
+=======
+     y_{sens} = \begin{bmatrix} \ddot{p}^b \\ \omega^b \\ q_j \\ \dot{q}_j \end{bmatrix} =
+	\begin{bmatrix}
+	acc^b+R^T \begin{bmatrix}0 \\0 \\-9.81 \end{bmatrix} \\ \hat{\omega}^{b}\\ q_{j} \\ \dot{q}_{j} 
+	\end{bmatrix}
+\end{equation}
+\begin{itemize}
+    \item The simplified model of IMU is $$ acc^b= \begin{bmatrix} acc^b_x \\ acc^b_y \\ acc^b_z \end{bmatrix} = R^T( \begin{bmatrix}\ddot{p}_x \\ \ddot{p}_y \\ \ddot{p}_z \end{bmatrix} - \begin{bmatrix}0 \\0 \\-9.81 \end{bmatrix})$$ \emph{R} is the rotational matrix that transforms a vector in body coordinate frame to spatial frame.
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 \end{itemize}
 \begin{figure}
     \begin{center}
@@ -337,6 +499,41 @@ The measurements of \emph{Toro} are Cartisian accelerations($acc^b$) of the hip 
     \end{center}
 \end{figure}
 Along with the sensor measurements kinematic constraints are also considered as mesurement. When a foot is in contact with the ground the velocity of the foot is zero. Figure \ref{fig:biped_feet} shows the contact points considered for measurements. The corner points of each foot are measured with respect to spatial frame \emph{S} as shown in Figure \ref{fig:biped_feet} before starting the experiment and they are assumed to be constant throughout the experiment. The contact points of the robot does not change throughout the experiment, since we are considering the case where the robot is tilting around one edge of the foot. 
+<<<<<<< HEAD
+=======
+\begin{equation}
+    \begin{split}
+    y_{kin} &=
+    \begin{bmatrix}
+    p_{contact} \\ V_{contact}
+    \end{bmatrix}\\
+    p_{contact} &= \begin{bmatrix}p_{RF}\\ p_{LF}\end{bmatrix}\\
+     V_{contact} &= \begin{bmatrix} V_{RF}^b \\ V_{LF}^b \end{bmatrix} = \begin{bmatrix} J_r(y)^T \dot{q} \\ J_l(y)^T\dot{q} \end{bmatrix}
+    \end{split}
+\end{equation}
+\begin{itemize}
+\item $p_{RF},p_{LF}$ are the vectors of contact points in right foot and left foot defined with respect to spatial frame.
+\item $J_r(y), J_l(y)$ are the Jacobians of right and left foot that relates the joint velocity to the velocity of right and left foot respectively. \underline{[Appendix Define Body Jacobian]}
+\end{itemize}
+\begin{equation}
+    \begin{split}
+    p_{RF} &= \begin{bmatrix} p_{A,RF}\\ p_{B,RF}\\ p_{C,RF}\\ p_{D,RF}\end{bmatrix}= \begin{bmatrix} H_{RF}p_{A}\\  H_{RF}p_{B}\\  H_{RF}p_{C}\\  H_{RF}p_{D}\end{bmatrix} \\
+    p_{LF} &= \begin{bmatrix} p_{A,LF}\\ p_{B,LF}\\ p_{C,LF}\\ p_{D,LF}\end{bmatrix}= \begin{bmatrix} H_{LF}p_{A}\\  H_{LF}p_{B}\\  H_{LF}p_{C}\\  H_{LF}p_{D}\end{bmatrix} \\
+    \end{split}
+\end{equation}
+\begin{itemize}
+\item $H_{RF},H_{LF}$ are the homogeneous transformation matrices of the right and left foot.\underline{Appendix Homogeneous Transformation Matrix}
+\end{itemize}
+\begin{comment}
+\item $\omega_{f}^{b} $ is the vector of angular rates of floating base in body frame (measured by Gyroscope). 
+\item $\ddot{p}_{f}^{b}$ is the vector of Cartesian accelerations of the floating base in body frame (measured by IMU).	$\ddot{q}(1,2,3)$ is the first three elements of $\ddot{q}$ computed by Eq. \ref{eq:motion}. $R_{sb}^{T}(0,0,9.81)^{T}$ is the term added to compensate for the gravity measured by IMU. 
+\item $p_{c}^{b}$ is the vector of position constraints of right and left foot. These positions constraints are the static points on the foot of the robot. $H_{sx}$ is the homogeneous transformation matrix from frame \emph{x} to spatial frame. $p_{a,r}^{s}, p_{b,r}^{s}, p_{a,l}^{s}, p_{b,l}^{s}$ are known points which are constant with respect to spatial frame.
+\item $\hat{V}_{c}^{b}$ are velocity constraints on right and left foot.
+
+\end{comment}
+
+For computation of measurement matrix \emph{C} the derivative of y in Eq. \ref{eq:toro} with respect to system state is computed.
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 \begin{equation}
     \label{eq:y_kin}
     \begin{split}
@@ -503,6 +700,10 @@ C\\ CA \\ CA^{2}\\ \vdots \\ CA^{n-1}
 , rank(obs) =n
 \end{equation}
 For our system to be observable $rank(obs) = 62$.
+<<<<<<< HEAD
 
 \textbf{ Make plots from files act=datsrc/ROBOT-TILT-0807.mat est=estimates-data/est-090701.mat or *080703.mat }
+=======
+	
+>>>>>>> 44a31b53d04194cb885ea2522465b774c238d9f2
 %\end{document}
