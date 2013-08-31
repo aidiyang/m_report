@@ -1,0 +1,14 @@
+\chapter{Simple model}
+\label{chap:simp_mdl}
+\underline{Inertial measurement unit} IMU \emph{MTi-100 \footnote{xsens technologies \url{http://www.xsens.com/en/general/mti-100-series} }} consists of accelerometer and gyroscope. The accelerometer measures accelerations $a_x,a_y,a_z$ acting along the three Cartesian axes. Likewise gyroscope measures the angular rate $\omega_x,\omega_y,\omega_z$ along the respective axes. IMU measures the acceleration and angular rate with respect to the body frame with which it is attached. Normally the measurement from the IMU is accompanied by noise. In addition to the noise there can be bias acting on the measurements. The stochastic model of the IMU is 
+\begin{equation}
+\begin{split}
+\tilde{a} &= a + b_a + w_a \\
+\dot{b}_a &= w_{ba} \\
+\tilde{\omega} &= \omega + b_\omega + w_\omega \\
+\dot{b}_\omega &= w_{b\omega}
+\end{split}
+\end{equation}
+$\tilde{a}$ is the measured acceleration from the IMU. It is composed of true acceleration \emph{a}, bias in the acceleration measurements $b_a$ and the sensor noise $w_a$. $\tilde{\omega}$ is the angular velocity measured, which comprises of true angular velocity $\omega$, bias $b_{\omega}$ and sensor noise $w_\omega$. The sensor noises $w_a$ and $w_\omega$ are modelled as Gaussian white noise. The bias in acceleration measurement is $b_a$ and that of angular velocity measurement is $b_\omega$. The bias terms are also time varying quantities which follows slow dynamics. Bias dynamics $\dot{b}_a$ and $\dot{b}_\omega$ are modelled as first order Markov process. $w_{b\omega}$ and $w_{bf}$ are the Gaussian white noise associated with the bias. 
+
+\section{Prediction model}

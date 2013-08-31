@@ -1,0 +1,17 @@
+\documentclass[12pt,a4paper]{article}
+%	options include 12pt or 11pt or 10pt
+%	classes include article, report, book, letter, thesis
+\usepackage{mathtools}
+\usepackage{amsfonts}
+
+ \begin{document}
+ \section{Double Pendulum}
+ \begin{center}
+   \begin{tabular}{ p{1cm} | p{3cm} | p{3cm} | p{5cm} }
+     \hline
+     \textbf{Type of filter} & \textbf{States} & \textbf{Measurements} & \textbf{Result} \\ \hline
+           EKF & $q_1,q_2,\dot{q_1},\dot{q_2}$ & $ q_2,\dot{q_2}, \ddot{x}, \ddot{y}, F_x,F_y$ & Good estimation of $q_1 and \dot{q_1}$ \\ \hline
+           UKF & $q_1,q_2,\dot{q_1},\dot{q_2}$ & $ q_2,\dot{q_2}, \ddot{x}, \ddot{y},F_x,F_y$ & Good estimation of $q_1 and \dot{q_1}$ \\ \hline
+   \end{tabular}
+ \end{center}
+ \end{document}
