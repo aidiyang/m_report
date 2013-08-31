@@ -59,6 +59,7 @@ At each time step these Jacobian matrices are evaluated with current predicted s
 \subsubsection{Algorithm}
 \textbf{Predict}
 \begin{equation}
+\label{eq:ekf_predict}
 \begin{split}
 %\text{Project the state}\\
 \hat{x}_k^- &= f(\hat{x}_{k-1},u_k,0)\\
@@ -68,9 +69,10 @@ P_k^- &= A_kP_{k-1}A_k^T + W_kQ_{k-1}W_k^T\\
 \end{equation}
 \textbf{Correct}\\
 \begin{equation}
+\label{eq:ekf_correct}
 \begin{split}
 K_k &= P_k^-H^T(H_kP_k^-H_k^T + V_kR_kV_k^T)^{-1}\\
-\hat{x}_k &= \hat{x}_k^- + K_k(y_k-h(x_k^-,u_k,0))\\
+\hat{x}_k &= \hat{x}_k^- + K_k(y_k-h(\hat{x}_k^-,u_k,0))\\
 P_k &= (I- K_kH_k)P_k^-
 \end{split}
 \end{equation}

@@ -1,3 +1,4 @@
+
 \documentclass[a4paper,11pt,twoside,DIV10,english,numbers=noendperiod]{scrbook}
 \usepackage[a4paper,left=3.5cm,right=2.5cm,bottom=3.5cm,top=3cm]{geometry}
 %{report}
@@ -180,33 +181,33 @@
   \includegraphics[width=1.0\textwidth]{Bilder/tud_logo_rgb}
  \end{minipage}
  
- \vspace*{1.7cm}
- \begin{center}
-  \noindent{
- \begin{minipage}{0.55\linewidth}
-	\hrulefill
-  \vspace{2.0cm}
- \end{minipage}}
+ \vspace*{5.7cm}
+ %\begin{center}
+ % \noindent{
+ %\begin{minipage}{0.55\linewidth}
+%	\hrulefill
+ % \vspace{2.0cm}
+% \end{minipage}}
  \hfil
- \begin{minipage}{0.4\linewidth}
+ %\begin{minipage}{0.4\linewidth}
   % empty
- \end{minipage}
- \begin{minipage}{0.15\linewidth}
+ %\end{minipage}
+ %\begin{minipage}{0.15\linewidth}
   % empty
- \end{minipage}
+ %\end{minipage}
  \hfil
- \begin{minipage}{0.55\linewidth}
+ \begin{minipage}{0.7\linewidth}
   \begin{center}
-    \Large\textbf{Master Thesis}
+    \Huge\textbf{Master Thesis}
   \end{center}
   \begin{center}
-    \large{Estimation of Underactuated Degrees of Freedom(DOF's) in Humanoid Robots}\\[3ex]
+    \huge{Estimation of Underactuated Degrees of Freedom(DOF's) in Humanoid Robots}\\[3ex]
   \end{center}
   \vspace{0.75cm}
   \begin{center}
-    \normalsize{Rajesh Rajendran}\\
+    \large{Rajesh Rajendran}\\
  
- \small{rajesh.rajendran@tu-dortmund.de}\\[2ex]
+ \normalsize{rajesh.rajendran@tu-dortmund.de}\\[2ex]
     \large{\today}
   \end{center}
  \end{minipage}
@@ -215,11 +216,11 @@
   % empty
  \end{minipage}
  \begin{minipage}{0.55\linewidth}
- \vspace{2.0cm}
-  \hrulefill
+% \vspace{2.0cm}
+%  \hrulefill
  \end{minipage}
- \end{center}
- \vspace*{2cm}
+% \end{center}
+ %\vspace*{2cm}
 
  \vfill
  			\rmfamily
@@ -254,7 +255,7 @@
     \pagenumbering{arabic}
     \parindent 0pt
     \input{Makros.tex}
-    \input{testpage.tex}
+%    \input{testpage.tex}
 
     %%%%%%%%%%%
     % Kapitel %
@@ -265,7 +266,8 @@
     \input{Kapitel/Grundlagen/state_estimation.tex}
     \input{Kapitel/Grundlagen/kalman_filtering.tex}
     \input{Kapitel/Grundlagen/modelling.tex}
-    %\input{Kapitel/Zusammenfassung/zusammenfassung.tex}
+    \input{Kapitel/Grundlagen/simple_model.tex}
+    \input{Kapitel/Zusammenfassung/appendix.tex}
 
     %%%%%%%%%%
     % Anhang %
@@ -286,8 +288,11 @@
     %\bibliographystyle{gerplain}
     %\bibliographystyle{unsrt}
     \bibliographystyle{alphadin}
-    \bibliography{literatur}
-		
+    %\bibliography{literatur}
+    \bibliography{thesis}
+    % To complie succesfully wit bibtex use the following sequence of operation
+    % F1 -> F11 -> F1 -> F1
+    		
     % Erklaerung
     \newpage
     \thispagestyle{myheadings}
