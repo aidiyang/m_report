@@ -1,13 +1,8 @@
 %\def\dfdx#1#2{\frac{\partial {#1}}{\partial {#2}}}
-%\begin{document}
-%\newpage
 \chapter{Multi body system model}
 \label{chap:multi_mdl}
-This chapter discusses two modelling approaches used in the Kalman filter.
-% Multi body system 
-In the first approach, the robot is modelled as multi body dynamic system in which the motion of the robot is caused by application of torques at the respective joints.
-% sensor fusion
-In the second approach a sensor fusion algorithm is implemented which depends on the motion equations developed from a simplified model of a inertial navigation system.
+In this chapter a multi body dynamic system model is used in the prediction step of EKF. Here, the robot is modelled as multi body dynamic system in which the motion of the robot is caused by application of torques at the respective joints.
+
 \section{Multi body system}
 Humanoid robots consists of group of rigid bodies that are joined together to resemble the human skeletal structure. As human beings are driven by the muscular system, humanoids are driven by electric, hydraulic or pneumatic actuators, which apply torques at the joints of the robot. The dynamics of robots describes how the robots moves in response to the actuator forces or torques. The dynamics of the robot is defined by the  equations of motion of the rigid body system. In general there are several approaches in deriving equations of motion of rigid body dynamic system. One such approach is by deriving Lagrange equation. Lagrangian analysis relies on the energy properties of the mechanical system to derive the equations of motion. The \emph{Lagrangian, L,} is defined as the difference between kinetic and potential energy of the system. $$ L(q,\dot{q}) = T(q,\dot{q}) - V(q)$$ \emph{q} represents the vector of joint angles \emph{T} and \emph{V} represents the kinetic and potential energies of the system. \emph{q} is called the generalized coordinates of the system as the specification of joint angles uniquely determines position of all the rigid bodies.
 
@@ -38,7 +33,7 @@ Figure \ref{fig:biped_simplelow} shows a biped with two legs, which is connected
 \label{fig:rbody}
 \end{center}
 \end{figure}
-where \emph{x,y,z} are the translational degrees of freedom and \emph{roll,pitch,yaw} are the rotational degrees of freedom which corresponds to rotation around \emph{x,y,z} axes respectively. In biped the base is a free rigid body which is unactuated. The base has all six degrees of freedom unless it is constrained to the surface as shown in Figure \ref{fig:biped_simplelow}. Since the base has all the six degrees of freedom it is called \emph{floating base} (i.e it is considered as floating in space). The equation of motion of the floating base is given by Newton-Euler equation of motion in body coordinates \citet[chapter 4]{mur94}.
+where \emph{x,y,z} are the translational degrees of freedom and \emph{roll,pitch,yaw} are the rotational degrees of freedom which corresponds to rotation around \emph{x,y,z} axes respectively. In biped the base is a free rigid body which is unactuated. The base has all six degrees of freedom unless it is constrained to the surface as shown in Figure \ref{fig:biped_simplelow}. Since the base has all the six degrees of freedom it is called \emph{floating base} (i.e it is considered as floating in space). The equation of motion of the floating base is given by Newton-Euler equation of motion in body coordinates \cite[chapter 4]{mur94}.
 \footnotetext[1]{Image source:\url{http://www.cncexpo.com/Images/pitchyawroll.jpg}}
 \begin{equation}
 \label{eq:dyn_rig_bdy}
@@ -116,8 +111,8 @@ where $y = [x_f,q]^T$ is the combined state variables of the biped. $M(y),C(y),g
 \emph{q} is a vector of joint variables given in generalized coordinates. $x_{f}=[p,\theta]^{T}$ is a vector of position and orientation defined with respect to spatial frame. $p=[p_x,p_y,p_z]$ is a vector representing  the position of origin of floating base with respect to spatial frame and $\theta=[\theta_{x},\theta_{y},\theta_{z}]$ is a vector of \underline{Euler angles}  that describes the rotation of floating base frame with respect to spatial frame. $q \in \Re^{25}$ is the vector of joint angles. $\dot{y}=[V^{b},\dot{q}]^T \in \Re^{31}$ is the vector of generalized velocities. $V^b= [v^b,\omega^b]^T \in \Re^{6}$ is the body velocity, it is defined in \ref{eq:body_vel}. $\dot{q} \in \Re^{25}$ is the vector of joint velocities. $\ddot{y}\in \Re^{31}$ is the vector of generalized accelerations. $M(y)\in \Re^{31 \times 31}$ is the inertia matrix, $C(y,\dot{y})\in \Re^{31 \times 31}$ is the matrix accounting for centrifugal and Coriolis forces. $g(y) \in \Re^{31}$ is the gravity vector. $\tau \in \Re^{31}$ is the vector of actuating torques acting on the robot, where the first six components are zero because those degrees of freedom corresponding to $x_f$ are not actuated. $J_r(y)^{T},J_l(y)^{T} \in \Re^{31 \times 6}$ represents the body Jacobian that transforms the wrenches $W_r,W_l \in \Re^{6}$ applied in the right and left foot to generalized forces acting on the robot.
 
 Integrating the forward dynamics Equation \ref{eq:motion} once gives the velocity of all the bodies in the system and integrating it twice gives the position or orientation of the system. $$ acc = \dfdx{^2pos}{t}, vel = \dfdx{pos}{t} $$ 
-\subsection{Space representation:}
-The multi body system would be modeled with position(\emph{pos}) and velocity(\emph{vel}) as the state variables which leads to following form 
+\subsection{State space representation:}
+The multi body system would be modelled with position(\emph{pos}) and velocity(\emph{vel}) as the state variables which leads to following form 
 \begin{equation}
 \label{eq:newton_motion}
  \begin{bmatrix}
@@ -178,17 +173,15 @@ The state space representation of the equation of motions of \emph{Toro} can be 
 	M(y)^{-1}(-C(y,\dot{y})\dot{y} -g(y) +  J_r(y)^{T}W_{r} +J_l(y)^{T}W_{l} + \tau)	
 	\end{bmatrix}
 	\\
-	\end{equation}
-	
-
+	\end{equation}	
 \begin{itemize}
 \item $$ y = \begin{bmatrix} p \\ \theta \\ q \end{bmatrix} = \begin{bmatrix} x_f \\ q \end{bmatrix}, \dot{y} = \begin{bmatrix} V^b \\ \dot{q}\end{bmatrix}, x = \begin{bmatrix}y \\ \dot{y}\end{bmatrix} $$  $x_f,q$ are the parameters of the floating base and joints as described in \ref{eq:motion}. $V^b$ is the body velocity as defined in \ref{eq:body_vel} and $\dot{q}$ is the velocities of the joints of the robot. \emph{x} is the vector of system states.
 \item $T(\theta_{f})$ is the matrix that transforms the angular velocity $\omega_{f}^{b}$ to the time derivative of Euler angles $\dot{\theta}_{f}$. i.e $\omega_{f}^{b}=T(\theta_{f}) \dot{\theta}_{f}$. 
 \item R is the rotation matrix which describes the rotation of floating base with respect to spatial frame. $ R = R_x(\theta_x) R_y(\theta_y) R_z(\theta_z)$
 \end{itemize}
 
-\section{Prediction Step}
-The prediction equations of EKF are given in Equation \ref{eq:ekf_predict}. For the sake of simplicity we assume the process noise acting on the model is uncorrelated. i.e The noise acting on each state is independent $$W_k = I_{3}$$. Substituting the value of $W_k$ in Equation \ref{eq:ekf_predict}
+\section{Prediction step}
+The prediction equations of EKF are given in Equation \ref{eq:ekf_predict}. For the sake of simplicity we assume the process noise acting on the model is uncorrelated. i.e The noise acting on each state is independent $$W_k = I_{n}$$. \emph{n} is the number of states. Substituting the value of $W_k$ in Equation \ref{eq:ekf_predict}
 \begin{equation}
 \label{eq:predict}
 \begin{split}
@@ -270,7 +263,7 @@ From Equation \ref{eq:toro_dis}
 	\end{cases}
 \]
 \begin{itemize}
-\item $l_{25,i}$ is a colomn vector of length 25 with 1 in the \emph{ith} position and zeros in other position [Appendix \ref{sec:symbols}].
+\item $l_{25,i}$ is a column vector of length 25 with 1 in the \emph{ith} position and zeros in other position [Appendix \ref{sec:symbols}].
 \end{itemize}
 \item $\hat{\dot{y}}_{k+1}^- = \hat{\dot{y}}_{k}+ \Delta t \Lambda $
 $$\Lambda = M(\hat{y}_{k})^{-1}(-C(\hat{y}_{k},\hat{\dot{y}}_{k})\hat{\dot{y}}_{k} - g(\hat{y}_{k}) + J_r(\hat{y}_{k})^{T}W_{r,k+1} +J_l(\hat{y}_{k})^{T}W_{l,k+1} + \tau_{k+1})$$
@@ -308,23 +301,23 @@ A_k = \left(
 \end{equation}
 Substituting Equations \ref{eq:toro_dis} and \ref{eq:sys_mat} in \ref{eq:predict} and substituting the values of process covariance $Q_k$ completes the prediction stage of EKF.
 
-\section{Update Step}
+\section{Update step}
 The update equation of the EKF is given in Equation \ref{eq:ekf_correct}. The measurement equation of the system is given by $$\hat{y}_{k+1} = h(\hat{x}_{k+1}^-,u_{k+1},0)$$.For the sake of simplicity let us assume the measurement of noise are independent. $$V_k = I_3$$. Substituting the assumption in \ref{eq:ekf_correct}
 \begin{equation}
 \label{eq:correct}
 \begin{split}
-K_{k+1} &= P_{k+1}^-H_{k+1}^T(H_{k+1}P_{k+1}^-H_{k+1}^T + R_{k+1})^{-1}\\
+K_{k+1} &= P_{k+1}^-\hat{H}_{k+1}^{T-}(\hat{H}_{k+1}^-P_{k+1}^-\hat{H}_{k+1}^{T-} + R_{k+1})^{-1}\\
 \hat{x}_{k+1} &= \hat{x}_{k+1}^- + K_{k+1}(y_{k+1}-\hat{y}_{k+1})\\
-P_{k+1} &= (I- K_{k+1}H_{k+1})P_{k+1}^-
+P_{k+1} &= (I- K_{k+1}\hat{H}_{k+1}^-)P_{k+1}^-
 \end{split}
 \end{equation}
-The measurements of \emph{Toro} are Cartisian accelerations($acc^b$) of the hip measured by IMU, angular velocity($\omega^b)$ of the hip measured by the gyroscope, joint angles($q_j$) and joint velocities($\dot{q_j}$) measured by joint encoders.
+The measurements of \emph{Toro} are Cartesian accelerations($acc^b$) of the hip measured by accelerometer($IMU_{acc}$), angular velocity($\omega^b$) of the hip measured by the gyroscope($IMU_{gyro}$), joint angles($q_j$) and joint velocities($\dot{q_j}$) measured by joint encoders.
 \begin{equation}
     \label{eq:y_sens}
      y_{sens} = \begin{bmatrix} acc^b \\ \omega^b \\ q_j \\ \dot{q}_j \end{bmatrix} 
 \end{equation}
 \begin{itemize}
-    \item The simplified model of IMU is $$ acc^b= \begin{bmatrix} acc^b_x \\ acc^b_y \\ acc^b_z \end{bmatrix} =  \begin{bmatrix}\ddot{p}_x^b \\ \ddot{p}_y^b \\ \ddot{p}_z^b \end{bmatrix} - R^T \begin{bmatrix}0 \\0 \\-9.81 \end{bmatrix}$$ \emph{R} is the rotational matrix that transforms a vector in body coordinate frame to spatial frame.
+    \item The simplified model of $IMU_{acc}$ is $$ acc^b= \begin{bmatrix} acc^b_x \\ acc^b_y \\ acc^b_z \end{bmatrix} =  \begin{bmatrix}\ddot{p}_x^b \\ \ddot{p}_y^b \\ \ddot{p}_z^b \end{bmatrix} - R^T \begin{bmatrix}0 \\0 \\-9.81 \end{bmatrix}$$ \emph{R} is the rotational matrix that transforms a vector in body coordinate frame to spatial frame.
     \item $\ddot{p}^b$ is computed from the forward dynamic equation \ref{eq:motion} using the predicted values of the state
     \item $\omega_{f}^{b} $ is the vector of angular rates of the hip(floating base) measured by gyroscope. The measurements are in the frame attached to the hip. 
 \end{itemize}
@@ -345,12 +338,12 @@ Along with the sensor measurements kinematic constraints are also considered as 
     p_{contact} \\ V_{contact}
     \end{bmatrix}\\
     p_{contact} &= \begin{bmatrix}p_{RF}\\ p_{LF}\end{bmatrix}\\
-     V_{contact} &= \begin{bmatrix} V_{RF}^b \\ V_{LF}^b \end{bmatrix} = \begin{bmatrix} J_r(\hat{y})^T \hat{\dot{q}} \\ J_l(\hat{y})^T\hat{\dot{q}} \end{bmatrix}
+     V_{contact} &= \begin{bmatrix} V_{RF}^b \\ V_{LF}^b \end{bmatrix} = \begin{bmatrix} J_r(\hat{y})^T \hat{\dot{y}} \\ J_l(\hat{y})^T\hat{\dot{y}} \end{bmatrix}
     \end{split}
 \end{equation}
 \begin{itemize}
 \item $p_{RF},p_{LF}$ are the vectors of contact points in right foot and left foot defined with respect to spatial frame.
-\item $J_r(y), J_l(y)$ are the Jacobians of right and left foot that relates the joint velocity to the velocity of right and left foot respectively. \underline{[Appendix Define Body Jacobian]}
+\item $J_r(y), J_l(y)$ are the Jacobian of right and left foot that relates the joint velocity to the velocity of right and left foot respectively. \underline{[Appendix Define Body Jacobian]}
 \end{itemize}
 \begin{equation}
     \begin{split}
@@ -359,7 +352,7 @@ Along with the sensor measurements kinematic constraints are also considered as 
     \end{split}
 \end{equation}
 \begin{itemize}
-\item $\hat{H}_{RF},\hat{H}_{LF}$ are the homogeneous transformation matrices of the right and left foot.\underline{Appendix Homogeneous Transformation Matrix}
+\item $\hat{H}_{RF},\hat{H}_{LF}$ are the homogeneous transformation matrices of the right and left foot [Appendix \ref{sec:htm}]
 \item In Figure \ref{fig:biped_feet} $p_A,p_B,p_C,p_D$ are the corner points defined with respect to respective foot frame \emph{RF,LF}.
 \end{itemize}
 The full measurement equations of is obtained combining Equations \ref{eq:y_sens} and \ref{eq:y_kin} 
@@ -367,15 +360,15 @@ The full measurement equations of is obtained combining Equations \ref{eq:y_sens
     \label{eq:y_msr}
     y_{k+1} = \begin{bmatrix} y_{sens,k+1} \\ y_{kin,k+1} \end{bmatrix}
 \end{equation}
-The measurement sensititvity matrix can be computed by taking the parial derivative of the mesaurement equation \ref{eq:y_msr} with respect to system states \emph{x}.
+The measurement sensitivity matrix can be computed by taking the parial derivative of the measurement equation \ref{eq:y_msr} with respect to system states \emph{x}.
 \begin{enumerate}
 \item $\hat{acc}^b_{k+1} = \ddot{p}_{k+1}-\hat{R}^T\begin{bmatrix} 0 \\ 0 \\ -9,81 \end{bmatrix}$
 \begin{equation}
     \label{eq:dacc_msrdx}
-    \dfdx{\hat{acc}_{k+1}^b}{x} = \dfdx{\hat{\ddot{p}}_{k+1}^b}{x} + \dfdx{\hat{R}^T_{k+1}}{x}\begin{bmatrix} 0 \\ 0 \\ -9,81 \end{bmatrix}  \in \Re^{3 \times 62}
+    \dfdx{\hat{acc}_{k+1}^{b-}}{x} = \dfdx{\hat{\ddot{p}}_{k+1}^{b-}}{x} + \dfdx{\hat{R}^{T-}_{k+1}}{x}\begin{bmatrix} 0 \\ 0 \\ -9,81 \end{bmatrix}  \in \Re^{3 \times 62}
 \end{equation}
 \begin{itemize}
-    \item $\dfdx{\hat{\ddot{p}}_{k+1}^b}{x}$ is parital derivative of acceleration of body with respect to states of the system. It is computed by substituting $\hat{x}_{k+1}^-$ for $\hat{x}_k$ in Equation \ref{eq:dydx} and then subtracting  $l_{31,i-31}$ for the case \emph{i > 31}. The first three rows of the reuslting matrix is the partial derivative of acceleration with respect to states.
+    \item $\dfdx{\hat{\ddot{p}}_{k+1}^b}{x}$ is partial derivative of acceleration of body with respect to states of the system. It is computed by substituting $\hat{x}_{k+1}^-$ for $\hat{x}_k$ in Equation \ref{eq:dydx} and then subtracting  $l_{31,i-31}$ for the case \emph{i > 31}. The first three rows of the resulting matrix is the partial derivative of acceleration with respect to states.
     \item $\dfdx{\hat{R}^T_{k+1}}{x}$ is partial derivative of Rotation matrix with respect to system state.[Appendix \ref{sec:rot_mat}]
 \end{itemize}
 
@@ -416,55 +409,62 @@ The measurement sensititvity matrix can be computed by taking the parial derivat
  0 & \text{otherwise}
  \end{cases}
  \]
- 
-\end{enumerate}
+ \item $\hat{p}_{RF,k+1}^- = \hat{H}_{RF,k+1}^- p = \begin{bmatrix} \hat{H}_{RF,k+1}^- p_{A}\\ \hat{H}_{RF,k+1}^- p_{B}\\ \hat{H}_{RF,k+1}^- p_{C}\\ \hat{H}_{RF,k+1}^- p_{D}\end{bmatrix}$
 \begin{equation}
-\label{eq:dmsr_dpc}
-\dfdx{p_{c}^{b}}{x} = \left(\dfdx{p_{c}^{b}}{x_{1}}, \dfdx{p_{c}^{b}}{x_{2}}, \cdots , \dfdx{p_{c}^{b}}{x_{62}}\right) \in \Re^{12 \times 62}
+    \label{eq:dpr_msrdx}
+    \begin{split}
+    &\dfdx{\hat{p}_{RF,k+1}^-}{x} = \dfdx{\hat{H}_{RF,k+1}^-}{x}p\in \Re^{12 \times 62}
+ \\
+     \dfdx{\hat{H}_{RF,k+1}^-}{x} = &\left( \dfdx{\hat{H}_{RF,k+1}^-}{x_1}, \dfdx{\hat{H}_{RF,k+1}^-}{x_2},\cdots, \dfdx{\hat{H}_{RF,k+1}^-}{x_{62}} \right)     
+     \end{split}
+\end{equation}
+\begin{itemize}
+     \item $\dfdx{\hat{H}_{RF,k+1}^-}{x}$ is the derivative of homogeneous transformation matrix with respect to the system states [Appendix \ref{sec:htm}].
+\end{itemize}
+ \item $\hat{p}_{LF,k+1}^- = \hat{H}_{LF,k+1}^- p$
+\begin{equation}
+    \label{eq:dpl_msrdx}
+    \dfdx{\hat{p}_{LF,k+1}^-}{x} = \dfdx{\hat{H}_{LF,k+1}^-}{x}p\in \Re^{12 \times 62}
+\end{equation}
+\begin{itemize}
+    \item $\dfdx{\hat{p}_{LF,k+1}^-}{x}$ is computed similar to $\dfdx{\hat{p}_{RF,k+1}^-}{x}$ in Equation \ref{eq:dpr_msrdx}.
+\end{itemize}
+\item $\hat{V}_{contact,k+1}^b = \begin{bmatrix} \hat{V}_{RF,k+1}^b \\ \hat{V}_{LF,k+1}^b \end{bmatrix} 
+=\begin{bmatrix}\hat{J}_{r,k+1}^{T-} \hat{\dot{y}}_{k+1}\\ \hat{J}_{l,k+1}^{T-} \hat{\dot{y}}_{k+1}\end{bmatrix}$
+\begin{equation}
+    \label{eq:dv_msrdx}
+     \dfdx{\hat{V}_{cnt,k+1}^-}{x} = \left( \dfdx{\hat{V}_{cnt,k+1}^-}{x_1}, \dfdx{\hat{V}_{cnt,k+1}^-}{x_2},\cdots, \dfdx{\hat{V}_{cnt,k+1}^-}{x_{62}} \right)\in \Re^{12 \times 62}
 \end{equation}
 \[
-\dfdx{p_{c}^{b}}{x_{i}} =
-\begin{cases}
-\left(
-\begin{aligned}
--H_{sr}^{-1}\dfdx{H_{sr}}{x_{i}}H_{sr}^{-1}p_{a,r}^{s} \\
--H_{sr}^{-1}\dfdx{H_{sr}}{x_{i}}H_{sr}^{-1}p_{b,r}^{s} \\
--H_{sl}^{-1}\dfdx{H_{sl}}{x_{i}}H_{sl}^{-1}p_{a,l}^{s} \\
--H_{sl}^{-1}\dfdx{H_{sl}}{x_{i}}H_{sl}^{-1}p_{b,l}^{s}
-\end{aligned} \right)
-& \text{if } 1 \leq i \leq 31 \\
-0 &\text{otherwise}
-\end{cases}
-\]
- \begin{equation}
- \label{eq:dmsr_dvc}
-\dfdx{\hat{V}_{c}^{b}}{x} = \left(\dfdx{\hat{V}_{c}^{b}}{x_{1}}, \dfdx{\hat{V}_{c}^{b}}{x_{2}}, \cdots , \dfdx{\hat{V}_{c}^{b}}{x_{62}}\right) \in \Re^{12 \times 62}
-\end{equation}
-\[
-\dfdx{\hat{V}_{c}^{b}}{x_{i}} = 
+\dfdx{\hat{V}_{cnt,k+1}^{-}}{x_{i}} = 
 	\begin{cases}
 	\left(
 	\begin{aligned}
-	\dfdx{J_{r}^{b}}{x_{i}}\dot{q} \\
-	\dfdx{J_{l}^{b}}{x_{i}}\dot{q} \\
+	\dfdx{\hat{J}_{r,k+1}^{T-}}{x_{i}}\dot{\hat{y}}^- \\
+	\dfdx{\hat{J}_{l,k+1}^{T-}}{x_{i}}\dot{\hat{y}}^- \\
 	\end{aligned} \right)
 	& \text{if } 1 \leq i \leq 31 \\
 	\begin{pmatrix}
-	col(J_{r}^{b},i)\\ col(J_{l}^{b},i)
+	col(\hat{J}_{r,k+1}^{T-},i)\\ col(\hat{J}_{l,k+1}^{T-},i)
 	\end{pmatrix}
 	 	& \text{if } 32 \leq i \leq 62
 	\end{cases}
 \]
-The measurement matrix of the system is given by Eq. \ref{eq:dmsr_q}, \ref{eq:dmsr_dq}, \ref{eq:dmsr_dacc}, \ref{eq:dmsr_dtheta}, \ref{eq:dmsr_dpc}, \ref{eq:dmsr_dvc}
+\begin{itemize}
+    \item $ \hat{V}_{cnt,k+1}^{-}= \hat{V}_{contact,k+1}^b $
+\end{itemize}
+\end{enumerate}
+The measurement sensitivity matrix $\hat{H}_{k+1}^-$ of the system is given by Equations \ref{eq:dacc_msrdx}, \ref{eq:dw_msrdx},\ref{eq:dq_msrdx}, \ref{eq:ddq_msrdx}, \ref{eq:dpr_msrdx}, \ref{eq:dpl_msrdx} and \ref{eq:dv_msrdx}.
 \begin{equation}
-C = \left(
+\hat{H}^-_{k+1} = \left(
    \begin{aligned}
-   \dfdx{q}{x} \\
-	 \dfdx{\dot{q}}{x}\\
-	 \dfdx{\ddot{p}_{f}^{b}}{x}\\
-	 \dfdx{\dot{\theta}_{f}^{b}}{x}\\
-	 \dfdx{p_{c}^{b}}{x}\\
-	 \dfdx{\hat{V}_{c}^{b}}{x} 
+   \dfdx{\hat{acc}_{k+1}^{b-}}{x} \\
+   \dfdx{\hat{\omega}^{b-}_{k+1}}{x} \\
+    \dfdx{\hat{q}_{k+1}^-}{x} \\
+    \dfdx{\hat{\dot{q}}_{k+1}^-}{x} \\
+    \dfdx{\hat{p}_{RF,k+1}^-}{x} \\
+    \dfdx{\hat{p}_{LF,k+1}^-}{x} \\
+	 \dfdx{\hat{V}_{cnt,k+1}^{-}}{x} 
    \end{aligned}
 	 \right) \in \Re^{80 \times 62}
 \end{equation}
@@ -483,6 +483,7 @@ This is a code to format lengthy equations.
 \]
 \end{comment}
 \end{enumerate}
+\begin{comment}
 \paragraph{Observability:}
 State space representation of a linear system is,
 \begin{equation}
@@ -503,6 +504,6 @@ C\\ CA \\ CA^{2}\\ \vdots \\ CA^{n-1}
 , rank(obs) =n
 \end{equation}
 For our system to be observable $rank(obs) = 62$.
-
-\textbf{ Make plots from files act=datsrc/ROBOT-TILT-0807.mat est=estimates-data/est-090701.mat or *080703.mat }
+\end{comment}
+%\textbf{ Make plots from files act=datsrc/ROBOT-TILT-0807.mat est=estimates-data/est-090701.mat or *080703.mat }
 %\end{document}

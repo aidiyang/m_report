@@ -7,20 +7,25 @@
 \contentsline {subsection}{\numberline {2.1.2}Extended Kalman filter}{5}{subsection.2.1.2}
 \contentsline {subsubsection}{\numberline {2.1.2.1}Algorithm}{6}{subsubsection.2.1.2.1}
 \contentsline {subsection}{\numberline {2.1.3}Unscented Kalman filter}{6}{subsection.2.1.3}
-\contentsline {chapter}{\numberline {3}Multi body system model}{7}{chapter.3}
-\contentsline {section}{\numberline {3.1}Multi body system}{7}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Space representation:}{11}{subsection.3.1.1}
-\contentsline {section}{\numberline {3.2}Prediction Step}{13}{section.3.2}
-\contentsline {section}{\numberline {3.3}Update Step}{15}{section.3.3}
-\contentsline {paragraph}{Observability:}{19}{paragraph*.9}
-\contentsline {chapter}{\numberline {4}Simple model}{21}{chapter.4}
-\contentsline {section}{\numberline {4.1}Prediction model}{22}{section.4.1}
-\contentsline {chapter}{\numberline {5}Appendix}{23}{chapter.5}
-\contentsline {section}{\numberline {5.1}Symbols}{23}{section.5.1}
-\contentsline {section}{\numberline {5.2}Abbreviation}{24}{section.5.2}
-\contentsline {section}{\numberline {5.3}Rotation matrix}{24}{section.5.3}
-\contentsline {section}{\numberline {5.4}Transformation of angular velocity to Euler rates}{25}{section.5.4}
-\contentsline {chapter}{List of figures}{29}{appendix*.10}
-\contentsline {chapter}{Bibliography}{31}{appendix*.10}
-\contentsline {chapter}{Erkl\"{a}rung}{32}{appendix*.11}
+\contentsline {chapter}{\numberline {3}Double pendulum}{7}{chapter.3}
+\contentsline {chapter}{\numberline {4}Multi body system model}{9}{chapter.4}
+\contentsline {section}{\numberline {4.1}Multi body system}{9}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}State space representation:}{13}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}Prediction step}{15}{section.4.2}
+\contentsline {section}{\numberline {4.3}Update step}{17}{section.4.3}
+\contentsline {chapter}{\numberline {5}Model based on Inertial Measurement Unit}{23}{chapter.5}
+\contentsline {section}{\numberline {5.1}Simplified motion model}{23}{section.5.1}
+\contentsline {section}{\numberline {5.2}State space representation}{24}{section.5.2}
+\contentsline {section}{\numberline {5.3}Prediction step}{25}{section.5.3}
+\contentsline {section}{\numberline {5.4}Update step}{26}{section.5.4}
+\contentsline {chapter}{\numberline {6}Appendix}{29}{chapter.6}
+\contentsline {section}{\numberline {6.1}Symbols}{29}{section.6.1}
+\contentsline {section}{\numberline {6.2}Abbreviation}{30}{section.6.2}
+\contentsline {section}{\numberline {6.3}Rotation matrix}{30}{section.6.3}
+\contentsline {section}{\numberline {6.4} Homogeneous transformation matrix}{32}{section.6.4}
+\contentsline {section}{\numberline {6.5}Transformation of angular velocity to Euler rates}{32}{section.6.5}
+\contentsline {chapter}{\numberline {7}Conclusion}{35}{chapter.7}
+\contentsline {chapter}{List of figures}{37}{appendix*.9}
+\contentsline {chapter}{Bibliography}{39}{appendix*.9}
+\contentsline {chapter}{Erkl\"{a}rung}{40}{appendix*.10}
 \contentsfinish 

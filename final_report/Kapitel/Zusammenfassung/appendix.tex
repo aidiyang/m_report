@@ -13,9 +13,12 @@ $l_{m,n}$    	& Zero vector of length \emph{m}, with 1 in \emph{nth} position of
 
 \section{Abbreviation}
 \begin{tabular}{c l}
-EKF & Extended Kalman Filter \\
-IMU & Inertial Measurement Unit \\
-FTS & Force Torque sensor \\
+EKF & Extended Kalman filter \\
+IMU & Inertial measurement Unit \\
+FTS & Force torque sensor \\
+ODE & Ordinary differential equation\\
+ZMP & Zero moment point\\
+RPY & Roll-Pitch-Yaw
 \end{tabular}
 
 \section{Rotation matrix}
@@ -76,7 +79,7 @@ The partial derivative of the above rotational matrix with respect to the angles
 	\end{bmatrix}
 	\end{split}
 \end{equation}
-\item Rotation matrix for the simplified model in Chapter \ref{chap:simp_mdl}is 
+\item Rotation matrix for the simplified model in Chapter \ref{chap:simp_mdl} is parameterized as RPY angles
 \begin{equation}
 	\label{eq:rot_simp}
 	\begin{split}
@@ -117,6 +120,25 @@ The partial derivative of the above rotational matrix with respect to the angles
 \item $ s_x,s_y,s_z $ are the short hand notations of $sin(\theta_x), sin(\theta_y), sin(\theta_z)$ respectively.
 \end{itemize}
 \end{enumerate}
+\section{ Homogeneous transformation matrix}
+\label{sec:htm}
+Homogeneous transformation matrix is a one form of representation of rigid body transformation.
+\begin{equation}
+    H = \begin{bmatrix} R(\theta) & p \\ \textbf{0}_{3,1} &1 \end{bmatrix} \in SE(3)
+\end{equation}
+\begin{itemize}
+    \item $R(\theta)$ is the rotation matrix representing rotation of body frame with respect to spatial frame. 
+    \item $p = \begin{bmatrix} p_x \\ p_y \\ p_z \end{bmatrix} = \begin{bmatrix} p_1 \\ p_2 \\ p_3 \end{bmatrix} $ is the position of the body frame relative to spatial frame. 
+
+\end{itemize}
+The partial derivative of homogeneous transformation matrix with respect to poition and orientation.
+\begin{equation}
+    \begin{split}
+    \dfdx{H}{p_i} &= \begin{bmatrix} \textbf{0}_{3,3} &e_i \\ \textbf{0}_{1,3} &1 \end{bmatrix} \hspace{2cm} i={1,2,3} \\
+    \dfdx{H}{\theta_i} &= \begin{bmatrix} \dfdx{R}{\theta_i} &\textbf{0}_{3,1} \\ \textbf{0}_{1,3} &1 \end{bmatrix}
+    \end{split}
+\end{equation}
+
 \section{Transformation of angular velocity to Euler rates}
 \label{sec:avel_trfm}
 The relation between the angular velocity and time derivative of rotational matrix is $$ \omega^b = (R^T \dot{R}) ^ \vee $$
