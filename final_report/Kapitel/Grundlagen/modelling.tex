@@ -1,22 +1,23 @@
 %\def\dfdx#1#2{\frac{\partial {#1}}{\partial {#2}}}
 \chapter{Multi body system model}
 \label{chap:multi_mdl}
-In this chapter a multi body dynamic system model is used in the prediction step of EKF. Here, the robot is modelled as multi body dynamic system in which the motion of the robot is caused by application of torques at the respective joints.
+A multibody system model describes the dynamics of the group of interconnected rigid bodies that exhibits translational and rotational displacement. In this chapter the multi body system model of \emph{Toro} is derived and it is used as the prediction model in EKF.
 
 \section{Multi body system}
-Humanoid robots consists of group of rigid bodies that are joined together to resemble the human skeletal structure. As human beings are driven by the muscular system, humanoids are driven by electric, hydraulic or pneumatic actuators, which apply torques at the joints of the robot. The dynamics of robots describes how the robots moves in response to the actuator forces or torques. The dynamics of the robot is defined by the  equations of motion of the rigid body system. In general there are several approaches in deriving equations of motion of rigid body dynamic system. One such approach is by deriving Lagrange equation. Lagrangian analysis relies on the energy properties of the mechanical system to derive the equations of motion. The \emph{Lagrangian, L,} is defined as the difference between kinetic and potential energy of the system. $$ L(q,\dot{q}) = T(q,\dot{q}) - V(q)$$ \emph{q} represents the vector of joint angles \emph{T} and \emph{V} represents the kinetic and potential energies of the system. \emph{q} is called the generalized coordinates of the system as the specification of joint angles uniquely determines position of all the rigid bodies.
+The humanoid robots consists of group of rigid bodies(links) connected together by set of joints. Joints are mechanical components that connects two or more rigid bodies(links) and constraint their motion. Human beings are able to produce a motion with the help of the muscular system, where as the humanoids are driven by electric, hydraulic or pneumatic actuators, that apply torques to the joints of the robot which in turn produces the motion \cite[Chapter 2]{mur94}. The motion of bodies is described by their kinematic behaviour but the dynamic behaviour results from the equilibrium of applied froces and the rate of change of momentum. The dynamics of a robot describes how the robot moves in response to the actuator forces or torques. The dynamics of a multi body system(robot) is described by the equations of motion. In general there are several approaches in deriving equations of motion of rigid body dynamic system. One such approach is by deriving Lagrange equation. Lagrangian analysis relies on the energy properties of the mechanical system to derive the equations of motion. Lagrangian \emph{L} is defined as the difference between kinetic and potential energy of the system. Lagrangian \emph{L} is $$ L(q,\dot{q}) = T(q,\dot{q}) - V(q),$$ 
+where \emph{q} represents the vector of joint angles, $\dot{q}$ is the vector of angular velocities of the joints, the kinetic and potential energies are represented by \emph{T} and \emph{V}. The joint angles \emph{q} is called the generalized coordinates of the system as the joint angles uniquely determines the position of rigid bodies in the system.
 
-The equations of motion for a rigid body system with generalized coordinates $q \in \Re^m $ is given by, 
+The equations of motion for a rigid body system in generalized coordinates $q \in \Re^m $ is given by
 \begin{align}
-\frac{d}{dt} &\dfdx{L}{\dot{q}}-s\dfdx{L}{q_i} = \Gamma_i && i=1,....,m
+\frac{d}{dt} &\dfdx{L}{\dot{q}} - \dfdx{L}{q_i} = \Gamma_i && i=1,....,m,
 \end{align}
-$\Gamma_i$ is the external force acting on the $i^{th}$ generalized coordinate.
-The general formulation of equation of motion of a multi body system is
+where $\Gamma_i$ is the external force acting on the $i^{th}$ generalized coordinate \cite[Chapter 4]{mur94}.
+Simplifying and rearranging the above equation will result in the general formulation of equations of motion of a multi body system. It is given by
 \begin{equation}
 \label{eq:dyn_mul_bdy}
-M(q)\ddot{q}+C(q,\dot{q})+g(q) = \tau + \tau_{ext}
+M(q)\ddot{q}+C(q,\dot{q})+g(q) = \tau + \tau_{ext},
 \end{equation}
-\emph{M(q)} is the generalized inertia matrix, $C(q,\dot{q})$ is the matrix representing Coriolis and centrifugal forces, \emph{g(q)} is the gravity vector acting on the system and $\tau$ is the actuator torque applied to the joints $\tau_{ext}$ is the external torque acting on the system.
+where \emph{M(q)} is the generalized inertia matrix, $C(q,\dot{q})$ is the matrix representing Coriolis and centrifugal forces, \emph{g(q)} is the gravity vector acting on the system and $\tau$ is the actuator torque applied to the joints $\tau_{ext}$ is the external torque acting on the system.
 \begin{figure}
 \begin{center}
 \includegraphics[trim= 10mm 80mm 10mm 80mm,scale=0.75]{Bilder/model_biped.pdf}
@@ -25,20 +26,21 @@ M(q)\ddot{q}+C(q,\dot{q})+g(q) = \tau + \tau_{ext}
 \end{center}
 \end{figure}
 
-Figure \ref{fig:biped_simplelow} shows a biped with two legs, which is connected to common base. $q$ represents a vector of joint variables which corresponds to angle of the joint. $q_r,q_l$ corresponds to joins in left and right legs respectively. Number of joints corresponds to the number of controllable degrees of freedom of the robot. \emph{Q} is the \underline{configuration space} of the biped. $x_b$ represents the number of degrees of freedom of the base. A rigid body in space has six degrees of freedom as shown in Figure \ref{fig:rbody} 
-\begin{figure}[!htb]
+Figure \ref{fig:biped_simplelow} shows a biped with two legs, which is connected to common base. The generalized coordinates of the robot legs is represneted by the vecotor of joint angles $q$. The vector $q$ consists of two subvectors $q_r,q_l$ that corresponds to angles of the joints in left and right legs respectively. Number of joints in a multi body system is the number of controllable degrees of freedom of the system. \emph{Q} is the configuration space of the biped. Configuration space represents the set of all valid configurations of the system. Each element of $q$ corresponds to the valid configuration of the system \cite[Chapter 2]{mur94}. $x_b$ represents the number of degrees of freedom of the base. A rigid body in space has six degrees of freedom as shown in Figure \ref{fig:rbody}.
+%\begin{figure}[!htb]
+\begin{figure}
 \begin{center}
-\includegraphics[trim= 10mm 100mm 10mm 120mm,scale=0.75]{Bilder/rbody_dof.pdf}
+\includegraphics[trim= 30mm 100mm 10mm 120mm,scale=0.75]{Bilder/rbody_dof.pdf}
 \caption[Degrees of freedom of a rigid body]{Degrees of freedom of a rigid body \footnotemark[1]}
 \label{fig:rbody}
 \end{center}
 \end{figure}
-where \emph{x,y,z} are the translational degrees of freedom and \emph{roll,pitch,yaw} are the rotational degrees of freedom which corresponds to rotation around \emph{x,y,z} axes respectively. In biped the base is a free rigid body which is unactuated. The base has all six degrees of freedom unless it is constrained to the surface as shown in Figure \ref{fig:biped_simplelow}. Since the base has all the six degrees of freedom it is called \emph{floating base} (i.e it is considered as floating in space). The equation of motion of the floating base is given by Newton-Euler equation of motion in body coordinates \cite[chapter 4]{mur94}.
+The translational degrees of freedom of the rigid body in \ref{fig:rbody} is \emph{x,y,z} and \emph{roll,pitch,yaw} are the rotational degrees of freedom which corresponds to rotation around \textbf{X,Y,Z} axes respectively. In biped, the base is a free rigid body which is unactuated. The base of the biped has all six degrees of freedom unless it is constrained to the surface as shown in Figure \ref{fig:biped_simplelow}. Since the base has all the six degrees of freedom it is called floating base. The equation of motion of a single rigid body(floating base) is given by Newton-Euler equation of motion in body coordinates \cite[Chapter 4]{mur94}. It is given by 
 \footnotetext[1]{Image source:\url{http://www.cncexpo.com/Images/pitchyawroll.jpg}}
 \begin{equation}
 \label{eq:dyn_rig_bdy}
 \begin{bmatrix}
-mI &0 \\ 0 &\Im
+mI_3 & \textbf{0}_3 \\ \textbf{0}_3 &\Im
 \end{bmatrix}
 \begin{bmatrix}
 \dot{v}^b\\ \dot{\omega}^b
@@ -47,16 +49,16 @@ mI &0 \\ 0 &\Im
 \omega^b \times mv^b \\ 
 \omega^b \times \Im w^b
 \end{bmatrix}
-= W^b\\
+= W^b,\\
 \end{equation}
-\emph{m} is the mass of the rigid body, $\Im$ is the inertia of the rigid body. $I,0$ are the $3 \times 3$ identity and zero matrices. $[\dot{v}^b,\dot{\omega}^b]$ are the \underline{body twist coordinates} of the rigid body. $W^b$ is the \underline{body wrench}  applied to the center of mass of body.
+where \emph{m} is the mass of the rigid body, $\Im$ is the moment of inertia of the rigid body. $I_3$ represents the $3 \times 3$ identity matrix and $ \textbf{0}_3$ represents the  $3 \times 3$ zero matrix. $[\dot{v}^b,\dot{\omega}^b]$ are the translational velocity and angular velocity represented in body coordinate frame. $W^b$ is the \underline{body wrench}  applied to the center of mass of body. To be consistent with the multi body system dynamics formulation in Equation \ref{eq:dyn_mul_bdy} Newton Euler Equation \ref{eq:dyn_rig_bdy} is reformulated as
 \begin{equation}
 \label{eq:dyn_rig_bdy_sh}
-M_x^b \ddot{x}_f^b + C_x^b\dot{x}_f^b+g_x^b = W^b
+M_x^b \ddot{x}_f^b + C_x^b\dot{x}_f^b+g_x^b = W^b,
 \end{equation}
-To be consistent with the multi body system dynamics formulation in Equation \ref{eq:dyn_mul_bdy} Newton Euler Equation \ref{eq:dyn_rig_bdy} is reformulated into Equation \ref{eq:dyn_rig_bdy_sh}. $x_f^b$ is a vector that represents six degrees of freedom of the rigid body. $\dot{x}_f^b$ represents the body twist. $\ddot{x}_f^b$ represents the acceleration in body frame(i.e it represents the time derivative of body twist). $M_x^b$ represents the inertia matrix of the rigid body in body coordinates. $C_x^b$ is the matrix representing the Coriolis and centrifugal forces acting on the system in body coordinates. $g_x^b$ is the vector representing the gravitational forces acting on the body in body coordinates. $W^b$ is the external force applied to the center of mass of the body. \footnote[2]{Inertia, Coriolis and gravity are assumed to be given with respect to the body coordinate frame for the rest of the report}.
+ where $x_f^b$ is a vector that represents six degrees of freedom of the rigid body, $\dot{x}_f^b$ represents the body velocity, $\ddot{x}_f^b$ represents the acceleration in body frame(i.e it represents the time derivative of body twist). $M_x^b$ represents the inertia matrix of the rigid body in body coordinates. $C_x^b$ is the matrix representing the Coriolis and centrifugal forces acting on the system in body coordinates. $g_x^b$ is the vector representing the gravitational forces acting on the body in body coordinates. $W^b$ is the external force applied to the center of mass of the body. \footnote[2]{Inertia, Coriolis and gravity are assumed to be given with respect to the body coordinate frame for the rest of the report}.
 
-The dynamics of biped in Figure \ref{fig:biped_simplelow} is composed of both multi body dynamics in the form of legs and rigid body dynamics in form of base. Combining Equation \ref{eq:dyn_rig_bdy_sh} and Equation \ref{eq:dyn_mul_bdy} gives the equation of the biped.
+The equations of motion of the biped in Figure \ref{fig:biped_simplelow} is composed of equation of motion of the multi body system (For example legs) and equation of motion of single rigid body (For example the floating base). The composed equation of motion of the biped is \cite{ott09} 
 \begin{equation} \label{eq:dyn_biped}
 \begin{bmatrix}
 M_x &M_{xq} \\ M_{qx} &M_q
@@ -79,14 +81,15 @@ g_x \\ g_q
 \begin{bmatrix}
 0 \\ \tau
 \end{bmatrix}
-+ (J_r^b)^T W_r^b + (J_l^b)^T W_l^b
++ (J_r^b)^T W_r^b + (J_l^b)^T W_l^b,
 \end{equation}
-\underline{Explanation of the terms in the equation are part of appendix}.
+where the terms with subscript $x$ are the parameters of floating  base, the terms with subscript $q$ are the parameters of the multi body system(legs) and the terms with subscript $xq, qx$ are the coupling terms that connects the dynamics of the floating base with dynamics of the multibody system.
+
 Equation \ref{eq:dyn_biped} can be written in a simplified form as
 \begin{equation} \label{eq:dyn_sbiped}
-M(y)\ddot{y} + C(y,\dot{y})\dot{y} + g(y) = W_{act} + W_{ext}
+M(y)\ddot{y} + C(y,\dot{y})\dot{y} + g(y) = \tau + J^T W_{ext},
 \end{equation}
-where $y = [x_f,q]^T$ is the combined state variables of the biped. $M(y),C(y),g(y)$ are combined Inertia, Coriolis and gravity parameters of the biped.
+where $y = \begin{bmatrix} x_f \\ q \end{bmatrix}$ is the state variables of the biped, and $W_{ext}$ is the external wrench acting on the system (For example $W_l,W_r$ in \ref{eq:dyn_biped} are the external wrenches acting on the biped).
 \begin{figure}
 \begin{center}
 \includegraphics[trim= 70mm 10mm 40mm 10mm,clip,scale=0.7]{Bilder/TORO_kinematic.pdf}
@@ -94,7 +97,7 @@ where $y = [x_f,q]^T$ is the combined state variables of the biped. $M(y),C(y),g
 \label{fig:toro_kin}
 \end{center}
 \end{figure}
-
+\paragraph{Toro}
 \emph{Toro} is modelled as floating base dynamic model. \emph{Toro} is made up of 25 rotary joints that are actuated by electrical motors. It can be seen from Figure \ref{fig:toro_kin} that floating base acts as the root of the kinematic chain. Legs and torso branches out of the floating base. Equation of motion for \emph{Toro} can be formulated in similar fashion as biped Equation \ref{eq:dyn_sbiped}, where the dynamics of the upper body is also combined to it. The forward dynamics of \emph{Toro} 
 \begin{equation}
 	\label{eq:motion}

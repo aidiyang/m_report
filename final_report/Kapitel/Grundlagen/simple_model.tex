@@ -68,7 +68,7 @@ The model is discretized for the implementation of EKF. Since the time step for 
     \begin{split}
     \hat{p}_{k+1}^- &= \hat{p}_k + \Delta t \hat{v}_k + \frac{\Delta t^2}{2} \hat{R}_k (\tilde{a}_{k+1} - \hat{b}_{a,k} +g) \\
     \hat{v}_{k+1}^- &= \hat{v}_k + \Delta t \hat{R}_k (\tilde{a}_{k+1} - \hat{b}_{a,k} +g) \\
-    \hat{\theta}_{k+1}^- &= \hat{\theta}_k + \hat{T}_k^{-1}(\tilde{\omega}_{k+1} - \hat{b}_{\omega,k+1}) \\
+    \hat{\theta}_{k+1}^- &= \hat{\theta}_k + \Delta t \hat{T}_k^{-1}(\tilde{\omega}_{k+1} - \hat{b}_{\omega,k+1}) \\
     \hat{b}_{a,k+1}^- &= \hat{b}_{a,k}\\\
     \hat{b}_{\omega,k+1}^- &= \hat{b}_{\omega,k}
     \end{split}
