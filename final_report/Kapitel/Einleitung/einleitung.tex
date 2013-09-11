@@ -2,6 +2,9 @@
 \label{sec:einleitung}
 
 \section{Motivation}
+\begin{itemize}
+\item \textbf{Justify why is it important to solve this problem ?}
+\end{itemize}
 The field of \emph{Robotics} have seen a tremendous development since the introduction of the term by \emph{Isaac Asimov} in 1940s. The fundamental components of robotic systems are mechanical structure, actuators, sensors and controller. Robotic system ranges from simple \emph{Cartesian manipulator} to the complex \emph{Humanoids}. \emph{Industrial robots} are robots that are used in applications such as palletizing, material loading and unloading, part sorting, packaging etc. These robots usually operate in the structured environment whose geometrical or physical characteristics are known in priori. They are pre programmed to execute the set of tasks. These robots have largely aided the automation of manufacturing processes in the industries. \emph{Mobile robots} that are used in the environments where human beings can hardly survive or be exposed to unsustainable risks are called \emph{Field robots}. \emph{Field robots} normally operate in the unstructured environments, where the geometry or physical characteristics are not know in priori. Mars rover \emph{Curiosity} is one such example. Locomotion in these robots are achieved either by wheels or by mechanical legs. Operating in the unknown environments and dynamic balancing of mechanical structure demands advanced control schemes for \emph{Field robots}.
 \begin{comment}
 a) structural improvement is limited
@@ -23,4 +26,46 @@ Chapter 4 : Results
   \label{fig:bsp}
 \end{figure}
 \end{comment}
+\section{Problem Statement}
+\begin{itemize}
+    \item \textbf{Explain what are the parameters that will be estimated}
 
+    The focus of this thesis is estimation of underactuated degrees of freedom of a humanoid robot. The underactuated degrees of freedom of a humanoid robot are the position, orientation, linear and angular velocity of the base frame. Base represents the part that connects the upper body and lower body of \emph{Toro}. 
+    \item \textbf{What are underactuated degrees of freedom in toro}
+
+    The underactuated degrees of freeedom means that the degrees of freedom are unactuated or not controlled. These degrees of freedom are free to move in space. For example in a two dimension space any object has 3 degrees of freedom, two translational degrees of freedom and one rotational degree of freedom. But when the object is constrained to its environment the number of degrees of freedom is less.
+    \begin{figure}
+    \begin{center}
+    \includegraphics[trim = 0mm 130mm 0mm 25mm, scale = 0.75 ]{Bilder/dof2d.pdf}
+    \caption{ Degrees of freedom of 2d object}
+    \label{fig:dof_2d}
+    \end{center}
+    \end{figure}
+    Figure \ref{fig:dof_2d} show how an object loses its degrees of freedom when it is constrained in 2 dimension space. In Figure \ref{fig:dof_2d} a) represents the unconstrained rectangular object free to move in space, b) represents the rectangular object constrained to move only along x axis and c) represents fully constrained rectangular object. 
+    
+    Humanoid robots operate in three dimensional space. A humanoid robot can be considered as an object in three dimensional space. An object in three dimensional space has six underactuated or free degrees of freedom. They are three translational and three rotational degrees of freedom. When an object or a humanoid robot is freely suspended in three dimensional space it has six free degrees of freedom, but when it is constrained to it environment, the number of degrees of feedom decreses. In this thesis we aim to estimate the motion of these degrees of freedom of a humanoid robot with respect to a frame of refrence. For the purpose of state estimation we assign a frame at the hip of the robot and determine its motion with respect to the world coordinate frame or spatial frame.
+    
+    \item \textbf{The case of underactuation}
+     \begin{figure}[h]
+	    \centering
+    	\includegraphics[scale=0.75]{Bilder/robot_flatfloor}
+	    \caption{Humanoid robot standing on flat surface}	
+	    \label{fig:flat_floor}
+    \end{figure}
+   Figure \ref{fig:flat_floor} shows a simplified two dimensional version of a humanoid robot standing on the flat surface. The position and orientation of the hip can be determined by computing the forward kinematics of the robot. Forward kinematics is a function of joint angles and it is given as,
+    \begin{equation}
+    \label{eq:fwkin_flat}
+    H_{hip}^s = \text{fwdkin}(q_1,q_2,q_3,q_4),
+    \end{equation}
+    where $H_{hip}^s$ is the homogeneous transformation matrix position and orientation of the hip with respect to spatial frame. 
+    \begin{figure}[h]
+	    \centering
+    	\includegraphics[scale=0.65]{Bilder/robot_slope}
+	    \caption{Humanoid robot standing on a slope}	
+	    \label{fig:slope}
+    \end{figure}
+
+    Figure \ref{fig:slope} shows a humanoid robot staning on the sloping surface. In this case the orientation computed by the forward kinematics function in Equation \ref{eq:fwkin_flat} will be wrong. As we can see in the Figure \ref{fig:slope} there is an additional angle $\alpha$ acting between the surface of the real ground and the slope. There is no direct measuremnt available for this underactuaed degree of freedom. Failure to estimate this angle may lead to  tilting over an edge which might cause the robot to fall on the ground. Estimating this angle will help to achive good balancing in the humanoid robot.
+
+    \item \textbf{Brief introduction about the approaches that are written in the thesis}
+\end{itemize}

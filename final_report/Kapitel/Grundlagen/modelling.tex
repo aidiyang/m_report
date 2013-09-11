@@ -15,9 +15,19 @@ where $\Gamma_i$ is the external force acting on the $i^{th}$ generalized coordi
 Simplifying and rearranging the above equation will result in the general formulation of equations of motion of a multi body system. It is given by
 \begin{equation}
 \label{eq:dyn_mul_bdy}
-M(q)\ddot{q}+C(q,\dot{q})+g(q) = \tau + \tau_{ext},
+M(q)\ddot{q}+C(q,\dot{q})\dot{q}+g(q) = \tau + \tau_{ext},
 \end{equation}
 where \emph{M(q)} is the generalized inertia matrix, $C(q,\dot{q})$ is the matrix representing Coriolis and centrifugal forces, \emph{g(q)} is the gravity vector acting on the system and $\tau$ is the actuator torque applied to the joints $\tau_{ext}$ is the external torque acting on the system.
+
+Rearranging the Equation \ref{eq:dyn_mul_bdy} results in the forward dynamics equation of the multibody system. Forward dynamics equation is the relation between the acceleration of the multi body system in repsonse to the forces and torques acting on the system.
+\begin{equation}
+    \label{eq:fwdyn}
+    \ddot{q} = M(q)^{-1} (- C(q,\dot{q})\dot{q} -g(q) + \tau + \tau_{ext})
+\end{equation}
+\begin{itemize}
+\item Inverted Double Pendulum model
+\end{itemize}
+\input{Kapitel/Grundlagen/double_pendulum.tex}
 \begin{figure}
 \begin{center}
 \includegraphics[trim= 10mm 80mm 10mm 80mm,scale=0.75]{Bilder/model_biped.pdf}
@@ -25,7 +35,6 @@ where \emph{M(q)} is the generalized inertia matrix, $C(q,\dot{q})$ is the matri
 \label{fig:biped_simplelow}
 \end{center}
 \end{figure}
-
 Figure \ref{fig:biped_simplelow} shows a biped with two legs, which is connected to common base. The generalized coordinates of the robot legs is represneted by the vecotor of joint angles $q$. The vector $q$ consists of two subvectors $q_r,q_l$ that corresponds to angles of the joints in left and right legs respectively. Number of joints in a multi body system is the number of controllable degrees of freedom of the system. \emph{Q} is the configuration space of the biped. Configuration space represents the set of all valid configurations of the system. Each element of $q$ corresponds to the valid configuration of the system \cite[Chapter 2]{mur94}. $x_b$ represents the number of degrees of freedom of the base. A rigid body in space has six degrees of freedom as shown in Figure \ref{fig:rbody}.
 %\begin{figure}[!htb]
 \begin{figure}
@@ -35,7 +44,7 @@ Figure \ref{fig:biped_simplelow} shows a biped with two legs, which is connected
 \label{fig:rbody}
 \end{center}
 \end{figure}
-The translational degrees of freedom of the rigid body in \ref{fig:rbody} is \emph{x,y,z} and \emph{roll,pitch,yaw} are the rotational degrees of freedom which corresponds to rotation around \textbf{X,Y,Z} axes respectively. In biped, the base is a free rigid body which is unactuated. The base of the biped has all six degrees of freedom unless it is constrained to the surface as shown in Figure \ref{fig:biped_simplelow}. Since the base has all the six degrees of freedom it is called floating base. The equation of motion of a single rigid body(floating base) is given by Newton-Euler equation of motion in body coordinates \cite[Chapter 4]{mur94}. It is given by 
+The translational degrees of freedom of the rigid body in Figure \ref{fig:rbody} is \emph{x,y,z} and \emph{roll,pitch,yaw} are the rotational degrees of freedom which corresponds to rotation around \textbf{X,Y,Z} axes respectively. In biped, the base is a free rigid body which is unactuated. The base of the biped has all six degrees of freedom unless it is constrained to the surface as shown in Figure \ref{fig:biped_simplelow}. Since the base has all the six degrees of freedom it is called floating base. The equation of motion of a single rigid body(floating base) is given by Newton-Euler equation of motion in body coordinates \cite[Chapter 4]{mur94}. It is given by 
 \footnotetext[1]{Image source:\url{http://www.cncexpo.com/Images/pitchyawroll.jpg}}
 \begin{equation}
 \label{eq:dyn_rig_bdy}
