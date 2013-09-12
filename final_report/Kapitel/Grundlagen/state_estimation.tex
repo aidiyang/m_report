@@ -2,10 +2,40 @@
 \label{ch:st_est}
 State estimation is the principle of estimating the internal state of the system from the measurement of inputs and outputs of the system. In general knowledge of the internal state of the system will make the system easy to control. Figure \ref{fig:observer} shows the usage of state estimator in state feedback control loop.
 \begin{figure}[h]
-  \centering
-  \includegraphics[trim = 10mm 200mm 20mm 20mm, clip,scale=0.80]{Bilder/system_observer.pdf}
-  \caption{Structure of state feedback controller with state estimator}
-  \label{fig:observer}
+%  \centering
+%  \includegraphics[trim = 10mm 200mm 20mm 20mm, clip,scale=0.80]{Bilder/system_observer.pdf}
+\tikzstyle{block} = [draw, fill=blue!20, rectangle, 
+    minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+\def\blockdist{2.3}
+% The block diagram code is probably more verbose than necessary
+\begin{tikzpicture}[auto, node distance=4cm,>=latex']
+    % We start by placing the blocks
+    \node [input, name=input] {};
+    \node [sum, right of=input] (sum) {};
+    \node [block, right of=sum] (controller) {Controller};
+    \node [block, right of=controller, pin={[pinstyle]above:Disturbances},
+            node distance=5cm] (system) {System};
+    % We draw an edge between the controller and system block to 
+    % calculate the coordinate u. We need it to place the measurement block. 
+    \draw [->] (controller) -- node[name=u] {$u$} (system);
+    \node [output, right of=system] (output) {};
+    \node [block, below of= controller] (measurements) {Estimator};
+
+    % Once the nodes are placed, connecting them is easy. 
+    \draw [draw,->] (input) -- node {$r$} (sum);
+    \draw [->] (sum) -- node {$e$} (controller);
+    \draw [->] (system) -- node [name=y] {$y$}(output);
+    \draw [->] (y) |- (measurements.base east);
+    \draw [->] (u) |- (measurements.10);
+    \draw [->] (measurements) -| node[pos=0.99] {$-$} 
+        node [near end] {$\hat{x}$} (sum);
+\end{tikzpicture}
+    \caption{Structure of state feedback controller with state estimator}
+      \label{fig:observer}
 \end{figure}
 
 A general nonlinear system in state space form,

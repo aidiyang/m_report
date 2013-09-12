@@ -3,6 +3,9 @@
 %{report}
 
 % ~~~~~~~~~~~~~~~my packages~~~~~~~~~~~`
+% package for block diagrams
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
 % Multiline comments
 \usepackage{verbatim}
 %\usepackage[llncsdoc]{llncsdoc}
@@ -253,14 +256,13 @@
     \pagenumbering{arabic}
     \parindent 0pt
     \input{Makros.tex}
-%    \input{testpage.tex}
-
     %%%%%%%%%%%
     % Kapitel %
     %%%%%%%%%%%
 
     \input{Kapitel/Einleitung/einleitung.tex}
     %\input{Kapitel/Grundlagen/grundlagen.tex}
+	%\input{testpage.tex}
     \input{Kapitel/Grundlagen/state_estimation.tex}
     \input{Kapitel/Grundlagen/kalman_filtering.tex}
     %\input{Kapitel/Grundlagen/dpendulum.tex}

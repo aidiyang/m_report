@@ -49,7 +49,7 @@ A 3 dimensional rotation matrix defines the rotation along \emph{X,Y,Z} directio
 	\end{split}
 \end{equation}
 \begin{enumerate}
-\item Rotation matrix for the whole body model in Chapter \ref{chap:multi_mdl} is 
+\item Rotation matrix for the whole body model in Chapter \ref{ch:multi_mdl} is 
 \begin{equation}
 	\label{eq:rot_full}
 	\begin{split}
@@ -85,7 +85,7 @@ The partial derivative of the above rotational matrix with respect to the angles
 	\end{bmatrix}
 	\end{split}
 \end{equation}
-\item Rotation matrix for the simplified model in Chapter \ref{chap:simp_mdl} is parameterized as RPY angles
+\item Rotation matrix for the simplified model in Chapter \ref{ch:simp_mdl} is parameterized as RPY angles
 \begin{equation}
 	\label{eq:rot_simp}
 	\begin{split}
@@ -167,7 +167,7 @@ $$ (R^T \dot{R}) ^ \vee = \begin{bmatrix}\omega_x^b\\ \omega_y^b\\ \omega_z^b \e
 \end{itemize}
 The rotation matrix R is parametrized by Euler angles. $w^b$ depends on the parametrization of the rotation matrix.
 \begin{enumerate}
-\item For the whole body model discussed in Chapter \ref{chap:multi_mdl} the rotation matrix is given in Equation \ref{eq:rot_full}. The angular velocity is
+\item For the whole body model discussed in Chapter \ref{ch:multi_mdl} the rotation matrix is given in Equation \ref{eq:rot_full}. The angular velocity is
 \begin{equation}
 	\begin{split}
 	\omega_x^b &= cos(\theta_z)cos(\theta_y)\dot{\theta}_x + sin(\theta_z)\dot{\theta}_y \\
@@ -193,7 +193,7 @@ $T(\theta)$ is the transformation matrix, that transforms the time derivative of
 The partial derivatives of $\omega^b$ with respect to the states are
 $$\dfdx{\omega_b}{\theta_x} = \textbf{0}_{3\times 3},\dfdx{\omega_b}{\theta_y} = \begin{bmatrix}	-c_zs_y &0 &0\\ s_zs_y &0 &0\\ c_y &0 &0 \end{bmatrix}, \dfdx{\omega_b}{\theta_z} = \begin{bmatrix}	-s_zc_y &c_z &0\\ -c_zc_y &-s_z &0\\ 0 &0 &0 \end{bmatrix} $$
 
-\item For the simple model discussed in Chapter \ref{chap:simp_mdl} the rotation matirx is given in Equation \ref{eq:rot_simp}. The angular velocity is
+\item For the simple model discussed in Chapter \ref{ch:simp_mdl} the rotation matirx is given in Equation \ref{eq:rot_simp}. The angular velocity is
 \begin{equation}
 	\begin{split}
 	\omega_x^b &= \dot{\theta}_x - sin(\theta_y)\dot{\theta}_z \\

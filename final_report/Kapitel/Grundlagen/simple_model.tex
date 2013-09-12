@@ -66,8 +66,8 @@ The model is discretized for the implementation of EKF. Since the time step for 
 \begin{equation}
     \label{eq:dyn_imu_disc}
     \begin{split}
-    \hat{p}_{k+1}^- &= \hat{p}_k + \Delta t \hat{v}_k + \frac{\Delta t^2}{2} \hat{R}_k (\tilde{a}_{k+1} - \hat{b}_{a,k} +g) \\
-    \hat{v}_{k+1}^- &= \hat{v}_k + \Delta t \hat{R}_k (\tilde{a}_{k+1} - \hat{b}_{a,k} +g) \\
+    \hat{p}_{k+1}^- &= \hat{p}_k + \Delta t \hat{v}_k + \frac{\Delta t^2}{2} (\hat{R}_k (\tilde{a}_{k+1} - \hat{b}_{a,k})+g) \\
+    \hat{v}_{k+1}^- &= \hat{v}_k + \Delta t (\hat{R}_k (\tilde{a}_{k+1} - \hat{b}_{a,k})+g) \\
     \hat{\theta}_{k+1}^- &= \hat{\theta}_k + \Delta t \hat{T}_k^{-1}(\tilde{\omega}_{k+1} - \hat{b}_{\omega,k+1}) \\
     \hat{b}_{a,k+1}^- &= \hat{b}_{a,k}\\\
     \hat{b}_{\omega,k+1}^- &= \hat{b}_{\omega,k}
@@ -76,8 +76,8 @@ The model is discretized for the implementation of EKF. Since the time step for 
 The system matrix is obtained by computing the Jacobian of the discretized system of equations is
 \begin{equation}
     A_k = \begin{bmatrix}
-    I_3 &\Delta t &\frac{\Delta t^2}{2} \dfdx{\hat{R}_k}{x}(\tilde{a}_{k+1} - \hat{b}_{a,k} +g) &-\frac{\Delta t^2}{2} \hat{R}_k &\textbf{0}_3 \\
-    \textbf{0}_3 &I_3  &\Delta t \dfdx{\hat{R}_k}{x}(\tilde{a}_{k+1} - \hat{b}_{a,k} +g) &-\Delta t\hat{R}_k &\textbf{0}_3\\
+    I_3 &\Delta t &\frac{\Delta t^2}{2} \dfdx{\hat{R}_k}{x}(\tilde{a}_{k+1} - \hat{b}_{a,k} ) &-\frac{\Delta t^2}{2} \hat{R}_k &\textbf{0}_3 \\
+    \textbf{0}_3 &I_3  &\Delta t \dfdx{\hat{R}_k}{x}(\tilde{a}_{k+1} - \hat{b}_{a,k} ) &-\Delta t\hat{R}_k &\textbf{0}_3\\
     \textbf{0}_3  &\textbf{0}_3 &I_3 + \Delta t \dfdx{\hat{T}^{-1}}{x}(\tilde{\omega}_{k+1} - \hat{b}_{\omega,k+1}) &\textbf{0}_3 &\Delta t \hat{T}_k^{-1}\\
     \textbf{0}_3  &\textbf{0}_3  &\textbf{0}_3  &I_3 &\textbf{0}_3 \\
     \textbf{0}_3  &\textbf{0}_3  &\textbf{0}_3  &\textbf{0}_3 &I_3
