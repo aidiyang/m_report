@@ -76,9 +76,9 @@ The model is discretized for the implementation of EKF. Since the time step for 
 The system matrix is obtained by computing the Jacobian of the discretized system of equations is
 \begin{equation}
     A_k = \begin{bmatrix}
-    I_3 &\Delta t &\frac{\Delta t^2}{2} \dfdx{\hat{R}_k}{x}(\tilde{a}_{k+1} - \hat{b}_{a,k} ) &-\frac{\Delta t^2}{2} \hat{R}_k &\textbf{0}_3 \\
-    \textbf{0}_3 &I_3  &\Delta t \dfdx{\hat{R}_k}{x}(\tilde{a}_{k+1} - \hat{b}_{a,k} ) &-\Delta t\hat{R}_k &\textbf{0}_3\\
-    \textbf{0}_3  &\textbf{0}_3 &I_3 + \Delta t \dfdx{\hat{T}^{-1}}{x}(\tilde{\omega}_{k+1} - \hat{b}_{\omega,k+1}) &\textbf{0}_3 &\Delta t \hat{T}_k^{-1}\\
+    I_3 &\Delta t &\frac{\Delta t^2}{2} \dfdx{\hat{R}_k}{\theta}(\tilde{a}_{k+1} - \hat{b}_{a,k} ) &-\frac{\Delta t^2}{2} \hat{R}_k &\textbf{0}_3 \\
+    \textbf{0}_3 &I_3  &\Delta t \dfdx{\hat{R}_k}{\theta}(\tilde{a}_{k+1} - \hat{b}_{a,k} ) &-\Delta t\hat{R}_k &\textbf{0}_3\\
+    \textbf{0}_3  &\textbf{0}_3 &I_3 + \Delta t \dfdx{\hat{T}^{-1}}{\theta}(\tilde{\omega}_{k+1} - \hat{b}_{\omega,k+1}) &\textbf{0}_3 &\Delta t \hat{T}_k^{-1}\\
     \textbf{0}_3  &\textbf{0}_3  &\textbf{0}_3  &I_3 &\textbf{0}_3 \\
     \textbf{0}_3  &\textbf{0}_3  &\textbf{0}_3  &\textbf{0}_3 &I_3
     \end{bmatrix}

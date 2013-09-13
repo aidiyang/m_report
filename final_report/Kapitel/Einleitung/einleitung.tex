@@ -27,25 +27,21 @@ Chapter 4 : Results
 \end{itemize}
 
 \section{Problem Statement}
-\begin{itemize}
-    \item \textbf{Explain what are the parameters that will be estimated}
+    The focus of this thesis is estimation of underactuated degrees of freedom of a humanoid robot.  Degrees of freedom of a robot is the number of joints present in the robot \citep{mur94}. In contrast to fixed base manipulators where the degrees of freedom is equal to number of joints in robot, the degrees of freedom of a humanoid robot is equal to sum of number of joints and degrees of freedom of a single rigid body. The underactuated degrees of freedom of a humanoid robot are the degrees of freedom of a  rigid body.  A rigid body in three dimensional space can exhibit translational motion along \textbf{X,Y,Z} axes and rotational motion around these axes namely \emph{ roll, pitch ,yaw} as shown in Figure \ref{fig:rbody} in Chapter \ref{ch:multi_mdl}. The underactuated degrees of freedom are associated with a coordinate frame attached to the robot's body. In \emph{Toro} the coordinate frame is attached to the hip or base. Base connects the upper body and lower body of \emph{Toro}. As a result the state estimation problem involves estimation of motion parameters of the base namely position and velocity.
 
-    The focus of this thesis is estimation of underactuated degrees of freedom of a humanoid robot. The underactuated degrees of freedom of a humanoid robot are the position, orientation, linear and angular velocity of the base frame. Base represents the part that connects the upper body and lower body of \emph{Toro}. 
-    \item \textbf{What are underactuated degrees of freedom in toro}
-
+ \paragraph{Underactated degrees of freedom:}
     The underactuated degrees of freeedom means that the degrees of freedom are unactuated or not controlled. These degrees of freedom are free to move in space. For example in a two dimension space any object has 3 degrees of freedom, two translational degrees of freedom and one rotational degree of freedom. But when the object is constrained to its environment the number of degrees of freedom is less.
-    \begin{figure}
+    \begin{figure}[H]
     \begin{center}
-    \includegraphics[trim = 0mm 130mm 0mm 25mm, scale = 0.75 ]{Bilder/dof2d.pdf}
-    \caption{ Degrees of freedom of 2d object}
+    \includegraphics[trim = 0mm 130mm 0mm 20mm, scale = 0.75 ]{Bilder/dof2d.pdf}
+    \caption{ Degrees of freedom of two dimensional object}
     \label{fig:dof_2d}
     \end{center}
     \end{figure}
     Figure \ref{fig:dof_2d} show how an object loses its degrees of freedom when it is constrained in 2 dimension space. In Figure \ref{fig:dof_2d} a) represents the unconstrained rectangular object free to move in space, b) represents the rectangular object constrained to move only along x axis and c) represents fully constrained rectangular object. 
     
-    Humanoid robots operate in three dimensional space. A humanoid robot can be considered as an object in three dimensional space. An object in three dimensional space has six underactuated or free degrees of freedom. They are three translational and three rotational degrees of freedom. When an object or a humanoid robot is freely suspended in three dimensional space it has six free degrees of freedom, but when it is constrained to it environment, the number of degrees of feedom decreses. In this thesis we aim to estimate the motion of these degrees of freedom of a humanoid robot with respect to a frame of refrence. For the purpose of state estimation we assign a frame at the hip of the robot and determine its motion with respect to the world coordinate frame or spatial frame.
-    
-    \item \textbf{The case of underactuation}
+   The humanoid robots opreates in three dimensional space. When it is freely suspended(it is floating in air) it has six free degrees of freedom. But when it is constrained to its environment, the number of degrees of feedom decreses. In this thesis we aim to estimate the motion of these degrees of freedom of a humanoid robot with respect to a frame of refrence.   
+\subparagraph{Illustartion:}    
      \begin{figure}[h]
 	    \centering
     	\includegraphics[scale=0.75]{Bilder/robot_flatfloor}
@@ -64,14 +60,11 @@ Chapter 4 : Results
 	    \caption{Humanoid robot standing on a slope}	
 	    \label{fig:slope}
     \end{figure}
-
     Figure \ref{fig:slope} shows a humanoid robot staning on the sloping surface. In this case the orientation computed by the forward kinematics function in Equation \ref{eq:fwkin_flat} will be wrong. As we can see in the Figure \ref{fig:slope} there is an additional angle $\alpha$ acting between the surface of the real ground and the slope. There is no direct measuremnt available for this underactuaed degree of freedom. Failure to estimate this angle may lead to  tilting over an edge which might cause the robot to fall on the ground. Estimating this angle will help to achive good balancing in the humanoid robot.
 
-    \item \textbf{Brief introduction about the approaches that are written in the thesis}
-    
+ \section{Methodolgy} 
     Kalman filter is an optimal state estimator for linear systems. The popular nonlinear extensions of Kalman filters used in practice are Extended Kalman filter(EKF) and Unscented Kalman filter(UKF) \citep{oli12}\citep{atk12}\citep{bloe12}. The estimation problem is solved in both versions of Kalman filter. The results are compared based on accuracy of estimates and simulation time. Chapter \ref{ch:st_est} gives brief introduction to state estimation and describes the Kalman filtering algorithm. EKF and UKF algorithms are presented in Chapter \ref{ch:st_est}.
 
     Two different models used for the purpose of state estimation. They are the multi body system model and the model of Inertial measurement unit(IMU). A multi body system is a modelling foramlism that is used to model the dynamic behaviour of a multi body system. \emph{Toro} is modelled as a multibody system. \emph{Toro} has 25 joints or 25 degrees of freedom. In addition to these 25 degrees of freedom there are 6 underactuad degrees of freedom. Altogether \emph{Toro} has 31 degrees of freedom. State estimation of the multi body system involves estimation of position and velocity of the degrees of freedom of the system. For example in \emph{Toro} has 31 degrees of freedom. The result of estimation problem will be 31 poitions and 31 velocities which leads to 62 states being estimated. Chapter \ref{ch:multi_mdl} deals with the modelling of multibody systems and its implementation in Kalman filtering algorithm. 
     
     A simplified model of IMU is discussed in Chapter \ref{ch:simp_mdl}. State estimation using this model involves estimating the position, orientation, translational velocity, accelerometer bias and gyroscope bias. The position, orientation estimated are the underactuated degrees of freedom and of \emph{Toro}. Translational velocity is the velocity of translationl motion of \emph{Toro}. The number of estimated states are 15. State estimation using this model is more simpler than the multi body system. It is practically implemented on \emph{Toro}.
-\end{itemize}
