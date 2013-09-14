@@ -25,9 +25,19 @@ Rearranging the Equation \ref{eq:dyn_mul_bdy} results in the forward dynamics eq
     \label{eq:fwdyn}
     \ddot{q} = M(q)^{-1} (- C(q,\dot{q})\dot{q} -g(q) + \tau + \tau_{ext})
 \end{equation}
-\begin{itemize}
-\item Inverted Double Pendulum model
-\end{itemize}
+
+Integrating the above equation once gives the velocity, integrating it twice gives the position of the multibody system. 
+$$ \begin{aligned} 
+    v &= \int a ,\\ 
+    p &=  \iint a \text{ or } \int v , 
+    \end{aligned}$$ where $a = \ddot{q}$ represents the accleration, $p$ represents the position and $v$ represents the velocity of the multibody system.
+
+The position and velocity are the parameters of interest for state estimation. Kalman filter algorithm requires a dynamic model to predict the states of the system. Inorder to accomodate the forward dynamic equation as the prediction model the forward dyanmics Equation \ref{eq:fwdyn} of the multi body system is converted into system of ordinary differential equations(ODE). The ODE system is given by
+\begin{equation}
+    \begin{bmatrix} \frac{dp}{dt}  \\ \frac{dv}{dt} \end{bmatrix} = 
+    \begin{bmatrix} v \\ a \end{bmatrix}
+\end{equation}
+ 
 \input{Kapitel/Grundlagen/double_pendulum.tex}
 \begin{figure}
 \begin{center}

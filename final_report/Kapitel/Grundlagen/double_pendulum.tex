@@ -1,7 +1,7 @@
 \section{Inverted Double Pendulum model} 
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\includegraphics[trim = 0mm 160mm 0mm 30mm, scale=0.75]{Bilder/simp_uactcase.pdf}
+	\includegraphics[trim = 0mm 180mm 0mm 10mm, scale=0.50]{Bilder/simp_uactcase.pdf}
 	\caption{A simplified humanoid robot standing on one foot}
 	\label{fig:idp_scene}
 \end{figure}
@@ -10,11 +10,12 @@ Inorder to check the feasibility of solving the state estimation problem with th
 When robot is tilting around an edge of the foot as shown in Figure \ref{fig:idp_scene}.b, we assume there is an imaginary joint located at the edge of the foot around which the robot tilts. Figure \ref{fig:idp_scene}.b resmbles an inverted double pendulum in Figure \ref{fig:idp}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.75]{Bilder/doublePendulum1.png}
-	\caption{Inverted Double Pendulum}	
+	\includegraphics[trim= 0mm 150mm 0mm 0mm, scale=0.65]{Bilder/inv_db_pend.pdf}
+	\caption[Inverted Double Pendulum]{Inverted Double Pendulum \footnotemark}
 	\label{fig:idp}
 \end{figure}
- In the inverted pendulum model the ankle joint is actuated but the toe joint is unactuated. The degrees of freedom of this model are toe and ankle. Toe is the underactuated degree of freedom whose motion parameters such as angle $q_1$ and angular velocity $\dot{q}_1$ needs to be estimated. The motion parameters of the inverted double pendulum are 
+\footnotetext{Image source: A mathematical introduction to robotic manipulation \cite[Chapter 4, Page 164]{mur94}}
+ The inverted double pendulum shown in Figure \ref{fig:idp} consists two links of length $l_1$ and $l_2$. The distance between center of mass of link 1 from the toe joint is $r_1$, $r_2$ is the distance between center of mass of link 2 from the ankle joint. In the inverted pendulum model the ankle joint is actuated but the toe joint is unactuated. The degrees of freedom of this model are toe and ankle. Toe is the underactuated degree of freedom whose motion parameters such as angle $q_1$ and angular velocity $\dot{q}_1$ needs to be estimated. The motion parameters of the inverted double pendulum are 
 \begin{equation}
 	 q = 
 	\begin{pmatrix}
@@ -27,19 +28,22 @@ When robot is tilting around an edge of the foot as shown in Figure \ref{fig:idp
 		\dot{q_{2}}
 	\end{pmatrix},
 \end{equation}
-where \emph{q} is the vector of joint angles and $\dot{q}$ is the vector of joint angular velocities. The control input or torque applied to the ankle joint is $\tau$. The equation of motion of the inverted double pendulum is derived by Lagrange formulation, the generalized coordinates of the system are $q_1,q_2$ which represents the angles of the joints, $\dot{q_1},\dot{q_2}$ represent the velocities of corresponding joints as shown in figure \ref{fig:idp}.
+where \emph{q} is the vector of joint angles and $\dot{q}$ is the vector of joint angular velocities. The angle $q_1$ and angular velocity $\dot{q}_1$ are the motion parameters of toe joint. Likewise $q_2$ and $\dot{q}_2$ are the motion parameteres of ankle joint. The control input or torque applied to the ankle joint is $\tau$. 
+
+The equation of motion of the inverted double pendulum is derived using Lagrange formulation given in Equation \ref{eq:lagrange}. The generalized coordinates of the system are $q_1$ and $q_2$, the velocities of the corresponding generalized coordinates are $\dot{q_1}$ and $\dot{q_2}$ as shown in Figure \ref{fig:idp}. The equation of motion of double pendulum written in general formulation of multi body system in Equation \ref{eq:dyn_mul_bdy} is, 
 \begin{equation}
-	M(q)_{2\times2}.
-	\begin{pmatrix}
+	M(q_1,q_2)
+	\begin{bmatrix}
 		\ddot{q_{1}} \\
 		\ddot{q_{2}} 
-	\end{pmatrix}
-	+ C(q,\dot{q})_{2\times2}.
-	\begin{pmatrix}
+	\end{bmatrix}
+	+ C(q_1,q_2,\dot{q}_1,\dot{q}_2)
+    \begin{bmatrix}
 		\dot{q_{1}} \\
 		\dot{q_{2}} 
-	\end{pmatrix}
-	+ g(q)_{2\times 1} = \tau_{2\times 1}
+	\end{bmatrix}
+	+ g(q_1,q_2) = 
+    \begin{bmatrix} 0 \\ \tau \end{bmatrix},
 \end{equation}
 
 \begin{equation}
@@ -48,8 +52,34 @@ where \emph{q} is the vector of joint angles and $\dot{q}$ is the vector of join
 		\ddot{q_{1}} \\
 		\ddot{q_{2}} 
 		\end{pmatrix}
-	= M(q)^{-1} \left( -C(q,\dot{q}).\dot{q} - g(q) + \tau \right )
+	= M(q)^{-1} \left( -C(q,\dot{q}).\dot{q} - g(q) + \tau \right ),
 \end{equation}
+where, $M(q_1,q_2)$ represents the ineria matrix of the inverted double pendulum system. It is given by 
+$$ M(q_1,q_2) = \begin{bmatrix}\
+    \alpha+2\beta cos(q_2) & \delta + \beta cos(q_2) \\ 
+    \delta + \beta cos(q_2) & \delta  \end{bmatrix},$$ where the terms $\alpha, \beta, \delta$ is given by
+    $$
+    \begin{aligned}
+    \alpha &= \frac{1}{12} m_1 l_1^2 + \frac{1}{12} m_2 l_2^2 + m_1 r_1^2 + m_2 (r_2^2 + l_1^2),\\
+    \beta &= m_2 l_1 r_2, \\
+    \delta &= \frac{1}{12} m_2 l_2^2 + m_2 r_2^2.
+    \end{aligned}
+    $$
+$C(q_1,q_2,\dot{q}_1,\dot{q}_2)$ represents the Corioli matrix of the system. It is given by 
+$$C(q_1,q_2,\dot{q}_1,\dot{q}_2) = 
+\begin{bmatrix}
+-\beta sin(q_2) \dot{q}_2 &-\beta sin(q_2)(\dot{q}_1 + \dot{q}_2) \\
+-\beta sin(q_2) \dot{q}_1 & 0
+\end{bmatrix},
+$$
+where $\beta$ is given in the previous equation. The gravity vector is represented by $g(q_1,q_2)$. It is given by
+$$g(q_1,q_2) = 
+\begin{bmatrix}
+(m_1 r_1 +m_2 l_1)a_g cos(q_1) + m_2 r_2 a_g cos(q_1+q_2) \\
+m_2 l_2 a_g cos(q_1+q_2)
+\end{bmatrix}
+$$
+where $a_g$ represents the acceleration due to gravity 9.81 $m/{s}^2$.
 
 To convert the equations into ODE's, assume 
 $$ x_1 = q_1, x_2 = \dot{q_1}, x_3 = q_2, x_4 = \dot{q_2}$$
