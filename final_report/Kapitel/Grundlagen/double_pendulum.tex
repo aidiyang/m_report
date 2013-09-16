@@ -1,11 +1,11 @@
 \section{Inverted Double Pendulum model} 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[trim = 0mm 180mm 0mm 10mm, scale=0.50]{Bilder/simp_uactcase.pdf}
 	\caption{A simplified humanoid robot standing on one foot}
 	\label{fig:idp_scene}
 \end{figure}
-Inorder to check the feasibility of solving the state estimation problem with the available measurements for the whole robot model, a preliminary subproblem is formulated. Since we are interested in estimating the underactuated degrees of freedom, we have to consider the senario where these underactuated degrees of freedom are action on the robot. Let us consider the senario where the robot is tilting around an edge of the foot by applying some external force as shown in Figure \ref{fig:idp_scene}.b. Figure \ref{fig:idp_scene} shows a simplified version of a humanoid robot standing on one leg. All the joints other that ankle joint of the robot are assumed to remain static(joints does not produce any motion) throughout the experiment. The kinematics of the robot is simplified to one joint on the ankle connecting the whole body with the foot as shown in \ref{fig:idp_scene}.a. The kinematics of \emph{Toro} is shown in Figure \ref{fig:toro_kin}. The mass block in the Figure \ref{fig:idp_scene} represents the inertia of upperbody. The inertia of leg is incorporated in the link connceting upperbody and foot. 
+Inorder to check the feasibility of solving the state estimation problem with the available measurements, a preliminary subproblem is formulated. Since we are interested in estimating the underactuated degrees of freedom, we have to consider the senario where these underactuated degrees of freedom are action on the robot. Let us consider the senario where the robot is tilting around an edge of the foot by applying some external force as shown in Figure \ref{fig:idp_scene}.b. Figure \ref{fig:idp_scene} shows a simplified version of a humanoid robot standing on one leg. All the joints other that ankle joint of the robot are assumed to remain static(joints does not produce any motion) throughout the experiment. The kinematics of the robot is simplified to one joint on the ankle connecting the whole body with the foot as shown in \ref{fig:idp_scene}.a. The kinematics of \emph{Toro} is shown in Figure \ref{fig:toro_kin}. The mass block in the Figure \ref{fig:idp_scene} represents the inertia of upperbody. The inertia of leg is incorporated in the link connceting upperbody and foot. 
 
 When robot is tilting around an edge of the foot as shown in Figure \ref{fig:idp_scene}.b, we assume there is an imaginary joint located at the edge of the foot around which the robot tilts. Figure \ref{fig:idp_scene}.b resmbles an inverted double pendulum in Figure \ref{fig:idp}.
 \begin{figure}[H]
@@ -32,6 +32,7 @@ where \emph{q} is the vector of joint angles and $\dot{q}$ is the vector of join
 
 The equation of motion of the inverted double pendulum is derived using Lagrange formulation given in Equation \ref{eq:lagrange}. The generalized coordinates of the system are $q_1$ and $q_2$, the velocities of the corresponding generalized coordinates are $\dot{q_1}$ and $\dot{q_2}$ as shown in Figure \ref{fig:idp}. The equation of motion of double pendulum written in general formulation of multi body system in Equation \ref{eq:dyn_mul_bdy} is, 
 \begin{equation}
+   \label{eq:dyn_idp}
 	M(q_1,q_2)
 	\begin{bmatrix}
 		\ddot{q_{1}} \\
@@ -44,15 +45,6 @@ The equation of motion of the inverted double pendulum is derived using Lagrange
 	\end{bmatrix}
 	+ g(q_1,q_2) = 
     \begin{bmatrix} 0 \\ \tau \end{bmatrix},
-\end{equation}
-
-\begin{equation}
-	\label{eq:dyn_eq}
-	\begin{pmatrix}
-		\ddot{q_{1}} \\
-		\ddot{q_{2}} 
-		\end{pmatrix}
-	= M(q)^{-1} \left( -C(q,\dot{q}).\dot{q} - g(q) + \tau \right ),
 \end{equation}
 where, $M(q_1,q_2)$ represents the ineria matrix of the inverted double pendulum system. It is given by 
 $$ M(q_1,q_2) = \begin{bmatrix}\
@@ -81,46 +73,20 @@ m_2 l_2 a_g cos(q_1+q_2)
 $$
 where $a_g$ represents the acceleration due to gravity 9.81 $m/{s}^2$.
 
-To convert the equations into ODE's, assume 
-$$ x_1 = q_1, x_2 = \dot{q_1}, x_3 = q_2, x_4 = \dot{q_2}$$
-substitute the above equations into \eqref{eq:dyn_eq}. The resulting non linear dynamic equation is of form
+The state space representation of the inverted double pendulum system is formulated as given in Equation \ref{eq:dyn_ss}. The states of the system are $$ x = \begin{bmatrix} q_1 \\ q_2 \\ \dot q_1  \\ \dot q_2 \end{bmatrix}. $$
 
+The measurement equation of the ODE system are formulated with the set of available measurements. The measurement equation is  
 \begin{equation}
-\begin{split}\label{eq:dyn_ode}
-	\dot{x}  = f(x,u),	\\
-	x = 
-	\begin{pmatrix}
-		x_1 \\
-		x_2 \\
-		x_3 \\
-		x_4
-	\end{pmatrix}
-\end{split}
+	y= \begin{bmatrix} q_2 \\ \dot q_2 \\ acc_x \\ acc_y \\ \omega \end{bmatrix},
 \end{equation}
-\eqref{eq:dyn_ode} is the model prediction equations in Kalman filter. The measurement equation is,
+where $q_2, \dot{q}_2$ are  angle and velocity of ankle joint measured by encoders. $acc_{x},acc_{y} $ are the Cartesian accelerations along \emph{x and y axis} measured by accelerometer present in inertial measurement unit(IMU) that is located at the end of link 2 in Figure \ref{fig:idp}. The acceleration measurements can be written in terms of states of the system as,
+$$ 
+    \begin{aligned}
+    acc_x &= -l_1 (\ddot q_1 sin(q_1) + \dot q_1^2 cos(q_1)) - ((\ddot q_1 + \ddot q_2) l_2 sin(q_1+q_2) + (\dot q_1 + \dot q_2)^2 l_2 cos(q_1+q_2)), \\
+    acc_y &= l_1 (\ddot q_1 cos(q_1) - \dot q_1^2 sin(q_1)) + ((\ddot q_1 + \ddot q_2) l_2 cos(q_1+q_2) - (\dot q_1 + \dot q_2)^2 l_2 sin(q_1+q_2)), \\
+    \end{aligned}
+$$
+where $\ddot q_1 , \ddot q_2 $ are the accelerations which is computed using forward dynamics equation. The angular velocity of the whole system $\omega$ is measured by the gyroscope present in IMU. The measurement equation of the gyroscope is $$ \omega = \dot q_1 + \dot q_2. $$ 
+The estimated states $$q_1, \dot{q_1}$$ are the angle and anglular velocity of the toe or the underactuated degrees of freedom of the system.
 
-\begin{equation}
-	y= 
-	\begin{pmatrix}
-		q_2\\
-		\dot{q_2}\\
-		a_{py}\\
-		a_{pz}\\
-		\omega_x\\
-		Fb_y\\
-		Fb_z \\
-	\end{pmatrix}
-\end{equation}
-
-where,
-\begin{itemize}
-\item
- $q_2, \dot{q_2}$- angle and velocity of ankle joint measured by encoders
-\item 
-$a_{py},a_{pz}$- cartesian accelerations along \emph{x and z axis} measured by IMU(Inertial Measurement Unit)
-\item
-$\omega_x$ - angular acceleration around \emph{x axis} measured by gyroscope
-\item
-$Fb_y,Fb_z$- ground reactional froces action along \emph{ y and z axis} measured by FTS(Force Torque Sensor)
-\end{itemize}
-The estimated states are $$q_1, \dot{q_1}$$ are the underactuated degrees of freedom of the system.
+\subsection{Kalman filtering}

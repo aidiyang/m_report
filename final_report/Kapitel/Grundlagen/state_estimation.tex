@@ -1,6 +1,6 @@
 \chapter{State Estimation}
 \label{ch:st_est}
-State estimation is the principle of estimating the internal state of the system from the measurement of inputs and outputs of the system. In general knowledge of the internal state of the system will make the system easy to control. Figure \ref{fig:observer} shows the usage of state estimator in state feedback control loop.
+State estimation is the principle of estimating the internal state of the system from the measurement of inputs and outputs of the system. The knowledge of the internal state of the system will make the system easy to control. Figure \ref{fig:observer} shows the usage of state estimator in state feedback control loop.
 \begin{figure}[h]
 %  \centering
 %  \includegraphics[trim = 10mm 200mm 20mm 20mm, clip,scale=0.80]{Bilder/system_observer.pdf}
@@ -34,7 +34,7 @@ State estimation is the principle of estimating the internal state of the system
     \draw [->] (measurements) -| node[pos=0.99] {$-$} 
         node [near end] {$\hat{x}$} (sum);
 \end{tikzpicture}
-    \caption{Structure of state feedback controller with state estimator}
+    \caption{State feedback controller with state estimator}
       \label{fig:observer}
 \end{figure}
 
