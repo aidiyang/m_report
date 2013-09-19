@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.482"
+    ComputedModelVersion    "1.506"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,9 +44,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sun Jul 21 14:10:35 2013"
+  LastModifiedDate	  "Thu Sep 19 23:57:41 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:482>"
+  ModelVersionFormat	  "1.%<AutoIncrement:506>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -758,7 +758,7 @@ Model {
   }
   System {
     Name		    "estimator_ekf_v02"
-    Location		    [0, 54, 1920, 1080]
+    Location		    [4, 66, 1596, 1092]
     Open		    on
     ModelBrowserVisibility  on
     ModelBrowserWidth	    212
@@ -808,8 +808,8 @@ Model {
       FunctionWithSeparateData off
       System {
 	Name			"Extended kalman filter"
-	Location		[1920, 54, 3840, 1153]
-	Open			on
+	Location		[0, 54, 1600, 1153]
+	Open			off
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -832,64 +832,11 @@ Model {
 	Block {
 	  BlockType		  Inport
 	  Name			  "z(k)"
-	  Position		  [1525, 593, 1555, 607]
-	  Orientation		  "left"
+	  Position		  [665, 173, 695, 187]
 	  Port			  "2"
 	  IconDisplay		  "Port number"
 	  OutDataType		  "sfix(16)"
 	  OutScaling		  "2^0"
-	}
-	Block {
-	  BlockType		  Product
-	  Name			  "Product"
-	  Ports			  [2, 1]
-	  Position		  [1190, 546, 1250, 604]
-	  Orientation		  "left"
-	  Multiplication	  "Matrix(*)"
-	  CollapseMode		  "All dimensions"
-	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum"
-	  Ports			  [2, 1]
-	  Position		  [1325, 580, 1345, 600]
-	  Orientation		  "left"
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "-+|"
-	  CollapseMode		  "All dimensions"
-	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum1"
-	  Ports			  [2, 1]
-	  Position		  [920, 565, 940, 585]
-	  Orientation		  "left"
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  CollapseMode		  "All dimensions"
-	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
-	  SaturateOnIntegerOverflow off
-	  Port {
-	    PortNumber		    1
-	    Name		    "x(k)"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
 	}
 	Block {
 	  BlockType		  UnitDelay
@@ -909,14 +856,13 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "contact measurements"
 	  Ports			  [2, 1]
-	  Position		  [1380, 569, 1480, 611]
-	  Orientation		  "left"
+	  Position		  [920, 204, 985, 246]
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
 	  System {
 	    Name		    "contact measurements"
-	    Location		    [2457, 450, 3729, 1148]
+	    Location		    [164, 251, 1436, 949]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -931,14 +877,14 @@ Model {
 	    ZoomFactor		    "100"
 	    Block {
 	      BlockType		      Inport
-	      Name		      "u_in(k)"
-	      Position		      [25, 78, 55, 92]
+	      Name		      "y(k)"
+	      Position		      [40, 593, 70, 607]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Inport
-	      Name		      "y(k)"
-	      Position		      [40, 593, 70, 607]
+	      Name		      "u_in(k)"
+	      Position		      [25, 78, 55, 92]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	    }
@@ -1074,7 +1020,7 @@ Model {
 	      FunctionWithSeparateData off
 	      System {
 		Name			"contact_doublesupport"
-		Location		[2156, 571, 3534, 1075]
+		Location		[111, 348, 1489, 852]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -1159,7 +1105,7 @@ Model {
 		  FunctionWithSeparateData off
 		  System {
 		    Name		    "contact_backedge"
-		    Location		    [661, 229, 1765, 856]
+		    Location		    [491, 229, 1595, 856]
 		    Open		    off
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    200
@@ -3778,15 +3724,21 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "corrector"
-	  Ports			  [3, 3]
-	  Position		  [995, 286, 1145, 404]
+	  Ports			  [4, 2]
+	  Position		  [1015, 286, 1165, 404]
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
+	  Port {
+	    PortNumber		    1
+	    Name		    "x(k)"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
 	  System {
 	    Name		    "corrector"
-	    Location		    [0, 54, 1920, 1080]
-	    Open		    on
+	    Location		    [4, 66, 1596, 1092]
+	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -3800,8 +3752,17 @@ Model {
 	    ZoomFactor		    "100"
 	    Block {
 	      BlockType		      Inport
+	      Name		      "z(k)"
+	      Position		      [395, 523, 425, 537]
+	      IconDisplay	      "Port number"
+	      OutDataType	      "sfix(16)"
+	      OutScaling	      "2^0"
+	    }
+	    Block {
+	      BlockType		      Inport
 	      Name		      "u(k)"
-	      Position		      [115, 363, 145, 377]
+	      Position		      [370, 323, 400, 337]
+	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
@@ -3809,8 +3770,8 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "P_(k)-"
-	      Position		      [650, 448, 680, 462]
-	      Port		      "2"
+	      Position		      [315, 463, 345, 477]
+	      Port		      "3"
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
@@ -3819,7 +3780,7 @@ Model {
 	      BlockType		      Inport
 	      Name		      "x_(k)-"
 	      Position		      [25, 303, 55, 317]
-	      Port		      "3"
+	      Port		      "4"
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
@@ -3873,7 +3834,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant"
-	      Position		      [655, 515, 685, 545]
+	      Position		      [190, 430, 230, 450]
 	      Value		      "R"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
@@ -3890,159 +3851,9 @@ Model {
 	    }
 	    Block {
 	      BlockType		      SubSystem
-	      Name		      "Measurement update"
-	      Ports		      [3, 2]
-	      Position		      [765, 344, 890, 566]
-	      PermitHierarchicalResolution "ExplicitOnly"
-	      MinAlgLoopOccurrences   off
-	      RTWSystemCode	      "Auto"
-	      FunctionWithSeparateData off
-	      MaskType		      "Stateflow"
-	      MaskDescription	      "Embedded MATLAB block"
-	      MaskDisplay	      "disp('fcn');"
-	      MaskSelfModifiable      on
-	      MaskIconFrame	      on
-	      MaskIconOpaque	      off
-	      MaskIconRotate	      "none"
-	      MaskIconUnits	      "autoscale"
-	      System {
-		Name			"Measurement update"
-		Location		[257, 457, 812, 717]
-		Open			off
-		ModelBrowserVisibility	on
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "H"
-		  Position		  [20, 101, 40, 119]
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "P_"
-		  Position		  [20, 136, 40, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "R"
-		  Position		  [20, 171, 40, 189]
-		  Port			  "3"
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Demux
-		  Name			  " Demux "
-		  Ports			  [1, 1]
-		  Position		  [270, 365, 320, 405]
-		  Outputs		  "1"
-		}
-		Block {
-		  BlockType		  "S-Function"
-		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function estimator_ekf_v02 2"
-		  Ports			  [3, 3]
-		  Position		  [180, 134, 230, 366]
-		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[3 3]"
-		  EnableBusSupport	  on
-		  Port {
-		    PortNumber		    2
-		    Name		    "K"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    3
-		    Name		    "P"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  " Terminator "
-		  Position		  [460, 376, 480, 394]
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "K"
-		  Position		  [460, 101, 480, 119]
-		  IconDisplay		  "Port number"
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "P"
-		  Position		  [460, 136, 480, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		}
-		Line {
-		  SrcBlock		  " SFunction "
-		  SrcPort		  1
-		  Points		  [0, 210]
-		  DstBlock		  " Demux "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " Demux "
-		  SrcPort		  1
-		  DstBlock		  " Terminator "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "H"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "P_"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  2
-		}
-		Line {
-		  Name			  "K"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  2
-		  DstBlock		  "K"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "P"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "P"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "R"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  3
-		}
-	      }
-	    }
-	    Block {
-	      BlockType		      SubSystem
 	      Name		      "Measurements1"
-	      Ports		      [9, 2]
-	      Position		      [480, 117, 625, 473]
+	      Ports		      [12, 2]
+	      Position		      [480, 121, 625, 479]
 	      PermitHierarchicalResolution "ExplicitOnly"
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
@@ -4055,13 +3866,6 @@ Model {
 	      MaskIconOpaque	      off
 	      MaskIconRotate	      "none"
 	      MaskIconUnits	      "autoscale"
-	      Port {
-		PortNumber		2
-		Name			"H"
-		PropagatedSignals	"H"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
 	      System {
 		Name			"Measurements1"
 		Location		[257, 457, 812, 717]
@@ -4142,30 +3946,51 @@ Model {
 		  IconDisplay		  "Port number"
 		}
 		Block {
+		  BlockType		  Inport
+		  Name			  "R_in"
+		  Position		  [20, 426, 40, 444]
+		  Port			  "10"
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Inport
+		  Name			  "P_"
+		  Position		  [20, 461, 40, 479]
+		  Port			  "11"
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Inport
+		  Name			  "z_in"
+		  Position		  [20, 496, 40, 514]
+		  Port			  "12"
+		  IconDisplay		  "Port number"
+		}
+		Block {
 		  BlockType		  Demux
 		  Name			  " Demux "
 		  Ports			  [1, 1]
-		  Position		  [270, 360, 320, 400]
+		  Position		  [270, 380, 320, 420]
 		  Outputs		  "1"
 		}
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
 		  Tag			  "Stateflow S-Function estimator_ekf_v02 5"
-		  Ports			  [9, 3]
-		  Position		  [180, 118, 230, 362]
+		  Ports			  [12, 3]
+		  Position		  [180, 120, 230, 380]
 		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[9 3]"
+		  PortCounts		  "[12 3]"
 		  EnableBusSupport	  on
 		  Port {
 		    PortNumber		    2
-		    Name		    "y"
+		    Name		    "x_out"
 		    RTWStorageClass	    "Auto"
 		    DataLoggingNameMode	    "SignalName"
 		  }
 		  Port {
 		    PortNumber		    3
-		    Name		    "H"
+		    Name		    "P"
 		    RTWStorageClass	    "Auto"
 		    DataLoggingNameMode	    "SignalName"
 		  }
@@ -4173,11 +3998,11 @@ Model {
 		Block {
 		  BlockType		  Terminator
 		  Name			  " Terminator "
-		  Position		  [460, 371, 480, 389]
+		  Position		  [460, 391, 480, 409]
 		}
 		Block {
 		  BlockType		  Outport
-		  Name			  "y"
+		  Name			  "x_out"
 		  Position		  [460, 101, 480, 119]
 		  IconDisplay		  "Port number"
 		  OutDataType		  "sfix(16)"
@@ -4185,25 +4010,17 @@ Model {
 		}
 		Block {
 		  BlockType		  Outport
-		  Name			  "H"
+		  Name			  "P"
 		  Position		  [460, 136, 480, 154]
 		  Port			  "2"
 		  IconDisplay		  "Port number"
 		}
 		Line {
-		  Name			  "H"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "H"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "y"
+		  Name			  "x_out"
 		  Labels		  [0, 0]
 		  SrcBlock		  " SFunction "
 		  SrcPort		  2
-		  DstBlock		  "y"
+		  DstBlock		  "x_out"
 		  DstPort		  1
 		}
 		Line {
@@ -4222,7 +4039,7 @@ Model {
 		Line {
 		  SrcBlock		  " SFunction "
 		  SrcPort		  1
-		  Points		  [0, 220]
+		  Points		  [0, 235]
 		  DstBlock		  " Demux "
 		  DstPort		  1
 		}
@@ -4242,6 +4059,7 @@ Model {
 		Line {
 		  SrcBlock		  "J_in"
 		  SrcPort		  1
+		  Points		  [120, 0]
 		  DstBlock		  " SFunction "
 		  DstPort		  4
 		}
@@ -4274,6 +4092,32 @@ Model {
 		  SrcPort		  1
 		  DstBlock		  " SFunction "
 		  DstPort		  8
+		}
+		Line {
+		  SrcBlock		  "R_in"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  10
+		}
+		Line {
+		  SrcBlock		  "P_"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  11
+		}
+		Line {
+		  SrcBlock		  "z_in"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  12
+		}
+		Line {
+		  Name			  "P"
+		  Labels		  [0, 0]
+		  SrcBlock		  " SFunction "
+		  SrcPort		  3
+		  DstBlock		  "P"
+		  DstPort		  1
 		}
 	      }
 	    }
@@ -4547,7 +4391,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "inertia"
-	      Position		      [305, 422, 365, 448]
+	      Position		      [295, 347, 355, 373]
 	      Value		      "Irf"
 	      VectorParams1D	      off
 	      OutDataType	      "sfix(16)"
@@ -4556,7 +4400,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "inertia1"
-	      Position		      [305, 462, 365, 488]
+	      Position		      [280, 377, 340, 403]
 	      Value		      "Ilf"
 	      VectorParams1D	      off
 	      OutDataType	      "sfix(16)"
@@ -4564,8 +4408,8 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "yhat_(k)"
-	      Position		      [785, 203, 815, 217]
+	      Name		      "x(k)"
+	      Position		      [735, 203, 765, 217]
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
@@ -4573,17 +4417,8 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "P(k)"
-	      Position		      [965, 503, 995, 517]
+	      Position		      [735, 383, 765, 397]
 	      Port		      "2"
-	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "K(k)"
-	      Position		      [960, 393, 990, 407]
-	      Port		      "3"
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
@@ -4672,71 +4507,64 @@ Model {
 		DstPort			1
 	      }
 	      Branch {
-		Points			[180, 0; 0, 25]
+		Points			[180, 0; 0, -25]
 		DstBlock		"Measurements1"
 		DstPort			6
 	      }
 	    }
 	    Line {
-	      Name		      "H"
-	      Labels		      [0, 0]
-	      SrcBlock		      "Measurements1"
-	      SrcPort		      2
-	      Points		      [0, -5]
-	      DstBlock		      "Measurement update"
-	      DstPort		      1
-	    }
-	    Line {
 	      SrcBlock		      "Measurements1"
 	      SrcPort		      1
-	      Points		      [0, 5]
-	      DstBlock		      "yhat_(k)"
+	      DstBlock		      "x(k)"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "u(k)"
 	      SrcPort		      1
-	      Points		      [315, 0]
+	      Points		      [60, 0]
 	      DstBlock		      "Measurements1"
 	      DstPort		      7
 	    }
 	    Line {
-	      SrcBlock		      "Constant"
-	      SrcPort		      1
-	      DstBlock		      "Measurement update"
-	      DstPort		      3
-	    }
-	    Line {
-	      SrcBlock		      "P_(k)-"
-	      SrcPort		      1
-	      DstBlock		      "Measurement update"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "Measurement update"
-	      SrcPort		      2
-	      DstBlock		      "P(k)"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Measurement update"
-	      SrcPort		      1
-	      DstBlock		      "K(k)"
-	      DstPort		      1
-	    }
-	    Line {
 	      SrcBlock		      "inertia"
 	      SrcPort		      1
-	      Points		      [35, 0; 0, -20]
+	      Points		      [105, 0]
 	      DstBlock		      "Measurements1"
 	      DstPort		      8
 	    }
 	    Line {
 	      SrcBlock		      "inertia1"
 	      SrcPort		      1
-	      Points		      [70, 0; 0, -20]
+	      Points		      [120, 0]
 	      DstBlock		      "Measurements1"
 	      DstPort		      9
+	    }
+	    Line {
+	      SrcBlock		      "Constant"
+	      SrcPort		      1
+	      Points		      [105, 0; 0, -35]
+	      DstBlock		      "Measurements1"
+	      DstPort		      10
+	    }
+	    Line {
+	      SrcBlock		      "P_(k)-"
+	      SrcPort		      1
+	      Points		      [55, 0; 0, -35]
+	      DstBlock		      "Measurements1"
+	      DstPort		      11
+	    }
+	    Line {
+	      SrcBlock		      "Measurements1"
+	      SrcPort		      2
+	      DstBlock		      "P(k)"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "z(k)"
+	      SrcPort		      1
+	      Points		      [15, 0; 0, -65]
+	      DstBlock		      "Measurements1"
+	      DstPort		      12
 	    }
 	  }
 	}
@@ -4750,7 +4578,7 @@ Model {
 	  FunctionWithSeparateData off
 	  System {
 	    Name		    "predictor"
-	    Location		    [1920, 54, 3840, 1153]
+	    Location		    [0, 54, 1600, 1153]
 	    Open		    on
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -5740,32 +5568,25 @@ Model {
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [255, 0]
+	    Points		    [200, 0]
 	    Branch {
-	      Points		      [0, 65]
+	      Points		      [10, 0; 0, 90]
 	      DstBlock		      "corrector"
-	      DstPort		      1
+	      DstPort		      2
 	    }
 	    Branch {
-	      Points		      [570, 0; 0, 340]
+	      Points		      [0, -5]
 	      DstBlock		      "contact measurements"
-	      DstPort		      1
+	      DstPort		      2
 	    }
 	  }
 	}
 	Line {
 	  SrcBlock		  "predictor"
 	  SrcPort		  2
-	  Points		  [35, 0]
-	  Branch {
-	    Points		    [20, 0; 0, 10]
-	    DstBlock		    "corrector"
-	    DstPort		    3
-	  }
-	  Branch {
-	    DstBlock		    "Sum1"
-	    DstPort		    1
-	  }
+	  Points		  [55, 0; 0, 15]
+	  DstBlock		  "corrector"
+	  DstPort		  4
 	}
 	Line {
 	  SrcBlock		  "Unit Delay"
@@ -5774,43 +5595,11 @@ Model {
 	  DstPort		  2
 	}
 	Line {
+	  Name			  "x(k)"
+	  Labels		  [3, 0]
 	  SrcBlock		  "corrector"
 	  SrcPort		  1
-	  Points		  [185, 0]
-	  DstBlock		  "Sum"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Sum"
-	  SrcPort		  1
-	  DstBlock		  "Product"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Unit Delay1"
-	  SrcPort		  1
-	  DstBlock		  "predictor"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "predictor"
-	  SrcPort		  1
-	  Points		  [60, 0; 0, 30]
-	  DstBlock		  "corrector"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Product"
-	  SrcPort		  1
-	  DstBlock		  "Sum1"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "x(k)"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Sum1"
-	  SrcPort		  1
-	  Points		  [-45, 0]
+	  Points		  [165, 0; 0, 260; -465, 0]
 	  Branch {
 	    Points		    [-405, 0; 0, -230]
 	    DstBlock		    "Unit Delay"
@@ -5823,29 +5612,37 @@ Model {
 	  }
 	}
 	Line {
+	  SrcBlock		  "Unit Delay1"
+	  SrcPort		  1
+	  DstBlock		  "predictor"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "predictor"
+	  SrcPort		  1
+	  Points		  [60, 0; 0, 45]
+	  DstBlock		  "corrector"
+	  DstPort		  3
+	}
+	Line {
 	  SrcBlock		  "corrector"
 	  SrcPort		  2
-	  Points		  [45, 0; 0, 145; -595, 0; 0, -105]
+	  Points		  [25, 0; 0, 115; -595, 0; 0, -105]
 	  DstBlock		  "Unit Delay1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "z(k)"
+	  SrcPort		  1
+	  Points		  [0, 35]
+	  DstBlock		  "contact measurements"
 	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "contact measurements"
 	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "z(k)"
-	  SrcPort		  1
-	  DstBlock		  "contact measurements"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "corrector"
-	  SrcPort		  3
-	  Points		  [115, 0]
-	  DstBlock		  "Product"
+	  Points		  [10, 0]
+	  DstBlock		  "corrector"
 	  DstPort		  1
 	}
       }
@@ -6758,7 +6555,7 @@ Stateflow {
     name		    "estimator_ekf_v02"
     created		    "24-Apr-2013 17:48:49"
     isLibrary		    0
-    firstTarget		    52
+    firstTarget		    45
     sfVersion		    67014000.000001
   }
   chart {
@@ -6878,8 +6675,8 @@ Stateflow {
   }
   chart {
     id			    9
-    name		    "Extended kalman filter/corrector/Measurement update"
-    windowPosition	    [465.75 113.25 200.25 189.75]
+    name		    "Extended kalman filter/predictor/Time Update"
+    windowPosition	    [435.75 143.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3840 1200 1.25]
     treeNode		    [0 10 0 0]
@@ -6890,7 +6687,7 @@ Stateflow {
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    13
-    chartFileNumber	    2
+    chartFileNumber	    4
     disableImplicitCasting  1
     eml {
       name		      "fcn"
@@ -6909,8 +6706,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [K,P]= fcn(H,P_,R)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\nK = P_*H'/(H*P_*H'+R);\n%P = (eye(62)-K*H)*P_;\nI = eye(62);\nP = (I-K*H)*P_*(I-K*H)' + K*R*K' ;"
-      editorLayout	      "100 M4x1[1915 16 1920 1137]"
+      script		      "function [A,x_k]= fcn(M_in,C_in,g_in,J_in,H_in,TA_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndt = 1e-3;\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n%q = x_in(1:dof);\ndq = x_in(dof+(1:dof));\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\nTA = TA_in(1:3,:);\ninvTA = TA \\ eye(3,3);\n% Transformation from body to spacial frame:\n%Adfb = Adjoint(Hfb);\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% Transformation for the velocites of floating base\nvfb = dq(1:3);\nwfb = dq(4:6);\n\ndp = Rfb * vfb;\ndo = invTA * (Rfb*wfb);\n\nvel = [dp; do; dq(7:31)];\n\n%vel = [Vfb_s; dq(7:31)];%~~~~~~~ First Attempt\n\ngacc = [ 0 0 -9.81 0 0 0]';\n% errrf = Irf * (Adrf\\gacc) ;\n% errlf = Ilf * (Adlf\\gacc);\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\n%acc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nx_dot = [vel;acc];   \n\n% Computing second order derivative terms for base\n% p - position of floating base o-orientation of floating base\n\nx_k = x_in + dt*x_dot ;\n\n\n% Computation of Jacobian for velocities of Floating base\n\ndqdx = [zeros(25,37),eye(25)];                               %%%%%%%%%%%%%%%%\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndpdx = zeros(3,2*dof);\ndodx = zeros(3,2*dof);\n\ndacc = zeros(dof,2*dof);\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    dHfb  = H_in(i*20+(5*4+ind4),:); \n    dRfb  = dHfb( 1:3, 1:3);\n \n    dpdx(:,i) = dRfb*vfb;\n    %dodx(:,i) = TA \\ ( dRfb*wfb) ;\n    dodx(:,i) = invTA * ( dRfb*wfb) ;\n\n    if i > 3 && i < 6\n        \n    dTA   = TA_in((i-3)*3+(1:3),:);\n    % dodx(:,i) = TA\\ (-dTA*do );\n    dodx(:,i) = dodx(:,i) + invTA * (-dTA*do );\n    \n    end \n\n%     dacc(:,i)   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n%                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n%                                              - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n%                                              - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) ) ));\n      dacc(:,i)   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));\n    \n    if i > dof\n        if i <= dof+3\n            dpdx(:,i) = dpdx(:,i) + Rfb(:,i-dof);         \n        elseif i<= dof+6\n            %dodx(:,i) = dodx(:,i) + TA\\Rfb(:,i-(dof+3)); \n            dodx(:,i) = dodx(:,i) + invTA * Rfb(:,i-(dof+3)); \n        end\n        %dacc(:,i) = dacc(:,i) + M \\ (- C(:,i-31));\n        dacc(:,i) = dacc(:,i) + invM * (- C(:,i-31));\n\n    end\nend\n\ndvel = [ dpdx ; dodx ; dqdx ];\n\nA = eye(62) + dt * [dvel;dacc] ;"
+      editorLayout	      "100 M4x1[1916 28 1928 1169]"
     }
   }
   junction {
@@ -6943,9 +6740,9 @@ Stateflow {
   }
   data {
     id			    13
-    name		    "H"
+    name		    "A"
     linkNode		    [9 0 14]
-    scope		    INPUT_DATA
+    scope		    OUTPUT_DATA
     machine		    1
     props {
       array {
@@ -6965,9 +6762,9 @@ Stateflow {
   }
   data {
     id			    14
-    name		    "K"
+    name		    "M_in"
     linkNode		    [9 13 15]
-    scope		    OUTPUT_DATA
+    scope		    INPUT_DATA
     machine		    1
     props {
       array {
@@ -6977,7 +6774,6 @@ Stateflow {
 	method			SF_INHERITED_TYPE
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
     }
     dataType		    "inherited"
     fixptType {
@@ -6988,7 +6784,7 @@ Stateflow {
   }
   data {
     id			    15
-    name		    "P"
+    name		    "x_k"
     linkNode		    [9 14 16]
     scope		    OUTPUT_DATA
     machine		    1
@@ -7011,7 +6807,7 @@ Stateflow {
   }
   data {
     id			    16
-    name		    "P_"
+    name		    "C_in"
     linkNode		    [9 15 17]
     scope		    INPUT_DATA
     machine		    1
@@ -7033,8 +6829,162 @@ Stateflow {
   }
   data {
     id			    17
-    name		    "R"
-    linkNode		    [9 16 0]
+    name		    "g_in"
+    linkNode		    [9 16 18]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    18
+    name		    "J_in"
+    linkNode		    [9 17 19]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    19
+    name		    "H_in"
+    linkNode		    [9 18 20]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    20
+    name		    "TA_in"
+    linkNode		    [9 19 21]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    21
+    name		    "x_in"
+    linkNode		    [9 20 22]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    22
+    name		    "u_in"
+    linkNode		    [9 21 23]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    23
+    name		    "Irf"
+    linkNode		    [9 22 24]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    24
+    name		    "Ilf"
+    linkNode		    [9 23 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7054,58 +7004,59 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   instance {
-    id			    18
-    name		    "Extended kalman filter/corrector/Measurement update"
+    id			    25
+    name		    "Extended kalman filter/predictor/Time Update"
     machine		    1
     chart		    9
   }
   chart {
-    id			    19
-    name		    "Extended kalman filter/predictor/Time Update"
-    windowPosition	    [435.75 143.25 200.25 189.75]
+    id			    26
+    name		    "Extended kalman filter/corrector/Measurements1"
+    windowPosition	    [450.75 128.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3840 1200 1.25]
-    treeNode		    [0 20 0 0]
-    firstTransition	    22
-    firstJunction	    21
-    viewObj		    19
+    treeNode		    [0 27 0 0]
+    firstTransition	    29
+    firstJunction	    28
+    viewObj		    26
     machine		    1
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    23
-    chartFileNumber	    4
+    firstData		    30
+    chartFileNumber	    5
     disableImplicitCasting  1
     eml {
       name		      "fcn"
+      noDebugging	      1
     }
   }
   state {
-    id			    20
+    id			    27
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    19
-    treeNode		    [19 0 0 0]
+    chart		    26
+    treeNode		    [26 0 0 0]
     superState		    SUBCHART
-    subviewer		    19
+    subviewer		    26
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [A,x_k]= fcn(M_in,C_in,g_in,J_in,H_in,TA_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndt = 1e-3;\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n%q = x_in(1:dof);\ndq = x_in(dof+(1:dof));\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\nTA = TA_in(1:3,:);\ninvTA = TA \\ eye(3,3);\n% Transformation from body to spacial frame:\n%Adfb = Adjoint(Hfb);\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% Transformation for the velocites of floating base\nvfb = dq(1:3);\nwfb = dq(4:6);\n\ndp = Rfb * vfb;\ndo = invTA * (Rfb*wfb);\n\nvel = [dp; do; dq(7:31)];\n\n%vel = [Vfb_s; dq(7:31)];%~~~~~~~ First Attempt\n\ngacc = [ 0 0 -9.81 0 0 0]';\n% errrf = Irf * (Adrf\\gacc) ;\n% errlf = Ilf * (Adlf\\gacc);\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\n%acc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nx_dot = [vel;acc];   \n\n% Computing second order derivative terms for base\n% p - position of floating base o-orientation of floating base\n\nx_k = x_in + dt*x_dot ;\n\n\n% Computation of Jacobian for velocities of Floating base\n\ndqdx = [zeros(25,37),eye(25)];                               %%%%%%%%%%%%%%%%\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndpdx = zeros(3,2*dof);\ndodx = zeros(3,2*dof);\n\ndacc = zeros(dof,2*dof);\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    dHfb  = H_in(i*20+(5*4+ind4),:); \n    dRfb  = dHfb( 1:3, 1:3);\n \n    dpdx(:,i) = dRfb*vfb;\n    %dodx(:,i) = TA \\ ( dRfb*wfb) ;\n    dodx(:,i) = invTA * ( dRfb*wfb) ;\n\n    if i > 3 && i < 6\n        \n    dTA   = TA_in((i-3)*3+(1:3),:);\n    % dodx(:,i) = TA\\ (-dTA*do );\n    dodx(:,i) = dodx(:,i) + invTA * (-dTA*do );\n    \n    end \n\n%     dacc(:,i)   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n%                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n%                                              - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n%                                              - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) ) ));\n      dacc(:,i)   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));\n    \n    if i > dof\n        if i <= dof+3\n            dpdx(:,i) = dpdx(:,i) + Rfb(:,i-dof);         \n        elseif i<= dof+6\n            %dodx(:,i) = dodx(:,i) + TA\\Rfb(:,i-(dof+3)); \n            dodx(:,i) = dodx(:,i) + invTA * Rfb(:,i-(dof+3)); \n        end\n        %dacc(:,i) = dacc(:,i) + M \\ (- C(:,i-31));\n        dacc(:,i) = dacc(:,i) + invM * (- C(:,i-31));\n\n    end\nend\n\ndvel = [ dpdx ; dodx ; dqdx ];\n\nA = eye(62) + dt * [dvel;dacc] ;"
+      script		      "function [x_out,P]= fcn(M_in,C_in,g_in,J_in,H_in,x_in,u_in,Irf,Ilf,R_in,P_,z_in)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nq = x_in(1:dof);\ndq = x_in(dof+(1:dof));\nomega = dq(4:6);\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%TA = TA_in(1*6+ind6,:);\n\n% Gyroscopic measurements\n%gyro = Rfb'*( TA(4:6,4:6) \\ (Rfb*omega) ); % ~~~~~~~~~~~~~~~~~~~~~~~~Not sure weather this is correct ????????????\n gyro = omega;                                          % Should the gyroscope be necessarily rotated ???\n\n% Inertia correction\n\ngacc = [ 0 0 -9.81 0 0 0]';\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\n\n% Gravity compensation for IMU\nimu_bias = [ 0.005 0 0]';\nimu = acc(1:3) + Rfb'*[0 0 9.81]'+imu_bias;\n\n%Internal sensors\njnt = [q(7:31);dq(7:31)];\n\n% Velocity measurements for foot contact\n%v_rf = Jr*v; \n%v_lf = Jl*v;\n%msr_vcont = [v_rf;v_lf];\n\n% Position of the contact points\n% Contact Model:\n%        y       b---------c\n%        |       |      .o |\n%    x_ _|       a---------d\n%\n% CD --> AB === Fx: 20 --> -20\n% AB --> CD === Fx: -20 --> 20\n\ncontact_AB = [ 0.13 0.0475 0 1 0.13 -0.0475 0 1]';\ncontact_CD = [ -0.06 -0.0475 0 1 -0.06 0.0475 0 1]';\n\n% zmp computation\nzmprf_x = ( -Frf(5) -0.1189 * Frf(1) ) / Frf(3);\nzmplf_x = ( -Flf(5) -0.1189 * Flf(1) ) / Flf(3);\n\nzmp_x = (zmprf_x * Frf(3) + zmplf_x * Flf(3))/ (Frf(3)+Flf(3));\n\n% front edge limit = 0.12\n% back edge limit = -0.055\nif zmp_x < 0.12\n    p1 = contact_CD(1*4+ind4);\n    p2 = contact_CD(2*4+ind4);\nelse\n    p1 = contact_AB(1*4+ind4);\n    p2 = contact_AB(2*4+ind4);\nend\n\np1rf_s = Hrf * p1;\np2rf_s = Hrf * p2;\n\np1lf_s = Hlf * p1;\np2lf_s = Hlf * p2;\n\npcont = [ p1rf_s(1:3) ; p2rf_s(1:3) ; p1lf_s(1:3) ; p2lf_s(1:3) ];\n\nvcont = [ Jrf * dq; Jlf * dq ];\n\n%measurement equation \n\n    y = [ jnt ; imu ; gyro ; pcont ; vcont ];\n    z = z_in;\n\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndimu = zeros(3,dof*2);\n%dgyro = zeros(3,dof*2);\ndgyro = [ zeros(3,dof+3),eye(3,28) ];\ndpcont = zeros(12,dof*2);\ndvcont = zeros(12,dof*2);\n\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHfb = H_in(i*20+(5*4+ind4),:);\n    dRfb  = dHfb( 1:3, 1:3);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    %dTA  = TA_in(i*6+(1*6+ind6),:);\n    \n    df   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));                                        \n      \n    dp1rf_s = dHrf*p1 ; dp2rf_s = dHrf*p2 ; dp1lf_s = dHlf*p1 ; dp2lf_s = dHlf*p2;\n    dpcont(:,i) =[ dp1rf_s(1:3) ; dp2rf_s(1:3) ; dp1lf_s(1:3) ; dp2lf_s(1:3) ];\n    dvcont(:,i) = [ dJrf * dq; dJlf * dq; ];\n\n    if i > dof\n        df = df + invM * (- C(:,i-31));\n        dvcont(:,i) = dvcont(:,i) + [ Jrf(:,i-31); Jlf(:,i-31); ];\n    end\n    dimu(1:3,i) = df(1:3) + dRfb'*[0 0 9.81]';\nend\n\ndjnt = [ [zeros(25,6),eye(25,25),zeros(25,31)]; [zeros(25,37),eye(25,25)] ];\n\n% dgyro(1,35) = 1; \n% dgyro(2,36) = 1;\n% dgyro(3,37) = 1;\n% Measurement matrix\n\nif zmp_x < -0.05 && zmp_x> 0.12\n    C_uo = [ djnt ; dimu ; dgyro ; dpcont];\n    R_uo = R_in(1:end-12,1:end-12);\n    K_uo = P_*C_uo'/(C_uo*P_*C_uo'+R_uo);\n    I = eye(size(P_));\n    P = (I-K_uo*C_uo)*P_*(I-K_uo*C_uo)' + K_uo*R_uo*K_uo' ;\n    x_out = x_in + K_uo *(z(1:end-12) - y(1:end-12));\nelse\n    C_o = [ djnt ; dimu ; dgyro ; dpcont ; dvcont];\n    R_o = R_in;\n    K = P_*C_o'/(C_o*P_*C_o'+R_o);\n    I = eye(size(P_));\n    P = (I-K*C_o)*P_*(I-K*C_o)' + K*R_o*K' ;\n    x_out = x_in + K *(z-y);\nend\n\n\n\n\n\n\n\n\n"
       editorLayout	      "100 M4x1[1916 28 1928 1169]"
     }
   }
   junction {
-    id			    21
+    id			    28
     position		    [23.5747 49.5747 7]
-    chart		    19
-    linkNode		    [19 0 0]
-    subviewer		    19
+    chart		    26
+    linkNode		    [26 0 0]
+    subviewer		    26
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    22
+    id			    29
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -7113,176 +7064,21 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      21
+      id		      28
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    19
-    linkNode		    [19 0 0]
+    chart		    26
+    linkNode		    [26 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    19
+    subviewer		    26
     drawStyle		    SMART
     executionOrder	    1
   }
   data {
-    id			    23
-    name		    "A"
-    linkNode		    [19 0 24]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    24
-    name		    "M_in"
-    linkNode		    [19 23 25]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-    }
-    dataType		    "inherited"
-    fixptType {
-      slope		      1
-      baseType		      SF_INT16_TYPE
-    }
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    25
-    name		    "x_k"
-    linkNode		    [19 24 26]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "inherited"
-    fixptType {
-      slope		      1
-      baseType		      SF_INT16_TYPE
-    }
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    26
-    name		    "C_in"
-    linkNode		    [19 25 27]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    27
-    name		    "g_in"
-    linkNode		    [19 26 28]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    28
-    name		    "J_in"
-    linkNode		    [19 27 29]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    29
-    name		    "H_in"
-    linkNode		    [19 28 30]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
     id			    30
-    name		    "TA_in"
-    linkNode		    [19 29 31]
+    name		    "M_in"
+    linkNode		    [26 0 31]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7291,21 +7087,21 @@ Stateflow {
       }
       type {
 	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
     }
     dataType		    "inherited"
+    fixptType {
+      slope		      1
+      baseType		      SF_INT16_TYPE
+    }
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
     id			    31
-    name		    "x_in"
-    linkNode		    [19 30 32]
-    scope		    INPUT_DATA
+    name		    "x_out"
+    linkNode		    [26 30 32]
+    scope		    OUTPUT_DATA
     machine		    1
     props {
       array {
@@ -7313,20 +7109,21 @@ Stateflow {
       }
       type {
 	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
+      frame		      SF_FRAME_NO
     }
     dataType		    "inherited"
+    fixptType {
+      slope		      1
+      baseType		      SF_INT16_TYPE
+    }
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
     id			    32
-    name		    "u_in"
-    linkNode		    [19 31 33]
+    name		    "C_in"
+    linkNode		    [26 31 33]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7347,8 +7144,8 @@ Stateflow {
   }
   data {
     id			    33
-    name		    "Irf"
-    linkNode		    [19 32 34]
+    name		    "g_in"
+    linkNode		    [26 32 34]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7369,8 +7166,8 @@ Stateflow {
   }
   data {
     id			    34
-    name		    "Ilf"
-    linkNode		    [19 33 0]
+    name		    "J_in"
+    linkNode		    [26 33 35]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7389,81 +7186,10 @@ Stateflow {
     dataType		    "inherited"
     complexity		    SF_COMPLEX_INHERITED
   }
-  instance {
-    id			    35
-    name		    "Extended kalman filter/predictor/Time Update"
-    machine		    1
-    chart		    19
-  }
-  chart {
-    id			    36
-    name		    "Extended kalman filter/corrector/Measurements1"
-    windowPosition	    [450.75 128.25 200.25 189.75]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3840 1200 1.25]
-    treeNode		    [0 37 0 0]
-    firstTransition	    39
-    firstJunction	    38
-    viewObj		    36
-    machine		    1
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    firstData		    40
-    chartFileNumber	    5
-    disableImplicitCasting  1
-    eml {
-      name		      "fcn"
-    }
-  }
-  state {
-    id			    37
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    36
-    treeNode		    [36 0 0 0]
-    superState		    SUBCHART
-    subviewer		    36
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function [y,H]= fcn(M_in,C_in,g_in,J_in,H_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nq = x_in(1:dof);\ndq = x_in(dof+(1:dof));\nomega = dq(4:6);\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%TA = TA_in(1*6+ind6,:);\n\n% Gyroscopic measurements\n%gyro = Rfb'*( TA(4:6,4:6) \\ (Rfb*omega) ); % ~~~~~~~~~~~~~~~~~~~~~~~~Not sure weather this is correct ????????????\n gyro = omega;                                          % Should the gyroscope be necessarily rotated ???\n\n% Inertia correction\n\ngacc = [ 0 0 -9.81 0 0 0]';\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\n\n% Gravity compensation for IMU\nimu_bias = [ 0.005 0 0]';\nimu = acc(1:3) + Rfb'*[0 0 9.81]'+imu_bias;\n\n%Internal sensors\njnt = [q(7:31);dq(7:31)];\n\n% Velocity measurements for foot contact\n%v_rf = Jr*v; \n%v_lf = Jl*v;\n%msr_vcont = [v_rf;v_lf];\n\n% Position of the contact points\n% Contact Model:\n%        y       b---------c\n%        |       |      .o |\n%    x_ _|       a---------d\n%\n% CD --> AB === Fx: 20 --> -20\n% AB --> CD === Fx: -20 --> 20\n\ncontact_AB = [ 0.13 0.0475 0 1 0.13 -0.0475 0 1]';\ncontact_CD = [ -0.06 -0.0475 0 1 -0.06 0.0475 0 1]';\n\n% zmp computation\nzmprf_x = ( -Frf(5) -0.1189 * Frf(1) ) / Frf(3);\nzmplf_x = ( -Flf(5) -0.1189 * Flf(1) ) / Flf(3);\n\nzmp_x = (zmprf_x * Frf(3) + zmplf_x * Flf(3))/ (Frf(3)+Flf(3));\n\n% front edge limit = 0.12\n% back edge limit = -0.055\nif zmp_x < 0.12\n    p1 = contact_CD(1*4+ind4);\n    p2 = contact_CD(2*4+ind4);\nelse\n    p1 = contact_AB(1*4+ind4);\n    p2 = contact_AB(2*4+ind4);\nend\n\np1rf_s = Hrf * p1;\np2rf_s = Hrf * p2;\n\np1lf_s = Hlf * p1;\np2lf_s = Hlf * p2;\n\npcont = [ p1rf_s(1:3) ; p2rf_s(1:3) ; p1lf_s(1:3) ; p2lf_s(1:3) ];\n\nvcont = [ Jrf * dq; Jlf * dq ];\n\n%measurement equation \ny = [ jnt ; imu ; gyro ; pcont ; vcont ];\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndimu = zeros(3,dof*2);\n%dgyro = zeros(3,dof*2);\ndgyro = [ zeros(3,dof+3),eye(3,28) ];\ndpcont = zeros(12,dof*2);\ndvcont = zeros(12,dof*2);\n\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHfb = H_in(i*20+(5*4+ind4),:);\n    dRfb  = dHfb( 1:3, 1:3);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    %dTA  = TA_in(i*6+(1*6+ind6),:);\n    \n    df   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));                                        \n      \n    dp1rf_s = dHrf*p1 ; dp2rf_s = dHrf*p2 ; dp1lf_s = dHlf*p1 ; dp2lf_s = dHlf*p2;\n    dpcont(:,i) =[ dp1rf_s(1:3) ; dp2rf_s(1:3) ; dp1lf_s(1:3) ; dp2lf_s(1:3) ];\n    dvcont(:,i) = [ dJrf * dq; dJlf * dq; ];\n\n    if i > dof\n        df = df + invM * (- C(:,i-31));\n        dvcont(:,i) = dvcont(:,i) + [ Jrf(:,i-31); Jlf(:,i-31); ];\n    end\n    dimu(1:3,i) = df(1:3) + dRfb'*[0 0 9.81]';\nend\n\ndjnt = [ [zeros(25,6),eye(25,25),zeros(25,31)]; [zeros(25,37),eye(25,25)] ];\n\n% dgyro(1,35) = 1; \n% dgyro(2,36) = 1;\n% dgyro(3,37) = 1;\n% Measurement matrix\nH = [ djnt ; dimu ; dgyro ; dpcont ; dvcont];\n\n\n\n\n\n\n\n\n\n"
-      editorLayout	      "100 M4x1[1916 28 1928 1169]"
-    }
-  }
-  junction {
-    id			    38
-    position		    [23.5747 49.5747 7]
-    chart		    36
-    linkNode		    [36 0 0]
-    subviewer		    36
-    type		    CONNECTIVE_JUNCTION
-  }
-  transition {
-    id			    39
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      38
-      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    36
-    linkNode		    [36 0 0]
-    dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    36
-    drawStyle		    SMART
-    executionOrder	    1
-  }
   data {
-    id			    40
-    name		    "M_in"
-    linkNode		    [36 0 41]
+    id			    35
+    name		    "H_in"
+    linkNode		    [26 34 36]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7472,20 +7198,152 @@ Stateflow {
       }
       type {
 	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
     }
     dataType		    "inherited"
-    fixptType {
-      slope		      1
-      baseType		      SF_INT16_TYPE
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    36
+    name		    "x_in"
+    linkNode		    [26 35 37]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
     }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    37
+    name		    "u_in"
+    linkNode		    [26 36 38]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    38
+    name		    "Irf"
+    linkNode		    [26 37 39]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    39
+    name		    "Ilf"
+    linkNode		    [26 38 40]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    40
+    name		    "R_in"
+    linkNode		    [26 39 41]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
     id			    41
-    name		    "y"
-    linkNode		    [36 40 42]
+    name		    "P_"
+    linkNode		    [26 40 42]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    42
+    name		    "P"
+    linkNode		    [26 41 43]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -7494,197 +7352,20 @@ Stateflow {
       }
       type {
 	method			SF_INHERITED_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "inherited"
-    fixptType {
-      slope		      1
-      baseType		      SF_INT16_TYPE
-    }
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    42
-    name		    "C_in"
-    linkNode		    [36 41 43]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
 	primitive		SF_DOUBLE_TYPE
 	isSigned		1
 	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
+      frame		      SF_FRAME_NO
     }
     dataType		    "inherited"
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
     id			    43
-    name		    "g_in"
-    linkNode		    [36 42 44]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    44
-    name		    "J_in"
-    linkNode		    [36 43 45]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    45
-    name		    "H_in"
-    linkNode		    [36 44 46]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    46
-    name		    "x_in"
-    linkNode		    [36 45 47]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    47
-    name		    "u_in"
-    linkNode		    [36 46 48]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    48
-    name		    "Irf"
-    linkNode		    [36 47 49]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    49
-    name		    "H"
-    linkNode		    [36 48 50]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    50
-    name		    "Ilf"
-    linkNode		    [36 49 0]
+    name		    "z_in"
+    linkNode		    [26 42 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7704,13 +7385,13 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   instance {
-    id			    51
+    id			    44
     name		    "Extended kalman filter/corrector/Measurements1"
     machine		    1
-    chart		    36
+    chart		    26
   }
   target {
-    id			    52
+    id			    45
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1

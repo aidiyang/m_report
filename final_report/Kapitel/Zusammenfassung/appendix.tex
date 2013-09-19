@@ -86,6 +86,9 @@ The partial derivative of the above rotational matrix with respect to the angles
 	\end{bmatrix}
 	\end{split}
 \end{equation}
+The partial derivative of the Rotation matrix with respect any other variables is
+$$ \dfdx{R}{x} = \textbf{0}_{3,3},$$ where $\textbf{0}_{3,3}$ is the $3 \times 3$ zero matrix.
+
 \item Rotation matrix for the simplified model in Chapter \ref{ch:simp_mdl} is parameterized as RPY angles
 \begin{equation}
 	\label{eq:rot_simp}
@@ -151,9 +154,10 @@ The partial derivative of homogeneous transformation matrix with respect to poit
 \begin{equation}
     \begin{split}
     \dfdx{H}{p_i} &= \begin{bmatrix} \textbf{0}_{3,3} &e_i \\ \textbf{0}_{1,3} &1 \end{bmatrix} \hspace{2cm} i={1,2,3} \\
-    \dfdx{H}{\theta_i} &= \begin{bmatrix} \dfdx{R}{\theta_i} &\textbf{0}_{3,1} \\ \textbf{0}_{1,3} &1 \end{bmatrix}
+    \dfdx{H}{\theta_i} &= \begin{bmatrix} \dfdx{R}{\theta_i} &\textbf{0}_{3,1} \\ \textbf{0}_{1,3} &1 \end{bmatrix} \\
     \end{split}
 \end{equation}
+The partial derivative the homogeneous transformation matrix with respect to any other variables is $$    \dfdx{H}{x} = \textbf{0}_{4,4}.$$
 
 \section{Transformation of angular velocity to Euler rates}
 \label{sec:avel_trfm}
@@ -180,7 +184,7 @@ The rotation matrix R is parametrized by Euler angles. $w^b$ depends on the para
 	 &= 
 	\begin{bmatrix}
 		cos(\theta_z)cos(\theta_y) &sin(\theta_z) &0 \\
-	 	-sin(\theta_z)cos(\theta_y) &c_z&0 \\
+	 	-sin(\theta_z)cos(\theta_y) &cos(\theta_z) &0 \\
 		sin(\theta_y) &0 &1
 	\end{bmatrix}
 	\begin{bmatrix}
@@ -205,10 +209,13 @@ $$\dfdx{\omega_b}{\theta_x} = \textbf{0}_{3\times 3},\dfdx{\omega_b}{\theta_y} =
 	\end{bmatrix}
 	 &= 
 	\begin{bmatrix}
-	 &1 &0 &-s_y\\
-	 &0  &c_x &c_ys_x\\
-	 &0  &-s_x &c_yc_x
-	\end{bmatrix} \\
+	 &1 &0 &-sin(\theta_y)\\
+	 &0  &cos(\theta_x) &cos(\theta_y)sin(\theta_x)\\
+	 &0  &-sin(\theta_x) &cos(\theta_y)cos(\theta_x)
+	\end{bmatrix}
+	\begin{bmatrix}
+			\dot{\theta_x} \\ \dot{\theta_y}\\ \dot{\theta_z}
+	\end{bmatrix}\\
 	&\omega^b = T(\theta) \dot{\theta}
 	\end{split}
 \end{equation}
