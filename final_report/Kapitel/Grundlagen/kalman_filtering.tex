@@ -187,12 +187,30 @@ The sigma points $x_i$ are applied to the non linear function $$y= f(x).$$ The m
 \begin{equation}
     \label{eq:ut_mean_cov}
     \begin{split}
-        \bar y &= \sum \limits_{i=0}^n W_i^m y_i \\
-        \Sigma_y &= \sum \limits_{i=0}^n W_i^c [y_i - \bar y ] [ y_i - \bar y] ^T \\
-        \Sigma_{xy} &= \sum \limits_{i=0}^n W_i^c [x_i - \bar x ] [ y_i - \bar y] ^T .
+        \bar y &= \sum \limits_{i=0}^{2n} W_i^m y_i \\
+        \Sigma_y &= \sum \limits_{i=0}^{2n} W_i^c [y_i - \bar y ] [ y_i - \bar y] ^T \\
+        \Sigma_{xy} &= \sum \limits_{i=0}^{2n} W_i^c [x_i - \bar x ] [ y_i - \bar y] ^T .
     \end{split}
 \end{equation}
 
+The UKF have all the steps as in the Kalman Filter. The continuous time non linear system with additive white noises $v(t),w(t)$ is as follows \citep{sim07}:
+\begin{equation}
+    \label{eq:ukf_nlsys}
+    \begin{split}
+       \frac{dx}{dt} &= f(x(t),u(t),t) + W(t)w(t) \\
+       y(t) &= h(x(t),u(t),t) + V(t)v(t),
+    \end{split}
+\end{equation} 
+where $W(t),V(t)$ are arbitrary time varying matrices independent of $x(t)$ and $y(t)$. For sake of simplicity we assume the white noises $v(t),w(t)$  are uncorrelated, so the matrices $W(t),V(t)$ are assmed as identity matrices. The difference between UKF and EKF is in the method used for computation of the state covariance $P_k$. The state covariace of the priori state estimate $\hat x_k^-$ projected ahed of time is $$ P_k^- = \sum \limits_{i=0}^{2n} W_i^c [\hat x_{i,k}^- - \hat{\bar x}_k^-] [\hat x_{i,k}^- - \hat{\bar x}_k^-]^T + Q. $$
+Similarly the covariance matrix $\Sigma_{\hat y_k}$ after projecting the priori estimates through the nonlinear function is $$ \Sigma_{\hat y} = \sum \limits_{i=0}^n W_i^c [\hat{y}_{k,i} - \hat{\bar y}_k ] [ \hat{y}_{k,i} - \hat{\bar y}_k] ^T+R.$$
+The cross covariance matrix $\Sigma_{\hat x_k^-, \hat y_k}$ is $$ \Sigma_{\hat x_k^- \hat y_k} = \sum \limits_{i=0}^{2n} W_i^c [\hat x_{k,i}^- - \hat{\bar x}_k^- ] [ \hat y_{k,i} - \hat{\bar y}_k] ^T .$$
+The Kalman gain $K_k$ is $$K_k = \Sigma_{\hat{\bar x}_k^- \hat y_k} \Sigma_{\hat y_k}^{-1}.$$
+The state and covariance are updated according to the following equations:
+$$  \begin{aligned}
+    \hat{\bar{x}}_k &= \hat{\bar{x}}_k^- + K_k(y_k - \hat{\bar y}_k)\\
+    P_k &= P_k^- - K_k \Sigma_{y,k} K_k^T.
+    \end{aligned}
+    $$
 \subsubsection{Algorithm}
 The UKF algorithm in matrix form is given in \citep{sim07}. The matrix from UKF is chosen as it is easy to implement in Matlab.
 \begin{itemize}
@@ -214,82 +232,63 @@ The UKF algorithm in matrix form is given in \citep{sim07}. The matrix from UKF 
         \end{split}
     \end{equation} 
     
-    \item \textbf{Prediction:} The predicted state mean $\hat{\bar x}^-_k$ and covariance are ${\bar P}^-_k$ is given by
-    \begin{equation}
+    \item \textbf{Time update:} Project the state mean state mean $\hat{\bar x}^-_k$ and covariance ${\bar P}^-_k$ ahed of time. The time update is perfomed by the following steps:
+    \begin{itemize}
+        \item \textbf{Sigma points:} Compute the sigma points from the positeriori state estimates from the previous time step.
+        \begin{equation}
+        X_{k-1} = [ \hat{\bar{x}}_k \hspace{5mm} \cdots \hspace{5mm} \hat{\bar{x}}_k]+ \sqrt c [ 0 \hspace{5mm} \sqrt{P_{k-1}} \hspace{5mm} - \sqrt{P_{k-1}} ]
+        \end{equation}
+
+        \item \textbf{Unscented transform:} Propogate the sigma points through the non linear state projection function and compute their statistics.
+        \begin{equation}
         \begin{split}
-        &\text{Compute the sigma points of the estimates from previous time step}\\
-        &X_{k-1} = [ \hat{\bar{x}}_k \hspace{5mm} \cdots \hspace{5mm} \hat{\bar{x}}_k]+ \sqrt c [ 0 \hspace{5mm} \sqrt{P_{k-1}} \hspace{5mm} - \sqrt{P_{k-1}} ]\\
-        &\text{Propogate the sigma points through non linear state function}\\
-        &\hat X_k = f(X_{k-1},u_k,k-1) \\
-        &\text{Compute the mean of the transformed points }\\
-        &\hat{\bar x}^-_k = \hat X_k w_m \\
-        &\text{Compute the covariance of the transfromed points}\\
-        &\hat{\bar P}^-_k = \hat X_k W \hat X_k^T + Q_{k-1}
+            &\hat X_k = f(X_{k-1},u_k,k-1) \\
+            &\text{Mean of the transformed points }\\
+            &\hat{\bar x}^-_k = \hat X_k w_m \\
         \end{split}
-    \end{equation}
-    
-    \item \textbf{Update:} The updated state mean $\hat{\bar x}_k$ and covariance ${\bar P}_k$ are given by
-    \begin{equation}
+        \end{equation}
+
+        \item \textbf{Estimate projection:} Compute the state covariance matrix from the projected estimates.
+        \begin{equation}
+            \hat{\bar P}^-_k = \hat X_k W \hat X_k^T + Q_{k-1}
+        \end{equation}
+
+    \end{itemize}
+        
+    \item \textbf{Measurement update:} The updated state mean $\hat{\bar x}_k$ and covariance ${\bar P}_k$. The measurement update is performed in the follwoing steps:
+    \begin{itemize}
+        \item \textbf{Sigma points:} Compute the sigma points from priori state estimates.
+        \begin{equation}
+        X_k^- = [ \hat{\bar{x}}_k^- \hspace{5mm} \cdots \hspace{5mm} \hat{\bar{x}}_k^-]+ \sqrt c [ 0 \hspace{5mm} \sqrt{P_k^-} \hspace{5mm} - \sqrt{P_k^-} ]
+        \end{equation}
+
+        \item \textbf{Unscented transform:} Propogate the sigma points through the measurement function and compute their statistics.
+        \begin{equation}
         \begin{split}
-        &\text{Compute the sigma points of priori state estimates}\\
-        &X_k^- = [ \hat{\bar{x}}_k^- \hspace{5mm} \cdots \hspace{5mm} \hat{\bar{x}}_k^-]+ \sqrt c [ 0 \hspace{5mm} \sqrt{P_k^-} \hspace{5mm} - \sqrt{P_k^-} ]\\
-        &\text{Propogate the sigma points through non linear measurement function}\\
         &\hat Y_k = h(X_{k}^-,u_k,k) \\
-        &\text{Compute the mean of transfromed points}\\
+        &\text{Mean of the transfromed points}\\
         &\hat{\bar y}_k = \hat Y_k w_m \\
-        &\text{Compute the covariance of transfromed points}\\
-        &\Sigma_{y,k} = \hat Y_k W \hat Y_k^T + R_k \\
-        &\text{Compute the cross covariance of transformed points}\\
-        &\Sigma_{xy,k} = \hat X_k^- W \hat Y_k^T \\
+        &\text{Covariance of the transfromed points}\\
+        &\Sigma_{\hat y_k} = \hat Y_k W \hat Y_k^T + R_k \\
+        &\text{Cross covariance of the transformed points}\\
+        &\Sigma_{\hat x_k^- \hat y_k} = \hat X_k^- W \hat Y_k^T \\
+        \end{split}
+        \end{equation}
+
+        \item \textbf{Estimate Correction:} Compute the kalman gain and update the priori estimates.
+        \begin{equation}
+        \begin{split}
         &\text{Compute Kalman gain}\\
-        &K_k = \Sigma_{xy,k} \Sigma_{y,k}^{-1}\\
+        &K_k = \Sigma_{\hat{\bar x}_k^- \hat y_k} \Sigma_{\hat y_k}^{-1}\\
         &\text{Update the priori state estimates}\\
         &\hat{\bar{x}}_k = \hat{\bar{x}}_k^- + K_k(y_k - \hat{\bar y}_k)\\
         &P_k = P_k^- - K_k \Sigma_{y,k} K_k^T
         \end{split}
-    \end{equation}
-
+        \end{equation}
+    \end{itemize}
 \end{itemize}
 \begin{figure}  
-\tikzset{state/.style={ rectangle,rounded corners, draw=black, very thick, minimum height=2em, inner sep=2pt, text centered,}, }
-\begin{tikzpicture}[->,>=stealth']
-% Prediction or Time update
- \node[state,
-      ] (predict) 
-       {\begin{tabular}{c}
-       \textbf{Time update:}\\
-       \hrulefill\\
-       $\begin{matrix}
-       \hat{x}_k^- = f(\hat{x}_{k-1},u_k,0) \\
-       \hfill \\
-       P_k^- = A_k P_{k-1} A_k^T+ W_k Q_{k-1} W_k^T 
-       \end{matrix}$
-       \end{tabular}
-       };
-       % Correction or Measurement update
-       \node[state,       % layout (defined above)
-       text width=6.5cm,  % max text width
-       right of=predict,    % Position is to the right of QUERY
-       node distance=8.5cm,    % distance to QUERY
-       anchor=center] (correct) 
-       {\begin{tabular}{c}
-       \textbf{Measurement upadate:}\\
-       \hrulefill\\
-       $\begin{matrix}
-       K_k = P_k^-C^T(C_kP_k^-C_k^T + V_kR_kV_k^T)^{-1}\\
-       \hfill \\
-       \hat{x}_k = \hat{x}_k^- + K_k(y_k-h(\hat{x}_k^-,u_k,0))\\
-       \hfill \\
-       P_k = (I- K_kC_k)P_k^-
-       \end{matrix}$
-       \end{tabular}
-       };
-% draw the paths and and print some Text below/above the graph
-\path (predict)     edge[bend left]  node[anchor=south,above]{$\hat x_k^-, P_k^-$} (correct)
-(correct)       edge[bend left] node[anchor= north,below] {$\hat x_{k-1}, P_{k-1}$} (predict);
-\end{tikzpicture}
-\caption{Structure of UKF}
+\input{Bilder/ukf_work.tex}
+\caption{Working of UKF}
 \label{fig:ukf_blk}
 \end{figure}
-
-

@@ -7,7 +7,7 @@
 \end{figure}
 Inorder to check the feasibility of solving the state estimation problem with the available measurements, a preliminary subproblem is formulated. Since we are interested in estimating the underactuated degrees of freedom, we have to consider the senario where these underactuated degrees of freedom are action on the robot. Let us consider the senario where the robot is tilting around an edge of the foot by applying some external force as shown in Figure \ref{fig:idp_scene}.b. All the joints other that ankle joint of the robot are assumed to remain static(joints does not produce any motion) throughout the experiment. The kinematics of the robot is simplified to one joint on the ankle connecting the whole body with the foot as shown in \ref{fig:idp_scene}.a. The kinematics of \emph{Toro} is shown in Figure \ref{fig:toro_kin}. The mass block in the Figure \ref{fig:idp_scene} represents the inertia of upperbody. The inertia of leg is incorporated in the link connceting upperbody and foot. 
 
-When robot is tilting around an edge of the foot as shown in Figure \ref{fig:idp_scene}.b, we assume there is an imaginary joint located at the edge of the foot around which the robot tilts. Figure \ref{fig:idp_scene}.b resmbles an inverted double pendulum in Figure \ref{fig:idp}.
+When the robot is tilting around an edge of the foot as shown in Figure \ref{fig:idp_scene}.b, we assume there is an imaginary joint located at the edge of the foot around which the robot tilts. Figure \ref{fig:idp_scene}.b resmbles an inverted double pendulum in Figure \ref{fig:idp}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[trim= 0mm 150mm 0mm 0mm, scale=0.65]{Bilder/inv_db_pend.pdf}
@@ -77,6 +77,7 @@ The state space representation of the inverted double pendulum system is formula
 
 The measurement equation of the ODE system are formulated with the set of available measurements. The measurement equation is  
 \begin{equation}
+    \label{eq:y_idp}
 	y= \begin{bmatrix} q_2 \\ \dot q_2 \\ acc_x \\ acc_y \\ \omega \end{bmatrix},
 \end{equation}
 where $q_2, \dot{q}_2$ are  angle and velocity of ankle joint measured by encoders. $acc_{x},acc_{y} $ are the Cartesian accelerations along \emph{x and y axis} measured by accelerometer present in inertial measurement unit(IMU) that is located at the end of link 2 in Figure \ref{fig:idp}. The acceleration measurements can be written in terms of states of the system as,
@@ -89,4 +90,23 @@ $$
 where $\ddot q_1 , \ddot q_2 $ are the accelerations which is computed using forward dynamics equation. The angular velocity of the whole system $\omega$ is measured by the gyroscope present in IMU. The measurement equation of the gyroscope is $$ \omega = \dot q_1 + \dot q_2. $$ 
 The estimated states $$q_1, \dot{q_1}$$ are the angle and anglular velocity of the toe or the underactuated degrees of freedom of the system.
 
-\subsection{Kalman filtering}
+\subsection{Experiment}
+\begin{figure}[h]
+    \centering
+    \input{Bilder/idp_exp_setup.tex}
+    \caption{Experimental setup of inverted double pendulum}
+    \label{fig:exp_idp}  
+\end{figure}
+
+The state estimation problem is tested using Matlab Simulink. The experimental setup consists of the pendulum system and the state estimator. The pendulum system simulates the dynamical Equations \ref{eq:dyn_idp} of the inverted double pendulum system and outputs the measurements $y$ in Equation \ref{eq:y_idp}. Zero mean Gaussian white noises $n_w$ and $n_v$ are added to the state and measurements equations, so that the simulated system behaves closer to the real system. The state space equations of the pendulum system is 
+\begin{equation}
+    \label{eq:sim_idp}
+    \begin{split}
+    \dot x &= f(x,u) + n_w \\
+    y &= h(x,u) + n_v.
+    \end{split}
+\end{equation}
+The continuous time EKF is used for state estimation. The equations of continuous time extended kalman filter is given in Equation \ref{eq:ekf_con}. The non linear state space equation of state $x$ and measurement $y$ are given in Equations \ref{eq:dyn_ss} and \ref{eq:y_idp}. The Jacobians matrices $A$ and $H$ are computed by expanding the state and measurement functions and taking the derivatives with respect to the states. They are computed using the symbolic toolbox in Matlab.
+
+In Figure \ref{fig:exp_idp}, $x_0$ and $\hat x_0$ represents the initial values of the states of the system and estimator. The input $\tau$ applied to the ankle joint of the system is represented by $u$. The system and estimator are initialzed with different initial values. $$ x_0 = \begin{bmatrix} x \\ x\\ x\\ x \end{bmatrix}, \hat x_0 = \begin{bmatrix} 0 \\ 0\\ 0\\ 0 \end{bmatrix}.$$ The experimental setup is simulated for 10 seconds with time step of 1 millisecond.
+

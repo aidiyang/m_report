@@ -1,8 +1,6 @@
-%\def\dfdx#1#2{\frac{\partial {#1}}{\partial {#2}}}
 \chapter{Multi body system model}
 \label{ch:multi_mdl}
-A multibody system model describes the dynamics of the group of interconnected rigid bodies that exhibits translational and rotational displacement. In this chapter the multi body system model of \emph{Toro} is derived and it is used as the prediction model in EKF.
-
+A multibody system model describes the dynamics of the group of interconnected rigid bodies that exhibits translational and rotational displacement \citep{mur94}. In this chapter the multi body system models of an inverted double pendulum and \emph{Toro} is derived. These models are used in the filtering equations of EKF and UKF to predict the states ahed of time.
 \section{Multi body system}
 The humanoid robots consists of group of rigid bodies(links) connected together by set of joints. Joints are mechanical components that connects two or more rigid bodies(links) and constraint their motion. Human beings are able to produce a motion with the help of the muscular system, where as the humanoids are driven by electric, hydraulic or pneumatic actuators, that apply torques to the joints of the robot which in turn produces the motion \cite[Chapter 2]{mur94}. The motion of bodies is described by their kinematic behaviour but the dynamic behaviour results from the equilibrium of applied froces and the rate of change of momentum. The dynamics of a robot describes how the robot moves in response to the actuator forces or torques. The dynamics of a multi body system(robot) is described by the equations of motion. In general there are several approaches in deriving equations of motion of rigid body dynamic system. One such approach is by deriving Lagrange equation. Lagrangian analysis relies on the energy properties of the mechanical system to derive the equations of motion. Lagrangian \emph{L} is defined as the difference between kinetic and potential energy of the system. Lagrangian \emph{L} is $$ L(q,\dot{q}) = T(q,\dot{q}) - V(q),$$ 
 where \emph{q} represents the vector of joint angles, $\dot{q}$ is the vector of angular velocities of the joints, the kinetic and potential energies are represented by \emph{T} and \emph{V}. The joint angles \emph{q} is called the generalized coordinates of the system as the joint angles uniquely determines the position of rigid bodies in the system.
@@ -45,10 +43,10 @@ The position and velocity are the parameters of interest for state estimation. K
 Sustituting Equation \ref{eq:fwdyn} in \ref{eq:fwdyn_ode} gives, 
 \begin{equation}
     \label{eq:dyn_ss}
-    \begin{bmatrix} \frac{dq}{dt} \\ \frac{\dot q}{dt} \end{bmatrix} =
+    \begin{bmatrix} \frac{dq}{dt} \\ \frac{d \dot q}{dt} \end{bmatrix} =
     \begin{bmatrix}
     \dot q \\
-    M(q)^{-1} \left( -C(q,\dot{q}).\dot{q} - g(q) + \tau \right )
+    M(q)^{-1} \left( -C(q,\dot{q})\dot{q} - g(q) + \tau \right )
     \end{bmatrix}
 \end{equation}
 % Inverted Double pendulum model
