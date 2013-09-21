@@ -108,5 +108,74 @@ The state estimation problem is tested using Matlab Simulink. The experimental s
 \end{equation}
 The continuous time EKF is used for state estimation. The equations of continuous time extended kalman filter is given in Equation \ref{eq:ekf_con}. The non linear state space equation of state $x$ and measurement $y$ are given in Equations \ref{eq:dyn_ss} and \ref{eq:y_idp}. The Jacobians matrices $A$ and $H$ are computed by expanding the state and measurement functions and taking the derivatives with respect to the states. They are computed using the symbolic toolbox in Matlab.
 
-In Figure \ref{fig:exp_idp}, $x_0$ and $\hat x_0$ represents the initial values of the states of the system and estimator. The input $\tau$ applied to the ankle joint of the system is represented by $u$. The system and estimator are initialzed with different initial values. $$ x_0 = \begin{bmatrix} x \\ x\\ x\\ x \end{bmatrix}, \hat x_0 = \begin{bmatrix} 0 \\ 0\\ 0\\ 0 \end{bmatrix}.$$ The experimental setup is simulated for 10 seconds with time step of 1 millisecond.
+In Figure \ref{fig:exp_idp}, $x_0$ and $\hat x_0$ represents the initial values of the states of the system and estimator. The input $\tau$ applied to the ankle joint of the system is represented by $u$. The system and estimator are initialzed with different initial values. $$ x_0 = \begin{bmatrix} x \\ x\\ x\\ x \end{bmatrix}, \hat x_0 = \begin{bmatrix} 0 \\ 0\\ 0\\ 0 \end{bmatrix}.$$  We assume that we have no confidence in the initial values of the estimator $\hat x_0$, so the inital state covariance $P_0$ of the state estimates is set to high values $$P_0 = I_4, $$ where $I_4$ is a $4 \times 4$ identity matrix.
+Zero mean gaussian white noise of covairance $n_w$ and $n_v$ are added to the process and measurements of inverted double pendulum system. The noise added to the system is given as follows:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    Noise &Variance\\ \hline
+    \textbf{Process noise $w_n$:}&\hspace{2mm} \\
+    $\dot q_2$ &$1e^{-3}$ \\ \hline
+    \textbf{Measurement noise $v_n$:}&\hspace{2mm} \\
+     $acc$ &$1e^{-2}$ \\
+     $gyro$ &$1e^{-4}$ \\
+     $q$ &$1e^{-6}$\\ 
+     $\dot q$ &$1e^{-6}$ \\ \hline
+    \end{tabular}
+    \caption{ Variance of the Gaussian white noise used in the experiment}
+    \label{tab:idp_noise}
+\end{table}
+
+The process covariance $Q$ and measurement covariance $R$ matrices of the EKF are assigned with the corresponding values of measurement and process noise covariance in Table \ref{tab:idp_noise}.
+$$  \begin{aligned}
+    Q&=diag([0; 0; 0; 1e^{-3}]) \\
+    R&=diag([1e^{-2}; 1e^{-4}; 1e^{-6}; 1e^{-6}]) \\
+    \end{aligned}
+    $$
+% Make a plot of the noise and actual measurement data here %
+The whole system is simulated for 10 seconds with time step of 1 millisecond.
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim = 30mm 60mm 20mm 60mm,scale=0.9]{Bilder/idp_plot.pdf}
+	\caption{ Plots of estimated state $\hat x$ and true state $x$ vs time}
+	\label{fig:idp_plot}
+\end{figure}
+
+From the plots in Figure \ref{fig:idp_plot} it can be seen that the actual states and estimates converges to same value after some time. This implies the system is observable for the given measurements. 
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.1]{Bilder/Abbildung.pdf}
+    \caption{ Initial convergence behaviour of the estimator }
+    \label{fig:idp_init_conv}
+\end{figure}
+The initial convergence behaviour of the state and estimates is shown in Figure \ref{fig:idp_init_conv}.
+
+The root mean square value of the states $\hat q_1, \hat{\dot q}_1 $ estimated by EKF and UKF are given in Tables \ref{tab:idp_rmse_ekf} and \ref{tab:idp_rmse_ukf}. The result in the tables shows that UKF produces better estimates than EKF, as the RMSE values of UKF are lesser than EKF.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    Estimates &RMSE \\ \hline
+    $\hat q$   &xxx \\ \hline
+    $\hat {\dot q}$ & xxx \\ \hline
+    \end{tabular}
+    \caption{RMSE values for EKF estimates}
+    \label{tab:idp_rmse_ekf}
+\end{table}
+
+The root mean square erro of UKF is
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    Estimates &RMSE \\ \hline
+    $\hat q$   &xxx \\ \hline
+    $\hat {\dot q}$ & xxx \\ \hline
+    \end{tabular}
+    \caption{RMSE values for UKF estimates}
+    \label{tab:idp_rmse_ukf}
+\end{table}
+
 

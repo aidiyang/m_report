@@ -292,3 +292,11 @@ The UKF algorithm in matrix form is given in \citep{sim07}. The matrix from UKF 
 \caption{Working of UKF}
 \label{fig:ukf_blk}
 \end{figure}
+
+\section{Root mean square error (RMSE)}
+Root mean square error (RMSE) is a measure of difference between the estimates and the true values observed \citep{hyn06}. It is computed for $n$ different predictions as the square root of mean of the square of difference between original value and estimates.
+\begin{equation}
+    \label{eq:rmse}
+    RMSE = \sqrt{\frac{\sum_{i=1}^n (x_i - \hat x_i)^2}{n}}.
+\end{equation}
+Lower the RMSE values better the performance of the estimator.
