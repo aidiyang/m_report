@@ -22,7 +22,7 @@ p = [a,b,d,m1,m2,r1,r2,l1,g,c1,c2,l2];
 par_fb = [g,m1,m2,l1,l2,r1,r2,i_x1,i_x2] ;
 %% System and Filter Variables
 B = [0 0 0 1]';
-
+x_0 = rand(4,1)
 % Settings for extended kalman filter
 % The process noise also includes the residual error in one step euler
 % integration
@@ -59,7 +59,10 @@ disp('Estimating with EKF...');
 sim('dPendDisEKF',[0,10]);
 % Root mean square error
 disp('Plotting results...');
-figure;plot_result;
+ekf_plot = figure;plot_result;
+PrintPNG(ekf_plot,'idp_ekf');
+disp('RMSE EKF');
+rmse_ekf = sqrt(sum((x.signals.values(2e3:end,1:2)-x_hat.signals.values(2e3:end,1:2)).^2)/length(x.signals.values))
 % rmse1 = sqrt(sum(e_out.signals.values(1,2000:end))/numel(e_out.signals.values(1,2000:end)));
 % rmse2 = sqrt(sum(e_out.signals.values(2,2000:end))/numel(e_out.signals.values(2,2000:end)));
 % fprintf('RMSE x1 : %0.4f\n',rmse1);
@@ -69,7 +72,10 @@ disp('Estimation with UKF...');
 sim('dPendDisUKF',[0,10]);
 % Root mean square error
 disp('Plotting results...');
-figure;plot_result;
+ukf_plot = figure;plot_result;
+PrintPNG(ukf_plot,'idp_ukf');
+disp('RMSE UKF');
+rmse_ukf = sqrt(sum((x.signals.values(2e3:end,1:2)-x_hat.signals.values(2e3:end,1:2)).^2)/length(x.signals.values))
 % rmse1 = sqrt(sum(e_out.signals.values(1,2000:end))/numel(e_out.signals.values(1,2000:end)));
 % rmse2 = sqrt(sum(e_out.signals.values(2,2000:end))/numel(e_out.signals.values(2,2000:end)));
 % fprintf('RMSE x1 : %0.4f\n',rmse1);

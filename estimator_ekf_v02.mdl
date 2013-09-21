@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.506"
+    ComputedModelVersion    "1.512"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,9 +44,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Sep 19 23:57:41 2013"
+  LastModifiedDate	  "Sat Sep 21 18:17:28 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:506>"
+  ModelVersionFormat	  "1.%<AutoIncrement:512>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -103,8 +103,8 @@ Model {
 	Simulink.SolverCC {
 	  $ObjectID		  2
 	  Version		  "1.3.0"
-	  StartTime		  "10"
-	  StopTime		  "20"
+	  StartTime		  "0"
+	  StopTime		  "0"
 	  AbsTol		  "auto"
 	  FixedStep		  "1e-3"
 	  InitialStep		  "auto"
@@ -590,6 +590,14 @@ Model {
       SaturateOnIntegerOverflow	on
     }
     Block {
+      BlockType		      MATLABFcn
+      MATLABFcn		      "sin"
+      OutputDimensions	      "-1"
+      OutputSignalType	      "auto"
+      Output1D		      on
+      SampleTime	      "-1"
+    }
+    Block {
       BlockType		      Mux
       Inputs		      "4"
       DisplayOption	      "none"
@@ -633,12 +641,7 @@ Model {
       SampleTime	      "-1"
     }
     Block {
-      BlockType		      RandomNumber
-      Mean		      "0"
-      Variance		      "1"
-      Seed		      "0"
-      SampleTime	      "-1"
-      VectorParams1D	      on
+      BlockType		      Reference
     }
     Block {
       BlockType		      Selector
@@ -758,7 +761,7 @@ Model {
   }
   System {
     Name		    "estimator_ekf_v02"
-    Location		    [4, 66, 1596, 1092]
+    Location		    [87, 66, 1679, 1029]
     Open		    on
     ModelBrowserVisibility  on
     ModelBrowserWidth	    212
@@ -776,7 +779,7 @@ Model {
       BlockType		      Demux
       Name		      "Demux"
       Ports		      [1, 2]
-      Position		      [1015, 496, 1020, 534]
+      Position		      [1015, 171, 1020, 209]
       BackgroundColor	      "black"
       ShowName		      off
       Outputs		      "2"
@@ -786,7 +789,7 @@ Model {
       BlockType		      Display
       Name		      "Display"
       Ports		      [1]
-      Position		      [1275, 210, 1360, 850]
+      Position		      [1275, 15, 1360, 655]
       Decimation	      "1"
       Lockdown		      off
     }
@@ -794,21 +797,29 @@ Model {
       BlockType		      Display
       Name		      "Display1"
       Ports		      [1]
-      Position		      [1530, 245, 1620, 855]
+      Position		      [1395, 45, 1485, 655]
+      Decimation	      "1"
+      Lockdown		      off
+    }
+    Block {
+      BlockType		      Display
+      Name		      "Display2"
+      Ports		      [1]
+      Position		      [1000, 513, 1085, 667]
       Decimation	      "1"
       Lockdown		      off
     }
     Block {
       BlockType		      SubSystem
       Name		      "Extended kalman filter"
-      Ports		      [2, 1]
+      Ports		      [2, 2]
       Position		      [640, 341, 735, 439]
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
       System {
 	Name			"Extended kalman filter"
-	Location		[0, 54, 1600, 1153]
+	Location		[4, 66, 1604, 1029]
 	Open			off
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200
@@ -3732,6 +3743,7 @@ Model {
 	  Port {
 	    PortNumber		    1
 	    Name		    "x(k)"
+	    PropagatedSignals	    "x_out"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
@@ -4578,8 +4590,8 @@ Model {
 	  FunctionWithSeparateData off
 	  System {
 	    Name		    "predictor"
-	    Location		    [0, 54, 1600, 1153]
-	    Open		    on
+	    Location		    [4, 66, 1604, 1029]
+	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -5558,6 +5570,15 @@ Model {
 	  OutDataType		  "sfix(16)"
 	  OutScaling		  "2^0"
 	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "P(k)"
+	  Position		  [955, 543, 985, 557]
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	  OutDataType		  "sfix(16)"
+	  OutScaling		  "2^0"
+	}
 	Line {
 	  SrcBlock		  "u(k)"
 	  SrcPort		  1
@@ -5627,9 +5648,17 @@ Model {
 	Line {
 	  SrcBlock		  "corrector"
 	  SrcPort		  2
-	  Points		  [25, 0; 0, 115; -595, 0; 0, -105]
-	  DstBlock		  "Unit Delay1"
-	  DstPort		  1
+	  Points		  [25, 0; 0, 115; -260, 0]
+	  Branch {
+	    Points		    [-335, 0; 0, -105]
+	    DstBlock		    "Unit Delay1"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, 60]
+	    DstBlock		    "P(k)"
+	    DstPort		    1
+	  }
 	}
 	Line {
 	  SrcBlock		  "z(k)"
@@ -5672,6 +5701,14 @@ Model {
       ZeroCross		      on
     }
     Block {
+      BlockType		      MATLABFcn
+      Name		      "MATLAB Fcn"
+      Ports		      [1, 1]
+      Position		      [780, 445, 840, 475]
+      MATLABFcn		      "diag(u)"
+      Output1D		      off
+    }
+    Block {
       BlockType		      SubSystem
       Name		      "Measurement Noise SS"
       Ports		      [1, 1]
@@ -5711,7 +5748,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -5720,7 +5757,7 @@ Model {
 	  Cov			  "[1e-9]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Reference
@@ -5731,7 +5768,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -5740,7 +5777,7 @@ Model {
 	  Cov			  "[1e-8]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Reference
@@ -5751,7 +5788,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -5760,7 +5797,7 @@ Model {
 	  Cov			  "[1e-9]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Reference
@@ -5771,7 +5808,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -5780,7 +5817,7 @@ Model {
 	  Cov			  "[1e-9]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Display
@@ -6119,7 +6156,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -6128,7 +6165,7 @@ Model {
 	  Cov			  "[1e-9]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Reference
@@ -6139,7 +6176,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -6148,7 +6185,7 @@ Model {
 	  Cov			  "[1e-5]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Reference
@@ -6159,7 +6196,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -6168,7 +6205,7 @@ Model {
 	  Cov			  "[1e-7]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Reference
@@ -6179,7 +6216,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -6188,7 +6225,7 @@ Model {
 	  Cov			  "[1e-7]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  on
+	  VectorParams1D	  "on"
 	}
 	Block {
 	  BlockType		  Mux
@@ -6460,7 +6497,12 @@ Model {
     Block {
       BlockType		      Reshape
       Name		      "Reshape"
-      Position		      [800, 378, 830, 402]
+      Position		      [775, 353, 805, 377]
+    }
+    Block {
+      BlockType		      Reshape
+      Name		      "Reshape1"
+      Position		      [925, 448, 950, 472]
     }
     Block {
       BlockType		      Terminator
@@ -6470,11 +6512,30 @@ Model {
     Block {
       BlockType		      ToWorkspace
       Name		      "To Workspace"
-      Position		      [920, 375, 980, 405]
+      Position		      [950, 375, 1010, 405]
       VariableName	      "x_est"
       MaxDataPoints	      "inf"
       SampleTime	      "-1"
       SaveFormat	      "Structure With Time"
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "To Workspace1"
+      Position		      [980, 445, 1040, 475]
+      VariableName	      "P_est"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Structure With Time"
+    }
+    Block {
+      BlockType		      Selector
+      Name		      "q"
+      Ports		      [1, 1]
+      Position		      [865, 446, 905, 474]
+      InputPortWidth	      "62"
+      IndexOptions	      "Index vector (dialog)"
+      Indices		      "[1:6 32:37]"
+      OutputSizes	      "1"
     }
     Line {
       SrcBlock		      "Extended kalman filter"
@@ -6497,13 +6558,14 @@ Model {
     Line {
       SrcBlock		      "Reshape"
       SrcPort		      1
-      Points		      [60, 0]
+      Points		      [85, 0]
       Branch {
+	Points			[40, 0]
 	DstBlock		"To Workspace"
 	DstPort			1
       }
       Branch {
-	Points			[0, 125]
+	Points			[135, 0; 0, -175]
 	DstBlock		"Demux"
 	DstPort			1
       }
@@ -6527,18 +6589,51 @@ Model {
       DstPort		      2
     }
     Line {
+      SrcBlock		      "Extended kalman filter"
+      SrcPort		      2
+      Points		      [20, 0; 0, 45]
+      DstBlock		      "MATLAB Fcn"
+      DstPort		      1
+    }
+    Line {
       SrcBlock		      "Demux"
       SrcPort		      1
-      Points		      [115, 0; 0, 25]
+      Points		      [115, 0; 0, 155]
       DstBlock		      "Display"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Demux"
       SrcPort		      2
-      Points		      [105, 0; 0, 345; 385, 0]
+      Points		      [105, 0; 0, 345; 250, 0]
       DstBlock		      "Display1"
       DstPort		      1
+    }
+    Line {
+      SrcBlock		      "MATLAB Fcn"
+      SrcPort		      1
+      DstBlock		      "q"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "q"
+      SrcPort		      1
+      DstBlock		      "Reshape1"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Reshape1"
+      SrcPort		      1
+      Points		      [0, 0]
+      Branch {
+	DstBlock		"To Workspace1"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, 130]
+	DstBlock		"Display2"
+	DstPort			1
+      }
     }
   }
 }
@@ -6706,7 +6801,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [A,x_k]= fcn(M_in,C_in,g_in,J_in,H_in,TA_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndt = 1e-3;\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n%q = x_in(1:dof);\ndq = x_in(dof+(1:dof));\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\nTA = TA_in(1:3,:);\ninvTA = TA \\ eye(3,3);\n% Transformation from body to spacial frame:\n%Adfb = Adjoint(Hfb);\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% Transformation for the velocites of floating base\nvfb = dq(1:3);\nwfb = dq(4:6);\n\ndp = Rfb * vfb;\ndo = invTA * (Rfb*wfb);\n\nvel = [dp; do; dq(7:31)];\n\n%vel = [Vfb_s; dq(7:31)];%~~~~~~~ First Attempt\n\ngacc = [ 0 0 -9.81 0 0 0]';\n% errrf = Irf * (Adrf\\gacc) ;\n% errlf = Ilf * (Adlf\\gacc);\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\n%acc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nx_dot = [vel;acc];   \n\n% Computing second order derivative terms for base\n% p - position of floating base o-orientation of floating base\n\nx_k = x_in + dt*x_dot ;\n\n\n% Computation of Jacobian for velocities of Floating base\n\ndqdx = [zeros(25,37),eye(25)];                               %%%%%%%%%%%%%%%%\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndpdx = zeros(3,2*dof);\ndodx = zeros(3,2*dof);\n\ndacc = zeros(dof,2*dof);\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    dHfb  = H_in(i*20+(5*4+ind4),:); \n    dRfb  = dHfb( 1:3, 1:3);\n \n    dpdx(:,i) = dRfb*vfb;\n    %dodx(:,i) = TA \\ ( dRfb*wfb) ;\n    dodx(:,i) = invTA * ( dRfb*wfb) ;\n\n    if i > 3 && i < 6\n        \n    dTA   = TA_in((i-3)*3+(1:3),:);\n    % dodx(:,i) = TA\\ (-dTA*do );\n    dodx(:,i) = dodx(:,i) + invTA * (-dTA*do );\n    \n    end \n\n%     dacc(:,i)   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n%                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n%                                              - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n%                                              - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) ) ));\n      dacc(:,i)   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));\n    \n    if i > dof\n        if i <= dof+3\n            dpdx(:,i) = dpdx(:,i) + Rfb(:,i-dof);         \n        elseif i<= dof+6\n            %dodx(:,i) = dodx(:,i) + TA\\Rfb(:,i-(dof+3)); \n            dodx(:,i) = dodx(:,i) + invTA * Rfb(:,i-(dof+3)); \n        end\n        %dacc(:,i) = dacc(:,i) + M \\ (- C(:,i-31));\n        dacc(:,i) = dacc(:,i) + invM * (- C(:,i-31));\n\n    end\nend\n\ndvel = [ dpdx ; dodx ; dqdx ];\n\nA = eye(62) + dt * [dvel;dacc] ;"
+      script		      "function [A,x_k]= fcn(M_in,C_in,g_in,J_in,H_in,TA_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndt = 1e-3;\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n%q = x_in(1:dof);\ndq = x_in(dof+(1:dof));\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\nTA = TA_in(1:3,:);\ninvTA = TA \\ eye(3,3);\n% Transformation from body to spacial frame:\n%Adfb = Adjoint(Hfb);\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% Transformation for the velocites of floating base\nvfb = dq(1:3);\nwfb = dq(4:6);\n\ndp = Rfb * vfb;\ndo = invTA * (Rfb*wfb);\n\nvel = [dp; do; dq(7:31)];\n\n%vel = [Vfb_s; dq(7:31)];%~~~~~~~ First Attempt\n\ngacc = [ 0 0 -9.81 0 0 0]';\n% errrf = Irf * (Adrf\\gacc) ;\n% errlf = Ilf * (Adlf\\gacc);\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\n%acc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nx_dot = [vel;acc];   \n\n% Computing second order derivative terms for base\n% p - position of floating base o-orientation of floating base\n\nx_k = x_in + dt*x_dot ;\n\n\n% Computation of Jacobian for velocities of Floating base\n\ndqdx = [zeros(25,37),eye(25)];                               %%%%%%%%%%%%%%%%\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndpdx = zeros(3,2*dof);\ndodx = zeros(3,2*dof);\n\ndacc = zeros(dof,2*dof);\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:); \n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    dHfb  = H_in(i*20+(5*4+ind4),:); \n    dRfb  = dHfb( 1:3, 1:3);\n \n    dpdx(:,i) = dRfb*vfb;\n    %dodx(:,i) = TA \\ ( dRfb*wfb) ;\n    dodx(:,i) = invTA * ( dRfb*wfb) ;\n\n    if i > 3 && i < 6\n        \n    dTA   = TA_in((i-3)*3+(1:3),:);\n    % dodx(:,i) = TA\\ (-dTA*do );\n    dodx(:,i) = dodx(:,i) + invTA * (-dTA*do );\n    \n    end \n\n%     dacc(:,i)   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n%                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n%                                              - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n%                                              - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) ) ));\n      dacc(:,i)   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));\n    \n    if i > dof\n        if i <= dof+3\n            dpdx(:,i) = dpdx(:,i) + Rfb(:,i-dof);         \n        elseif i<= dof+6\n            %dodx(:,i) = dodx(:,i) + TA\\Rfb(:,i-(dof+3)); \n            dodx(:,i) = dodx(:,i) + invTA * Rfb(:,i-(dof+3)); \n        end\n        %dacc(:,i) = dacc(:,i) + M \\ (- C(:,i-31));\n        dacc(:,i) = dacc(:,i) + invM * (- C(:,i-31));\n\n    end\nend\n\ndvel = [ dpdx ; dodx ; dqdx ];\n\nA = eye(62) + dt * [dvel;dacc] ;"
       editorLayout	      "100 M4x1[1916 28 1928 1169]"
     }
   }

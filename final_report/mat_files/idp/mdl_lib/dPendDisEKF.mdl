@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.210"
+    ComputedModelVersion    "1.211"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -43,11 +43,11 @@ Model {
   Creator		  "raje_ra"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "vector"
+  LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Sep 13 03:26:09 2013"
+  LastModifiedDate	  "Sat Sep 21 19:44:09 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:210>"
+  ModelVersionFormat	  "1.%<AutoIncrement:211>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -780,7 +780,7 @@ Model {
   }
   System {
     Name		    "dPendDisEKF"
-    Location		    [968, 50, 1912, 760]
+    Location		    [968, 82, 1912, 792]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    212
@@ -7176,7 +7176,7 @@ Model {
       BlockType		      Constant
       Name		      "x_init"
       Position		      [30, 102, 120, 148]
-      Value		      "[pi/3 0 0 0]'"
+      Value		      "x_0"
       VectorParams1D	      off
       OutDataType	      "sfix(16)"
       OutScaling	      "2^0"

@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.130"
+    ComputedModelVersion    "1.131"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -43,11 +43,11 @@ Model {
   Creator		  "raje_ra"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "vector"
+  LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Sep 13 03:28:28 2013"
+  LastModifiedDate	  "Sat Sep 21 19:44:29 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:130>"
+  ModelVersionFormat	  "1.%<AutoIncrement:131>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -647,7 +647,12 @@ Model {
       SampleTime	      "-1"
     }
     Block {
-      BlockType		      Reference
+      BlockType		      RandomNumber
+      Mean		      "0"
+      Variance		      "1"
+      Seed		      "0"
+      SampleTime	      "-1"
+      VectorParams1D	      on
     }
     Block {
       BlockType		      Scope
@@ -3204,6 +3209,11 @@ Model {
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
 	      FunctionWithSeparateData off
+	      Array {
+		Type			"Handle"
+		Dimension		0
+		PropName		"AvailSigsLoadSave"
+	      }
 	      MaskType		      "Stateflow"
 	      MaskDescription	      "Embedded MATLAB block"
 	      MaskDisplay	      "disp('ut_sigmas');"
@@ -4268,6 +4278,11 @@ Model {
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
 	      FunctionWithSeparateData off
+	      Array {
+		Type			"Handle"
+		Dimension		0
+		PropName		"AvailSigsLoadSave"
+	      }
 	      MaskType		      "Stateflow"
 	      MaskDescription	      "Embedded MATLAB block"
 	      MaskDisplay	      "disp('ut_sigmas');"
@@ -6912,7 +6927,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData "off"
+	  FunctionWithSeparateData off
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -6921,7 +6936,7 @@ Model {
 	  Cov			  "[1e-6]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  "on"
+	  VectorParams1D	  on
 	}
 	Block {
 	  BlockType		  Sum
@@ -7014,7 +7029,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData "off"
+	  FunctionWithSeparateData off
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -7023,7 +7038,7 @@ Model {
 	  Cov			  "[1e-7]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  "on"
+	  VectorParams1D	  on
 	}
 	Block {
 	  BlockType		  Reference
@@ -7034,7 +7049,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData "off"
+	  FunctionWithSeparateData off
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -7043,7 +7058,7 @@ Model {
 	  Cov			  "[1e-9]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  "on"
+	  VectorParams1D	  on
 	}
 	Block {
 	  BlockType		  Reference
@@ -7054,7 +7069,7 @@ Model {
 	  SourceType		  "Band-Limited White Noise."
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData "off"
+	  FunctionWithSeparateData off
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -7063,7 +7078,7 @@ Model {
 	  Cov			  "[1e-5]"
 	  Ts			  "ts"
 	  seed			  "[23341]"
-	  VectorParams1D	  "on"
+	  VectorParams1D	  on
 	}
 	Block {
 	  BlockType		  Mux
@@ -7683,7 +7698,7 @@ Model {
       BlockType		      Constant
       Name		      "x_init"
       Position		      [30, 102, 120, 148]
-      Value		      "[pi/3 0 0 0]'"
+      Value		      "x_0"
       VectorParams1D	      off
       OutDataType	      "sfix(16)"
       OutScaling	      "2^0"

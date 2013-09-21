@@ -152,6 +152,11 @@ The continuous time EKF algorithm is given by \citep{gel74}
 \end{equation}
 where $$A(t) = \dfdx{f}{x}(\hat x(t), u(t)), \hspace{2cm} H(t) = \dfdx{h}{x} (\hat x(t), u(t))$$ are the Jacobians of the state and measurement equation. The continuous time EKF is applied for the inverted double pendulum system in Chapter \ref{ch:multi_mdl}.
 
+\subsubsection{Tuning rules:}
+Tuning of the EKF involves setting the values of the noise covariance matrices $Q,R$. When the measurements $y$ are noisy then the emphasis is laid on the prediction model. In other words the prediction model is relied more. This is achived by setting the covariances $Q<R$. On the other hand if the estimated process is noisy due to unmodelled dynamics or model mismatch then the measurements are relied more. This is achived by setting $Q>R$.
+
+The initial convergence of the filter depends upon the initial values of the estimator's state $\hat x_0$ and covariance $P_0$. If a states of the estimated system is not known at the beginning then the initial state covariance $P_0$ is set to very high value to achive the fast convergence to actual value.
+
 \subsection{Unscented Kalman filter}
 The unscented Kalman filter is a new class filter for nonlinear systems. It was first addressed by Julier et.al in 1997 \citep{jul97} as an alternative to EKF. This filter introduces unscented transformation(UT) to propogate mean and covariance information through non linear transformations.
 %This leads to a differnt method to compute the error covairance matrix $P_k^-$.
