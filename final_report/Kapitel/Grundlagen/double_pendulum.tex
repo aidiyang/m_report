@@ -124,12 +124,11 @@ Zero mean gaussian white noise of covairance $n_w$ and $n_v$ are added to the pr
     \label{tab:idp_noise}
 \end{table}
 
-
-\subsubsection{EKF}
+%\subsubsection{EKF}
  The equations of continuous time extended kalman filter is given in Equation \ref{eq:ekf_con}. The non linear state space equation of the system is given in Equations \ref{eq:dyn_ss} and \ref{eq:y_idp}. The Jacobians matrices $A$ and $H$ are computed with the help of symbolic toolbox in Matlab.
 
 In Figure \ref{fig:exp_idp}, $x_0$ and $\hat x_0$ are the initial states of the system and estimator. The input $\tau$ applied is applied to the ankle joint. The system and estimator are initialzed with different initial values. 
-$$ x_0 = \begin{bmatrix} x \\ x\\ x\\ x \end{bmatrix}, \hat x_0 = \begin{bmatrix} 0 \\ 0\\ 0\\ 0 \end{bmatrix}.$$  
+$$ x_0 = \begin{bmatrix} 0.9575 \\ 0.9649\\ 0.1576\\ 0.9706 \end{bmatrix}, \hat x_0 = \begin{bmatrix} 0 \\ 0\\ 0\\ 0 \end{bmatrix}.$$  
 The initial values of the error covariance matrix $P$ is $$P_0 = I_4, $$ where $I_4$ is a $4 \times 4$ identity matrix.
 
 
@@ -140,12 +139,18 @@ $$  \begin{aligned}
     \end{aligned}
     $$
 
-The 
+The following tuning parameters are set for UKF:
+$$  \begin{aligned}
+    \alpha = 1 \\
+    \beta = 0\\
+    \kappa = -1 
+    \end{aligned} $$ 
 % Make a plot of the noise and actual measurement data here %
 The whole system is simulated for 10 seconds with time step of 1 millisecond.
-\begin{figure}[H]
+\subsubsection{Observation}
+\begin{figure}
 	\centering
-	\includegraphics[trim = 0mm 0mm 0mm 0mm,scale=0.6]{Bilder/idp_ukf.png}
+	\includegraphics[angle=90,scale=0.5]{Bilder/plots/idp/idp_plot.pdf}
 	\caption{ Plots of estimated state $\hat x$ and true state $x$ vs time}
 	\label{fig:idp_plot}
 \end{figure}
@@ -153,20 +158,19 @@ The whole system is simulated for 10 seconds with time step of 1 millisecond.
 From the plots in Figure \ref{fig:idp_plot} it can be seen that the actual states and estimates converges to same value after some time. This implies the system is observable for the given measurements. 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.1]{Bilder/Abbildung.pdf}
-    \caption{ Initial convergence behaviour of the estimator }
+    \includegraphics[trim= 30mm 0mm 30mm 0mm,clip,width=\linewidth]{Bilder/plots/idp/init_beh.pdf}
+    \caption{ Convergence of the estimates to actual states }
     \label{fig:idp_init_conv}
 \end{figure}
-The initial convergence behaviour of the state and estimates is shown in Figure \ref{fig:idp_init_conv}.
+The initial convergence of the estimates is shown in Figure \ref{fig:idp_init_conv}. Filter converges in $0.6 sec$ for the given setting of $P_0=I_4$. When the initial error covairance is decreased to $\frac{1}{2}P_0$ the the time taken for convergance increases to $2 sec$. 
 
-The root mean square value of the states $\hat q_1, \hat{\dot q}_1 $ estimated by EKF and UKF are given in Tables \ref{tab:idp_rmse_ekf} and \ref{tab:idp_rmse_ukf}. The result in the tables shows that UKF produces better estimates than EKF, as the RMSE values of UKF are lesser than EKF.
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
     \hline
     Estimates &RMSE \\ \hline
-    $\hat q$   &0.0073 \\ \hline
-    $\hat {\dot q}$ & 0.027 \\ \hline
+    $\hat q_1$   &0.0045 \\ \hline
+    $\hat {\dot q}_1$ & 0.0261 \\ \hline
     \end{tabular}
     \caption{RMSE values for EKF estimates}
     \label{tab:idp_rmse_ekf}
@@ -177,13 +181,12 @@ The root mean square value of the states $\hat q_1, \hat{\dot q}_1 $ estimated b
     \begin{tabular}{|c|c|}
     \hline
     Estimates &RMSE \\ \hline
-    $\hat q$   &0.0188 \\ \hline
-    $\hat {\dot q}$ & 0.0686 \\ \hline
+    $\hat q_1$   &0.0045 \\ \hline
+    $\hat {\dot q}_1$ & 0.0332 \\ \hline
     \end{tabular}
     \caption{RMSE values for UKF estimates}
     \label{tab:idp_rmse_ukf}
 \end{table}
-
 
 \begin{table}[H]
     \centering
@@ -196,3 +199,4 @@ The root mean square value of the states $\hat q_1, \hat{\dot q}_1 $ estimated b
     \caption{Time taken for 10 seconds simulation}
     \label{tab:idp_sim_time}
 \end{table}
+The root mean square error (RMSE) value of the states $\hat q_1, \hat{\dot q}_1 $ estimated by EKF and UKF are given in Tables \ref{tab:idp_rmse_ekf} and \ref{tab:idp_rmse_ukf}. Both the UKF and EKF has the same performance in esimating $\hat q_1$ but EKF performs better in estimating $\hat{\dot q}_1$. The time taken for simulation of the EKF is lesser than UKF. The simulation time of UKF depends upon the number of states. The number of sigma points requrired to approximate the nonlinear function is given by $2n+1$.

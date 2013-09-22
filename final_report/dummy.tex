@@ -3,10 +3,20 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
 \usepackage{amsmath,bm,times}
+\usepackage{epstopdf}
 \newcommand{\mx}[1]{\mathbf{\bm{#1}}} % Matrix command
 \newcommand{\vc}[1]{\mathbf{\bm{#1}}} % Vector command
 
 \begin{document}
 \pagestyle{empty}
 \input{Bilder/toro_exp_setup.tex}
+
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=.7]{Bilder/idp_plot.eps}
+\caption{Digraph.}
+\label{fig:digraph}
+\end{figure}
+
 \end{document}

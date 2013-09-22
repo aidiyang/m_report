@@ -153,6 +153,7 @@ The continuous time EKF algorithm is given by \citep{gel74}
 where $$A(t) = \dfdx{f}{x}(\hat x(t), u(t)), \hspace{2cm} H(t) = \dfdx{h}{x} (\hat x(t), u(t))$$ are the Jacobians of the state and measurement equation. The continuous time EKF is applied for the inverted double pendulum system in Chapter \ref{ch:multi_mdl}.
 
 \subsubsection{Tuning rules:}
+\label{subsec:tune_ekf}
 Tuning of the EKF involves setting the values of the noise covariance matrices $Q,R$. When the measurements $y$ are noisy then the emphasis is laid on the prediction model. In other words the prediction model is relied more. This is achived by setting the covariances $Q<R$. On the other hand if the estimated process is noisy due to unmodelled dynamics or model mismatch then the measurements are relied more. This is achived by setting $Q>R$.
 
 The initial convergence of the filter depends upon the initial values of the estimator's state $\hat x_0$ and covariance $P_0$. If a states of the estimated system is not known at the beginning then the initial state covariance $P_0$ is set to very high value to achive the fast convergence to actual value.
@@ -298,6 +299,7 @@ The UKF algorithm in matrix form is given in \citep{sim07}. The matrix from UKF 
 \label{fig:ukf_blk}
 \end{figure}
 
+The tuning parameters of UKF are $Q,R,\alpha,\beta,\kappa$. The covariance matrices $Q$ and $R$ is set according to tuning rules for EKF in \ref{subsec:tune_ekf}.
 \section{Root mean square error (RMSE)}
 Root mean square error (RMSE) is a measure of difference between the estimates and the true values observed \citep{hyn06}. It is computed for $n$ different predictions as the square root of mean of the square of difference between original value and estimates.
 \begin{equation}
