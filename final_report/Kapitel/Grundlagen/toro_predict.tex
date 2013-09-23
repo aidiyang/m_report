@@ -1,4 +1,5 @@
-\section{Prediction step}
+\subsection{Prediction step}
+\label{subsec:toro_predict}
 The prediction equations of EKF are given in Equation \ref{eq:ekf_predict}. For the sake of simplicity we assume the process noise acting on the model is assumed to be uncorrelated. That means the noise acting on one state does not depend on the noise acting on the other states. So the noise correlation matrix is assumed to be identity $$W_k = I_{n},$$ where \emph{n} is the number of states. Substituting the value of $W_k$ in Equation \ref{eq:ekf_predict}
 \begin{equation}
 \label{eq:predict}
@@ -26,7 +27,7 @@ $$ f(\hat{x}_k,u_{k+1}) =
 	\hat{\dot{q}}_k\\
 	M(\hat{y}_{k})^{-1}(-C(\hat{y}_{k},\hat{\dot{y}}_{k})\hat{\dot{y}}_{k} -g(\hat{y}_{k}) +  J_r(\hat{y}_{k})^{T}W_{r,k+1} +J_l(\hat{y}_{k})^{T}W_{l,k+1} + \tau_{k+1})	
 	\end{bmatrix} \footnotemark[1] $$
-where $\hat{x}(t_k) = \hat{x}(k \Delta t) = \hat{x}_k$ represents the state x at \emph{kth} sampling instant. $\hat{x}_{k+1} = \hat{x}(k \Delta t + \Delta t)$ represents the state of the system at the next sampling instant. $u_{k+1}$ is the input at sampling instant $k+1$. The inputs $\tau, W_l, W_r$ remains constant in the interval between two sampling instant because of the zero order hold mechanism in the sensor. The above equation is used to predict the state $\hat{x}_k$ ahed of time in Equation \ref{eq:predict}. 
+where $\hat{x}(t_k) = \hat{x}(k \Delta t) = \hat{x}_k$ represents the state x at \emph{kth} sampling instant. $\hat{x}_{k+1} = \hat{x}(k \Delta t + \Delta t)$ represents the state of the system at the next sampling instant. $u_{k+1}$ is the input at sampling instant $k+1$. The inputs $\tau, W_l, W_r$ remains constant in the interval between two sampling instant because of the zero order hold mechanism in the sensor. The above equation is used to predict the state $\hat{x}_k$ ahead of time in Equation \ref{eq:predict}. 
 \footnotetext[1]{$\hat R_k, \hat T_k$ are the shorthand notations for $R(\hat \theta_k)$ and $T(\hat \theta_k)$.}
 
 For the computation of state covariance matrix $P_k^-$ in Equation \ref{eq:predict}, the Jacobian matrix $A$ should be computed. The Jacobian matrix is the matrix of first order partial derivatives of a vector valued function \citep{wal76}.

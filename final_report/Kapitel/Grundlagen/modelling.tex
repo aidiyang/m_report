@@ -1,8 +1,8 @@
 \chapter{Multi body system model}
 \label{ch:multi_mdl}
-A multibody system model describes the dynamics of the group of interconnected rigid bodies that exhibits translational and rotational displacement \citep{mur94}. In this chapter the multi body system models of an inverted double pendulum and \emph{Toro} is derived. These models are used in the filtering equations of EKF and UKF to predict the states ahed of time.
+A multibody system model describes the dynamics of the group of interconnected rigid bodies that exhibits translational and rotational displacement \citep{mur94}. In this chapter the multi body system models of an inverted double pendulum and \emph{Toro} is derived. These models are used in the filtering equations of EKF and UKF to predict the states ahead of time.
 \section{Multi body system}
-The humanoid robots consists of group of rigid bodies(links) connected together by set of joints. Joints are mechanical components that connects two or more rigid bodies(links) and constraint their motion. Human beings are able to produce a motion with the help of the muscular system, where as the humanoids are driven by electric, hydraulic or pneumatic actuators, that apply torques to the joints of the robot which in turn produces the motion \cite[Chapter 2]{mur94}. The motion of bodies is described by their kinematic behaviour but the dynamic behaviour results from the equilibrium of applied froces and the rate of change of momentum. The dynamics of a robot describes how the robot moves in response to the actuator forces or torques. The dynamics of a multi body system(robot) is described by the equations of motion. In general there are several approaches in deriving equations of motion of rigid body dynamic system. One such approach is by deriving Lagrange equation. Lagrangian analysis relies on the energy properties of the mechanical system to derive the equations of motion. Lagrangian \emph{L} is defined as the difference between kinetic and potential energy of the system. Lagrangian \emph{L} is $$ L(q,\dot{q}) = T(q,\dot{q}) - V(q),$$ 
+The humanoid robots consists of group of rigid bodies(links) connected together by set of joints. Joints are mechanical components that connects two or more rigid bodies(links) and constraint their motion. Human beings are able to produce a motion with the help of the muscular system, where as the humanoids are driven by electric, hydraulic or pneumatic actuators, that apply torques to the joints of the robot which in turn produces the motion \cite[Chapter 2]{mur94}. The motion of bodies is described by their kinematic behaviour but the dynamic behaviour results from the equilibrium of applied forces and the rate of change of momentum. The dynamics of a robot describes how the robot moves in response to the actuator forces or torques. The dynamics of a multi body system(robot) is described by the equations of motion. In general there are several approaches in deriving equations of motion of rigid body dynamic system. One such approach is by deriving Lagrange equation. Lagrangian analysis relies on the energy properties of the mechanical system to derive the equations of motion. Lagrangian \emph{L} is defined as the difference between kinetic and potential energy of the system. Lagrangian \emph{L} is $$ L(q,\dot{q}) = T(q,\dot{q}) - V(q),$$ 
 where \emph{q} represents the vector of joint angles, $\dot{q}$ is the vector of angular velocities of the joints, the kinetic and potential energies are represented by \emph{T} and \emph{V}. The joint angles \emph{q} is called the generalized coordinates of the system as the joint angles uniquely determines the position of rigid bodies in the system.
 
 The equations of motion for a rigid body system in generalized coordinates $q \in \Re^m $ is given by
@@ -18,7 +18,7 @@ M(q)\ddot{q}+C(q,\dot{q})\dot{q}+g(q) = \tau + \tau_{ext},
 \end{equation}
 where \emph{M(q)} is the generalized inertia matrix, $C(q,\dot{q})$ is the matrix representing Coriolis and centrifugal forces, \emph{g(q)} is the gravity vector acting on the system and $\tau$ is the actuator torque applied to the joints $\tau_{ext}$ is the external torque acting on the system.
 
-Rearranging the Equation \ref{eq:dyn_mul_bdy} results in the forward dynamics equation of the multibody system. Forward dynamics equation is the relation between the acceleration of the multi body system in repsonse to the forces and torques acting on the system.
+Rearranging the Equation \ref{eq:dyn_mul_bdy} results in the forward dynamics equation of the multibody system. Forward dynamics equation is the relation between the acceleration of the multi body system in response to the forces and torques acting on the system.
 \begin{equation}
     \label{eq:fwdyn}
     \ddot{q} = M(q)^{-1} (- C(q,\dot{q})\dot{q} -g(q) + \tau + \tau_{ext})
@@ -30,7 +30,7 @@ $$ \begin{aligned}
     p &=  \iint a \text{ or } \int v , 
     \end{aligned}$$ where $a = \ddot{q}$ represents the acceleration, $p$ represents the position and $v$ represents the velocity of the multibody system.
 
-The position and velocity are the parameters of interest for state estimation. Kalman filter algorithm requires a dynamic model to predict these parameters. To accomodate the Equation \ref{eq:fwdyn} as the prediction model, the forward dyanmics equation of the multi body system is converted into system of ordinary differential equations(ODE). The ODE system is given by
+The position and velocity are the parameters of interest for state estimation. Kalman filter algorithm requires a dynamic model to predict these parameters. To accommodate the Equation \ref{eq:fwdyn} as the prediction model, the forward dynamics equation of the multi body system is converted into system of ordinary differential equations(ODE). The ODE system is given by
 \begin{equation}
     \label{eq:fwdyn_ode}
     \begin{bmatrix} \frac{dp}{dt}  \\ \frac{dv}{dt} \end{bmatrix} = 
@@ -40,7 +40,7 @@ The position and velocity are the parameters of interest for state estimation. K
 \begin{equation}
     x = \begin{bmatrix} q \\ \dot q \end{bmatrix}.
 \end{equation}
-Sustituting Equation \ref{eq:fwdyn} in \ref{eq:fwdyn_ode} gives, 
+Substituting Equation \ref{eq:fwdyn} in \ref{eq:fwdyn_ode} gives, 
 \begin{equation}
     \label{eq:dyn_ss}
     \begin{bmatrix} \frac{dq}{dt} \\ \frac{d \dot q}{dt} \end{bmatrix} =

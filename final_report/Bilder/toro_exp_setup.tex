@@ -17,7 +17,7 @@
 	\node (sys_in)[yshift=1cm]{$x_0$};
 	\node (u_in) [below of=sys_in,node distance=1cm]{$u$};
 	\node (sys_u)[input,right of=u_in,node distance=1cm]{};
-    \node (sim_sys) [system,right of=sys_in,node distance=3cm] {Double pendulum system};
+    \node (sim_sys) [system,right of=sys_in,node distance=3cm] {OpenHRP3 Simulator};
     \node (sys_noise)[above of=sim_sys,node distance=3cm]{$n_w$};
     \node (msr_noise)[right of=sys_noise,node distance=2cm]{$n_v$};
     \node (msr_add)[sum,right of=sim_sys,node distance=2cm]{};

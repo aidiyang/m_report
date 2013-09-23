@@ -5,7 +5,7 @@
 	\caption{A simplified humanoid robot standing on one foot}
 	\label{fig:idp_scene}
 \end{figure}
-Inorder to check the feasibility of solving the state estimation problem with the available measurements, a preliminary subproblem is formulated. Since we are interested in estimating the underactuated degrees of freedom, we have to consider the senario where these underactuated degrees of freedom are action on the robot. Let us consider the senario where the robot is tilting around an edge of the foot by applying some external force as shown in Figure \ref{fig:idp_scene}.b. All the joints other that ankle joint of the robot are assumed to remain static(joints does not produce any motion) throughout the experiment. The kinematics of the robot is simplified to one joint on the ankle connecting the whole body with the foot as shown in \ref{fig:idp_scene}.a. The kinematics of \emph{Toro} is shown in Figure \ref{fig:toro_kin}. The mass block in the Figure \ref{fig:idp_scene} represents the inertia of upperbody. The inertia of leg is incorporated in the link connceting upperbody and foot. 
+At first to check the feasibility of solving the state estimation problem with the available measurements, a preliminary sub-problem is formulated. Since we are interested in estimating the under-actuated degrees of freedom, we have to consider the scenario where these under-actuated degrees of freedom are action on the robot. Let us consider the scenario where the robot is tilting around an edge of the foot by applying some external force as shown in Figure \ref{fig:idp_scene}.b. All the joints other that ankle joint of the robot are assumed to remain static(joints does not produce any motion) throughout the experiment. The kinematics of the robot is simplified to one joint on the ankle connecting the whole body with the foot as shown in \ref{fig:idp_scene}.a. The kinematics of \emph{Toro} is shown in Figure \ref{fig:toro_kin}. The mass block in the Figure \ref{fig:idp_scene} represents the inertia of upper-body. The inertia of leg is incorporated in the link connecting upperbody and foot. 
 
 When the robot is tilting around an edge of the foot as shown in Figure \ref{fig:idp_scene}.b, we assume there is an imaginary joint located at the edge of the foot around which the robot tilts. Figure \ref{fig:idp_scene}.b resmbles an inverted double pendulum in Figure \ref{fig:idp}.
 \begin{figure}[H]
@@ -15,7 +15,7 @@ When the robot is tilting around an edge of the foot as shown in Figure \ref{fig
 	\label{fig:idp}
 \end{figure}
 \footnotetext{Image source: A mathematical introduction to robotic manipulation \cite[Chapter 4, Page 164]{mur94}}
- The inverted double pendulum shown in Figure \ref{fig:idp} consists two links of length $l_1$ and $l_2$. The distance between center of mass of link 1 from the toe joint is $r_1$, $r_2$ is the distance between center of mass of link 2 from the ankle joint. In the inverted pendulum model the ankle joint is actuated but the toe joint is unactuated. The degrees of freedom of this model are toe and ankle. Toe is the underactuated degree of freedom whose motion parameters such as angle $q_1$ and angular velocity $\dot{q}_1$ needs to be estimated. The motion parameters of the inverted double pendulum are 
+ The inverted double pendulum shown in Figure \ref{fig:idp} consists two links of length $l_1$ and $l_2$. The distance between center of mass of link 1 from the toe joint is $r_1$, $r_2$ is the distance between center of mass of link 2 from the ankle joint. In the inverted pendulum model the ankle joint is actuated but the toe joint is unactuated. The degrees of freedom of this model are toe and ankle. Toe is the under-actuated degree of freedom whose motion parameters such as angle $q_1$ and angular velocity $\dot{q}_1$ needs to be estimated. The motion parameters of the inverted double pendulum are 
 \begin{equation}
 	 q = 
 	\begin{pmatrix}
@@ -28,7 +28,7 @@ When the robot is tilting around an edge of the foot as shown in Figure \ref{fig
 		\dot{q_{2}}
 	\end{pmatrix},
 \end{equation}
-where \emph{q} is the vector of joint angles and $\dot{q}$ is the vector of joint angular velocities. The angle $q_1$ and angular velocity $\dot{q}_1$ are the motion parameters of toe joint. Likewise $q_2$ and $\dot{q}_2$ are the motion parameteres of ankle joint. The control input or torque applied to the ankle joint is $\tau$. 
+where \emph{q} is the vector of joint angles and $\dot{q}$ is the vector of joint angular velocities. The angle $q_1$ and angular velocity $\dot{q}_1$ are the motion parameters of toe joint. Likewise $q_2$ and $\dot{q}_2$ are the motion parameters of ankle joint. The control input or torque applied to the ankle joint is $\tau$. 
 
 The equation of motion of the inverted double pendulum is derived using Lagrange formulation given in Equation \ref{eq:lagrange}. The generalized coordinates of the system are $q_1$ and $q_2$, the velocities of the corresponding generalized coordinates are $\dot{q_1}$ and $\dot{q_2}$ as shown in Figure \ref{fig:idp}. The equation of motion of double pendulum written in general formulation of multi body system in Equation \ref{eq:dyn_mul_bdy} is, 
 \begin{equation}
@@ -46,7 +46,7 @@ The equation of motion of the inverted double pendulum is derived using Lagrange
 	+ g(q_1,q_2) = 
     \begin{bmatrix} 0 \\ \tau \end{bmatrix},
 \end{equation}
-where, $M(q_1,q_2)$ represents the ineria matrix of the inverted double pendulum system. It is given by 
+where, $M(q_1,q_2)$ represents the inertia matrix of the inverted double pendulum system. It is given by 
 $$ M(q_1,q_2) = \begin{bmatrix}\
     \alpha+2\beta cos(q_2) & \delta + \beta cos(q_2) \\ 
     \delta + \beta cos(q_2) & \delta  \end{bmatrix},$$ where the terms $\alpha, \beta, \delta$ is given by
@@ -57,7 +57,7 @@ $$ M(q_1,q_2) = \begin{bmatrix}\
     \delta &= \frac{1}{12} m_2 l_2^2 + m_2 r_2^2.
     \end{aligned}
     $$
-$C(q_1,q_2,\dot{q}_1,\dot{q}_2)$ represents the Corioli matrix of the system. It is given by 
+$C(q_1,q_2,\dot{q}_1,\dot{q}_2)$ represents the Coriolis matrix of the system. It is given by 
 $$C(q_1,q_2,\dot{q}_1,\dot{q}_2) = 
 \begin{bmatrix}
 -\beta sin(q_2) \dot{q}_2 &-\beta sin(q_2)(\dot{q}_1 + \dot{q}_2) \\
@@ -106,7 +106,7 @@ The state estimation problem is tested using Matlab Simulink. The experimental s
     y &= h(x,u) + n_v.
     \end{split}
 \end{equation}
-Zero mean gaussian white noise of covairance $n_w$ and $n_v$ are added to the process and measurements of inverted double pendulum system.The table below lists the variance of the process and measurement noises used in the experiment.
+Zero mean Gaussian white noise of covariance $n_w$ and $n_v$ are added to the process and measurements of inverted double pendulum system.The table below lists the variance of the process and measurement noises used in the experiment.
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
@@ -125,9 +125,9 @@ Zero mean gaussian white noise of covairance $n_w$ and $n_v$ are added to the pr
 \end{table}
 
 %\subsubsection{EKF}
- The equations of continuous time extended kalman filter is given in Equation \ref{eq:ekf_con}. The non linear state space equation of the system is given in Equations \ref{eq:dyn_ss} and \ref{eq:y_idp}. The Jacobians matrices $A$ and $H$ are computed with the help of symbolic toolbox in Matlab.
+ The equations of continuous time extended Kalman filter is given in Equation \ref{eq:ekf_con}. The non linear state space equation of the system is given in Equations \ref{eq:dyn_ss} and \ref{eq:y_idp}. The Jacobian matrices $A$ and $H$ are computed with the help of symbolic toolbox in Matlab.
 
-In Figure \ref{fig:exp_idp}, $x_0$ and $\hat x_0$ are the initial states of the system and estimator. The input $\tau$ applied is applied to the ankle joint. The system and estimator are initialzed with different initial values. 
+In Figure \ref{fig:exp_idp}, $x_0$ and $\hat x_0$ are the initial states of the system and estimator. The input $\tau$ applied is applied to the ankle joint. The system and estimator are initialized with different initial values. 
 $$ x_0 = \begin{bmatrix} 0.9575 \\ 0.9649\\ 0.1576\\ 0.9706 \end{bmatrix}, \hat x_0 = \begin{bmatrix} 0 \\ 0\\ 0\\ 0 \end{bmatrix}.$$  
 The initial values of the error covariance matrix $P$ is $$P_0 = I_4, $$ where $I_4$ is a $4 \times 4$ identity matrix.
 
@@ -162,7 +162,7 @@ From the plots in Figure \ref{fig:idp_plot} it can be seen that the actual state
     \caption{ Convergence of the estimates to actual states }
     \label{fig:idp_init_conv}
 \end{figure}
-The initial convergence of the estimates is shown in Figure \ref{fig:idp_init_conv}. Filter converges in $0.6 sec$ for the given setting of $P_0=I_4$. When the initial error covairance is decreased to $\frac{1}{2}P_0$ the the time taken for convergance increases to $2 sec$. 
+The initial convergence of the estimates is shown in Figure \ref{fig:idp_init_conv}. Filter converges in $0.6 sec$ for the given setting of $P_0=I_4$. When the initial error covariance is decreased to $\frac{1}{2}P_0$ the the time taken for convergence increases to $2 sec$. 
 
 \begin{table}[H]
     \centering
@@ -199,4 +199,4 @@ The initial convergence of the estimates is shown in Figure \ref{fig:idp_init_co
     \caption{Time taken for 10 seconds simulation}
     \label{tab:idp_sim_time}
 \end{table}
-The root mean square error (RMSE) value of the states $\hat q_1, \hat{\dot q}_1 $ estimated by EKF and UKF are given in Tables \ref{tab:idp_rmse_ekf} and \ref{tab:idp_rmse_ukf}. Both the UKF and EKF has the same performance in esimating $\hat q_1$ but EKF performs better in estimating $\hat{\dot q}_1$. The time taken for simulation of the EKF is lesser than UKF. The simulation time of UKF depends upon the number of states. The number of sigma points requrired to approximate the nonlinear function is given by $2n+1$.
+The root mean square error (RMSE) value of the states $\hat q_1, \hat{\dot q}_1 $ estimated by EKF and UKF are given in Tables \ref{tab:idp_rmse_ekf} and \ref{tab:idp_rmse_ukf}. Both the UKF and EKF has the same performance in estimating $\hat q_1$ but EKF performs better in estimating $\hat{\dot q}_1$. The time taken for simulation of the EKF is lesser than UKF. The simulation time of UKF depends upon the number of states, as number of sigma points depends upon the number of states. $$\text{Number of sigma points}=2\times \text{Number of states} +1.$$  Moreover the UKF algorithm requries to propogate the sigma points through nonlinear functions twice. In this experiment UKF evaluates the state equations 9 times and the measurement equations 9 times for each time step. But the EKF algorithm evaluates the nonlinear system once per time step. This is the reason for EKF being faster than UKF. 

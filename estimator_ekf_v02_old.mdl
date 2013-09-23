@@ -1,12 +1,12 @@
 Model {
-  Name			  "estimator_ekf_v02"
+  Name			  "estimator_ekf_v02_old"
   Version		  7.0
   MdlSubVersion		  0
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.556"
+    ComputedModelVersion    "1.513"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,9 +44,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Sep 23 04:49:12 2013"
+  LastModifiedDate	  "Mon Sep 23 04:47:42 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:556>"
+  ModelVersionFormat	  "1.%<AutoIncrement:513>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -103,8 +103,8 @@ Model {
 	Simulink.SolverCC {
 	  $ObjectID		  2
 	  Version		  "1.3.0"
-	  StartTime		  "10"
-	  StopTime		  "30.7"
+	  StartTime		  "0"
+	  StopTime		  "0"
 	  AbsTol		  "auto"
 	  FixedStep		  "1e-3"
 	  InitialStep		  "auto"
@@ -513,12 +513,6 @@ Model {
       SampleTime	      "-1"
     }
     Block {
-      BlockType		      EnablePort
-      StatesWhenEnabling      "held"
-      ShowOutputPort	      off
-      ZeroCross		      on
-    }
-    Block {
       BlockType		      From
       IconDisplay	      "Tag"
     }
@@ -580,6 +574,20 @@ Model {
       LatchByDelayingOutsideSignal off
       LatchByCopyingInsideSignal off
       Interpolate	      on
+    }
+    Block {
+      BlockType		      Math
+      Operator		      "exp"
+      OutputSignalType	      "auto"
+      SampleTime	      "-1"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeMode	      "Same as first input"
+      OutDataType	      "fixdt(1,16,0)"
+      OutScaling	      "[]"
+      LockScale		      off
+      RndMeth		      "Floor"
+      SaturateOnIntegerOverflow	on
     }
     Block {
       BlockType		      MATLABFcn
@@ -752,8 +760,8 @@ Model {
     FontAngle		    "normal"
   }
   System {
-    Name		    "estimator_ekf_v02"
-    Location		    [87, 66, 1679, 1029]
+    Name		    "estimator_ekf_v02_old"
+    Location		    [2076, 66, 3668, 1029]
     Open		    on
     ModelBrowserVisibility  on
     ModelBrowserWidth	    212
@@ -811,7 +819,7 @@ Model {
       FunctionWithSeparateData off
       System {
 	Name			"Extended kalman filter"
-	Location		[4, 66, 1020, 1029]
+	Location		[4, 66, 1604, 1029]
 	Open			off
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200
@@ -865,7 +873,7 @@ Model {
 	  FunctionWithSeparateData off
 	  System {
 	    Name		    "contact measurements"
-	    Location		    [169, 251, 1436, 1018]
+	    Location		    [164, 251, 1436, 949]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -881,46 +889,149 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "y(k)"
-	      Position		      [60, 128, 90, 142]
+	      Position		      [40, 593, 70, 607]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "u_in(k)"
-	      Position		      [560, 573, 590, 587]
+	      Position		      [25, 78, 55, 92]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
+	      BlockType		      Display
+	      Name		      "Display1"
+	      Ports		      [1]
+	      Position		      [235, 182, 320, 208]
+	      Decimation	      "1"
+	      Lockdown		      off
+	    }
+	    Block {
+	      BlockType		      Display
+	      Name		      "Display2"
+	      Ports		      [1]
+	      Position		      [230, 237, 315, 263]
+	      Decimation	      "1"
+	      Lockdown		      off
+	    }
+	    Block {
+	      BlockType		      From
+	      Name		      "From1"
+	      Position		      [755, 131, 780, 149]
+	      CloseFcn		      "tagdialog Close"
+	      GotoTag		      "y"
+	    }
+	    Block {
+	      BlockType		      From
+	      Name		      "From2"
+	      Position		      [750, 91, 775, 109]
+	      CloseFcn		      "tagdialog Close"
+	      GotoTag		      "u"
+	    }
+	    Block {
+	      BlockType		      From
+	      Name		      "From3"
+	      Position		      [600, 266, 625, 284]
+	      CloseFcn		      "tagdialog Close"
+	      GotoTag		      "y"
+	    }
+	    Block {
+	      BlockType		      From
+	      Name		      "From4"
+	      Position		      [595, 226, 620, 244]
+	      CloseFcn		      "tagdialog Close"
+	      GotoTag		      "u"
+	    }
+	    Block {
+	      BlockType		      From
+	      Name		      "From5"
+	      Position		      [400, 446, 425, 464]
+	      CloseFcn		      "tagdialog Close"
+	      GotoTag		      "y"
+	    }
+	    Block {
+	      BlockType		      From
+	      Name		      "From6"
+	      Position		      [395, 396, 420, 414]
+	      CloseFcn		      "tagdialog Close"
+	      GotoTag		      "u"
+	    }
+	    Block {
 	      BlockType		      Selector
-	      Name		      "IMU"
+	      Name		      "Fz_lf"
 	      Ports		      [1, 1]
-	      Position		      [150, 141, 190, 169]
-	      InputPortWidth	      "56"
+	      Position		      [105, 116, 145, 144]
+	      InputPortWidth	      "37"
 	      IndexOptions	      "Index vector (dialog)"
-	      Indices		      "[51:56]"
+	      Indices		      "3"
 	      OutputSizes	      "1"
+	    }
+	    Block {
+	      BlockType		      Selector
+	      Name		      "Fz_rf"
+	      Ports		      [1, 1]
+	      Position		      [105, 66, 145, 94]
+	      InputPortWidth	      "37"
+	      IndexOptions	      "Index vector (dialog)"
+	      Indices		      "3"
+	      OutputSizes	      "1"
+	    }
+	    Block {
+	      BlockType		      Goto
+	      Name		      "Goto1"
+	      Position		      [265, 587, 290, 603]
+	      GotoTag		      "y"
+	      TagVisibility	      "local"
+	    }
+	    Block {
+	      BlockType		      Goto
+	      Name		      "Goto2"
+	      Position		      [140, 272, 165, 288]
+	      GotoTag		      "u"
+	      TagVisibility	      "local"
+	    }
+	    Block {
+	      BlockType		      If
+	      Name		      "If1"
+	      Ports		      [2, 3]
+	      Position		      [235, 54, 350, 156]
+	      NumInputs		      "2"
+	      IfExpression	      "(u1 > 650)"
+	      ElseIfExpressions	      "(u2 > 650)"
+	    }
+	    Block {
+	      BlockType		      Merge
+	      Name		      "Merge"
+	      Ports		      [3, 1]
+	      Position		      [1025, 185, 1065, 225]
+	      Inputs		      "3"
 	    }
 	    Block {
 	      BlockType		      Mux
 	      Name		      "Mux"
 	      Ports		      [2, 1]
-	      Position		      [230, 81, 235, 174]
+	      Position		      [210, 546, 215, 639]
 	      ShowName		      off
 	      Inputs		      "2"
 	      DisplayOption	      "bar"
 	    }
 	    Block {
+	      BlockType		      Terminator
+	      Name		      "Terminator"
+	      Position		      [1015, 400, 1035, 420]
+	    }
+	    Block {
 	      BlockType		      SubSystem
-	      Name		      "Subsystem"
-	      Ports		      [2, 0, 1]
-	      Position		      [625, 548, 740, 672]
+	      Name		      "contact_doublesupport"
+	      Ports		      [2, 1, 0, 0, 0, 0, 0, 1]
+	      Position		      [465, 389, 545, 451]
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
 	      FunctionWithSeparateData off
 	      System {
-		Name			"Subsystem"
-		Location		[890, 143, 2055, 605]
+		Name			"contact_doublesupport"
+		Location		[111, 348, 1489, 852]
 		Open			off
 		ModelBrowserVisibility	on
 		ModelBrowserWidth	200
@@ -935,237 +1046,77 @@ Model {
 		ZoomFactor		"100"
 		Block {
 		  BlockType		  Inport
-		  Name			  "u_in(k)"
-		  Position		  [25, 53, 55, 67]
+		  Name			  "u_in"
+		  Position		  [25, 73, 55, 87]
 		  IconDisplay		  "Port number"
 		}
 		Block {
 		  BlockType		  Inport
-		  Name			  "y"
-		  Position		  [85, 353, 115, 367]
+		  Name			  "y_in"
+		  Position		  [765, 413, 795, 427]
 		  Port			  "2"
 		  IconDisplay		  "Port number"
 		}
 		Block {
-		  BlockType		  EnablePort
-		  Name			  "Enable"
-		  Ports			  []
-		  Position		  [570, 15, 590, 35]
+		  BlockType		  ActionPort
+		  Name			  "Action Port"
+		  Position		  [510, 20, 569, 48]
+		  ActionType		  "else"
 		}
 		Block {
 		  BlockType		  Display
 		  Name			  "Display1"
 		  Ports			  [1]
-		  Position		  [235, 157, 320, 183]
+		  Position		  [575, 187, 660, 213]
 		  Decimation		  "1"
 		  Lockdown		  off
-		}
-		Block {
-		  BlockType		  Display
-		  Name			  "Display2"
-		  Ports			  [1]
-		  Position		  [230, 212, 315, 238]
-		  Decimation		  "1"
-		  Lockdown		  off
-		}
-		Block {
-		  BlockType		  From
-		  Name			  "From1"
-		  Position		  [755, 106, 780, 124]
-		  CloseFcn		  "tagdialog Close"
-		  GotoTag		  "y"
 		}
 		Block {
 		  BlockType		  From
 		  Name			  "From2"
-		  Position		  [750, 66, 775, 84]
+		  Position		  [910, 126, 935, 144]
 		  CloseFcn		  "tagdialog Close"
-		  GotoTag		  "u"
+		  GotoTag		  "y"
 		}
 		Block {
 		  BlockType		  From
 		  Name			  "From3"
-		  Position		  [600, 241, 625, 259]
+		  Position		  [710, 241, 735, 259]
 		  CloseFcn		  "tagdialog Close"
 		  GotoTag		  "y"
-		}
-		Block {
-		  BlockType		  From
-		  Name			  "From4"
-		  Position		  [595, 201, 620, 219]
-		  CloseFcn		  "tagdialog Close"
-		  GotoTag		  "u"
-		}
-		Block {
-		  BlockType		  From
-		  Name			  "From5"
-		  Position		  [315, 421, 340, 439]
-		  CloseFcn		  "tagdialog Close"
-		  GotoTag		  "y"
-		}
-		Block {
-		  BlockType		  From
-		  Name			  "From6"
-		  Position		  [395, 371, 420, 389]
-		  CloseFcn		  "tagdialog Close"
-		  GotoTag		  "u"
-		}
-		Block {
-		  BlockType		  Selector
-		  Name			  "Fz_lf"
-		  Ports			  [1, 1]
-		  Position		  [105, 91, 145, 119]
-		  InputPortWidth	  "37"
-		  IndexOptions		  "Index vector (dialog)"
-		  Indices		  "3"
-		  OutputSizes		  "1"
-		}
-		Block {
-		  BlockType		  Selector
-		  Name			  "Fz_rf"
-		  Ports			  [1, 1]
-		  Position		  [105, 41, 145, 69]
-		  InputPortWidth	  "37"
-		  IndexOptions		  "Index vector (dialog)"
-		  Indices		  "3"
-		  OutputSizes		  "1"
 		}
 		Block {
 		  BlockType		  Goto
 		  Name			  "Goto1"
-		  Position		  [215, 342, 240, 358]
+		  Position		  [860, 412, 885, 428]
 		  GotoTag		  "y"
 		  TagVisibility		  "local"
 		}
 		Block {
-		  BlockType		  Goto
-		  Name			  "Goto2"
-		  Position		  [140, 247, 165, 263]
-		  GotoTag		  "u"
-		  TagVisibility		  "local"
-		}
-		Block {
 		  BlockType		  If
-		  Name			  "If1"
-		  Ports			  [2, 3]
-		  Position		  [235, 29, 350, 131]
-		  NumInputs		  "2"
-		  IfExpression		  "(u1 > 650)"
-		  ElseIfExpressions	  "(u2 > 650)"
+		  Name			  "If"
+		  Ports			  [1, 2]
+		  Position		  [610, 29, 725, 131]
+		  IfExpression		  "u1 < 0.12"
 		}
 		Block {
 		  BlockType		  Merge
 		  Name			  "Merge"
-		  Ports			  [3, 1]
-		  Position		  [1025, 160, 1065, 200]
-		  Inputs		  "3"
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  "Terminator"
-		  Position		  [1015, 375, 1035, 395]
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  "Terminator1"
-		  Position		  [1120, 175, 1140, 195]
+		  Ports			  [2, 1]
+		  Position		  [1130, 175, 1170, 215]
 		}
 		Block {
 		  BlockType		  SubSystem
-		  Name			  "contact_doublesupport"
-		  Ports			  [2, 1, 0, 0, 0, 0, 0, 1]
-		  Position		  [465, 364, 545, 426]
+		  Name			  "contact_backedge"
+		  Ports			  [1, 1, 0, 0, 0, 0, 0, 1]
+		  Position		  [975, 106, 1075, 164]
+		  TreatAsAtomicUnit	  on
 		  MinAlgLoopOccurrences	  off
 		  RTWSystemCode		  "Auto"
 		  FunctionWithSeparateData off
 		  System {
-		    Name		    "contact_doublesupport"
-		    Location		    [111, 348, 1489, 852]
-		    Open		    off
-		    ModelBrowserVisibility  on
-		    ModelBrowserWidth	    200
-		    ScreenColor		    "white"
-		    PaperOrientation	    "landscape"
-		    PaperPositionMode	    "auto"
-		    PaperType		    "usletter"
-		    PaperUnits		    "inches"
-		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-		    TiledPageScale	    1
-		    ShowPageBoundaries	    off
-		    ZoomFactor		    "100"
-		    Block {
-		    BlockType		    Inport
-		    Name		    "u_in"
-		    Position		    [25, 73, 55, 87]
-		    IconDisplay		    "Port number"
-		    }
-		    Block {
-		    BlockType		    Inport
-		    Name		    "y_in"
-		    Position		    [765, 413, 795, 427]
-		    Port		    "2"
-		    IconDisplay		    "Port number"
-		    }
-		    Block {
-		    BlockType		    ActionPort
-		    Name		    "Action Port"
-		    Position		    [510, 20, 569, 48]
-		    ActionType		    "else"
-		    }
-		    Block {
-		    BlockType		    Display
-		    Name		    "Display1"
-		    Ports		    [1]
-		    Position		    [575, 187, 660, 213]
-		    Decimation		    "1"
-		    Lockdown		    off
-		    }
-		    Block {
-		    BlockType		    From
-		    Name		    "From2"
-		    Position		    [910, 126, 935, 144]
-		    CloseFcn		    "tagdialog Close"
-		    GotoTag		    "y"
-		    }
-		    Block {
-		    BlockType		    From
-		    Name		    "From3"
-		    Position		    [710, 241, 735, 259]
-		    CloseFcn		    "tagdialog Close"
-		    GotoTag		    "y"
-		    }
-		    Block {
-		    BlockType		    Goto
-		    Name		    "Goto1"
-		    Position		    [860, 412, 885, 428]
-		    GotoTag		    "y"
-		    TagVisibility	    "local"
-		    }
-		    Block {
-		    BlockType		    If
-		    Name		    "If"
-		    Ports		    [1, 2]
-		    Position		    [610, 29, 725, 131]
-		    IfExpression	    "u1 < 0.12"
-		    }
-		    Block {
-		    BlockType		    Merge
-		    Name		    "Merge"
-		    Ports		    [2, 1]
-		    Position		    [1130, 175, 1170, 215]
-		    }
-		    Block {
-		    BlockType		    SubSystem
 		    Name		    "contact_backedge"
-		    Ports		    [1, 1, 0, 0, 0, 0, 0, 1]
-		    Position		    [975, 106, 1075, 164]
-		    TreatAsAtomicUnit	    on
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
-		    Name		    "contact_backedge"
-		    Location		    [508, 255, 1612, 882]
+		    Location		    [491, 229, 1595, 856]
 		    Open		    off
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    200
@@ -1270,20 +1221,20 @@ Model {
 		    DstBlock		    "Matrix\nConcatenate"
 		    DstPort		    1
 		    }
-		    }
-		    }
-		    Block {
-		    BlockType		    SubSystem
+		  }
+		}
+		Block {
+		  BlockType		  SubSystem
+		  Name			  "contact_frontedge"
+		  Ports			  [1, 1, 0, 0, 0, 0, 0, 1]
+		  Position		  [790, 213, 905, 287]
+		  TreatAsAtomicUnit	  on
+		  MinAlgLoopOccurrences	  off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  System {
 		    Name		    "contact_frontedge"
-		    Ports		    [1, 1, 0, 0, 0, 0, 0, 1]
-		    Position		    [790, 213, 905, 287]
-		    TreatAsAtomicUnit	    on
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
-		    Name		    "contact_frontedge"
-		    Location		    [1970, 253, 2982, 770]
+		    Location		    [802, 418, 1814, 935]
 		    Open		    off
 		    ModelBrowserVisibility  on
 		    ModelBrowserWidth	    200
@@ -1388,17 +1339,17 @@ Model {
 		    DstBlock		    "Matrix\nConcatenate"
 		    DstPort		    1
 		    }
-		    }
-		    }
-		    Block {
-		    BlockType		    SubSystem
-		    Name		    "zmp_computation"
-		    Ports		    [1, 1]
-		    Position		    [280, 52, 415, 108]
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
+		  }
+		}
+		Block {
+		  BlockType		  SubSystem
+		  Name			  "zmp_computation"
+		  Ports			  [1, 1]
+		  Position		  [280, 52, 415, 108]
+		  MinAlgLoopOccurrences	  off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  System {
 		    Name		    "zmp_computation"
 		    Location		    [2507, 443, 3157, 706]
 		    Open		    off
@@ -2170,198 +2121,198 @@ Model {
 		    DstPort		    1
 		    }
 		    }
-		    }
-		    }
-		    Block {
-		    BlockType		    Outport
-		    Name		    "y"
-		    Position		    [1255, 188, 1285, 202]
-		    IconDisplay		    "Port number"
-		    }
-		    Line {
-		    Labels		    [0, 0]
-		    SrcBlock		    "u_in"
-		    SrcPort		    1
-		    DstBlock		    "zmp_computation"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "zmp_computation"
-		    SrcPort		    1
-		    Points		    [105, 0]
-		    Branch {
-		    Points		    [0, 120]
-		    DstBlock		    "Display1"
-		    DstPort		    1
-		    }
-		    Branch {
-		    DstBlock		    "If"
-		    DstPort		    1
-		    }
-		    }
-		    Line {
-		    SrcBlock		    "y_in"
-		    SrcPort		    1
-		    DstBlock		    "Goto1"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Merge"
-		    SrcPort		    1
-		    DstBlock		    "y"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "contact_frontedge"
-		    SrcPort		    1
-		    Points		    [100, 0; 0, -45]
-		    DstBlock		    "Merge"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "contact_backedge"
-		    SrcPort		    1
-		    Points		    [15, 0; 0, 50]
-		    DstBlock		    "Merge"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "From3"
-		    SrcPort		    1
-		    DstBlock		    "contact_frontedge"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "From2"
-		    SrcPort		    1
-		    DstBlock		    "contact_backedge"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "If"
-		    SrcPort		    2
-		    Points		    [115, 0]
-		    DstBlock		    "contact_frontedge"
-		    DstPort		    ifaction
-		    }
-		    Line {
-		    SrcBlock		    "If"
-		    SrcPort		    1
-		    Points		    [295, 0]
-		    DstBlock		    "contact_backedge"
-		    DstPort		    ifaction
-		    }
 		  }
 		}
 		Block {
-		  BlockType		  SubSystem
-		  Name			  "contact_lf"
-		  Ports			  [2, 1, 0, 0, 0, 0, 0, 1]
-		  Position		  [680, 194, 760, 256]
-		  MinAlgLoopOccurrences	  off
-		  RTWSystemCode		  "Auto"
-		  FunctionWithSeparateData off
-		  System {
-		    Name		    "contact_lf"
-		    Location		    [2347, 289, 3787, 793]
-		    Open		    off
-		    ModelBrowserVisibility  on
-		    ModelBrowserWidth	    200
-		    ScreenColor		    "white"
-		    PaperOrientation	    "landscape"
-		    PaperPositionMode	    "auto"
-		    PaperType		    "usletter"
-		    PaperUnits		    "inches"
-		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-		    TiledPageScale	    1
-		    ShowPageBoundaries	    off
-		    ZoomFactor		    "100"
-		    Block {
-		    BlockType		    Inport
-		    Name		    "u_in"
-		    Position		    [25, 73, 55, 87]
-		    IconDisplay		    "Port number"
-		    }
-		    Block {
-		    BlockType		    Inport
-		    Name		    "y_in"
-		    Position		    [50, 363, 80, 377]
-		    Port		    "2"
-		    IconDisplay		    "Port number"
-		    }
-		    Block {
-		    BlockType		    ActionPort
-		    Name		    "Action Port"
-		    Position		    [290, 15, 349, 43]
-		    ActionType		    "elseif"
-		    }
-		    Block {
-		    BlockType		    From
-		    Name		    "From2"
-		    Position		    [685, 126, 710, 144]
-		    CloseFcn		    "tagdialog Close"
-		    GotoTag		    "y"
-		    }
-		    Block {
-		    BlockType		    From
-		    Name		    "From3"
-		    Position		    [485, 241, 510, 259]
-		    CloseFcn		    "tagdialog Close"
-		    GotoTag		    "y"
-		    }
-		    Block {
-		    BlockType		    Goto
-		    Name		    "Goto1"
-		    Position		    [145, 362, 170, 378]
-		    GotoTag		    "y"
-		    TagVisibility	    "local"
-		    }
-		    Block {
-		    BlockType		    If
-		    Name		    "If"
-		    Ports		    [1, 2]
-		    Position		    [385, 29, 500, 131]
-		    IfExpression	    "u1 < 0.7"
-		    }
-		    Block {
-		    BlockType		    Concatenate
-		    Name		    "Matrix\nConcatenate"
-		    Ports		    [2, 1]
-		    Position		    [975, 176, 1045, 249]
-		    Mode		    "Multidimensional array"
-		    }
-		    Block {
-		    BlockType		    Merge
-		    Name		    "Merge"
-		    Ports		    [2, 1]
-		    Position		    [905, 175, 945, 215]
-		    }
-		    Block {
-		    BlockType		    Selector
-		    Name		    "Selector1"
-		    Ports		    [1, 1]
-		    Position		    [80, 66, 120, 94]
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog)"
-		    Indices		    "7:12"
-		    OutputSizes		    "1"
-		    Port {
+		  BlockType		  Outport
+		  Name			  "y"
+		  Position		  [1255, 188, 1285, 202]
+		  IconDisplay		  "Port number"
+		}
+		Line {
+		  Labels		  [0, 0]
+		  SrcBlock		  "u_in"
+		  SrcPort		  1
+		  DstBlock		  "zmp_computation"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "zmp_computation"
+		  SrcPort		  1
+		  Points		  [105, 0]
+		  Branch {
+		    Points		    [0, 120]
+		    DstBlock		    "Display1"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "If"
+		    DstPort		    1
+		  }
+		}
+		Line {
+		  SrcBlock		  "y_in"
+		  SrcPort		  1
+		  DstBlock		  "Goto1"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Merge"
+		  SrcPort		  1
+		  DstBlock		  "y"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "contact_frontedge"
+		  SrcPort		  1
+		  Points		  [100, 0; 0, -45]
+		  DstBlock		  "Merge"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "contact_backedge"
+		  SrcPort		  1
+		  Points		  [15, 0; 0, 50]
+		  DstBlock		  "Merge"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "From3"
+		  SrcPort		  1
+		  DstBlock		  "contact_frontedge"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "From2"
+		  SrcPort		  1
+		  DstBlock		  "contact_backedge"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "If"
+		  SrcPort		  2
+		  Points		  [115, 0]
+		  DstBlock		  "contact_frontedge"
+		  DstPort		  ifaction
+		}
+		Line {
+		  SrcBlock		  "If"
+		  SrcPort		  1
+		  Points		  [295, 0]
+		  DstBlock		  "contact_backedge"
+		  DstPort		  ifaction
+		}
+	      }
+	    }
+	    Block {
+	      BlockType		      SubSystem
+	      Name		      "contact_lf"
+	      Ports		      [2, 1, 0, 0, 0, 0, 0, 1]
+	      Position		      [680, 219, 760, 281]
+	      MinAlgLoopOccurrences   off
+	      RTWSystemCode	      "Auto"
+	      FunctionWithSeparateData off
+	      System {
+		Name			"contact_lf"
+		Location		[2347, 289, 3787, 793]
+		Open			off
+		ModelBrowserVisibility	on
+		ModelBrowserWidth	200
+		ScreenColor		"white"
+		PaperOrientation	"landscape"
+		PaperPositionMode	"auto"
+		PaperType		"usletter"
+		PaperUnits		"inches"
+		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+		TiledPageScale		1
+		ShowPageBoundaries	off
+		ZoomFactor		"100"
+		Block {
+		  BlockType		  Inport
+		  Name			  "u_in"
+		  Position		  [25, 73, 55, 87]
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Inport
+		  Name			  "y_in"
+		  Position		  [50, 363, 80, 377]
+		  Port			  "2"
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  ActionPort
+		  Name			  "Action Port"
+		  Position		  [290, 15, 349, 43]
+		  ActionType		  "elseif"
+		}
+		Block {
+		  BlockType		  From
+		  Name			  "From2"
+		  Position		  [685, 126, 710, 144]
+		  CloseFcn		  "tagdialog Close"
+		  GotoTag		  "y"
+		}
+		Block {
+		  BlockType		  From
+		  Name			  "From3"
+		  Position		  [485, 241, 510, 259]
+		  CloseFcn		  "tagdialog Close"
+		  GotoTag		  "y"
+		}
+		Block {
+		  BlockType		  Goto
+		  Name			  "Goto1"
+		  Position		  [145, 362, 170, 378]
+		  GotoTag		  "y"
+		  TagVisibility		  "local"
+		}
+		Block {
+		  BlockType		  If
+		  Name			  "If"
+		  Ports			  [1, 2]
+		  Position		  [385, 29, 500, 131]
+		  IfExpression		  "u1 < 0.7"
+		}
+		Block {
+		  BlockType		  Concatenate
+		  Name			  "Matrix\nConcatenate"
+		  Ports			  [2, 1]
+		  Position		  [975, 176, 1045, 249]
+		  Mode			  "Multidimensional array"
+		}
+		Block {
+		  BlockType		  Merge
+		  Name			  "Merge"
+		  Ports			  [2, 1]
+		  Position		  [905, 175, 945, 215]
+		}
+		Block {
+		  BlockType		  Selector
+		  Name			  "Selector1"
+		  Ports			  [1, 1]
+		  Position		  [80, 66, 120, 94]
+		  InputPortWidth	  "37"
+		  IndexOptions		  "Index vector (dialog)"
+		  Indices		  "7:12"
+		  OutputSizes		  "1"
+		  Port {
 		    PortNumber		    1
 		    Name		    "F_rf"
 		    RTWStorageClass	    "Auto"
 		    DataLoggingNameMode	    "SignalName"
-		    }
-		    }
-		    Block {
-		    BlockType		    SubSystem
-		    Name		    "contact_backedge"
-		    Ports		    [1, 1, 0, 0, 0, 0, 0, 1]
-		    Position		    [750, 106, 850, 164]
-		    TreatAsAtomicUnit	    on
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
+		  }
+		}
+		Block {
+		  BlockType		  SubSystem
+		  Name			  "contact_backedge"
+		  Ports			  [1, 1, 0, 0, 0, 0, 0, 1]
+		  Position		  [750, 106, 850, 164]
+		  TreatAsAtomicUnit	  on
+		  MinAlgLoopOccurrences	  off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  System {
 		    Name		    "contact_backedge"
 		    Location		    [2279, 391, 3383, 1018]
 		    Open		    off
@@ -2451,18 +2402,18 @@ Model {
 		    DstBlock		    "Matrix\nConcatenate"
 		    DstPort		    3
 		    }
-		    }
-		    }
-		    Block {
-		    BlockType		    SubSystem
-		    Name		    "contact_frontedge"
-		    Ports		    [1, 1, 0, 0, 0, 0, 0, 1]
-		    Position		    [565, 213, 680, 287]
-		    TreatAsAtomicUnit	    on
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
+		  }
+		}
+		Block {
+		  BlockType		  SubSystem
+		  Name			  "contact_frontedge"
+		  Ports			  [1, 1, 0, 0, 0, 0, 0, 1]
+		  Position		  [565, 213, 680, 287]
+		  TreatAsAtomicUnit	  on
+		  MinAlgLoopOccurrences	  off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  System {
 		    Name		    "contact_frontedge"
 		    Location		    [802, 418, 1814, 935]
 		    Open		    off
@@ -2553,26 +2504,26 @@ Model {
 		    DstBlock		    "y_out"
 		    DstPort		    1
 		    }
-		    }
-		    }
-		    Block {
-		    BlockType		    Constant
-		    Name		    "dummy"
-		    Position		    [765, 274, 895, 306]
-		    Value		    "[0 0 0 0 0 0 0 0 0 0 0 0]'"
-		    VectorParams1D	    off
-		    OutDataType		    "sfix(16)"
-		    OutScaling		    "2^0"
-		    }
-		    Block {
-		    BlockType		    SubSystem
-		    Name		    "zmp_calculator"
-		    Ports		    [1, 1]
-		    Position		    [170, 58, 285, 102]
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
+		  }
+		}
+		Block {
+		  BlockType		  Constant
+		  Name			  "dummy"
+		  Position		  [765, 274, 895, 306]
+		  Value			  "[0 0 0 0 0 0 0 0 0 0 0 0]'"
+		  VectorParams1D	  off
+		  OutDataType		  "sfix(16)"
+		  OutScaling		  "2^0"
+		}
+		Block {
+		  BlockType		  SubSystem
+		  Name			  "zmp_calculator"
+		  Ports			  [1, 1]
+		  Position		  [170, 58, 285, 102]
+		  MinAlgLoopOccurrences	  off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  System {
 		    Name		    "zmp_calculator"
 		    Location		    [1949, 431, 2497, 633]
 		    Open		    off
@@ -2809,219 +2760,219 @@ Model {
 		    DstBlock		    "Demux"
 		    DstPort		    1
 		    }
-		    }
-		    }
-		    Block {
-		    BlockType		    Outport
-		    Name		    "y"
-		    Position		    [1170, 203, 1200, 217]
-		    IconDisplay		    "Port number"
-		    }
-		    Line {
-		    SrcBlock		    "Matrix\nConcatenate"
-		    SrcPort		    1
-		    Points		    [0, -5]
-		    DstBlock		    "y"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "dummy"
-		    SrcPort		    1
-		    Points		    [60, 0]
-		    DstBlock		    "Matrix\nConcatenate"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "Merge"
-		    SrcPort		    1
-		    DstBlock		    "Matrix\nConcatenate"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "If"
-		    SrcPort		    1
-		    Points		    [295, 0]
-		    DstBlock		    "contact_backedge"
-		    DstPort		    ifaction
-		    }
-		    Line {
-		    SrcBlock		    "If"
-		    SrcPort		    2
-		    Points		    [115, 0]
-		    DstBlock		    "contact_frontedge"
-		    DstPort		    ifaction
-		    }
-		    Line {
-		    SrcBlock		    "From2"
-		    SrcPort		    1
-		    DstBlock		    "contact_backedge"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "From3"
-		    SrcPort		    1
-		    DstBlock		    "contact_frontedge"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "contact_backedge"
-		    SrcPort		    1
-		    Points		    [15, 0; 0, 50]
-		    DstBlock		    "Merge"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "contact_frontedge"
-		    SrcPort		    1
-		    Points		    [100, 0; 0, -45]
-		    DstBlock		    "Merge"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "zmp_calculator"
-		    SrcPort		    1
-		    DstBlock		    "If"
-		    DstPort		    1
-		    }
-		    Line {
-		    Name		    "F_rf"
-		    Labels		    [0, 0]
-		    SrcBlock		    "Selector1"
-		    SrcPort		    1
-		    DstBlock		    "zmp_calculator"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "u_in"
-		    SrcPort		    1
-		    DstBlock		    "Selector1"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "y_in"
-		    SrcPort		    1
-		    DstBlock		    "Goto1"
-		    DstPort		    1
-		    }
 		  }
 		}
 		Block {
-		  BlockType		  SubSystem
-		  Name			  "contact_rf"
-		  Ports			  [2, 1, 0, 0, 0, 0, 0, 1]
-		  Position		  [835, 59, 915, 121]
-		  MinAlgLoopOccurrences	  off
-		  RTWSystemCode		  "Auto"
-		  FunctionWithSeparateData off
-		  System {
-		    Name		    "contact_rf"
-		    Location		    [2328, 524, 3811, 1028]
-		    Open		    off
-		    ModelBrowserVisibility  on
-		    ModelBrowserWidth	    200
-		    ScreenColor		    "white"
-		    PaperOrientation	    "landscape"
-		    PaperPositionMode	    "auto"
-		    PaperType		    "usletter"
-		    PaperUnits		    "inches"
-		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-		    TiledPageScale	    1
-		    ShowPageBoundaries	    off
-		    ZoomFactor		    "100"
-		    Block {
-		    BlockType		    Inport
-		    Name		    "u_in"
-		    Position		    [25, 73, 55, 87]
-		    IconDisplay		    "Port number"
-		    }
-		    Block {
-		    BlockType		    Inport
-		    Name		    "y_in"
-		    Position		    [50, 363, 80, 377]
-		    Port		    "2"
-		    IconDisplay		    "Port number"
-		    }
-		    Block {
-		    BlockType		    ActionPort
-		    Name		    "Action Port"
-		    Position		    [290, 15, 349, 43]
-		    ActionType		    "then"
-		    }
-		    Block {
-		    BlockType		    Display
-		    Name		    "Display"
-		    Ports		    [1]
-		    Position		    [365, 176, 445, 204]
-		    Decimation		    "1"
-		    Lockdown		    off
-		    }
-		    Block {
-		    BlockType		    From
-		    Name		    "From2"
-		    Position		    [685, 126, 710, 144]
-		    CloseFcn		    "tagdialog Close"
-		    GotoTag		    "y"
-		    }
-		    Block {
-		    BlockType		    From
-		    Name		    "From3"
-		    Position		    [485, 241, 510, 259]
-		    CloseFcn		    "tagdialog Close"
-		    GotoTag		    "y"
-		    }
-		    Block {
-		    BlockType		    Goto
-		    Name		    "Goto1"
-		    Position		    [235, 362, 260, 378]
-		    GotoTag		    "y"
-		    TagVisibility	    "local"
-		    }
-		    Block {
-		    BlockType		    If
-		    Name		    "If"
-		    Ports		    [1, 2]
-		    Position		    [385, 29, 500, 131]
-		    IfExpression	    "u1 < 0.7"
-		    }
-		    Block {
-		    BlockType		    Concatenate
-		    Name		    "Matrix\nConcatenate"
-		    Ports		    [2, 1]
-		    Position		    [1000, 186, 1070, 259]
-		    Mode		    "Multidimensional array"
-		    }
-		    Block {
-		    BlockType		    Merge
-		    Name		    "Merge"
-		    Ports		    [2, 1]
-		    Position		    [905, 175, 945, 215]
-		    }
-		    Block {
-		    BlockType		    Selector
-		    Name		    "Selector1"
-		    Ports		    [1, 1]
-		    Position		    [80, 66, 120, 94]
-		    InputPortWidth	    "37"
-		    IndexOptions	    "Index vector (dialog)"
-		    Indices		    "1:6"
-		    OutputSizes		    "1"
-		    Port {
+		  BlockType		  Outport
+		  Name			  "y"
+		  Position		  [1170, 203, 1200, 217]
+		  IconDisplay		  "Port number"
+		}
+		Line {
+		  SrcBlock		  "Matrix\nConcatenate"
+		  SrcPort		  1
+		  Points		  [0, -5]
+		  DstBlock		  "y"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "dummy"
+		  SrcPort		  1
+		  Points		  [60, 0]
+		  DstBlock		  "Matrix\nConcatenate"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "Merge"
+		  SrcPort		  1
+		  DstBlock		  "Matrix\nConcatenate"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "If"
+		  SrcPort		  1
+		  Points		  [295, 0]
+		  DstBlock		  "contact_backedge"
+		  DstPort		  ifaction
+		}
+		Line {
+		  SrcBlock		  "If"
+		  SrcPort		  2
+		  Points		  [115, 0]
+		  DstBlock		  "contact_frontedge"
+		  DstPort		  ifaction
+		}
+		Line {
+		  SrcBlock		  "From2"
+		  SrcPort		  1
+		  DstBlock		  "contact_backedge"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "From3"
+		  SrcPort		  1
+		  DstBlock		  "contact_frontedge"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "contact_backedge"
+		  SrcPort		  1
+		  Points		  [15, 0; 0, 50]
+		  DstBlock		  "Merge"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "contact_frontedge"
+		  SrcPort		  1
+		  Points		  [100, 0; 0, -45]
+		  DstBlock		  "Merge"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "zmp_calculator"
+		  SrcPort		  1
+		  DstBlock		  "If"
+		  DstPort		  1
+		}
+		Line {
+		  Name			  "F_rf"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Selector1"
+		  SrcPort		  1
+		  DstBlock		  "zmp_calculator"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "u_in"
+		  SrcPort		  1
+		  DstBlock		  "Selector1"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "y_in"
+		  SrcPort		  1
+		  DstBlock		  "Goto1"
+		  DstPort		  1
+		}
+	      }
+	    }
+	    Block {
+	      BlockType		      SubSystem
+	      Name		      "contact_rf"
+	      Ports		      [2, 1, 0, 0, 0, 0, 0, 1]
+	      Position		      [835, 84, 915, 146]
+	      MinAlgLoopOccurrences   off
+	      RTWSystemCode	      "Auto"
+	      FunctionWithSeparateData off
+	      System {
+		Name			"contact_rf"
+		Location		[2328, 565, 3811, 1069]
+		Open			off
+		ModelBrowserVisibility	on
+		ModelBrowserWidth	200
+		ScreenColor		"white"
+		PaperOrientation	"landscape"
+		PaperPositionMode	"auto"
+		PaperType		"usletter"
+		PaperUnits		"inches"
+		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+		TiledPageScale		1
+		ShowPageBoundaries	off
+		ZoomFactor		"100"
+		Block {
+		  BlockType		  Inport
+		  Name			  "u_in"
+		  Position		  [25, 73, 55, 87]
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Inport
+		  Name			  "y_in"
+		  Position		  [50, 363, 80, 377]
+		  Port			  "2"
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  ActionPort
+		  Name			  "Action Port"
+		  Position		  [290, 15, 349, 43]
+		  ActionType		  "then"
+		}
+		Block {
+		  BlockType		  Display
+		  Name			  "Display"
+		  Ports			  [1]
+		  Position		  [365, 176, 445, 204]
+		  Decimation		  "1"
+		  Lockdown		  off
+		}
+		Block {
+		  BlockType		  From
+		  Name			  "From2"
+		  Position		  [685, 126, 710, 144]
+		  CloseFcn		  "tagdialog Close"
+		  GotoTag		  "y"
+		}
+		Block {
+		  BlockType		  From
+		  Name			  "From3"
+		  Position		  [485, 241, 510, 259]
+		  CloseFcn		  "tagdialog Close"
+		  GotoTag		  "y"
+		}
+		Block {
+		  BlockType		  Goto
+		  Name			  "Goto1"
+		  Position		  [235, 362, 260, 378]
+		  GotoTag		  "y"
+		  TagVisibility		  "local"
+		}
+		Block {
+		  BlockType		  If
+		  Name			  "If"
+		  Ports			  [1, 2]
+		  Position		  [385, 29, 500, 131]
+		  IfExpression		  "u1 < 0.7"
+		}
+		Block {
+		  BlockType		  Concatenate
+		  Name			  "Matrix\nConcatenate"
+		  Ports			  [2, 1]
+		  Position		  [1000, 186, 1070, 259]
+		  Mode			  "Multidimensional array"
+		}
+		Block {
+		  BlockType		  Merge
+		  Name			  "Merge"
+		  Ports			  [2, 1]
+		  Position		  [905, 175, 945, 215]
+		}
+		Block {
+		  BlockType		  Selector
+		  Name			  "Selector1"
+		  Ports			  [1, 1]
+		  Position		  [80, 66, 120, 94]
+		  InputPortWidth	  "37"
+		  IndexOptions		  "Index vector (dialog)"
+		  Indices		  "1:6"
+		  OutputSizes		  "1"
+		  Port {
 		    PortNumber		    1
 		    Name		    "F_rf"
 		    RTWStorageClass	    "Auto"
 		    DataLoggingNameMode	    "SignalName"
-		    }
-		    }
-		    Block {
-		    BlockType		    SubSystem
-		    Name		    "contact_backedge"
-		    Ports		    [1, 1, 0, 0, 0, 0, 0, 1]
-		    Position		    [750, 106, 850, 164]
-		    TreatAsAtomicUnit	    on
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
+		  }
+		}
+		Block {
+		  BlockType		  SubSystem
+		  Name			  "contact_backedge"
+		  Ports			  [1, 1, 0, 0, 0, 0, 0, 1]
+		  Position		  [750, 106, 850, 164]
+		  TreatAsAtomicUnit	  on
+		  MinAlgLoopOccurrences	  off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  System {
 		    Name		    "contact_backedge"
 		    Location		    [2279, 391, 3383, 1018]
 		    Open		    off
@@ -3111,18 +3062,18 @@ Model {
 		    DstBlock		    "Matrix\nConcatenate"
 		    DstPort		    1
 		    }
-		    }
-		    }
-		    Block {
-		    BlockType		    SubSystem
-		    Name		    "contact_frontedge"
-		    Ports		    [1, 1, 0, 0, 0, 0, 0, 1]
-		    Position		    [565, 213, 680, 287]
-		    TreatAsAtomicUnit	    on
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
+		  }
+		}
+		Block {
+		  BlockType		  SubSystem
+		  Name			  "contact_frontedge"
+		  Ports			  [1, 1, 0, 0, 0, 0, 0, 1]
+		  Position		  [565, 213, 680, 287]
+		  TreatAsAtomicUnit	  on
+		  MinAlgLoopOccurrences	  off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  System {
 		    Name		    "contact_frontedge"
 		    Location		    [802, 418, 1814, 935]
 		    Open		    off
@@ -3213,26 +3164,26 @@ Model {
 		    DstBlock		    "Matrix\nConcatenate"
 		    DstPort		    1
 		    }
-		    }
-		    }
-		    Block {
-		    BlockType		    Constant
-		    Name		    "dummy"
-		    Position		    [790, 284, 920, 316]
-		    Value		    "[0 0 0 0 0 0 0 0 0 0 0 0]'"
-		    VectorParams1D	    off
-		    OutDataType		    "sfix(16)"
-		    OutScaling		    "2^0"
-		    }
-		    Block {
-		    BlockType		    SubSystem
-		    Name		    "zmp_calculator"
-		    Ports		    [1, 1]
-		    Position		    [190, 58, 305, 102]
-		    MinAlgLoopOccurrences   off
-		    RTWSystemCode	    "Auto"
-		    FunctionWithSeparateData off
-		    System {
+		  }
+		}
+		Block {
+		  BlockType		  Constant
+		  Name			  "dummy"
+		  Position		  [790, 284, 920, 316]
+		  Value			  "[0 0 0 0 0 0 0 0 0 0 0 0]'"
+		  VectorParams1D	  off
+		  OutDataType		  "sfix(16)"
+		  OutScaling		  "2^0"
+		}
+		Block {
+		  BlockType		  SubSystem
+		  Name			  "zmp_calculator"
+		  Ports			  [1, 1]
+		  Position		  [190, 58, 305, 102]
+		  MinAlgLoopOccurrences	  off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  System {
 		    Name		    "zmp_calculator"
 		    Location		    [1949, 431, 2497, 633]
 		    Open		    off
@@ -3469,423 +3420,126 @@ Model {
 		    DstBlock		    "Gain"
 		    DstPort		    1
 		    }
-		    }
-		    }
-		    Block {
-		    BlockType		    Outport
-		    Name		    "y"
-		    Position		    [1125, 188, 1155, 202]
-		    IconDisplay		    "Port number"
-		    }
-		    Line {
-		    SrcBlock		    "Matrix\nConcatenate"
-		    SrcPort		    1
-		    Points		    [15, 0; 0, -30]
-		    DstBlock		    "y"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "Merge"
-		    SrcPort		    1
-		    Points		    [15, 0; 0, 10]
-		    DstBlock		    "Matrix\nConcatenate"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "dummy"
-		    SrcPort		    1
-		    Points		    [60, 0]
-		    DstBlock		    "Matrix\nConcatenate"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "y_in"
-		    SrcPort		    1
-		    DstBlock		    "Goto1"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "u_in"
-		    SrcPort		    1
-		    DstBlock		    "Selector1"
-		    DstPort		    1
-		    }
-		    Line {
-		    Name		    "F_rf"
-		    Labels		    [0, 0]
-		    SrcBlock		    "Selector1"
-		    SrcPort		    1
-		    DstBlock		    "zmp_calculator"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "zmp_calculator"
-		    SrcPort		    1
-		    Points		    [20, 0]
-		    Branch {
-		    Points		    [0, 110]
-		    DstBlock		    "Display"
-		    DstPort		    1
-		    }
-		    Branch {
-		    DstBlock		    "If"
-		    DstPort		    1
-		    }
-		    }
-		    Line {
-		    SrcBlock		    "contact_frontedge"
-		    SrcPort		    1
-		    Points		    [100, 0; 0, -45]
-		    DstBlock		    "Merge"
-		    DstPort		    2
-		    }
-		    Line {
-		    SrcBlock		    "contact_backedge"
-		    SrcPort		    1
-		    Points		    [15, 0; 0, 50]
-		    DstBlock		    "Merge"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "From3"
-		    SrcPort		    1
-		    DstBlock		    "contact_frontedge"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "From2"
-		    SrcPort		    1
-		    DstBlock		    "contact_backedge"
-		    DstPort		    1
-		    }
-		    Line {
-		    SrcBlock		    "If"
-		    SrcPort		    2
-		    Points		    [115, 0]
-		    DstBlock		    "contact_frontedge"
-		    DstPort		    ifaction
-		    }
-		    Line {
-		    SrcBlock		    "If"
-		    SrcPort		    1
-		    Points		    [295, 0]
-		    DstBlock		    "contact_backedge"
-		    DstPort		    ifaction
-		    }
 		  }
 		}
-		Line {
-		  SrcBlock		  "contact_doublesupport"
-		  SrcPort		  1
-		  Points		  [370, 0; 0, -10]
-		  Branch {
-		    Points		    [0, -190]
-		    DstBlock		    "Merge"
-		    DstPort		    3
-		  }
-		  Branch {
-		    DstBlock		    "Terminator"
-		    DstPort		    1
-		  }
+		Block {
+		  BlockType		  Outport
+		  Name			  "y"
+		  Position		  [1125, 188, 1155, 202]
+		  IconDisplay		  "Port number"
 		}
 		Line {
-		  SrcBlock		  "contact_lf"
+		  SrcBlock		  "Matrix\nConcatenate"
 		  SrcPort		  1
-		  Points		  [120, 0; 0, -45]
-		  DstBlock		  "Merge"
-		  DstPort		  2
-		}
-		Line {
-		  SrcBlock		  "contact_rf"
-		  SrcPort		  1
-		  Points		  [45, 0; 0, 75]
-		  DstBlock		  "Merge"
+		  Points		  [15, 0; 0, -30]
+		  DstBlock		  "y"
 		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "If1"
-		  SrcPort		  3
-		  Points		  [150, 0]
-		  DstBlock		  "contact_doublesupport"
-		  DstPort		  ifaction
-		}
-		Line {
-		  SrcBlock		  "If1"
-		  SrcPort		  2
-		  Points		  [365, 0]
-		  DstBlock		  "contact_lf"
-		  DstPort		  ifaction
-		}
-		Line {
-		  SrcBlock		  "From5"
+		  SrcBlock		  "Merge"
 		  SrcPort		  1
-		  Points		  [100, 0; 0, -20]
-		  DstBlock		  "contact_doublesupport"
+		  Points		  [15, 0; 0, 10]
+		  DstBlock		  "Matrix\nConcatenate"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "dummy"
+		  SrcPort		  1
+		  Points		  [60, 0]
+		  DstBlock		  "Matrix\nConcatenate"
 		  DstPort		  2
 		}
 		Line {
-		  SrcBlock		  "From6"
+		  SrcBlock		  "y_in"
 		  SrcPort		  1
-		  DstBlock		  "contact_doublesupport"
+		  DstBlock		  "Goto1"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "u_in"
+		  SrcPort		  1
+		  DstBlock		  "Selector1"
+		  DstPort		  1
+		}
+		Line {
+		  Name			  "F_rf"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Selector1"
+		  SrcPort		  1
+		  DstBlock		  "zmp_calculator"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "zmp_calculator"
+		  SrcPort		  1
+		  Points		  [20, 0]
+		  Branch {
+		    Points		    [0, 110]
+		    DstBlock		    "Display"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "If"
+		    DstPort		    1
+		  }
+		}
+		Line {
+		  SrcBlock		  "contact_frontedge"
+		  SrcPort		  1
+		  Points		  [100, 0; 0, -45]
+		  DstBlock		  "Merge"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "contact_backedge"
+		  SrcPort		  1
+		  Points		  [15, 0; 0, 50]
+		  DstBlock		  "Merge"
 		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "From3"
 		  SrcPort		  1
-		  Points		  [15, 0; 0, -10]
-		  DstBlock		  "contact_lf"
-		  DstPort		  2
-		}
-		Line {
-		  SrcBlock		  "From4"
-		  SrcPort		  1
-		  DstBlock		  "contact_lf"
+		  DstBlock		  "contact_frontedge"
 		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "From1"
-		  SrcPort		  1
-		  Points		  [15, 0; 0, -10]
-		  DstBlock		  "contact_rf"
-		  DstPort		  2
 		}
 		Line {
 		  SrcBlock		  "From2"
 		  SrcPort		  1
-		  DstBlock		  "contact_rf"
+		  DstBlock		  "contact_backedge"
 		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "If1"
-		  SrcPort		  1
-		  Points		  [520, 0]
-		  DstBlock		  "contact_rf"
+		  SrcBlock		  "If"
+		  SrcPort		  2
+		  Points		  [115, 0]
+		  DstBlock		  "contact_frontedge"
 		  DstPort		  ifaction
 		}
 		Line {
-		  SrcBlock		  "u_in(k)"
+		  SrcBlock		  "If"
 		  SrcPort		  1
-		  Points		  [15, 0]
-		  Branch {
-		    Points		    [0, 45]
-		    Branch {
-		    Points		    [0, 150]
-		    DstBlock		    "Goto2"
-		    DstPort		    1
-		    }
-		    Branch {
-		    DstBlock		    "Fz_lf"
-		    DstPort		    1
-		    }
-		  }
-		  Branch {
-		    Points		    [0, -5]
-		    DstBlock		    "Fz_rf"
-		    DstPort		    1
-		  }
-		}
-		Line {
-		  SrcBlock		  "Fz_lf"
-		  SrcPort		  1
-		  Points		  [20, 0]
-		  Branch {
-		    Points		    [0, 120]
-		    DstBlock		    "Display2"
-		    DstPort		    1
-		  }
-		  Branch {
-		    DstBlock		    "If1"
-		    DstPort		    2
-		  }
-		}
-		Line {
-		  SrcBlock		  "Fz_rf"
-		  SrcPort		  1
-		  Points		  [55, 0]
-		  Branch {
-		    Points		    [0, 115]
-		    DstBlock		    "Display1"
-		    DstPort		    1
-		  }
-		  Branch {
-		    DstBlock		    "If1"
-		    DstPort		    1
-		  }
-		}
-		Line {
-		  SrcBlock		  "Merge"
-		  SrcPort		  1
-		  Points		  [15, 0; 0, 5]
-		  DstBlock		  "Terminator1"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "y"
-		  SrcPort		  1
-		  Points		  [40, 0; 0, -10]
-		  DstBlock		  "Goto1"
-		  DstPort		  1
+		  Points		  [295, 0]
+		  DstBlock		  "contact_backedge"
+		  DstPort		  ifaction
 		}
 	      }
 	    }
 	    Block {
-	      BlockType		      SubSystem
-	      Name		      "contact"
+	      BlockType		      Selector
+	      Name		      "gyro"
 	      Ports		      [1, 1]
-	      Position		      [370, 93, 485, 167]
-	      TreatAsAtomicUnit	      on
-	      MinAlgLoopOccurrences   off
-	      RTWSystemCode	      "Auto"
-	      FunctionWithSeparateData off
-	      System {
-		Name			"contact"
-		Location		[1970, 85, 2982, 770]
-		Open			off
-		ModelBrowserVisibility	on
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "y_in"
-		  Position		  [15, 98, 45, 112]
-		  IconDisplay		  "Port number"
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Block {
-		  BlockType		  Concatenate
-		  Name			  "Matrix\nConcatenate"
-		  Ports			  [6, 1]
-		  Position		  [515, 151, 640, 484]
-		  NumInputs		  "6"
-		  Mode			  "Multidimensional array"
-		}
-		Block {
-		  BlockType		  Constant
-		  Name			  "V_feet"
-		  Position		  [125, 609, 260, 681]
-		  Value			  "[0 0 0 0 0 0 0 0 0 0 0 0]'"
-		  VectorParams1D	  off
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Block {
-		  BlockType		  Constant
-		  Name			  "lf_contact_AB"
-		  Position		  [105, 391, 240, 469]
-		  Value			  "[0.130000073779718   0.160449981139864  -0.000099828958185   0.130000057748982   0.065449981139865  -0.000099833400502]'"
-		  VectorParams1D	  off
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Block {
-		  BlockType		  Constant
-		  Name			  "lf_contact_CD"
-		  Position		  [110, 494, 245, 566]
-		  Value			  "[-0.059999942250943   0.065450013201346  -0.000099999469068  -0.059999926220207   0.160450013201344  -0.000099995026751]'"
-		  VectorParams1D	  off
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Block {
-		  BlockType		  Constant
-		  Name			  "rf_contact_AB"
-		  Position		  [110, 166, 245, 264]
-		  Value			  "[0.130000027067808  -0.065450013272176  -0.000099766533171   0.130000008737612  -0.160450013271890  -0.000099999240125]'"
-		  VectorParams1D	  off
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Block {
-		  BlockType		  Constant
-		  Name			  "rf_contact_CD"
-		  Position		  [105, 289, 240, 361]
-		  Value			  "[-0.059999991262275  -0.160449976611997  -0.000099795625568  -0.059999972932080  -0.065449976612284  -0.000099562918613]'"
-		  VectorParams1D	  off
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "y_out"
-		  Position		  [880, 208, 910, 222]
-		  IconDisplay		  "Port number"
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Line {
-		  SrcBlock		  "y_in"
-		  SrcPort		  1
-		  Points		  [450, 0]
-		  DstBlock		  "Matrix\nConcatenate"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Matrix\nConcatenate"
-		  SrcPort		  1
-		  Points		  [0, -105]
-		  DstBlock		  "y_out"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "rf_contact_AB"
-		  SrcPort		  1
-		  Points		  [250, 0]
-		  DstBlock		  "Matrix\nConcatenate"
-		  DstPort		  2
-		}
-		Line {
-		  SrcBlock		  "rf_contact_CD"
-		  SrcPort		  1
-		  Points		  [85, 0; 0, -35]
-		  DstBlock		  "Matrix\nConcatenate"
-		  DstPort		  3
-		}
-		Line {
-		  SrcBlock		  "lf_contact_AB"
-		  SrcPort		  1
-		  Points		  [110, 0; 0, -85]
-		  DstBlock		  "Matrix\nConcatenate"
-		  DstPort		  4
-		}
-		Line {
-		  SrcBlock		  "lf_contact_CD"
-		  SrcPort		  1
-		  Points		  [145, 0; 0, -130]
-		  DstBlock		  "Matrix\nConcatenate"
-		  DstPort		  5
-		}
-		Line {
-		  SrcBlock		  "V_feet"
-		  SrcPort		  1
-		  Points		  [160, 0; 0, -190]
-		  DstBlock		  "Matrix\nConcatenate"
-		  DstPort		  6
-		}
-	      }
-	    }
-	    Block {
-	      BlockType		      Constant
-	      Name		      "dummy"
-	      Position		      [520, 499, 580, 531]
-	      Value		      "0"
-	      VectorParams1D	      off
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
+	      Position		      [130, 606, 170, 634]
+	      InputPortWidth	      "56"
+	      IndexOptions	      "Index vector (dialog)"
+	      Indices		      "[51:56]"
+	      OutputSizes	      "1"
 	    }
 	    Block {
 	      BlockType		      Selector
 	      Name		      "joints"
 	      Ports		      [1, 1]
-	      Position		      [150, 86, 190, 114]
+	      Position		      [130, 551, 170, 579]
 	      InputPortWidth	      "56"
 	      IndexOptions	      "Index vector (dialog)"
 	      Indices		      "1:50"
@@ -3894,25 +3548,17 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "y"
-	      Position		      [675, 123, 705, 137]
+	      Position		      [1220, 198, 1250, 212]
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
 	      SrcBlock		      "Mux"
 	      SrcPort		      1
-	      Points		      [5, 0]
-	      Branch {
-		DstBlock		"contact"
-		DstPort			1
-	      }
-	      Branch {
-		Points			[0, 510]
-		DstBlock		"Subsystem"
-		DstPort			2
-	      }
+	      DstBlock		      "Goto1"
+	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "IMU"
+	      SrcBlock		      "gyro"
 	      SrcPort		      1
 	      Points		      [20, 0]
 	      DstBlock		      "Mux"
@@ -3926,12 +3572,156 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
+	      SrcBlock		      "contact_doublesupport"
+	      SrcPort		      1
+	      Points		      [370, 0; 0, -10]
+	      Branch {
+		Points			[0, -190]
+		DstBlock		"Merge"
+		DstPort			3
+	      }
+	      Branch {
+		DstBlock		"Terminator"
+		DstPort			1
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Merge"
+	      SrcPort		      1
+	      DstBlock		      "y"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "contact_lf"
+	      SrcPort		      1
+	      Points		      [120, 0; 0, -45]
+	      DstBlock		      "Merge"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "contact_rf"
+	      SrcPort		      1
+	      Points		      [45, 0; 0, 75]
+	      DstBlock		      "Merge"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "If1"
+	      SrcPort		      3
+	      Points		      [150, 0]
+	      DstBlock		      "contact_doublesupport"
+	      DstPort		      ifaction
+	    }
+	    Line {
+	      SrcBlock		      "If1"
+	      SrcPort		      2
+	      Points		      [365, 0]
+	      DstBlock		      "contact_lf"
+	      DstPort		      ifaction
+	    }
+	    Line {
+	      SrcBlock		      "From5"
+	      SrcPort		      1
+	      Points		      [15, 0; 0, -20]
+	      DstBlock		      "contact_doublesupport"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "From6"
+	      SrcPort		      1
+	      DstBlock		      "contact_doublesupport"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "From3"
+	      SrcPort		      1
+	      Points		      [15, 0; 0, -10]
+	      DstBlock		      "contact_lf"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "From4"
+	      SrcPort		      1
+	      DstBlock		      "contact_lf"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "From1"
+	      SrcPort		      1
+	      Points		      [15, 0; 0, -10]
+	      DstBlock		      "contact_rf"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "From2"
+	      SrcPort		      1
+	      DstBlock		      "contact_rf"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "If1"
+	      SrcPort		      1
+	      Points		      [520, 0]
+	      DstBlock		      "contact_rf"
+	      DstPort		      ifaction
+	    }
+	    Line {
+	      SrcBlock		      "u_in(k)"
+	      SrcPort		      1
+	      Points		      [15, 0]
+	      Branch {
+		Points			[0, 45]
+		Branch {
+		  Points		  [0, 150]
+		  DstBlock		  "Goto2"
+		  DstPort		  1
+		}
+		Branch {
+		  DstBlock		  "Fz_lf"
+		  DstPort		  1
+		}
+	      }
+	      Branch {
+		Points			[0, -5]
+		DstBlock		"Fz_rf"
+		DstPort			1
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Fz_lf"
+	      SrcPort		      1
+	      Points		      [20, 0]
+	      Branch {
+		Points			[0, 120]
+		DstBlock		"Display2"
+		DstPort			1
+	      }
+	      Branch {
+		DstBlock		"If1"
+		DstPort			2
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Fz_rf"
+	      SrcPort		      1
+	      Points		      [55, 0]
+	      Branch {
+		Points			[0, 115]
+		DstBlock		"Display1"
+		DstPort			1
+	      }
+	      Branch {
+		DstBlock		"If1"
+		DstPort			1
+	      }
+	    }
+	    Line {
 	      SrcBlock		      "y(k)"
 	      SrcPort		      1
 	      Points		      [30, 0]
 	      Branch {
 		Points			[0, 20]
-		DstBlock		"IMU"
+		DstBlock		"gyro"
 		DstPort			1
 	      }
 	      Branch {
@@ -3939,25 +3729,6 @@ Model {
 		DstBlock		"joints"
 		DstPort			1
 	      }
-	    }
-	    Line {
-	      SrcBlock		      "contact"
-	      SrcPort		      1
-	      DstBlock		      "y"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "u_in(k)"
-	      SrcPort		      1
-	      DstBlock		      "Subsystem"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "dummy"
-	      SrcPort		      1
-	      Points		      [95, 0]
-	      DstBlock		      "Subsystem"
-	      DstPort		      enable
 	    }
 	  }
 	}
@@ -3978,7 +3749,7 @@ Model {
 	  }
 	  System {
 	    Name		    "corrector"
-	    Location		    [4, 66, 1596, 1029]
+	    Location		    [4, 66, 1596, 1092]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -4092,9 +3863,9 @@ Model {
 	    }
 	    Block {
 	      BlockType		      SubSystem
-	      Name		      "Measurement Update"
+	      Name		      "Measurements1"
 	      Ports		      [12, 2]
-	      Position		      [485, 109, 630, 546]
+	      Position		      [480, 121, 625, 479]
 	      PermitHierarchicalResolution "ExplicitOnly"
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
@@ -4108,7 +3879,7 @@ Model {
 	      MaskIconRotate	      "none"
 	      MaskIconUnits	      "autoscale"
 	      System {
-		Name			"Measurement Update"
+		Name			"Measurements1"
 		Location		[257, 457, 812, 717]
 		Open			off
 		ModelBrowserVisibility	on
@@ -4211,15 +3982,15 @@ Model {
 		  BlockType		  Demux
 		  Name			  " Demux "
 		  Ports			  [1, 1]
-		  Position		  [270, 375, 320, 415]
+		  Position		  [270, 380, 320, 420]
 		  Outputs		  "1"
 		}
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function estimator_ekf_v02 2"
+		  Tag			  "Stateflow S-Function estimator_ekf_v02_old 5"
 		  Ports			  [12, 3]
-		  Position		  [180, 115, 230, 375]
+		  Position		  [180, 120, 230, 380]
 		  FunctionName		  "sf_sfun"
 		  PortCounts		  "[12 3]"
 		  EnableBusSupport	  on
@@ -4239,7 +4010,7 @@ Model {
 		Block {
 		  BlockType		  Terminator
 		  Name			  " Terminator "
-		  Position		  [460, 386, 480, 404]
+		  Position		  [460, 391, 480, 409]
 		}
 		Block {
 		  BlockType		  Outport
@@ -4257,10 +4028,18 @@ Model {
 		  IconDisplay		  "Port number"
 		}
 		Line {
+		  Name			  "x_out"
+		  Labels		  [0, 0]
 		  SrcBlock		  " SFunction "
+		  SrcPort		  2
+		  DstBlock		  "x_out"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "M_in"
 		  SrcPort		  1
-		  Points		  [0, 235]
-		  DstBlock		  " Demux "
+		  Points		  [120, 0]
+		  DstBlock		  " SFunction "
 		  DstPort		  1
 		}
 		Line {
@@ -4270,36 +4049,16 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  Name			  "x_out"
-		  Labels		  [0, 0]
 		  SrcBlock		  " SFunction "
-		  SrcPort		  2
-		  DstBlock		  "x_out"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "z_in"
 		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  12
-		}
-		Line {
-		  Name			  "P"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "P"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "M_in"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
+		  Points		  [0, 235]
+		  DstBlock		  " Demux "
 		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "C_in"
 		  SrcPort		  1
+		  Points		  [120, 0]
 		  DstBlock		  " SFunction "
 		  DstPort		  2
 		}
@@ -4312,6 +4071,7 @@ Model {
 		Line {
 		  SrcBlock		  "J_in"
 		  SrcPort		  1
+		  Points		  [120, 0]
 		  DstBlock		  " SFunction "
 		  DstPort		  4
 		}
@@ -4320,6 +4080,12 @@ Model {
 		  SrcPort		  1
 		  DstBlock		  " SFunction "
 		  DstPort		  5
+		}
+		Line {
+		  SrcBlock		  "Ilf"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  9
 		}
 		Line {
 		  SrcBlock		  "x_in"
@@ -4340,12 +4106,6 @@ Model {
 		  DstPort		  8
 		}
 		Line {
-		  SrcBlock		  "Ilf"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  9
-		}
-		Line {
 		  SrcBlock		  "R_in"
 		  SrcPort		  1
 		  DstBlock		  " SFunction "
@@ -4356,6 +4116,20 @@ Model {
 		  SrcPort		  1
 		  DstBlock		  " SFunction "
 		  DstPort		  11
+		}
+		Line {
+		  SrcBlock		  "z_in"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  12
+		}
+		Line {
+		  Name			  "P"
+		  Labels		  [0, 0]
+		  SrcBlock		  " SFunction "
+		  SrcPort		  3
+		  DstBlock		  "P"
+		  DstPort		  1
 		}
 	      }
 	    }
@@ -4647,7 +4421,7 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "x(k)"
-	      Position		      [735, 213, 765, 227]
+	      Position		      [735, 203, 765, 217]
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
@@ -4655,7 +4429,7 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "P(k)"
-	      Position		      [735, 433, 765, 447]
+	      Position		      [735, 383, 765, 397]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
@@ -4672,7 +4446,7 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector"
 	      SrcPort		      1
-	      DstBlock		      "Measurement Update"
+	      DstBlock		      "Measurements1"
 	      DstPort		      1
 	    }
 	    Line {
@@ -4680,7 +4454,8 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector"
 	      SrcPort		      2
-	      DstBlock		      "Measurement Update"
+	      Points		      [70, 0]
+	      DstBlock		      "Measurements1"
 	      DstPort		      2
 	    }
 	    Line {
@@ -4688,7 +4463,8 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector"
 	      SrcPort		      3
-	      DstBlock		      "Measurement Update"
+	      Points		      [70, 0]
+	      DstBlock		      "Measurements1"
 	      DstPort		      3
 	    }
 	    Line {
@@ -4702,7 +4478,8 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector1"
 	      SrcPort		      1
-	      DstBlock		      "Measurement Update"
+	      Points		      [70, 0]
+	      DstBlock		      "Measurements1"
 	      DstPort		      4
 	    }
 	    Line {
@@ -4710,7 +4487,8 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector1"
 	      SrcPort		      2
-	      DstBlock		      "Measurement Update"
+	      Points		      [70, 0]
+	      DstBlock		      "Measurements1"
 	      DstPort		      5
 	    }
 	    Line {
@@ -4741,12 +4519,13 @@ Model {
 		DstPort			1
 	      }
 	      Branch {
-		DstBlock		"Measurement Update"
+		Points			[180, 0; 0, -25]
+		DstBlock		"Measurements1"
 		DstPort			6
 	      }
 	    }
 	    Line {
-	      SrcBlock		      "Measurement Update"
+	      SrcBlock		      "Measurements1"
 	      SrcPort		      1
 	      DstBlock		      "x(k)"
 	      DstPort		      1
@@ -4754,40 +4533,40 @@ Model {
 	    Line {
 	      SrcBlock		      "u(k)"
 	      SrcPort		      1
-	      Points		      [60, 0; 0, 15]
-	      DstBlock		      "Measurement Update"
+	      Points		      [60, 0]
+	      DstBlock		      "Measurements1"
 	      DstPort		      7
 	    }
 	    Line {
 	      SrcBlock		      "inertia"
 	      SrcPort		      1
-	      Points		      [105, 0; 0, 20]
-	      DstBlock		      "Measurement Update"
+	      Points		      [105, 0]
+	      DstBlock		      "Measurements1"
 	      DstPort		      8
 	    }
 	    Line {
 	      SrcBlock		      "inertia1"
 	      SrcPort		      1
-	      Points		      [120, 0; 0, 25]
-	      DstBlock		      "Measurement Update"
+	      Points		      [120, 0]
+	      DstBlock		      "Measurements1"
 	      DstPort		      9
 	    }
 	    Line {
 	      SrcBlock		      "Constant"
 	      SrcPort		      1
-	      Points		      [105, 0; 0, 10]
-	      DstBlock		      "Measurement Update"
+	      Points		      [105, 0; 0, -35]
+	      DstBlock		      "Measurements1"
 	      DstPort		      10
 	    }
 	    Line {
 	      SrcBlock		      "P_(k)-"
 	      SrcPort		      1
-	      Points		      [55, 0; 0, 15]
-	      DstBlock		      "Measurement Update"
+	      Points		      [55, 0; 0, -35]
+	      DstBlock		      "Measurements1"
 	      DstPort		      11
 	    }
 	    Line {
-	      SrcBlock		      "Measurement Update"
+	      SrcBlock		      "Measurements1"
 	      SrcPort		      2
 	      DstBlock		      "P(k)"
 	      DstPort		      1
@@ -4795,8 +4574,8 @@ Model {
 	    Line {
 	      SrcBlock		      "z(k)"
 	      SrcPort		      1
-	      Points		      [35, 0; 0, -10]
-	      DstBlock		      "Measurement Update"
+	      Points		      [15, 0; 0, -65]
+	      DstBlock		      "Measurements1"
 	      DstPort		      12
 	    }
 	  }
@@ -4811,7 +4590,7 @@ Model {
 	  FunctionWithSeparateData off
 	  System {
 	    Name		    "predictor"
-	    Location		    [4, 66, 987, 1016]
+	    Location		    [4, 66, 1604, 1029]
 	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
@@ -4827,7 +4606,7 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "u(k)"
-	      Position		      [765, 283, 795, 297]
+	      Position		      [765, 268, 795, 282]
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
@@ -4844,7 +4623,7 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "P(k-1)"
-	      Position		      [850, 423, 880, 437]
+	      Position		      [1295, 113, 1325, 127]
 	      Port		      "3"
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
@@ -4900,7 +4679,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function estimator_ekf_v02 1"
+		  Tag			  "Stateflow S-Function estimator_ekf_v02_old 1"
 		  Ports			  [1, 2]
 		  Position		  [180, 109, 230, 291]
 		  FunctionName		  "sf_sfun"
@@ -5003,9 +4782,8 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant"
-	      Position		      [805, 380, 835, 410]
-	      Value		      "Q_in"
-	      VectorParams1D	      off
+	      Position		      [1370, 200, 1400, 230]
+	      Value		      "Q"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
 	    }
@@ -5018,6 +4796,29 @@ Model {
 	      ShowName		      off
 	      Outputs		      "2"
 	      DisplayOption	      "bar"
+	    }
+	    Block {
+	      BlockType		      Math
+	      Name		      "Math\nFunction"
+	      Ports		      [1, 1]
+	      Position		      [1240, 145, 1270, 175]
+	      Operator		      "transpose"
+	      OutDataType	      "sfix(16)"
+	      OutScaling	      "2^0"
+	    }
+	    Block {
+	      BlockType		      Product
+	      Name		      "Product"
+	      Ports		      [3, 1]
+	      Position		      [1370, 60, 1425, 180]
+	      Inputs		      "3"
+	      Multiplication	      "Matrix(*)"
+	      CollapseMode	      "All dimensions"
+	      InputSameDT	      off
+	      OutDataTypeMode	      "Inherit via internal rule"
+	      OutDataType	      "sfix(16)"
+	      OutScaling	      "2^0"
+	      SaturateOnIntegerOverflow	off
 	    }
 	    Block {
 	      BlockType		      SubSystem
@@ -5282,6 +5083,21 @@ Model {
 	      }
 	    }
 	    Block {
+	      BlockType		      Sum
+	      Name		      "Sum1"
+	      Ports		      [2, 1]
+	      Position		      [1525, 110, 1545, 130]
+	      ShowName		      off
+	      IconShape		      "round"
+	      Inputs		      "|++"
+	      CollapseMode	      "All dimensions"
+	      InputSameDT	      off
+	      OutDataTypeMode	      "Inherit via internal rule"
+	      OutDataType	      "sfix(16)"
+	      OutScaling	      "2^0"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
 	      BlockType		      Terminator
 	      Name		      "Terminator"
 	      Position		      [655, 115, 675, 135]
@@ -5289,8 +5105,8 @@ Model {
 	    Block {
 	      BlockType		      SubSystem
 	      Name		      "Time Update"
-	      Ports		      [12, 2]
-	      Position		      [925, 20, 1070, 455]
+	      Ports		      [10, 2]
+	      Position		      [925, 41, 1055, 329]
 	      PermitHierarchicalResolution "ExplicitOnly"
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
@@ -5390,38 +5206,24 @@ Model {
 		  IconDisplay		  "Port number"
 		}
 		Block {
-		  BlockType		  Inport
-		  Name			  "Q_in"
-		  Position		  [20, 461, 40, 479]
-		  Port			  "11"
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "P_in"
-		  Position		  [20, 496, 40, 514]
-		  Port			  "12"
-		  IconDisplay		  "Port number"
-		}
-		Block {
 		  BlockType		  Demux
 		  Name			  " Demux "
 		  Ports			  [1, 1]
-		  Position		  [270, 375, 320, 415]
+		  Position		  [270, 330, 320, 370]
 		  Outputs		  "1"
 		}
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function estimator_ekf_v02 4"
-		  Ports			  [12, 3]
-		  Position		  [180, 115, 230, 375]
+		  Tag			  "Stateflow S-Function estimator_ekf_v02_old 4"
+		  Ports			  [10, 3]
+		  Position		  [180, 110, 230, 330]
 		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[12 3]"
+		  PortCounts		  "[10 3]"
 		  EnableBusSupport	  on
 		  Port {
 		    PortNumber		    2
-		    Name		    "P_"
+		    Name		    "A"
 		    RTWStorageClass	    "Auto"
 		    DataLoggingNameMode	    "SignalName"
 		  }
@@ -5435,11 +5237,11 @@ Model {
 		Block {
 		  BlockType		  Terminator
 		  Name			  " Terminator "
-		  Position		  [460, 386, 480, 404]
+		  Position		  [460, 341, 480, 359]
 		}
 		Block {
 		  BlockType		  Outport
-		  Name			  "P_"
+		  Name			  "A"
 		  Position		  [460, 101, 480, 119]
 		  IconDisplay		  "Port number"
 		}
@@ -5480,7 +5282,7 @@ Model {
 		Line {
 		  SrcBlock		  " SFunction "
 		  SrcPort		  1
-		  Points		  [0, 235]
+		  Points		  [0, 205]
 		  DstBlock		  " Demux "
 		  DstPort		  1
 		}
@@ -5498,11 +5300,11 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  Name			  "P_"
+		  Name			  "A"
 		  Labels		  [0, 0]
 		  SrcBlock		  " SFunction "
 		  SrcPort		  2
-		  DstBlock		  "P_"
+		  DstBlock		  "A"
 		  DstPort		  1
 		}
 		Line {
@@ -5543,24 +5345,12 @@ Model {
 		  DstBlock		  " SFunction "
 		  DstPort		  10
 		}
-		Line {
-		  SrcBlock		  "Q_in"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  11
-		}
-		Line {
-		  SrcBlock		  "P_in"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  12
-		}
 	      }
 	    }
 	    Block {
 	      BlockType		      Constant
 	      Name		      "inertia1"
-	      Position		      [810, 312, 870, 338]
+	      Position		      [795, 297, 855, 323]
 	      Value		      "Irf"
 	      VectorParams1D	      off
 	      OutDataType	      "sfix(16)"
@@ -5569,7 +5359,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "inertia2"
-	      Position		      [720, 347, 780, 373]
+	      Position		      [795, 337, 855, 363]
 	      Value		      "Ilf"
 	      VectorParams1D	      off
 	      OutDataType	      "sfix(16)"
@@ -5578,7 +5368,7 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "P_(k)-"
-	      Position		      [1230, 123, 1260, 137]
+	      Position		      [1620, 113, 1650, 127]
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
 	      OutScaling	      "2^0"
@@ -5586,7 +5376,7 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "x_(k)-"
-	      Position		      [1225, 338, 1255, 352]
+	      Position		      [1245, 258, 1275, 272]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      OutDataType	      "sfix(16)"
@@ -5603,6 +5393,7 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector"
 	      SrcPort		      1
+	      Points		      [190, 0]
 	      DstBlock		      "Time Update"
 	      DstPort		      1
 	    }
@@ -5619,6 +5410,7 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector"
 	      SrcPort		      3
+	      Points		      [190, 0]
 	      DstBlock		      "Time Update"
 	      DstPort		      3
 	    }
@@ -5633,6 +5425,7 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector1"
 	      SrcPort		      1
+	      Points		      [190, 0]
 	      DstBlock		      "Time Update"
 	      DstPort		      4
 	    }
@@ -5641,6 +5434,7 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector1"
 	      SrcPort		      2
+	      Points		      [190, 0]
 	      DstBlock		      "Time Update"
 	      DstPort		      5
 	    }
@@ -5656,6 +5450,7 @@ Model {
 		  DstPort		  1
 		}
 		Branch {
+		  Points		  [245, 0]
 		  DstBlock		  "Time Update"
 		  DstPort		  7
 		}
@@ -5679,6 +5474,52 @@ Model {
 	      DstPort		      2
 	    }
 	    Line {
+	      SrcBlock		      "Time Update"
+	      SrcPort		      1
+	      Points		      [130, 0]
+	      Branch {
+		Points			[0, 45]
+		DstBlock		"Math\nFunction"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, -35]
+		DstBlock		"Product"
+		DstPort			1
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Math\nFunction"
+	      SrcPort		      1
+	      DstBlock		      "Product"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "P(k-1)"
+	      SrcPort		      1
+	      DstBlock		      "Product"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Product"
+	      SrcPort		      1
+	      DstBlock		      "Sum1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant"
+	      SrcPort		      1
+	      Points		      [130, 0]
+	      DstBlock		      "Sum1"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Sum1"
+	      SrcPort		      1
+	      DstBlock		      "P_(k)-"
+	      DstPort		      1
+	    }
+	    Line {
 	      SrcBlock		      "Robot_sfun"
 	      SrcPort		      2
 	      DstBlock		      "Terminator"
@@ -5687,49 +5528,36 @@ Model {
 	    Line {
 	      SrcBlock		      "Analytical Jacobian"
 	      SrcPort		      1
+	      Points		      [75, 0]
 	      DstBlock		      "Time Update"
 	      DstPort		      6
 	    }
 	    Line {
 	      SrcBlock		      "u(k)"
 	      SrcPort		      1
+	      Points		      [110, 0]
 	      DstBlock		      "Time Update"
 	      DstPort		      8
 	    }
 	    Line {
 	      SrcBlock		      "inertia1"
 	      SrcPort		      1
+	      Points		      [20, 0; 0, -20]
 	      DstBlock		      "Time Update"
 	      DstPort		      9
 	    }
 	    Line {
 	      SrcBlock		      "inertia2"
 	      SrcPort		      1
+	      Points		      [40, 0; 0, -30]
 	      DstBlock		      "Time Update"
 	      DstPort		      10
 	    }
 	    Line {
 	      SrcBlock		      "Time Update"
 	      SrcPort		      2
+	      Points		      [170, 0]
 	      DstBlock		      "x_(k)-"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "P(k-1)"
-	      SrcPort		      1
-	      DstBlock		      "Time Update"
-	      DstPort		      12
-	    }
-	    Line {
-	      SrcBlock		      "Constant"
-	      SrcPort		      1
-	      DstBlock		      "Time Update"
-	      DstPort		      11
-	    }
-	    Line {
-	      SrcBlock		      "Time Update"
-	      SrcPort		      1
-	      DstBlock		      "P_(k)-"
 	      DstPort		      1
 	    }
 	  }
@@ -5851,7 +5679,7 @@ Model {
     Block {
       BlockType		      FromWorkspace
       Name		      "From\nWorkspace"
-      Position		      [290, 323, 355, 347]
+      Position		      [370, 353, 435, 377]
       VariableName	      "u_in"
       SampleTime	      "0"
       ZeroCross		      on
@@ -6243,249 +6071,10 @@ Model {
 	  DstBlock		  "Sum"
 	  DstPort		  2
 	}
-      }
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "Process Noise SS"
-      Ports		      [1, 1]
-      Position		      [395, 317, 495, 353]
-      MinAlgLoopOccurrences   off
-      RTWSystemCode	      "Auto"
-      FunctionWithSeparateData off
-      System {
-	Name			"Process Noise SS"
-	Location		[750, 181, 1772, 1001]
-	Open			off
-	ModelBrowserVisibility	on
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "u_true"
-	  Position		  [30, 118, 60, 132]
-	  IconDisplay		  "Port number"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Band-Limited\nWhite Noise"
-	  Ports			  [0, 1]
-	  Position		  [175, 160, 205, 190]
-	  SourceBlock		  "simulink/Sources/Band-Limited\nWhite Noise"
-	  SourceType		  "Band-Limited White Noise."
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData "off"
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
-	  Cov			  "[1e-5]"
-	  Ts			  "ts"
-	  seed			  "[23341]"
-	  VectorParams1D	  "on"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Band-Limited\nWhite Noise2"
-	  Ports			  [0, 1]
-	  Position		  [175, 285, 205, 315]
-	  SourceBlock		  "simulink/Sources/Band-Limited\nWhite Noise"
-	  SourceType		  "Band-Limited White Noise."
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData "off"
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
-	  Cov			  "[1e-6]"
-	  Ts			  "ts"
-	  seed			  "[23341]"
-	  VectorParams1D	  "on"
-	}
-	Block {
-	  BlockType		  Display
-	  Name			  "Display1"
-	  Ports			  [1]
-	  Position		  [295, 163, 385, 197]
-	  Decimation		  "1"
-	  Lockdown		  off
-	}
-	Block {
-	  BlockType		  Display
-	  Name			  "Display3"
-	  Ports			  [1]
-	  Position		  [310, 281, 405, 309]
-	  Decimation		  "1"
-	  Lockdown		  off
-	}
-	Block {
-	  BlockType		  Mux
-	  Name			  "Mux"
-	  Ports			  [2, 1]
-	  Position		  [450, 70, 455, 265]
-	  ShowName		  off
-	  Inputs		  "2"
-	  DisplayOption		  "bar"
-	}
-	Block {
-	  BlockType		  Selector
-	  Name			  "Selector"
-	  Ports			  [1, 1]
-	  Position		  [135, 112, 170, 138]
-	  InputPortWidth	  "37"
-	  IndexOptions		  "Index vector (dialog)"
-	  Indices		  "[1:12]"
-	  OutputSizes		  "1"
-	  Port {
-	    PortNumber		    1
-	    Name		    "FTS"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Selector
-	  Name			  "Selector1"
-	  Ports			  [1, 1]
-	  Position		  [135, 227, 170, 253]
-	  InputPortWidth	  "37"
-	  IndexOptions		  "Index vector (dialog)"
-	  Indices		  "[13:37]"
-	  OutputSizes		  "1"
-	  Port {
-	    PortNumber		    1
-	    Name		    "tau"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum"
-	  Ports			  [2, 1]
-	  Position		  [215, 115, 235, 135]
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "|++"
-	  CollapseMode		  "All dimensions"
-	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum1"
-	  Ports			  [2, 1]
-	  Position		  [215, 230, 235, 250]
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "|++"
-	  CollapseMode		  "All dimensions"
-	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "u_in"
-	  Position		  [570, 163, 600, 177]
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  SrcBlock		  "Mux"
-	  SrcPort		  1
-	  DstBlock		  "u_in"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Sum1"
-	  SrcPort		  1
-	  Points		  [195, 0]
-	  DstBlock		  "Mux"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Sum"
-	  SrcPort		  1
-	  Points		  [195, 0]
-	  DstBlock		  "Mux"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Band-Limited\nWhite Noise2"
-	  SrcPort		  1
-	  Points		  [15, 0]
-	  Branch {
-	    Points		    [0, -5]
-	    DstBlock		    "Display3"
-	    DstPort		    1
-	  }
-	  Branch {
-	    DstBlock		    "Sum1"
-	    DstPort		    2
-	  }
-	}
-	Line {
-	  Name			  "tau"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Selector1"
-	  SrcPort		  1
-	  DstBlock		  "Sum1"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "FTS"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Selector"
-	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "u_true"
-	  SrcPort		  1
-	  Points		  [15, 0]
-	  Branch {
-	    DstBlock		    "Selector"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, 115]
-	    DstBlock		    "Selector1"
-	    DstPort		    1
-	  }
-	}
-	Line {
-	  SrcBlock		  "Band-Limited\nWhite Noise"
-	  SrcPort		  1
-	  Points		  [15, 0; 0, -5]
-	  Branch {
-	    Points		    [0, 10]
-	    DstBlock		    "Display1"
-	    DstPort		    1
-	  }
-	  Branch {
-	    DstBlock		    "Sum"
-	    DstPort		    2
-	  }
+	Annotation {
+	  Name			  "Noise with Sandard Deviation 1e-1 is added to inputs"
+	  Position		  [264, 706]
+	  FontSize		  18
 	}
       }
     }
@@ -6542,7 +6131,7 @@ Model {
     Line {
       SrcBlock		      "From\nWorkspace"
       SrcPort		      1
-      DstBlock		      "Process Noise SS"
+      DstBlock		      "Extended kalman filter"
       DstPort		      1
     }
     Line {
@@ -6613,13 +6202,6 @@ Model {
 	DstPort			1
       }
     }
-    Line {
-      SrcBlock		      "Process Noise SS"
-      SrcPort		      1
-      Points		      [20, 0; 0, 30]
-      DstBlock		      "Extended kalman filter"
-      DstPort		      1
-    }
   }
 }
 # Finite State Machines
@@ -6632,10 +6214,10 @@ Model {
 Stateflow {
   machine {
     id			    1
-    name		    "estimator_ekf_v02"
+    name		    "estimator_ekf_v02_old"
     created		    "24-Apr-2013 17:48:49"
     isLibrary		    0
-    firstTarget		    47
+    firstTarget		    45
     sfVersion		    67014000.000001
   }
   chart {
@@ -6672,7 +6254,7 @@ Stateflow {
     eml {
       isEML		      1
       script		      "function TA = fcn(x_in)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nox = x_in(4);\noy = x_in(5);\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%%{\nT = [1      0           sin(oy);...\n     0 cos(ox) -cos(oy)*sin(ox);...\n     0 sin(ox)  cos(oy)*cos(ox)];\n\n\ndTx = [0,         0,                0 ;...\n       0,  -sin(ox),  -cos(oy)*cos(ox);...\n       0,   cos(ox),  -cos(oy)*sin(ox)];\ndTy = [0,         0,           cos(oy);...\n       0,         0,   sin(oy)*sin(ox);...\n       0,         0,  -sin(oy)*cos(ox)];\n%%}\n\n%{\nT = [1      0   -sin(oy);...\n     0  cos(ox)  cos(oy)*sin(ox);...\n     0 -sin(ox)  cos(oy)*cos(ox)];\n \n%T_A = [eye(3,6);zeros(3),T];\n\ndTx = [0         0                0 ;\n       0   -sin(ox)  cos(oy)*cos(ox);\n       0   -cos(ox) -cos(oy)*sin(ox)];\ndTy = [0       0        -cos(oy);\n       0       0        -sin(oy)*sin(ox);\n       0       0        -sin(oy)*cos(ox)];\n%}\n\n%TA = [ T_A; zeros(3*6,6); [zeros(3,6); [zeros(3) dTx]] ; [zeros(3,6); [zeros(3) dTy]]; zeros(57*6,6) ];\n\nTA = [ T; dTx;dTy;zeros(3,3)];"
-      editorLayout	      "100 M4x1[1105 47 776 1029]"
+      editorLayout	      "100 M4x1[1915 16 1920 1137]"
     }
   }
   junction {
@@ -6755,10 +6337,10 @@ Stateflow {
   }
   chart {
     id			    9
-    name		    "Extended kalman filter/corrector/Measurement Update"
-    windowPosition	    [450.75 128.25 200.25 189.75]
+    name		    "Extended kalman filter/predictor/Time Update"
+    windowPosition	    [435.75 143.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3840 1080 1.25]
+    screen		    [1 1 3840 1200 1.25]
     treeNode		    [0 10 0 0]
     firstTransition	    12
     firstJunction	    11
@@ -6767,7 +6349,7 @@ Stateflow {
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    13
-    chartFileNumber	    2
+    chartFileNumber	    4
     disableImplicitCasting  1
     eml {
       name		      "fcn"
@@ -6786,9 +6368,8 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [x_out,P]= fcn(M_in,C_in,g_in,J_in,H_in,x_in,u_in,Irf,Ilf,R_in,P_,z_in)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nq = x_in(1:dof);\ndq = x_in(dof+(1:dof));\nomega = dq(4:6);\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%TA = TA_in(1*6+ind6,:);\n\n% Gyroscopic measurements\n%gyro = Rfb'*( TA(4:6,4:6) \\ (Rfb*omega) ); % ~~~~~~~~~~~~~~~~~~~~~~~~Not sure weather this is correct ????????????\n gyro = omega;                                          % Should the gyroscope be necessarily rotated ???\n\n% Inertia correction\n\ngacc = [ 0 0 -9.81 0 0 0]';\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\n\n% Gravity compensation for IMU\nimu_bias = [ 0.005 0 0]';\nimu = acc(1:3) + Rfb'*[0 0 9.81]'+imu_bias;\n\n%Internal sensors\njnt = [q(7:31);dq(7:31)];\n\n% Velocity measurements for foot contact\n%v_rf = Jr*v; \n%v_lf = Jl*v;\n%msr_vcont = [v_rf;v_lf];\n\n% Position of the contact points\n% Contact Model:\n%        y       b---------c\n%        |       |      .o |\n%    x_ _|       a---------d\n%\n% CD --> AB === Fx: 20 --> -20\n% AB --> CD === Fx: -20 --> 20\n\ncontact_AB = [ 0.13 0.0475 0 1 0.13 -0.0475 0 1]';\ncontact_CD = [ -0.06 -0.0475 0 1 -0.06 0.0475 0 1]';\n\n% zmp computation\nzmprf_x = ( -Frf(5) -0.1189 * Frf(1) ) / Frf(3);\nzmplf_x = ( -Flf(5) -0.1189 * Flf(1) ) / Flf(3);\n\nzmp_x = (zmprf_x * Frf(3) + zmplf_x * Flf(3))/ (Frf(3)+Flf(3));\n\np1 = contact_AB(1*4+ind4);\np2 = contact_AB(2*4+ind4);\np3 = contact_CD(1*4+ind4);\np4 = contact_CD(2*4+ind4);\n\np1rf_s = Hrf * p1;\np2rf_s = Hrf * p2;\np3rf_s = Hrf * p3;\np4rf_s = Hrf * p4;\n\np1lf_s = Hlf * p1;\np2lf_s = Hlf * p2;\np3lf_s = Hlf * p3;\np4lf_s = Hlf * p4;\n\npcont = [ p1rf_s(1:3) ; p2rf_s(1:3) ; p3rf_s(1:3) ; p4rf_s(1:3) ;...\n          p1lf_s(1:3) ; p2lf_s(1:3) ; p3lf_s(1:3) ; p4lf_s(1:3) ];\nvcont = [ Jrf * dq; Jlf * dq ];\n\n%measurement equation \n\ny = [ jnt ; imu ; gyro ; pcont ; vcont ];\nz = z_in;\n\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndimu = zeros(3,dof*2);\n%dgyro = zeros(3,dof*2);\ndgyro = [ zeros(3,dof+3),eye(3,dof-3) ];\ndpcont = zeros(24,dof*2);\ndvcont = zeros(12,dof*2);\n\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHfb = H_in(i*20+(5*4+ind4),:);\n    dRfb  = dHfb( 1:3, 1:3);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    %dTA  = TA_in(i*6+(1*6+ind6),:);\n    \n    df   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));                                        \n      \n    dp1rf_s = dHrf*p1 ; dp2rf_s = dHrf*p2 ; dp3rf_s = dHrf*p3 ; dp4rf_s = dHrf*p4 ; \n    dp1lf_s = dHlf*p1 ; dp2lf_s = dHlf*p2 ; dp3lf_s = dHlf*p3 ; dp4lf_s = dHlf*p4;\n    dpcont(:,i) =[ dp1rf_s(1:3) ; dp2rf_s(1:3) ; dp3rf_s(1:3) ; dp4rf_s(1:3) ;...\n                   dp1lf_s(1:3) ; dp2lf_s(1:3) ; dp3lf_s(1:3) ; dp4lf_s(1:3) ];\n    dvcont(:,i) = [ dJrf * dq; dJlf * dq; ];\n\n    if i > dof\n        df = df + invM * (- C(:,i-31));\n        dvcont(:,i) = dvcont(:,i) + [ Jrf(:,i-31); Jlf(:,i-31); ];\n    end\n    dimu(1:3,i) = df(1:3) + dRfb'*[0 0 9.81]';\nend \n\ndjnt = [ [zeros(25,6),eye(25,25),zeros(25,31)]; [zeros(25,37),eye(25,25)] ];\n\n% dgyro(1,35) = 1; \n% dgyro(2,36) = 1;\n% dgyro(3,37) = 1;\n% Measurement matrix\n\nif zmp_x < -0.05 && zmp_x> 0.12\n    % Pitching around an edge \n    C_uo = [ djnt ; dimu ; dgyro ; dpcont([7:12 12+(7:12)],:)];\n    R_uo = R_in(1:end-24,1:end-24);\n    K_uo = P_*C_uo'/(C_uo*P_*C_uo'+R_uo);\n    I = eye(size(P_));\n    P = (I-K_uo*C_uo)*P_*(I-K_uo*C_uo)' + K_uo*R_uo*K_uo' ;\n    x_out = x_in + K_uo *(z([1:56 56+[7:12 12+(7:12)]]) - y([1:56 56+[7:12 12+(7:12)]]));\nelse\n    C_o = [ djnt ; dimu ; dgyro ; dpcont ; dvcont];\n    R_o = R_in;\n    K = P_*C_o'/(C_o*P_*C_o'+R_o);\n    I = eye(size(P_));\n    P = (I-K*C_o)*P_*(I-K*C_o)' + K*R_o*K' ;\n    x_out = x_in + K *(z-y);\nend"
-      editorLayout	      "100 M4x1[1012 15 904 1017]"
-      breakpoints	      "100 M[139]"
+      script		      "function [A,x_k]= fcn(M_in,C_in,g_in,J_in,H_in,TA_in,x_in,u_in,Irf,Ilf)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndt = 1e-3;\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n%q = x_in(1:dof);\ndq = x_in(dof+(1:dof));\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\nTA = TA_in(1:3,:);\ninvTA = TA \\ eye(3,3);\n% Transformation from body to spacial frame:\n%Adfb = Adjoint(Hfb);\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% Transformation for the velocites of floating base\nvfb = dq(1:3);\nwfb = dq(4:6);\n\ndp = Rfb * vfb;\ndo = invTA * (Rfb*wfb);\n\nvel = [dp; do; dq(7:31)];\n\n%vel = [Vfb_s; dq(7:31)];%~~~~~~~ First Attempt\n\ngacc = [ 0 0 -9.81 0 0 0]';\n% errrf = Irf * (Adrf\\gacc) ;\n% errlf = Ilf * (Adlf\\gacc);\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\n%acc = M \\ (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nx_dot = [vel;acc];   \n\n% Computing second order derivative terms for base\n% p - position of floating base o-orientation of floating base\n\nx_k = x_in + dt*x_dot ;\n\n\n% Computation of Jacobian for velocities of Floating base\n\ndqdx = [zeros(25,37),eye(25)];                               %%%%%%%%%%%%%%%%\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndpdx = zeros(3,2*dof);\ndodx = zeros(3,2*dof);\n\ndacc = zeros(dof,2*dof);\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:); \n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    dHfb  = H_in(i*20+(5*4+ind4),:); \n    dRfb  = dHfb( 1:3, 1:3);\n \n    dpdx(:,i) = dRfb*vfb;\n    %dodx(:,i) = TA \\ ( dRfb*wfb) ;\n    dodx(:,i) = invTA * ( dRfb*wfb) ;\n\n    if i > 3 && i < 6\n        \n    dTA   = TA_in((i-3)*3+(1:3),:);\n    % dodx(:,i) = TA\\ (-dTA*do );\n    dodx(:,i) = dodx(:,i) + invTA * (-dTA*do );\n    \n    end \n\n%     dacc(:,i)   = M \\ (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n%                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n%                                              - ( dJrf'*Irf*(Adrf\\gacc) + Jrf'*(-Adrf\\(dAdrf*(Adrf\\gacc))) ) ...\n%                                              - ( dJlf'*Ilf*(Adlf\\gacc) + Jlf'*(-Adlf\\(dAdlf*(Adlf\\gacc))) ) ));\n      dacc(:,i)   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));\n    \n    if i > dof\n        if i <= dof+3\n            dpdx(:,i) = dpdx(:,i) + Rfb(:,i-dof);         \n        elseif i<= dof+6\n            %dodx(:,i) = dodx(:,i) + TA\\Rfb(:,i-(dof+3)); \n            dodx(:,i) = dodx(:,i) + invTA * Rfb(:,i-(dof+3)); \n        end\n        %dacc(:,i) = dacc(:,i) + M \\ (- C(:,i-31));\n        dacc(:,i) = dacc(:,i) + invM * (- C(:,i-31));\n\n    end\nend\n\ndvel = [ dpdx ; dodx ; dqdx ];\n\nA = eye(62) + dt * [dvel;dacc] ;"
+      editorLayout	      "100 M4x1[1916 28 1928 1169]"
     }
   }
   junction {
@@ -6821,8 +6402,30 @@ Stateflow {
   }
   data {
     id			    13
-    name		    "M_in"
+    name		    "A"
     linkNode		    [9 0 14]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    14
+    name		    "M_in"
+    linkNode		    [9 13 15]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -6842,32 +6445,10 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
-    id			    14
-    name		    "C_in"
-    linkNode		    [9 13 15]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
     id			    15
-    name		    "g_in"
+    name		    "x_k"
     linkNode		    [9 14 16]
-    scope		    INPUT_DATA
+    scope		    OUTPUT_DATA
     machine		    1
     props {
       array {
@@ -6875,19 +6456,20 @@ Stateflow {
       }
       type {
 	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
+      frame		      SF_FRAME_NO
     }
     dataType		    "inherited"
+    fixptType {
+      slope		      1
+      baseType		      SF_INT16_TYPE
+    }
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
     id			    16
-    name		    "J_in"
+    name		    "C_in"
     linkNode		    [9 15 17]
     scope		    INPUT_DATA
     machine		    1
@@ -6909,7 +6491,7 @@ Stateflow {
   }
   data {
     id			    17
-    name		    "H_in"
+    name		    "g_in"
     linkNode		    [9 16 18]
     scope		    INPUT_DATA
     machine		    1
@@ -6931,7 +6513,7 @@ Stateflow {
   }
   data {
     id			    18
-    name		    "x_in"
+    name		    "J_in"
     linkNode		    [9 17 19]
     scope		    INPUT_DATA
     machine		    1
@@ -6953,7 +6535,7 @@ Stateflow {
   }
   data {
     id			    19
-    name		    "u_in"
+    name		    "H_in"
     linkNode		    [9 18 20]
     scope		    INPUT_DATA
     machine		    1
@@ -6975,7 +6557,7 @@ Stateflow {
   }
   data {
     id			    20
-    name		    "Irf"
+    name		    "TA_in"
     linkNode		    [9 19 21]
     scope		    INPUT_DATA
     machine		    1
@@ -6997,7 +6579,7 @@ Stateflow {
   }
   data {
     id			    21
-    name		    "Ilf"
+    name		    "x_in"
     linkNode		    [9 20 22]
     scope		    INPUT_DATA
     machine		    1
@@ -7019,7 +6601,7 @@ Stateflow {
   }
   data {
     id			    22
-    name		    "R_in"
+    name		    "u_in"
     linkNode		    [9 21 23]
     scope		    INPUT_DATA
     machine		    1
@@ -7041,53 +6623,8 @@ Stateflow {
   }
   data {
     id			    23
-    name		    "P_"
+    name		    "Irf"
     linkNode		    [9 22 24]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    24
-    name		    "x_out"
-    linkNode		    [9 23 25]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "inherited"
-    fixptType {
-      slope		      1
-      baseType		      SF_INT16_TYPE
-    }
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    25
-    name		    "z_in"
-    linkNode		    [9 24 26]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7107,10 +6644,10 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
-    id			    26
-    name		    "P"
-    linkNode		    [9 25 0]
-    scope		    OUTPUT_DATA
+    id			    24
+    name		    "Ilf"
+    linkNode		    [9 23 0]
+    scope		    INPUT_DATA
     machine		    1
     props {
       array {
@@ -7123,64 +6660,65 @@ Stateflow {
 	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
+      frame		      SF_FRAME_INHERITED
     }
     dataType		    "inherited"
     complexity		    SF_COMPLEX_INHERITED
   }
   instance {
-    id			    27
-    name		    "Extended kalman filter/corrector/Measurement Update"
+    id			    25
+    name		    "Extended kalman filter/predictor/Time Update"
     machine		    1
     chart		    9
   }
   chart {
-    id			    28
-    name		    "Extended kalman filter/predictor/Time Update"
-    windowPosition	    [435.75 143.25 200.25 189.75]
+    id			    26
+    name		    "Extended kalman filter/corrector/Measurements1"
+    windowPosition	    [450.75 128.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3840 1200 1.25]
-    treeNode		    [0 29 0 0]
-    firstTransition	    31
-    firstJunction	    30
-    viewObj		    28
+    treeNode		    [0 27 0 0]
+    firstTransition	    29
+    firstJunction	    28
+    viewObj		    26
     machine		    1
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    32
-    chartFileNumber	    4
+    firstData		    30
+    chartFileNumber	    5
     disableImplicitCasting  1
     eml {
       name		      "fcn"
+      noDebugging	      1
     }
   }
   state {
-    id			    29
+    id			    27
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    28
-    treeNode		    [28 0 0 0]
+    chart		    26
+    treeNode		    [26 0 0 0]
     superState		    SUBCHART
-    subviewer		    28
+    subviewer		    26
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [P_,x_k]= fcn(M_in,C_in,g_in,J_in,H_in,TA_in,x_in,u_in,Irf,Ilf,Q_in,P_in)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndt = 1e-3;\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\n%q = x_in(1:dof);\ndq = x_in(dof+(1:dof));\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\nTA = TA_in(1:3,:);\ninvTA = TA \\ eye(3,3);\n% Transformation from body to spacial frame:\n%Adfb = Adjoint(Hfb);\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% Transformation for the velocites of floating base\nvfb = dq(1:3);\nwfb = dq(4:6);\n\ndp = Rfb * vfb;\ndo = invTA * (Rfb*wfb);\n\nvel = [dp; do; dq(7:31)];\n\n%vel = [Vfb_s; dq(7:31)];%~~~~~~~ First Attempt\n\ngacc = [ 0 0 -9.81 0 0 0]';\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\nx_dot = [vel;acc];   \n\n% Computing second order derivative terms for base\n% p - position of floating base o-orientation of floating base\nx_k = x_in + dt*x_dot ;\n\n% Computation the Jacobian of joint velocity function\ndqdx = [zeros(25,37),eye(25)];                               %%%%%%%%%%%%%%%%\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndpdx = zeros(3,2*dof);\ndodx = zeros(3,2*dof);\ndacc = zeros(dof,2*dof);\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:); \n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    dHfb  = H_in(i*20+(5*4+ind4),:); \n    dRfb  = dHfb( 1:3, 1:3);\n \n    dpdx(:,i) = dRfb*vfb;\n    dodx(:,i) = invTA * ( dRfb*wfb) ;\n\n    if i > 3 && i < 6      \n        dTA   = TA_in((i-3)*3+(1:3),:);\n        dodx(:,i) = dodx(:,i) - invTA *(dTA*do );     % do = invTA * (Rfb*wfb);\n    end \n\n      dacc(:,i)   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));\n    \n    if i > dof\n        if i <= dof+3\n            dpdx(:,i) = dpdx(:,i) + Rfb(:,i-dof);         \n        elseif i<= dof+6\n            dodx(:,i) = dodx(:,i) + invTA * Rfb(:,i-(dof+3)); \n        end\n        dacc(:,i) = dacc(:,i) + invM * (- C(:,i-31));\n\n    end\nend\n\ndvel = [ dpdx ; dodx ; dqdx ];\nA = eye(62) + dt * [dvel;dacc] ;\n\n% Noise Correlation matrix\ndtau = invM*diag([zeros(6,1);ones(25,1)]);\nW = dt*[ zeros(dof,37); [invM*Jrf'*Adrf' invM*Jlf'*Adlf' dtau(:,7:end)] ];\n%W = zeros(62,37);\nP_ = A * P_in * A' + W * Q_in * W';\n%P_ = eye(62);"
-      editorLayout	      "100 M4x1[72 3 1071 1033]"
+      script		      "function [x_out,P]= fcn(M_in,C_in,g_in,J_in,H_in,x_in,u_in,Irf,Ilf,R_in,P_,z_in)\n% This block supports the Embedded MATLAB subset.\n% See the help menu for details. \n\ndof = 31;\nind4 = -3:0;\nind6 = -5:0;\n\n% Dynamic parameters\nM = M_in(1:dof,:);\nC = C_in(1:dof,:);\ngrav = g_in(1:dof);\n\ninvM = M \\ eye(dof,dof);\n\n% Kinematics\n% tcp = 1 - Right Foot ; 2 - Left Foot ; 3 - Right Hand ; 4 - Left Hand ;\n%       5 - Floating Base\n\nJrf = J_in(1*6+ind6,:);\nJlf = J_in(2*6+ind6,:);\n\nHrf = H_in(1*4+ind4,:);\nRrf = Hrf(1:3,1:3);\nprf = Skew(Hrf(1:3,4));\n\nHlf = H_in(2*4+ind4,:);\nRlf = Hlf(1:3,1:3);\nplf = Skew(Hlf(1:3,4));\n\nHfb = H_in(5*4+ind4,:);\nRfb = Hfb(1:3,1:3);\n\n\nAdrf = Adjoint(Hrf);\nAdlf = Adjoint(Hlf);\n\ninvAdrf = InvAdjoint(Hrf);\ninvAdlf = InvAdjoint(Hlf);\n\n% state - [ position ; velocity ]\n% x_in  - [   1:31   ;   32:62  ]\nq = x_in(1:dof);\ndq = x_in(dof+(1:dof));\nomega = dq(4:6);\n\n% inputs - [FTS_RF ; FTS _LF ; TRQ_JOINT]\n% u_in   - [  1:6  ;   7:12  ;  13:37   ]\nFrf = u_in(1*6+ind6,:);\nFlf = u_in(2*6+ind6,:);\ntau = [zeros(6,1); u_in(13:37)];\n\n% Transformation for Angular velocities to angular rates of floating base \n% on instantaneous frame of reference. x-y-z rotations.\n%TA = TA_in(1*6+ind6,:);\n\n% Gyroscopic measurements\n%gyro = Rfb'*( TA(4:6,4:6) \\ (Rfb*omega) ); % ~~~~~~~~~~~~~~~~~~~~~~~~Not sure weather this is correct ????????????\n gyro = omega;                                          % Should the gyroscope be necessarily rotated ???\n\n% Inertia correction\n\ngacc = [ 0 0 -9.81 0 0 0]';\nerrrf = Irf * invAdrf * gacc ;\nerrlf = Ilf * invAdlf * gacc ;\n\n\n% Computation of accelerations\nacc = invM * (-C*dq - grav + tau + Jrf'*Adrf'*Frf + Jlf'*Adlf'*Flf - Jrf'*errrf - Jlf'*errlf);\n\n% Gravity compensation for IMU\nimu_bias = [ 0.005 0 0]';\nimu = acc(1:3) + Rfb'*[0 0 9.81]'+imu_bias;\n\n%Internal sensors\njnt = [q(7:31);dq(7:31)];\n\n% Velocity measurements for foot contact\n%v_rf = Jr*v; \n%v_lf = Jl*v;\n%msr_vcont = [v_rf;v_lf];\n\n% Position of the contact points\n% Contact Model:\n%        y       b---------c\n%        |       |      .o |\n%    x_ _|       a---------d\n%\n% CD --> AB === Fx: 20 --> -20\n% AB --> CD === Fx: -20 --> 20\n\ncontact_AB = [ 0.13 0.0475 0 1 0.13 -0.0475 0 1]';\ncontact_CD = [ -0.06 -0.0475 0 1 -0.06 0.0475 0 1]';\n\n% zmp computation\nzmprf_x = ( -Frf(5) -0.1189 * Frf(1) ) / Frf(3);\nzmplf_x = ( -Flf(5) -0.1189 * Flf(1) ) / Flf(3);\n\nzmp_x = (zmprf_x * Frf(3) + zmplf_x * Flf(3))/ (Frf(3)+Flf(3));\n\n% front edge limit = 0.12\n% back edge limit = -0.055\nif zmp_x < 0.12\n    p1 = contact_CD(1*4+ind4);\n    p2 = contact_CD(2*4+ind4);\nelse\n    p1 = contact_AB(1*4+ind4);\n    p2 = contact_AB(2*4+ind4);\nend\n\np1rf_s = Hrf * p1;\np2rf_s = Hrf * p2;\n\np1lf_s = Hlf * p1;\np2lf_s = Hlf * p2;\n\npcont = [ p1rf_s(1:3) ; p2rf_s(1:3) ; p1lf_s(1:3) ; p2lf_s(1:3) ];\n\nvcont = [ Jrf * dq; Jlf * dq ];\n\n%measurement equation \n\n    y = [ jnt ; imu ; gyro ; pcont ; vcont ];\n    z = z_in;\n\n\n% Compute the Jacobian of acceleration terms(forward dynamics):\ndimu = zeros(3,dof*2);\n%dgyro = zeros(3,dof*2);\ndgyro = [ zeros(3,dof+3),eye(3,28) ];\ndpcont = zeros(12,dof*2);\ndvcont = zeros(12,dof*2);\n\nfor i = 1:62\n    dM   = M_in(i*dof+(1:dof),:);\n    dC   = C_in(i*dof+(1:dof),:);\n    dg   = g_in(i*dof+(1:dof));\n    dJrf = J_in(i*30+(1*6+ind6),:);\n    dJlf = J_in(i*30+(2*6+ind6),:);\n    \n    dHfb = H_in(i*20+(5*4+ind4),:);\n    dRfb  = dHfb( 1:3, 1:3);\n    \n    dHrf = H_in(i*20+(1*4+ind4),:);\n    dRrf = dHrf(1:3,1:3);\n    dprf = Skew(dHrf(1:3,4));\n    dAdrf   = [ dRrf dprf*Rrf+prf*dRrf ; zeros(3) dRrf ];\n    \n    dHlf = H_in(i*20+(2*4+ind4),:);\n    dRlf = dHlf(1:3,1:3);\n    dplf = Skew(dHlf(1:3,4));\n    dAdlf   = [ dRlf dplf*Rlf+plf*dRlf ; zeros(3) dRlf ];\n    \n    %dTA  = TA_in(i*6+(1*6+ind6),:);\n    \n    df   = invM * (-dM*acc +(-dC*dq - dg + dJrf'*Adrf'*Frf + Jrf'*dAdrf'*Frf...\n                                              + dJlf'*Adlf'*Flf + Jlf'*dAdlf'*Flf...\n                                              - ( dJrf'*Irf* (invAdrf * gacc) + Jrf'*(-invAdrf *(dAdrf*(invAdrf * gacc))) ) ...\n                                              - ( dJlf'*Ilf* (invAdlf * gacc) + Jlf'*(-invAdlf *(dAdlf*(invAdlf * gacc))) ) ));                                        \n      \n    dp1rf_s = dHrf*p1 ; dp2rf_s = dHrf*p2 ; dp1lf_s = dHlf*p1 ; dp2lf_s = dHlf*p2;\n    dpcont(:,i) =[ dp1rf_s(1:3) ; dp2rf_s(1:3) ; dp1lf_s(1:3) ; dp2lf_s(1:3) ];\n    dvcont(:,i) = [ dJrf * dq; dJlf * dq; ];\n\n    if i > dof\n        df = df + invM * (- C(:,i-31));\n        dvcont(:,i) = dvcont(:,i) + [ Jrf(:,i-31); Jlf(:,i-31); ];\n    end\n    dimu(1:3,i) = df(1:3) + dRfb'*[0 0 9.81]';\nend\n\ndjnt = [ [zeros(25,6),eye(25,25),zeros(25,31)]; [zeros(25,37),eye(25,25)] ];\n\n% dgyro(1,35) = 1; \n% dgyro(2,36) = 1;\n% dgyro(3,37) = 1;\n% Measurement matrix\n\nif zmp_x < -0.05 && zmp_x> 0.12\n    C_uo = [ djnt ; dimu ; dgyro ; dpcont];\n    R_uo = R_in(1:end-12,1:end-12);\n    K_uo = P_*C_uo'/(C_uo*P_*C_uo'+R_uo);\n    I = eye(size(P_));\n    P = (I-K_uo*C_uo)*P_*(I-K_uo*C_uo)' + K_uo*R_uo*K_uo' ;\n    x_out = x_in + K_uo *(z(1:end-12) - y(1:end-12));\nelse\n    C_o = [ djnt ; dimu ; dgyro ; dpcont ; dvcont];\n    R_o = R_in;\n    K = P_*C_o'/(C_o*P_*C_o'+R_o);\n    I = eye(size(P_));\n    P = (I-K*C_o)*P_*(I-K*C_o)' + K*R_o*K' ;\n    x_out = x_in + K *(z-y);\nend\n\n\n\n\n\n\n\n\n"
+      editorLayout	      "100 M4x1[1916 28 1928 1169]"
     }
   }
   junction {
-    id			    30
+    id			    28
     position		    [23.5747 49.5747 7]
-    chart		    28
-    linkNode		    [28 0 0]
-    subviewer		    28
+    chart		    26
+    linkNode		    [26 0 0]
+    subviewer		    26
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    31
+    id			    29
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -7188,43 +6726,21 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      30
+      id		      28
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    28
-    linkNode		    [28 0 0]
+    chart		    26
+    linkNode		    [26 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    28
+    subviewer		    26
     drawStyle		    SMART
     executionOrder	    1
   }
   data {
-    id			    32
-    name		    "P_"
-    linkNode		    [28 0 33]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    33
+    id			    30
     name		    "M_in"
-    linkNode		    [28 32 34]
+    linkNode		    [26 0 31]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7244,9 +6760,9 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
-    id			    34
-    name		    "x_k"
-    linkNode		    [28 33 35]
+    id			    31
+    name		    "x_out"
+    linkNode		    [26 30 32]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -7267,9 +6783,75 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
-    id			    35
+    id			    32
     name		    "C_in"
-    linkNode		    [28 34 36]
+    linkNode		    [26 31 33]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    33
+    name		    "g_in"
+    linkNode		    [26 32 34]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    34
+    name		    "J_in"
+    linkNode		    [26 33 35]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "inherited"
+    complexity		    SF_COMPLEX_INHERITED
+  }
+  data {
+    id			    35
+    name		    "H_in"
+    linkNode		    [26 34 36]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7290,8 +6872,8 @@ Stateflow {
   }
   data {
     id			    36
-    name		    "g_in"
-    linkNode		    [28 35 37]
+    name		    "x_in"
+    linkNode		    [26 35 37]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7312,8 +6894,8 @@ Stateflow {
   }
   data {
     id			    37
-    name		    "J_in"
-    linkNode		    [28 36 38]
+    name		    "u_in"
+    linkNode		    [26 36 38]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7334,8 +6916,8 @@ Stateflow {
   }
   data {
     id			    38
-    name		    "H_in"
-    linkNode		    [28 37 39]
+    name		    "Irf"
+    linkNode		    [26 37 39]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7356,8 +6938,8 @@ Stateflow {
   }
   data {
     id			    39
-    name		    "TA_in"
-    linkNode		    [28 38 40]
+    name		    "Ilf"
+    linkNode		    [26 38 40]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7378,8 +6960,8 @@ Stateflow {
   }
   data {
     id			    40
-    name		    "x_in"
-    linkNode		    [28 39 41]
+    name		    "R_in"
+    linkNode		    [26 39 41]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7400,8 +6982,8 @@ Stateflow {
   }
   data {
     id			    41
-    name		    "u_in"
-    linkNode		    [28 40 42]
+    name		    "P_"
+    linkNode		    [26 40 42]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7422,9 +7004,9 @@ Stateflow {
   }
   data {
     id			    42
-    name		    "Irf"
-    linkNode		    [28 41 43]
-    scope		    INPUT_DATA
+    name		    "P"
+    linkNode		    [26 41 43]
+    scope		    OUTPUT_DATA
     machine		    1
     props {
       array {
@@ -7437,59 +7019,15 @@ Stateflow {
 	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
+      frame		      SF_FRAME_NO
     }
     dataType		    "inherited"
     complexity		    SF_COMPLEX_INHERITED
   }
   data {
     id			    43
-    name		    "Ilf"
-    linkNode		    [28 42 44]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    44
-    name		    "Q_in"
-    linkNode		    [28 43 45]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "inherited"
-    complexity		    SF_COMPLEX_INHERITED
-  }
-  data {
-    id			    45
-    name		    "P_in"
-    linkNode		    [28 44 0]
+    name		    "z_in"
+    linkNode		    [26 42 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -7509,13 +7047,13 @@ Stateflow {
     complexity		    SF_COMPLEX_INHERITED
   }
   instance {
-    id			    46
-    name		    "Extended kalman filter/predictor/Time Update"
+    id			    44
+    name		    "Extended kalman filter/corrector/Measurements1"
     machine		    1
-    chart		    28
+    chart		    26
   }
   target {
-    id			    47
+    id			    45
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1

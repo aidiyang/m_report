@@ -32,7 +32,7 @@ In addition to the external accelerations, IMU also measures the acceleration du
 \end{equation}
 $\tilde{a}$ is the measured acceleration from the IMU. It is composed of true acceleration \emph{a}, bias in the acceleration measurements $b_a$ and the sensor noise $w_a$. $\tilde{\omega}$ is the angular velocity measured, which comprises of true angular velocity $\omega$, bias $b_{\omega}$ and sensor noise $w_\omega$. The sensor noises $w_a$ and $w_\omega$ are modelled as zero mean Gaussian white noise. The bias in acceleration measurement is $b_a$ and that of angular velocity measurement is $b_\omega$. The bias terms are also time varying quantities but they have very slow dynamics. Bias dynamics $\dot{b}_a$ and $\dot{b}_\omega$ are modelled as first order Markov process. $w_{b\omega}$ and $w_{bf}$ are the Gaussian white noise associated with the bias. 
 
-\section{State space representation}
+\subsection{State space representation}
 The state space formulation of the dynamic model is based on Equation \ref{eq:newton_motion}. Rearranging the Equation \ref{eq:imu_noise} in terms of true acceleration and true angular velocity and substituting Equation \ref{eq:imu_acc} in \ref{eq:imu_noise} leads to state space dynamic model. 
 \begin{equation}
     \label{eq:dyn_imu}
@@ -53,7 +53,8 @@ The state space formulation of the dynamic model is based on Equation \ref{eq:ne
 \begin{equation}
 x = \begin{bmatrix} p \\ v \\ \theta \\ b_a \\ b_{b\omega} \end{bmatrix} \in \Re^{15}
 \end{equation}
-\section{Prediction step}
+
+\subsection{Prediction step}
 The prediction equations of EKF are given in Equation \ref{eq:ekf_predict}. For the sake of simplicity we assume the process noise acting on the model is uncorrelated. i.e The noise acting on each state is independent $$W_k = I_n$$. $n$ is the number of states. Substituting the value of $W_k$ in Equation \ref{eq:ekf_predict}
 \begin{equation}
 \label{eq:imu_predict}
@@ -84,7 +85,7 @@ The system matrix is obtained by computing the Jacobian of the discretized syste
     \end{bmatrix}
 \end{equation}
 
-\section{Update step}
+\subsection{Update step}
 The update equation of the EKF is given in Equation \ref{eq:ekf_correct}. The measurement equation of the system is given by $$\hat{y}_{k+1} = h(\hat{x}_{k+1}^-,u_{k+1},0)$$.For the sake of simplicity let us assume the measurement of noise are independent. $$V_k = I_3$$. Substituting the assumption in \ref{eq:ekf_correct}
 \begin{equation}
 \label{eq:imu_correct}
@@ -94,7 +95,7 @@ K_{k+1} &= P_{k+1}^-\hat{C}_{k+1}^{T}(\hat{C}_{k+1}P_{k+1}^-\hat{C}_{k+1}^{T} + 
 P_{k+1} &= (I- K_{k+1}\hat{C}_{k+1})P_{k+1}^-
 \end{split}
 \end{equation}
-The contact points are the only measurements that are considered for the update step. Figure \ref{fig:biped_feet} shows the contact points. FTS(Force torque sensor) measurement is used to compute the ZMP[Appendix \underline{Zero moment point}] of the foot and also to determine the foot that is in contact with the ground. The measurement equation is same as Equation \ref{eq:y_kin} of the multi body system model. $H_{RF} \text{ and } H_{LF} $ are formed as the composition of $H_{hip}^s H_{RF}^{hip}$ and $H_{hip}^s H_{RF}^{hip}$ respectively.
+The contact points are the only measurements that are considered for the update step. Figure \ref{fig:biped_feet} shows the contact points. The Force torque sensor (FTS) measurement is used to compute the ZMP[Appendix \underline{Zero moment point}] of the foot and also to determine the foot that is in contact with the ground. The measurement equation is same as Equation \ref{eq:y_kin} of the multi body system model. $H_{RF} \text{ and } H_{LF} $ are formed as the composition of $H_{hip}^s H_{RF}^{hip}$ and $H_{hip}^s H_{RF}^{hip}$ respectively.
 \begin{equation}
     \label{eq:imu_msr}
     \begin{split}
