@@ -14,7 +14,7 @@ A rigid body algorithm is used in the estimator to compute dynamic $M(y_k), C(y_
     \caption{Structure of rigid body algorithm}
     \label{fig:luc_dyn}
 \end{figure}
-The Jacobian $J_k$ outputted by the algorithm shown in Figure \ref{fig:luc_dyn} is the body Jacobian of \emph{Toro's} right foot $J_r$ and left foot $J_l$ and homogeneous transformation matrix $H_k$ is the homogeneous transformation matrices of right foot $H_r$, left foot $H_l$ and floating base $H_b$ with respect to spatial frame(world frame).
+The Jacobian $J_k$ outputted by the algorithm shown in Figure \ref{fig:luc_dyn} is the body Jacobian of \emph{Toro's} right foot $J_r$ and left foot $J_l$ and homogeneous transformation matrix $H_k$ represents the transformation of right foot $H_r$, left foot $H_l$ and floating base $H_b$ with respect to spatial frame (world frame).
 The Jacobian matrices $A_k$ and $\hat C_{k+1}$ in Equations \ref{eq:sys_mat}, \ref{eq:msr_mat} are computed from the outputs in Figure \ref{fig:luc_dyn} as discussed in sections \ref{subsec:toro_predict} and \ref{subsec:toro_update}. The simulator and the estimator are driven by the same control inputs $u$. For instance the control inputs of \emph{Toro} are the torques applied to joints. The ground reaction forces $W_r$ and $W_l$ are measured in the simulator with the help of senor model of FTS. The ground reaction forces and the control torques are the input to prediction model in \ref{eq:toro_dis}.
 
 The following scenario is simulated for the purpose of experiments. Initially \emph{Toro} is made to stand still on a floor (initial phase), after few seconds the robot is made to tilt around an edge by pushing it gently (tilting phase) and finally the robot is made to fall down by pushing it hard(falldown phase). During the tilting phase a force of low magnitude for short period of time is applied so the robot will not fall down.
@@ -40,7 +40,17 @@ Zero mean Gaussian noises $n_w$ and $n_v$ are added to the \underline{system or 
 The process $Q$ and measurement $R$ covariance matrices are set with the corresponding values of noise covariances given in Table \ref{tab:toro_var}. 
 $$  \begin{aligned}
          Q &= diag();\\
-         R &= diag([1e^{-6} \textbf{1}_{25,1}; 1e^{-4}\textbf{1}_{25,1}; 1e^{-2}\textbf{1}_{3,1};1e^{-4}\textbf{1}_{3,1}; 1e^{-12}\textbf{1}_{36,1} ]);,
+         R &= diag([1\cdot{10}^{-6} \textbf{1}_{25,1}; 1\cdot{10}^{-4}\textbf{1}_{25,1}; 1\cdot{10}^{-2}\textbf{1}_{3,1};1\cdot{10}^{-4}\textbf{1}_{3,1}; 1\cdot{10}^{-12}\textbf{1}_{36,1} ]),
      \end{aligned}$$
 where $\textbf{1}_{r,c}$ is the matrix of dimesions $r \times c$ with all the elements as 1 [Appendix \ref{sec:symbols}]. The initial values of the estimator $\hat x_0$ and its covariace $P_0$ are 
 $$ \begin{aligned} x_0 = \textbf{0}_{62,1}\\ P_0 = I_3, \end{aligned} $$  where $\textbf{0}_{62,1}$ is the zero matrix of dimensions $62 \times 1$ [Appendix \ref{sec:symbols}].
+
+
+\subsubsection{Observation}
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.7]{Bilder/toro_pos.png}
+    \label{fig:toro_pos}
+    \caption{Plots of actual and estimated values of the floating base}
+\end{figure}
+

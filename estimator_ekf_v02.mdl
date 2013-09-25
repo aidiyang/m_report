@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.574"
+    ComputedModelVersion    "1.576"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,9 +44,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "raje_ra"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Sep 23 09:35:28 2013"
+  LastModifiedDate	  "Wed Sep 25 17:37:26 2013"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:574>"
+  ModelVersionFormat	  "1.%<AutoIncrement:576>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -103,8 +103,8 @@ Model {
 	Simulink.SolverCC {
 	  $ObjectID		  2
 	  Version		  "1.3.0"
-	  StartTime		  "18.65"
-	  StopTime		  "30.7"
+	  StartTime		  "12.1"
+	  StopTime		  "13"
 	  AbsTol		  "auto"
 	  FixedStep		  "1e-3"
 	  InitialStep		  "auto"
@@ -766,7 +766,7 @@ Model {
       System {
 	Name			"Extended kalman filter"
 	Location		[4, 66, 1020, 1029]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	on
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1021,7 +1021,7 @@ Model {
 	  System {
 	    Name		    "corrector"
 	    Location		    [4, 66, 1596, 1029]
-	    Open		    on
+	    Open		    off
 	    ModelBrowserVisibility  on
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -3685,8 +3685,6 @@ Stateflow {
     created		    "24-Apr-2013 17:48:49"
     isLibrary		    0
     firstTarget		    47
-    debug {
-    }
     sfVersion		    67014000.000001
   }
   chart {
