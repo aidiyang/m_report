@@ -1,14 +1,14 @@
 \subsection{Prediction step}
 \label{subsec:toro_predict}
-The prediction equations of EKF are given in Equation \ref{eq:ekf_predict}. For the sake of simplicity we assume the process noise acting on the model is assumed to be uncorrelated. That means the noise acting on one state does not depend on the noise acting on the other states. So the noise correlation matrix is assumed to be identity $$W_k = I_{n},$$ where \emph{n} is the number of states. Substituting the value of $W_k$ in Equation \ref{eq:ekf_predict}
+The prediction equations of EKF given in Equation \ref{eq:ekf_predict} are as follows:
 \begin{equation}
 \label{eq:predict}
 \begin{split}
 \hat{x}_{k+1}^- &= f(\hat{x}_{k},u_{k+1},0)\\
-P_{k+1}^- &= A_kP_{k}A_k^T + Q_{k}\\
+P_{k+1}^- &= A_kP_{k}A_k^T + W_kQ_{k}W_k^T \\
 \end{split}
 \end{equation}
-The state space model of \emph{Toro} in \ref{eq:toro} is discretized for the implementation of EKF. For smaller integration time steps $\Delta t = 1ms$ the forward Euler discretization method can be used to discretize the continuous time model. The forward Euler discretization equation is $$ x_{k+1} = x_k + \Delta t f(x),$$ where $f(x)$ is the nonlinear function describing the system. The discretized prediction model of EKF is
+The state space model of \emph{Toro} in \ref{eq:toro} is discretized for the implementation of EKF. For smaller integration time steps $\Delta t = 1ms$ the forward Euler discretization method can be used to discretize the continuous time model. The forward Euler discretization equation is $$ x_{k+1} = x_k + \Delta t f(x),$$ where $f(x)=\dot x$ is the nonlinear function describing the system. The discretized prediction equation of \emph{Toro} is obtained by substituting $0$ for noise terms $w_\tau, w_{W_r}$ and $w_{W_l}$ in Equation \ref{eq:toro} and applying the forward Euler discretization:
 \begin{equation}
 \label{eq:toro_dis}
 	\begin{bmatrix}
@@ -20,15 +20,15 @@ The state space model of \emph{Toro} in \ref{eq:toro} is discretized for the imp
 	\end{bmatrix}	  
 	+ \Delta t f(\hat{x}_k,u_{k+1}) \\
 \end{equation}
-$$ f(\hat{x}_k,u_{k+1}) = 
+$$ f(\hat{x}_k,u_{k+1})\footnotemark[1] = 
 	\begin{bmatrix}
 	\hat R_k \hat v^b_k \\
 	\hat T_k^{-1} \hat \omega_k^b  \\
 	\hat{\dot{q}}_k\\
 	M(\hat{y}_{k})^{-1}(-C(\hat{y}_{k},\hat{\dot{y}}_{k})\hat{\dot{y}}_{k} -g(\hat{y}_{k}) +  J_r(\hat{y}_{k})^{T}W_{r,k+1} +J_l(\hat{y}_{k})^{T}W_{l,k+1} + \tau_{k+1})	
-	\end{bmatrix} \footnotemark[1] $$
+	\end{bmatrix}  $$
 where $\hat{x}(t_k) = \hat{x}(k \Delta t) = \hat{x}_k$ represents the state x at \emph{kth} sampling instant. $\hat{x}_{k+1} = \hat{x}(k \Delta t + \Delta t)$ represents the state of the system at the next sampling instant. $u_{k+1}$ is the input at sampling instant $k+1$. The inputs $\tau, W_l, W_r$ remains constant in the interval between two sampling instant because of the zero order hold mechanism in the sensor. The above equation is used to predict the state $\hat{x}_k$ ahead of time in Equation \ref{eq:predict}. 
-\footnotetext[1]{$\hat R_k, \hat T_k$ are the shorthand notations for $R(\hat \theta_k)$ and $T(\hat \theta_k)$.}
+\footnotetext[1]{$\hat R_k, \hat T_k$ are the shorthand notations for $R(\hat \theta_k)$ and $T(\hat \theta_k)$ in the equation.}
 
 For the computation of state covariance matrix $P_k^-$ in Equation \ref{eq:predict}, the Jacobian matrix $A$ should be computed. The Jacobian matrix is the matrix of first order partial derivatives of a vector valued function \citep{wal76}.
 
@@ -103,7 +103,7 @@ where
 \!\begin{aligned}
 	& \left. \!\begin{aligned}
 	-M_k^{-1}\dfdx{M_k}{x_{i}}\Lambda + &M_k^{-1}\left(-\dfdx{C_k}{x_{i}}\hat{\dot{y}}_{k} -\dfdx{g_k}{x_{i}}+ \right. \\
-	&\left(\dfdx{J_{r,k}^{b}}{x_{i}}\right)^{T}W_{r,k+1} + \left. \left(\dfdx{J_{l,k}^{b}}{x_{i}}\right)^{T}W_{l,k+1} \right)
+	&\left(\dfdx{J_{r,k}}{x_{i}}\right)^{T}W_{r,k+1} + \left. \left(\dfdx{J_{l,k}}{x_{i}}\right)^{T}W_{l,k+1} \right)
 	\end{aligned} \right\}& \text{if } 0 < i \leq 31 \\
     & \left.\!\begin{aligned}
     l_{31,(i-31)}-&M_k^{-1}\dfdx{M_k}{x_{i}}\Lambda+ \\
@@ -128,6 +128,15 @@ A_k = \left(
 \end{aligned} \right)
 \in \Re^{62 \times 62}
 \end{equation}
-Substituting Equations \ref{eq:toro_dis} and \ref{eq:sys_mat} in \ref{eq:predict} and substituting the values of process covariance $Q_k$ completes the prediction stage of EKF.
 
+The noise correlation matrix $W_k$ is derived by discretizing the Equation \ref{eq:toro} and computing the Jacobian matrix of the discretized equation with respect to the noise $w$. Discretization of the Equation \ref{eq:toro} will result in a equation similar to \ref{eq:toro_disc}. The matrix $W_k$ is 
+\begin{equation}
+    \label{eq:toro_noisecorr}
+    W_k =  \begin{bmatrix}
+        \textbf{0}_{31,31} \\ 
+        J_{r,k}^T \hspace{5mm} J_{l,k}^T \hspace{5mm} col(7:31,M_k^{-1})
+        \end{bmatrix},
+\end{equation}
+where $\textbf{0}_{31,31}$ is a zero matrix of dimension $31 \times 31$, $col(7:31,M_k^{-1})$ represents the $7^{th}$ to ${31}^{st}$ colomns of the $M_k^{-1}$ matrix.
 
+Substituting Equations \ref{eq:toro_dis}, \ref{eq:sys_mat} and \ref{eq:toro_noisecorr} in \ref{eq:predict} and substituting the values of process covariance $Q_k$ completes the prediction stage of EKF.

@@ -97,15 +97,21 @@ The forward dynamics equation of \emph{Toro} is
 	\ddot{y} = M(y)^{-1}(-C(y,\dot{y})\dot{y} - g(y) + J_r(y)^{T}W_{r} +J_l(y)^{T}W_{l} + \tau). 
 \end{equation}
 
+The inputs $\tau, W_r and W_l$ acting on the system are measured by sensors. For instance the torques $\tau$ are measured by the joint torque sensors and ground reactional forces $W_r,W_l$ are measured by the Force torque sensors (FTS) located at the ankle joint of the robot. These sensor measurements are accompanied by noise. The noise acting on the inputs are $w_\tau,w_{W_r} \text{ and } w_{W_l}$. Incorporating the noise in the froward dynamics equation \ref{eq:motion} results in  
+\begin{equation}
+	\label{eq:motion_noise}
+	\ddot{y} = M(y)^{-1}(-C(y,\dot{y})\dot{y} - g(y) + J_r(y)^{T}(W_{r}+w_{W_r}) +J_l(y)^{T}(W_{l} +w_{W_l})+ (\tau+ w_\tau )). 
+\end{equation}
+
 \subsection{State space representation:}
-The state space representation of \emph{Toro} is formulated similar to the state space representation of multibody system in Equation \ref{eq:dyn_ss}. The state space representation of Equation \ref{eq:motion} is
+The state space representation of \emph{Toro} is formulated similar to the state space representation of multibody system in Equation \ref{eq:dyn_ss}. The state space representation of Equation \ref{eq:motion_noise} is
 \begin{equation}
 \label{eq:newton_motion}
  \begin{bmatrix}
 \frac{dy}{dt} \\ \frac{d\dot y}{dt}
 \end{bmatrix}
 = \begin{bmatrix}
-\dot y \\  M(y)^{-1}(-C(y,\dot{y})\dot{y} - g(y) + J_r(y)^{T}W_{r} +J_l(y)^{T}W_{l} + \tau) 
+\dot y \\  M^{-1}(-C\dot{y} - g + J_r^{T}(W_{r}+w_{W_r}) +J_l^{T}(W_{l}+w_{W_l}) + (\tau+w_\tau)) 
 \end{bmatrix}
 \end{equation}
 
@@ -121,7 +127,7 @@ Likewise the angular part of the body velocity can be reformulated as
 \end{equation}
 where $T(\theta)$ is the transformation matrix [Appendix \ref{sec:avel_trfm}]. 
 
- The state space representation of \emph{Toro} is obtained by substituting Equations \ref{eq:transfo_linvel} and \ref{eq:transfo_angvel} in Equation \ref{eq:newton_motion}.
+ The state space representation of \emph{Toro} is obtained by substituting Equations \ref{eq:transfo_linvel} and \ref{eq:transfo_angvel} in Equation \ref{eq:newton_motion}. 
 \begin{equation}
 \label{eq:toro}
 	\dot{x} = 
@@ -133,9 +139,8 @@ where $T(\theta)$ is the transformation matrix [Appendix \ref{sec:avel_trfm}].
 	R v^b\\	
 	T(\theta)^{-1} \omega_f^b \\
 	\dot{q}\\
-	M(y)^{-1}(-C(y,\dot{y})\dot{y} -g(y) +  J_r(y)^{T}W_{r} +J_l(y)^{T}W_{l} + \tau)
+	M^{-1}(-C\dot{y} - g + J_r^{T}(W_{r}+w_{W_r}) +J_l^{T}(W_{l}+w_{W_l}) + (\tau+w_\tau))	
 	\end{bmatrix}.
-	\\
 \end{equation}	
 \begin{comment}
 \begin{itemize}

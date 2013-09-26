@@ -14,12 +14,14 @@ A rigid body algorithm is used in the estimator to compute dynamic $M(y_k), C(y_
     \caption{Structure of rigid body algorithm}
     \label{fig:luc_dyn}
 \end{figure}
-The Jacobian $J_k$ outputted by the algorithm shown in Figure \ref{fig:luc_dyn} is the body Jacobian of \emph{Toro's} right foot $J_r$ and left foot $J_l$ and homogeneous transformation matrix $H_k$ represents the transformation of right foot $H_r$, left foot $H_l$ and floating base $H_b$ with respect to spatial frame (world frame).
-The Jacobian matrices $A_k$ and $\hat C_{k+1}$ in Equations \ref{eq:sys_mat}, \ref{eq:msr_mat} are computed from the outputs in Figure \ref{fig:luc_dyn} as discussed in sections \ref{subsec:toro_predict} and \ref{subsec:toro_update}. The simulator and the estimator are driven by the same control inputs $u$. For instance the control inputs of \emph{Toro} are the torques applied to joints. The ground reaction forces $W_r$ and $W_l$ are measured in the simulator with the help of senor model of FTS. The ground reaction forces and the control torques are the input to prediction model in \ref{eq:toro_dis}.
+The Jacobian $J_k$ outputted by the algorithm shown in Figure \ref{fig:luc_dyn} is the body Jacobian of \emph{Toro's} right foot $J_r$ and left foot $J_l$ and homogeneous transformation matrix $H_k$ is the transformations of right foot $H_r$, left foot $H_l$ and floating base $H_b$ with respect to spatial frame (world frame).
+The Jacobian matrices $A_k$ and $\hat C_{k+1}$ in Equations \ref{eq:sys_mat}, \ref{eq:msr_mat} are computed from these outputs of the rigid body algorithm. The formulation of the Jacobian matrices $A_k$ and $\hat C_{k+1}$ are discussed in sections \ref{subsec:toro_predict} and \ref{subsec:toro_update}. 
 
-The following scenario is simulated for the purpose of experiments. Initially \emph{Toro} is made to stand still on a floor (initial phase), after few seconds the robot is made to tilt around an edge by pushing it gently (tilting phase) and finally the robot is made to fall down by pushing it hard(falldown phase). During the tilting phase a force of low magnitude for short period of time is applied so the robot will not fall down.
+The simulator and the estimator are driven by the same control inputs $u$. For instance the control inputs of \emph{Toro} are the torques applied to joints. The ground reaction forces $W_r$ and $W_l$ are measured in the simulator with the help of senor model of FTS. The ground reaction forces and the control torques are the input to prediction model in \ref{eq:toro_dis}.
 
-Zero mean Gaussian noises $n_w$ and $n_v$ are added to the \underline{system or inputs} and measurements.
+The state estimation of under-actuated degrees of freedom is the main aim in this thesis. With the multibody dynamic model of \emph{Toro} it is possible to estimate more than the under-actuated degrees of freedom. We consider the following experimental scenario where the joints remain fixed but the robot is made to move by applying an external force. For instance the robot can be made to fall on the ground by pushing it. Initially \emph{Toro} is made to stand still on a floor (initial phase), after few seconds the robot is made to tilt around an edge by pushing it gently (tilting phase) and finally the robot is made to fall down by pushing it hard(falldown phase). During the tilting phase a force of low magnitude for short period of time is applied so the robot will not fall down.
+
+Zero mean Gaussian noises $n_w$ and $n_v$ are added to the inputs and measurements.
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
@@ -49,7 +51,7 @@ $$ \begin{aligned} x_0 = \textbf{0}_{62,1}\\ P_0 = I_3, \end{aligned} $$  where 
 \subsubsection{Observation}
 \begin{figure}
     \centering
-    \includegraphics[scale=0.7]{Bilder/toro_pos.png}
+    \includegraphics[trim=30mm 0mm 20mm 0mm,clip,scale=0.5]{Bilder/plots/toro/toro_pos.png}
     \label{fig:toro_pos}
     \caption{Plots of actual and estimated values of the floating base}
 \end{figure}
