@@ -1,14 +1,14 @@
 \subsection{Experiment}
 The estimation problem is tested in Matlab Simulink. The experimental setup consists of the Open HRP3 simulator and the state estimator. The OpenHRP3 (Open Architecture Human-centred Robotics Platform version 3) is an integrated software platform for robot simulations and software developments \footnote{\url{http://www.openrtp.jp/openhrp3/en/about.html}}. It was developed as a cooperative work of University of Tokyo, General Robotix. Inc and National Institute of Advanced Industrial Science and Technology(AIST).
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \input{Bilder/toro_exp_setup.tex}
     \caption{Experimental setup of TORO}
 \end{figure}
 
 A rigid body algorithm is used in the estimator to compute dynamic $M(y_k), C(y_k,\dot y_k), g(y_k)$ and kinematic $J_r(y_k), J_l(y_k), H(y_k)$ parameters at time step $k$. An auto differentiation function that computes the derivative of the dynamic and kinematic parameters with respect to the the system states is integrated with the rigid body algorithm. 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \input{Bilder/rigidbody_algo.tex}
     \caption{Structure of rigid body algorithm}
@@ -17,17 +17,36 @@ A rigid body algorithm is used in the estimator to compute dynamic $M(y_k), C(y_
 The Jacobian $J_k$ outputted by the algorithm shown in Figure \ref{fig:luc_dyn} is the body Jacobian of \emph{Toro's} right foot $J_r$ and left foot $J_l$ and homogeneous transformation matrix $H_k$ is the transformations of right foot $H_r$, left foot $H_l$ and floating base $H_b$ with respect to spatial frame (world frame).
 The Jacobian matrices $A_k$ and $\hat C_{k+1}$ in Equations \ref{eq:sys_mat}, \ref{eq:msr_mat} are computed from these outputs of the rigid body algorithm. The formulation of the Jacobian matrices $A_k$ and $\hat C_{k+1}$ are discussed in sections \ref{subsec:toro_predict} and \ref{subsec:toro_update}. 
 
-The simulator and the estimator are driven by the same control inputs $u$. For instance the control inputs of \emph{Toro} are the torques applied to joints. The ground reaction forces $W_r$ and $W_l$ are measured in the simulator with the help of senor model of FTS. The ground reaction forces and the control torques are the input to prediction model in \ref{eq:toro_dis}.
+The simulator and the estimator are driven by the same control inputs $u$. For instance the control inputs of \emph{Toro} are the torques applied to joints. The ground reaction forces $W_r$ and $W_l$ are measured in the simulator with the help of sensor model of Forece Torque sensor (FTS). The ground reaction forces and the control torques are the input to prediction model in Equation \ref{eq:toro_dis}.
 
-The state estimation of under-actuated degrees of freedom is the main aim in this thesis. With the multibody dynamic model of \emph{Toro} it is possible to estimate more than the under-actuated degrees of freedom. We consider the following experimental scenario where the joints remain fixed but the robot is made to move by applying an external force. For instance the robot can be made to fall on the ground by pushing it. Initially \emph{Toro} is made to stand still on a floor (initial phase), after few seconds the robot is made to tilt around an edge by pushing it gently (tilting phase) and finally the robot is made to fall down by pushing it hard(falldown phase). During the tilting phase a force of low magnitude for short period of time is applied so the robot will not fall down.
+The following experimental scenario is simulated using the simulator. 
 
-Zero mean Gaussian noises $n_w$ and $n_v$ are added to the inputs and measurements.
+\paragraph{Initial phase: } The robot is made to stand on the ground (high pose). After a few seconds the robot is commanded to move to a different pose (medium pose) by applying the control inputs $u$. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth,height=0.4\textheight]{Bilder/toro_high_medium.png}
+	\caption{Snapshots of two different pose of \emph{Toro} in OpenHRP3 simulation}
+	\label{fig:toro_sim_high_low}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth, height=0.4\textheight]{Bilder/toro_tiltphase.png}
+	\caption{Snapshots of tilting phase of \emph{Toro} in simulation}
+	\label{fig:toro_tiltphase}
+\end{figure}
+
+\paragraph{Tilting phase} After a few seconds an external force is applied to the robot so that it starts to tilt around an edge. After the robot has tilted few degrees the external force is removed,as a result the robot goes back to the medium pose due to inertia of the upper body. The robot stores the energy when the force is applied, it is not completely dissipated when it comes back to the medium pose. Inorder to dissipate the stored energy, it tilts in the other direction and then move back due to inertia. This cycle goes on until the robot dissipates all its stored energy. After the energy is dissipated the robot stays in the medium pose.
+\paragraph{Final phase:} After the tilting phase is complete the robot is commanded to move back to the high pose.
+
+
+Zero mean Gaussian noises $w$ and $v$ are added to the inputs and measurements.
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
     \hline
     Noise &Variance \\ \hline
-    \textbf{\underline{Process noise}} &\hspace{2mm}\\
+    \textbf{Input noise} &\hspace{2mm}\\
     \hline
     \textbf{Measurement noise} &\hspace{2mm}\\
     Joint angles $q(rad)$ &$1e^{-6}$ \\ 
@@ -44,15 +63,17 @@ $$  \begin{aligned}
          Q &= diag();\\
          R &= diag([1\cdot{10}^{-6} \textbf{1}_{25,1}; 1\cdot{10}^{-4}\textbf{1}_{25,1}; 1\cdot{10}^{-2}\textbf{1}_{3,1};1\cdot{10}^{-4}\textbf{1}_{3,1}; 1\cdot{10}^{-12}\textbf{1}_{36,1} ]),
      \end{aligned}$$
-where $\textbf{1}_{r,c}$ is the matrix of dimesions $r \times c$ with all the elements as 1 [Appendix \ref{sec:symbols}]. The initial values of the estimator $\hat x_0$ and its covariace $P_0$ are 
+where $\textbf{1}_{r,c}$ is the matrix of dimensions $r \times c$ with all the elements as 1 [Appendix \ref{sec:symbols}]. The initial values of the estimator $\hat x_0$ and its covariance $P_0$ are 
 $$ \begin{aligned} x_0 = \textbf{0}_{62,1}\\ P_0 = I_3, \end{aligned} $$  where $\textbf{0}_{62,1}$ is the zero matrix of dimensions $62 \times 1$ [Appendix \ref{sec:symbols}].
 
 
 \subsubsection{Observation}
 \begin{figure}
     \centering
-    \includegraphics[trim=30mm 0mm 20mm 0mm,clip,scale=0.5]{Bilder/plots/toro/toro_pos.png}
+    \includegraphics[trim=30mm 0mm 20mm 0mm,clip,scale=0.4]{Bilder/plots/toro/toro_pos.png}
     \label{fig:toro_pos}
     \caption{Plots of actual and estimated values of the floating base}
 \end{figure}
 
+\subsection{Conclusion}
+The state estimation of under-actuated degrees of freedom is the main aim in this thesis. With the multibody dynamic model of \emph{Toro} it is possible to estimate more than the under-actuated degrees of freedom.

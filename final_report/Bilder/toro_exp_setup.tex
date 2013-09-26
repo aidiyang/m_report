@@ -11,31 +11,30 @@
 \tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
 %\tikzstyle{output} = [coordinate]
 \def\blockdist{0.5}
-\def\edgedist{0.75}
+\def\edgedist{0.7}
 \begin{tikzpicture}
 	% Define the nodes in the picture
 	\node (sys_in)[yshift=1cm]{$x_0$};
 	\node (u_in) [below of=sys_in,node distance=1cm]{$u$};
-	\node (sys_u)[input,right of=u_in,node distance=1cm]{};
     \node (sim_sys) [system,right of=sys_in,node distance=3cm] {OpenHRP3 Simulator};
-    \node (sys_noise)[above of=sim_sys,node distance=3cm]{$n_w$};
-    \node (msr_noise)[right of=sys_noise,node distance=2cm]{$n_v$};
-    \node (msr_add)[sum,right of=sim_sys,node distance=2cm]{};
-    \node (estimator) [system,right of=msr_add,node distance =3cm]{ Estimator};
-    \node (est_in) [right of=sim_sys,node distance=3cm,yshift=1.5cm]{$\hat{x}_0$};
-    \node (est_u) [input,right of =sim_sys, node distance=2cm,yshift=-3cm]{foo};
+    \node (msr_add)[sum,right of=sim_sys,node distance=2.5cm]{};
+    \node (msr_noise)[above of=msr_add,node distance=3cm]{$v$};
+    \node (estimator) [system,right of=msr_add,node distance =2.5cm]{ Estimator};
+    \node (est_in) [input,right of=sim_sys,node distance=3cm,yshift=1.5cm]{};
+	\node (inp_add)[sum,right of=sim_sys, node distance=3cm,yshift=-1.45cm]{};    
+	\node (sys_noise)[below of=inp_add,node distance=1.5cm]{$w$};
     \node (est_out)[right of=estimator,node distance=3cm]{$\hat{x}$};
     
     % Define the edges in the picture
     \draw [->] (sys_in) --node{}(sim_sys.west);
-    \draw [-] (u_in) --node{}(sys_u);
-    \draw [->] (sys_u) --node{}+(\edgedist,0);
-    \draw [-] (sys_u) |-node{}(est_u);
-    \draw [->] (est_u) |-node[pos=0.7,above]{$u$}(estimator.-130);
-    \draw [->] (est_in) --node{}+(\edgedist,0);
-    \draw [->] (sys_noise) --node{}(sim_sys.north);
+    \draw [->] (u_in) --node{}+(1.7,0);
+	\draw [->] (sim_sys.-48.75) --node[above]{$\tau,W_r,W_l$}(inp_add.west);
+    \draw [->] (inp_add) --node{}+(\edgedist,0);
+	\draw [->] (sys_noise) --node{}(inp_add);
+    \draw [->] (est_in) --node[above]{$\hat{x}_0$}+(\edgedist,0);
+
     \draw [->] (msr_noise) --node{}(msr_add.north);
-    \draw [->] (sim_sys.east) --node[above]{}(msr_add.west);
+    \draw [->] (sim_sys.east) --node[above]{$q,\dot{q}$}node[below]{$\ddot{p},\omega$}(msr_add.west);
     \draw [->] (msr_add.east) --node[above]{$y$}(estimator.west);
     \draw [->] (estimator) --node{}(est_out);
 \end{tikzpicture}
