@@ -27,44 +27,87 @@ The measurements of \emph{Toro} are Cartesian accelerations($acc^b$) of the hip 
     \label{fig:biped_feet}
     \end{center}
 \end{figure}
-Along with the sensor measurements kinematic constraints can also be introduced as measurements \citep{atk12}. The two kinematic constraints considered as measurement are velocity constraints and position constraints. For instance when a foot is in contact with the ground the velocity of the foot is zero. The velocity of a end-effector $V^{eff}$ is \citep[chapter 3]{mur94} 
-\begin{equation}
-    V^{eff} = J(q) \dot q
-\end{equation}
-where $J(q)$ is the body Jacobian that maps the joint angular velocities $\dot q$ to the end effector velocity $V^{eff}$. In addition to the velocity constraints we can introduce position constraints. For instance when the robot is tilting around an edge, the position of the points that are lying on the edge does not change with respect to the world. 
- Figure \ref{fig:biped_feet} shows the contact points considered for measurements. The corner points of each foot are measured with respect to spatial frame \emph{S} as shown in Figure \ref{fig:biped_feet} before starting the experiment and they are assumed to be constant throughout the experiment.
+Along with the sensor measurements kinematic constraints can also be introduced as measurements \citep{atk12}. The kinematic constraint that is considered as measurement is the position constraint. For instance when the robot is tilting around an edge, the position of the points that are lying on that edge does not change with respect to the spatial frame (world frame). 
+ 
+ Figure \ref{fig:biped_feet} shows the contact points considered for measurements. The corner points of each foot are measured with respect to spatial frame \emph{S}. The measuremnt equation of these contact points are
 \begin{equation}
     \label{eq:y_kin}
     \begin{split}
-    y_{kin} &=
-    \begin{bmatrix}
-    p_{contact} \\ V_{contact}
-    \end{bmatrix}\\
-    p_{contact} &= \begin{bmatrix}p_{r}\\ p_{l}\end{bmatrix}\\
-     V_{contact} &= \begin{bmatrix} V_{r}^b \\ V_{l}^b \end{bmatrix} = \begin{bmatrix} J_r(\hat{y})^T \hat{\dot{y}} \\ J_l(\hat{y})^T\hat{\dot{y}} \end{bmatrix}
+    y_{kin} &= s_{contact} = \begin{bmatrix}s_{r}\\ s_{l}\end{bmatrix},\\
     \end{split}
-\end{equation}
-\begin{itemize}
-\item $p_{r},p_{l}$ are the vectors of contact points in right foot and left foot defined with respect to spatial frame.
-\item $J_r(y), J_l(y)$ are the body Jacobian of right and left foot that relates the joint velocity to the velocity of right and left foot respectively.
-\end{itemize}
+\end{equation} where
+$s_{r},s_{l}$ are the vectors of contact points in right foot and left foot defined with respect to spatial frame. They are given as
 \begin{equation}
     \begin{split}
-    p_{r} &= \begin{bmatrix} p_{A,r}\\ p_{B,r}\\ p_{C,r}\\ p_{D,r}\end{bmatrix}= \begin{bmatrix} {H}_{r}p_{A}\\  {H}_{r}p_{B}\\  {H}_{r}p_{C}\\  {H}_{r}p_{D}\end{bmatrix} \\
-    p_{l} &= \begin{bmatrix} p_{A,l}\\ p_{B,l}\\ p_{C,l}\\ p_{D,l}\end{bmatrix}= \begin{bmatrix} {H}_{l}p_{A}\\  {H}_{l}p_{B}\\  {H}_{l}p_{C}\\  {H}_{l}p_{D}\end{bmatrix} \\
+    s_{r} &= \begin{bmatrix} s_{A,r}\\ s_{B,r}\\ s_{C,r}\\ s_{D,r}\end{bmatrix}= \begin{bmatrix} {H}_{r}s_{A}\\  {H}_{r}s_{B}\\  {H}_{r}s_{C}\\  {H}_{r}s_{D}\end{bmatrix} \\
+    s_{l} &= \begin{bmatrix} s_{A,l}\\ s_{B,l}\\ s_{C,l}\\ s_{D,l}\end{bmatrix}= \begin{bmatrix} {H}_{l}s_{A}\\  {H}_{l}s_{B}\\  {H}_{l}s_{C}\\  {H}_{l}s_{D}\end{bmatrix} \\
     \end{split}
 \end{equation}
-\begin{itemize}
-\item $\hat{H}_{r},\hat{H}_{l}$ are the homogeneous transformation matrices of the right and left foot [Appendix \ref{sec:htm}]
-\item In Figure \ref{fig:biped_feet} $p_A,p_B,p_C,p_D$ are the corner points defined with respect to respective foot frame \emph{r,l}.
-\end{itemize}
+where ${H}_{r},{H}_{l}$ are the homogeneous transformation matrices of the right and left foot with respect to spatial frame [Appendix \ref{sec:htm}]
+ In Figure \ref{fig:biped_feet} $s_A,s_B,s_C,s_D$ are constant with resptect to the foot coordinate frames \emph{RF,LF}. They are given as 
+ $$ s_A = \begin{bmatrix} 0.13 \\ 0.0475 \\ 0 \end{bmatrix} , 
+    s_B = \begin{bmatrix} 0.13 \\ -0.0475 \\ 0 \end{bmatrix},
+    s_C = \begin{bmatrix} -0.06 \\ -0.0475 \\ 0 \end{bmatrix} \text{ and }
+    s_D = \begin{bmatrix} -0.06 \\ 0.0475 \\ 0 \end{bmatrix}.$$
+
+\paragraph{Switching:} The measurement of the contact points with respect to the spatial frame \emph{S} are made before starting the experiment. The measurements are made under the circumstance where both feet of the robot is in contact with the ground. These measurements are assumed to remain constant throughout the experiment. When the robot is standing on the ground, all the contact measurements are valid. But when the robot starts to tilt around an edge, some of the point measurements becomes invalid. For instance let us consider standing on right leg, when the robot is tilting around the back edge, the points $s_{C}$ and $s_{D}$ remain in contact with the ground, whereas the points $s_{A}$ and $s_B$ lifts off from the floor. The measurements from these points are not valid. It is important to detect the situations when the robot is standing still and when it is tilting around an edge, so that we consider only the valid measurements. Zero moment point (ZMP) is an useful criteria for detecting the tilting edge. The ZMP of a foot is computed from the ground reaction force measured by the FTS [Appendix \ref{sec:zmp}]. The contact measurements also differ when the a single foot is in contact (single support) or two feet are in contact(double support). The single and double support cases can be differentiate by measuring the vertical ground reactional force $F_z$. The contact case is determined by the parameter $\alpha$ which is given as \citep{atk12} $$ \alpha = \frac{F_{z,r} + F_{z,l}}{F_{z,r}}.$$ 
+
+\begin{algorithm}
+    \caption{Select the contact measurements}
+    \label{alg:cnt_switch}
+    \begin{algorithmic}
+    \IF {$\alpha = 0.5$}
+    %{Double support}
+        \IF {$ {zmp}_x \geq 0.12$}
+        % Tilting around front edge
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{A,r} &s_{B,r} &s_{A,l} &s_{B,l} \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_x \leq -0.05$}
+        % Tilting around back edge
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{C,r} &s_{D,r} &s_{C,l} &s_{D,l} \end{bmatrix}^T$ 
+        \ENDIF
+    \ELSIF {$\alpha = 1$}
+    % Support right foot
+        \IF {$ {zmp}_x \geq 0.12$}
+        % Tilting around front edge
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{A,r} &s_{B,r}  \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_x \leq -0.05$}
+        % Tilting around back edge
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{C,r} &s_{D,r}  \end{bmatrix}^T$ 
+        \ELSIF {$ {zmp}_y \geq 0.04$}
+        % Tilting around inner edege
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{A,r} &s_{D,r}  \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_y \leq -0.04$}
+        % Tilting around outer edge
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{B,r} &s_{C,r}  \end{bmatrix}^T$ 
+        \ENDIF
+    \ELSIF {$\alpha = 0$}
+    % Support left foot
+        \IF {$ {zmp}_x \geq 0.12$}
+        % Tilting around front edge
+        \RETURN $ s_{cnt}= \begin{bmatrix} s_{A,l} &s_{B,l} \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_x \leq -0.05$}
+        % Tilting around back edge
+        \RETURN $ s_{cnt}= \begin{bmatrix} s_{C,l} &s_{D,l} \end{bmatrix}^T$ 
+        \ELSIF {$ {zmp}_y \geq 0.04$}
+        % Tilting around outer edege
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{A,r} &s_{D,r}  \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_y \leq -0.04$}
+        % Tilting around inner edge
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{B,r} &s_{C,r}  \end{bmatrix}^T$ 
+        \ENDIF
+    \ENDIF
+    \end{algorithmic}
+\end{algorithm}
+
+The Algorithm \ref{alg:cnt_switch} is useful in making the decision about the contact points $s_{cnt}$ based on number of support and ZMP. The ZMP is defined with respect to the foot coordinate frame. The upper and lower bounds of ${zmp}_x$ and ${zmp}_y$ for a foot are the edges of the foot. For instance ${zmp}_x$ of the front edge of right foot in Figure \ref{fig:biped_feet} is $0.13$.
+
 The full measurement equations of the system is obtained by combining Equations \ref{eq:y_sens} and \ref{eq:y_kin}. The discretized form of measurement equations is
 \begin{equation}
     \label{eq:y_msr}
-    y_{k+1} = \begin{bmatrix} y_{sens,k+1} \\ y_{kin,k+1} \end{bmatrix}= \begin{bmatrix} acc^b_{k+1} \\ \omega^b_{k+1} \\ q_{k+1} \\ \dot q_{k+1} \\ p_{r,k+1} \\ p_{l,k+1} \\ V^b_{r,k+1} \\ V^b_{l,k+1} \end{bmatrix}.
+    y_{k+1} = \begin{bmatrix} y_{sens,k+1} \\ y_{kin,k+1} \end{bmatrix}= \begin{bmatrix} acc^b_{k+1} \\ \omega^b_{k+1} \\ q_{k+1} \\ \dot q_{k+1} \\ s_{r,k+1} \\ s_{l,k+1} \end{bmatrix}.
 \end{equation}
 
-For the computation of Kalman gain $K_k$ and update the error covariance matrix $P_k$ in Equation \ref{eq:correct}, the measurement sensitivity matrix $C_k$ have to be computed. The matrix $C_k$ determined by computing the Jacobian matrix of the measurement equation \ref{eq:y_msr}. The computation of $C_k$ matrix is as follows:
+For the computation of Kalman gain $K_k$ and to update the error covariance matrix $P_k$ in Equation \ref{eq:correct}, the measurement sensitivity matrix $C_k$ have to be computed. The matrix $C_k$ determined by computing the Jacobian matrix of the measurement equation \ref{eq:y_msr}. The computation of $C_k$ matrix is as follows:
 \begin{enumerate}
 \item The measurement equation for acceleration measurements is  $$\hat{acc}^b_{k+1} = \dot{v}^{b-}_{k+1}-\hat{R}_{k+1}^{T-}\begin{bmatrix} 0 \\ 0 \\ -9,81 \end{bmatrix}$$.
 The Jacobian matrix is 
@@ -119,7 +162,7 @@ The Jacobian matrix is
  \end{cases}
  \]
 
- \item The measurement equation for the contact points in right foot is $$\hat{p}_{r,k+1}^- = \hat{H}_{r,k+1}^- p = \begin{bmatrix} \hat{H}_{r,k+1}^- p_{A}\\ \hat{H}_{r,k+1}^- p_{B}\\ \hat{H}_{r,k+1}^- p_{C}\\ \hat{H}_{r,k+1}^- p_{D}\end{bmatrix}.$$
+ \item The measurement equation for the contact points in right foot is $$\hat{p}_{r,k+1}^- = \hat{H}_{r,k+1}^- p = \begin{bmatrix} \hat{H}_{r,k+1}^- s_{A}\\ \hat{H}_{r,k+1}^- s_{B}\\ \hat{H}_{r,k+1}^- s_{C}\\ \hat{H}_{r,k+1}^- s_{D}\end{bmatrix}.$$
  The Jacobian matrix is 
 \begin{equation}
     \label{eq:dpr_msrdx}
@@ -142,34 +185,8 @@ The Jacobian matrix is
 \begin{itemize}
     \item $\dfdx{\hat{p}_{l,k+1}^-}{x}$ is computed similar to $\dfdx{\hat{p}_{r,k+1}^-}{x}$ in Equation \ref{eq:dpr_msrdx}.
 \end{itemize}
-
-\item The measurement equation for the velocities of the right and left foot is  $$\hat{V}_{contact,k+1}^b = \begin{bmatrix} \hat{V}_{r,k+1}^{b-} \\ \hat{V}_{l,k+1}^{b-} \end{bmatrix} 
-=\begin{bmatrix}\hat{J}_{r,k+1}^{T-} \hat{\dot{y}}_{k+1}\\ \hat{J}_{l,k+1}^{T-} \hat{\dot{y}}_{k+1}\end{bmatrix}$$
-The Jacobian matrix is 
-\begin{equation}
-    \label{eq:dv_msrdx}
-     \dfdx{\hat{V}_{cnt,k+1}^-}{x} = \left( \dfdx{\hat{V}_{cnt,k+1}^-}{x_1}, \dfdx{\hat{V}_{cnt,k+1}^-}{x_2},\cdots, \dfdx{\hat{V}_{cnt,k+1}^-}{x_{62}} \right)\in \Re^{12 \times 62}
-\end{equation}
-\[
-\dfdx{\hat{V}_{cnt,k+1}^{-}}{x_{i}} = 
-	\begin{cases}
-	\left(
-	\begin{aligned}
-	\dfdx{\hat{J}_{r,k+1}^{T-}}{x_{i}}\dot{\hat{y}}^- \\
-	\dfdx{\hat{J}_{l,k+1}^{T-}}{x_{i}}\dot{\hat{y}}^- \\
-	\end{aligned} \right)
-	& \text{if } 1 \leq i \leq 31 \\
-	\begin{pmatrix}
-	col(\hat{J}_{r,k+1}^{T-},i)\\ col(\hat{J}_{l,k+1}^{T-},i)
-	\end{pmatrix}
-	 	& \text{if } 32 \leq i \leq 62
-	\end{cases}
-\]where
-\begin{itemize}
-    \item $ \hat{V}_{cnt,k+1}^{-}$ is the shorthand notation for $\hat{V}_{contact,k+1}^{b-} $.
-\end{itemize}
 \end{enumerate}
-The measurement sensitivity matrix $\hat{C}_{k+1}^-$ of the system is given by Equations \ref{eq:dacc_msrdx}, \ref{eq:dw_msrdx}, \ref{eq:dq_msrdx}, \ref{eq:ddq_msrdx}, \ref{eq:dpr_msrdx}, \ref{eq:dpl_msrdx} and \ref{eq:dv_msrdx}.
+The measurement sensitivity matrix $\hat{C}_{k+1}^-$ of the system is given by Equations \ref{eq:dacc_msrdx}, \ref{eq:dw_msrdx}, \ref{eq:dq_msrdx}, \ref{eq:ddq_msrdx}, \ref{eq:dpr_msrdx}, and \ref{eq:dpl_msrdx}:
 \begin{equation}
     \label{eq:msr_mat}
     \hat{C}^-_{k+1} = \left(
@@ -180,9 +197,8 @@ The measurement sensitivity matrix $\hat{C}_{k+1}^-$ of the system is given by E
     \dfdx{\hat{\dot{q}}_{k+1}^-}{x} \\
     \dfdx{\hat{p}_{r,k+1}^-}{x} \\
     \dfdx{\hat{p}_{l,k+1}^-}{x} \\
-	 \dfdx{\hat{V}_{cnt,k+1}^{-}}{x} 
    \end{aligned}
-	 \right) \in \Re^{80 \times 62}
+	 \right) \in \Re^{80 \times 62}.
 \end{equation}
 
 \begin{comment}

@@ -17,11 +17,11 @@ A rigid body algorithm is used in the estimator to compute dynamic $M(y_k), C(y_
 The Jacobian $J_k$ outputted by the algorithm shown in Figure \ref{fig:luc_dyn} is the body Jacobian of \emph{Toro's} right foot $J_r$ and left foot $J_l$ and homogeneous transformation matrix $H_k$ is the transformations of right foot $H_r$, left foot $H_l$ and floating base $H_b$ with respect to spatial frame (world frame).
 The Jacobian matrices $A_k$ and $\hat C_{k+1}$ in Equations \ref{eq:sys_mat}, \ref{eq:msr_mat} are computed from these outputs of the rigid body algorithm. The formulation of the Jacobian matrices $A_k$ and $\hat C_{k+1}$ are discussed in sections \ref{subsec:toro_predict} and \ref{subsec:toro_update}. 
 
-The simulator and the estimator are driven by the same control inputs $u$. For instance the control inputs of \emph{Toro} are the torques applied to joints. The ground reaction forces $W_r$ and $W_l$ are measured in the simulator with the help of sensor model of Forece Torque sensor (FTS). The ground reaction forces and the control torques are the input to prediction model in Equation \ref{eq:toro_dis}.
+The simulator is driven by the control input $u$. For instance the control input of \emph{Toro} are the torque applied to joints $\tau$. The controller generates these inputs according to the control law. These inputs can be measured with the help of the torque sensors located at the joints. The ground reaction forces $W_r$ and $W_l$ are measured by the Force Torque sensor (FTS) located at the ankle joints. The ground reaction forces and the control torques are the input to prediction model in Equation \ref{eq:toro_dis}.
 
-The following experimental scenario is simulated using the simulator. 
+The following scenario is simulated using the OpenHRP3 simulator. It consists of the following phases:
 
-\paragraph{Initial phase: } The robot is made to stand on the ground (high pose). After a few seconds the robot is commanded to move to a different pose (medium pose) by applying the control inputs $u$. 
+\paragraph{Initial phase:} The robot is made to stand on the ground (high pose). After a few seconds the robot is commanded to move to a different pose (medium pose) by applying the control inputs $u$. 
 
 \begin{figure}
 	\centering
@@ -36,7 +36,7 @@ The following experimental scenario is simulated using the simulator.
 	\label{fig:toro_tiltphase}
 \end{figure}
 
-\paragraph{Tilting phase} After a few seconds an external force is applied to the robot so that it starts to tilt around an edge. After the robot has tilted few degrees the external force is removed,as a result the robot goes back to the medium pose due to inertia of the upper body. The robot stores the energy when the force is applied, it is not completely dissipated when it comes back to the medium pose. Inorder to dissipate the stored energy, it tilts in the other direction and then move back due to inertia. This cycle goes on until the robot dissipates all its stored energy. After the energy is dissipated the robot stays in the medium pose.
+\paragraph{Tilting phase:} After a few seconds an external force is applied to the robot so that it starts to tilt around an edge. After the robot has tilted few degrees the external force is removed,as a result the robot goes back to the medium pose due to inertia of the upper body. The robot stores the energy when the force is applied, it is not completely dissipated when it comes back to the medium pose. Inorder to dissipate the stored energy, it tilts in the other direction and then move back due to inertia. This cycle goes on until the robot dissipates all its stored energy. After the energy is dissipated the robot stays in the medium pose.
 \paragraph{Final phase:} After the tilting phase is complete the robot is commanded to move back to the high pose.
 
 
@@ -47,25 +47,27 @@ Zero mean Gaussian noises $w$ and $v$ are added to the inputs and measurements.
     \hline
     Noise &Variance \\ \hline
     \textbf{Input noise} &\hspace{2mm}\\
-    \hline
+    FTS $W_r,W_l$ & $1 \cdot {10}^{-2}$ \\ 
+    Torques $\tau$ & $1 \cdot {10}^{-4}$\\    \hline
     \textbf{Measurement noise} &\hspace{2mm}\\
-    Joint angles $q(rad)$ &$1e^{-6}$ \\ 
-    Joint velocities $\dot q(rad/s)$ &$1e^{-4}$ \\
-    Acceleration $\dot v^b(m/s^2)$ &$1e^{-2}$ \\ 
-    Angular velocity $\omega^b(rad/s)$ &$1e^{-4}$ \\ \hline
+    Joint angles $q(rad)$ &$1\cdot{10}^{-6}$ \\ 
+    Joint velocities $\dot q(rad/s)$ &$1\cdot{10}^{-4}$ \\
+    Acceleration $\dot v^b(m/s^2)$ &$1\cdot{10}^{-2}$ \\ 
+    Angular velocity $\omega^b(rad/s)$ &$1\cdot{10}^{-4}$ \\ \hline
     \end{tabular}
     \caption{Variance of simulated noises}
     \label{tab:toro_var}
 \end{table}
 
-The process $Q$ and measurement $R$ covariance matrices are set with the corresponding values of noise covariances given in Table \ref{tab:toro_var}. 
+The values of the process and measuremt covariance matrices $Q$ and $R$ are set with the variance of the noises from Table \ref{tab:toro_var}. They are 
 $$  \begin{aligned}
-         Q &= diag();\\
+         Q &= diag([1\cdot{10}^{-2} \textbf{1}_{12,1}; 1\cdot{10}^{-4} \textbf{1}_{25,1}])  \\
          R &= diag([1\cdot{10}^{-6} \textbf{1}_{25,1}; 1\cdot{10}^{-4}\textbf{1}_{25,1}; 1\cdot{10}^{-2}\textbf{1}_{3,1};1\cdot{10}^{-4}\textbf{1}_{3,1}; 1\cdot{10}^{-12}\textbf{1}_{36,1} ]),
      \end{aligned}$$
-where $\textbf{1}_{r,c}$ is the matrix of dimensions $r \times c$ with all the elements as 1 [Appendix \ref{sec:symbols}]. The initial values of the estimator $\hat x_0$ and its covariance $P_0$ are 
-$$ \begin{aligned} x_0 = \textbf{0}_{62,1}\\ P_0 = I_3, \end{aligned} $$  where $\textbf{0}_{62,1}$ is the zero matrix of dimensions $62 \times 1$ [Appendix \ref{sec:symbols}].
-
+where $\textbf{1}_{r,c}$ is the matrix of dimensions $r \times c$ with all the elements as 1 [Appendix \ref{sec:symbols}] and $diag(x)$ is a diagonal matrix where the main diagonal entries are the elements of vector $x$. 
+The initial values of the system $x_0$ and estimator $\hat x_0$ are
+$$ \begin{aligned} x_0 &= [0,0,1.164,\textbf{0}_{1,59}]^T \\ \hat x_0 &= \textbf{0}_{62,1}, \end{aligned} $$  where $\textbf{0}_{62,1}$ is the zero matrix of dimensions $62 \times 1$ [Appendix \ref{sec:symbols}].
+The initial value of the covariance matrix $P_0$ is $$ P_0 = I_{62},$$ where $I_{62}$ respresents the identity matrix of dimensions $62\times62$. 
 
 \subsubsection{Observation}
 \begin{figure}

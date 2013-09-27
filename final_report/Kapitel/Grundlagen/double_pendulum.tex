@@ -132,10 +132,11 @@ $$ x_0 = \begin{bmatrix} 0.9575 \\ 0.9649\\ 0.1576\\ 0.9706 \end{bmatrix}, \hat 
 The initial values of the error covariance matrix $P$ is $$P_0 = I_4, $$ where $I_4$ is a $4 \times 4$ identity matrix.
 
 
-The process covariance $Q$ and measurement covariance $R$ matrices of the EKF are assigned with the corresponding values of measurement and process noise variance's in Table \ref{tab:idp_noise}.
+The process covariance $Q$ and measurement covariance $R$ matrices of the EKF are assigned with the corresponding values of measurement and process noise variance's in Table \ref{tab:idp_noise}. This is due to the fact that if the system and estimator does not have any model mismatch then setting the variances of the noises for the respective covariance matrix gives the best estimates \citep{gre01}. They are 
+
 $$  \begin{aligned}
     Q&=diag([0; 0; 0; 1e^{-3}]) \\
-    R&=diag([1e^{-2}; 1e^{-4}; 1e^{-6}; 1e^{-6}]) \\
+    R&=diag([1e^{-2}; 1e^{-4}; 1e^{-6}; 1e^{-6}]). \\
     \end{aligned}
     $$
 

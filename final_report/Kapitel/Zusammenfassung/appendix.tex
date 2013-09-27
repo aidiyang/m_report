@@ -1,3 +1,4 @@
+%\begin{appendices}
 \chapter{Appendix}
 \section{Symbols}
 \label{sec:symbols}
@@ -226,3 +227,31 @@ $T(\theta)$ is the transformation matrix, that transforms the time derivative of
 The partial derivatives of $\omega^b$ with respect to the states are
 $$\dfdx{\omega_b}{\theta_y} = \begin{bmatrix}0 &0 &0\\ 0 &-s_x &c_yc_x\\ 0 &-c_x &-c_ys_x \end{bmatrix}, \dfdx{\omega_b}{\theta_z} = \begin{bmatrix}0 &0 &-c_y\\ 0 &0 &-s_ys_x\\ 0 &0 &-s_yc_x \end{bmatrix},\dfdx{\omega_b}{\theta_z} = \textbf{0}_{3\times 3} $$
 \end{enumerate}
+
+\section{Zero moment point}
+\label{sec:zmp}
+Zero moment point (ZMP) is the point at the contact of the foot with the ground where the ground reaction force does not produce any moment in horizontal direction. In other words the net moment due to the inertial forces and the gravity forces at this point is zero \citep{mio04}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[trim=30mm 75mm 30mm 70mm,clip,scale=0.65]{Bilder/zmp.pdf}
+	\caption{Planar view of the force distribution of a robot's foot in contact}
+	\label{fig:zmp_plane}
+\end{figure}
+
+The point \emph{p} in the Figure \ref{fig:zmp_plane} is the ZMP of the foot. The ZMP can be computed by measuring ground reaction force with FTS located at the ankle of the robot. The FTS measures the body Wrench which is given by $$ FTS = \begin{bmatrix}
+f_x \\ f_y \\ f_z\\ \tau_x \\ \tau_y \\ \tau_z
+\end{bmatrix}.$$ 
+\begin{figure}
+	\centering
+	\includegraphics[scale=1]{Bilder/zmp_pic.png}
+	\caption{The foot and the FTS in their coordinate frames}
+\end{figure}
+
+The computation of the ZMP is as follows:
+\begin{equation}
+	\begin{split}
+	p_x &= \frac{-\tau_y -(p_{sz}-p{z})f_x+p_{sx}f_z}{f_z}\\
+	p_y &= \frac{\tau_x -(p_{sz}-p{z})f_y+p_{sy}f_z}{f_z},
+	\end{split}
+\end{equation}
+where $p_s = [p_{sx},p_{sy},p_{sz}]$ represents the coordinates of the FTS frame. The ZMP is used to determine the dynamic stability of the biped robot. For instance when the ZMP remains inside the support polygon (the foot surface) the robot will remain stable. On the other hand if the ZMP is located at an edge of the foot then the robot is tilting around that edge.

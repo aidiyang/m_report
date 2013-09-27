@@ -1,0 +1,37 @@
+\tikzset{state/.style={ rectangle,rounded corners, draw=black, very thick, minimum height=2em, inner sep=2pt, text centered,}, }
+\begin{tikzpicture}[->,>=stealth']
+% Prediction or Time update
+ \node[state,
+      ] (predict) 
+       {\begin{tabular}{c}
+       \textbf{Time update:}\\
+       \hrulefill\\
+       $\begin{matrix}
+       \hat{x}_k^- = f(\hat{x}_{k-1},u_k,0) \\
+       \hfill \\
+       P_k^- = A_k P_{k-1} A_k^T+ W_k Q_{k-1} W_k^T 
+       \end{matrix}$
+       \end{tabular}
+       };
+       % Correction or Measurement update
+       \node[state,       % layout (defined above)
+       text width=6.5cm,  % max text width
+       right of=predict,    % Position is to the right of QUERY
+       node distance=8.5cm,    % distance to QUERY
+       anchor=center] (correct) 
+       {\begin{tabular}{c}
+       \textbf{Measurement update:}\\
+       \hrulefill\\
+       $\begin{matrix}
+       K_k = P_k^-C^T(C_kP_k^-C_k^T + V_kR_kV_k^T)^{-1}\\
+       \hfill \\
+       \hat{x}_k = \hat{x}_k^- + K_k(y_k-h(\hat{x}_k^-,u_k,0))\\
+       \hfill \\
+       P_k = (I- K_kC_k)P_k^-
+       \end{matrix}$
+       \end{tabular}
+       };
+% draw the paths and and print some Text below/above the graph
+\path (predict)     edge[bend left]  node[anchor=south,above]{$\hat x_k^-, P_k^-$} (correct)
+(correct)       edge[bend left] node[anchor= north,below] {$\hat x_{k-1}, P_{k-1}$} (predict);
+\end{tikzpicture}
