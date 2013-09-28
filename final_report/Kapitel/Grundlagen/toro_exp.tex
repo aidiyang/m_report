@@ -73,9 +73,17 @@ The initial value of the covariance matrix $P_0$ is $$ P_0 = I_{62},$$ where $I_
 \begin{figure}
     \centering
     \includegraphics[trim=30mm 0mm 20mm 0mm,clip,scale=0.4]{Bilder/plots/toro/toro_pos.png}
-    \label{fig:toro_pos}
     \caption{Plots of actual and estimated values of the floating base}
+    \label{fig:toro_plotpos}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[trim=30mm 0mm 20mm 0mm,clip,scale=0.4]{Bilder/plots/toro/toro_pos.png}
+    \caption{Plots of actual and estimated values of the floating base}
+    \label{fig:toro_plotvel}
 \end{figure}
 
+The robot tilts about the front and back edges of the foot. In other words it rotates about the $Y-axis$ of the spatial frame (world frame). A rotation of $\theta_y$ around $Y-axis$ will results in translation motions $p_x$ and $p_z$ along $X$ and $z$ axes. These three quantities are plotted in Figure \ref{fig:toro_plotpos}. The velocities of these quantities $\omega_y,v_x,v_z$ are plotted in Figure \ref{fig:toro_plotvel}.
+It can be seen in the Figures \ref{fig:toro_plotpos} and \ref{fig:toro_plotvel} that, the estimates converges quickly to the actual states. 
 \subsection{Conclusion}
 The state estimation of under-actuated degrees of freedom is the main aim in this thesis. With the multibody dynamic model of \emph{Toro} it is possible to estimate more than the under-actuated degrees of freedom.
