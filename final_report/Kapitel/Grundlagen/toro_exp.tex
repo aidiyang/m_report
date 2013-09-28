@@ -1,10 +1,12 @@
 \subsection{Experiment}
+\label{subsec:toro_exp}
 The estimation problem is tested in Matlab Simulink. The experimental setup consists of the Open HRP3 simulator and the state estimator. The OpenHRP3 (Open Architecture Human-centred Robotics Platform version 3) is an integrated software platform for robot simulations and software developments \footnote{\url{http://www.openrtp.jp/openhrp3/en/about.html}}. It was developed as a cooperative work of University of Tokyo, General Robotix. Inc and National Institute of Advanced Industrial Science and Technology(AIST).
 
 \begin{figure}[H]
     \centering
     \input{Bilder/toro_exp_setup.tex}
     \caption{Experimental setup of TORO}
+    \label{fig:toro_exp}
 \end{figure}
 
 A rigid body algorithm is used in the estimator to compute dynamic $M(y_k), C(y_k,\dot y_k), g(y_k)$ and kinematic $J_r(y_k), J_l(y_k), H(y_k)$ parameters at time step $k$. An auto differentiation function that computes the derivative of the dynamic and kinematic parameters with respect to the the system states is integrated with the rigid body algorithm. 
@@ -39,8 +41,7 @@ The following scenario is simulated using the OpenHRP3 simulator. It consists of
 \paragraph{Tilting phase:} After a few seconds an external force is applied to the robot so that it starts to tilt around an edge. After the robot has tilted few degrees the external force is removed,as a result the robot goes back to the medium pose due to inertia of the upper body. The robot stores the energy when the force is applied, it is not completely dissipated when it comes back to the medium pose. Inorder to dissipate the stored energy, it tilts in the other direction and then move back due to inertia. This cycle goes on until the robot dissipates all its stored energy. After the energy is dissipated the robot stays in the medium pose.
 \paragraph{Final phase:} After the tilting phase is complete the robot is commanded to move back to the high pose.
 
-
-Zero mean Gaussian noises $w$ and $v$ are added to the inputs and measurements.
+The simulations and estimation are made with an integration time step of $\Delta t=1ms$. Zero mean Gaussian noises $w$ and $v$ are added to the inputs and measurements.
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
@@ -72,18 +73,51 @@ The initial value of the covariance matrix $P_0$ is $$ P_0 = I_{62},$$ where $I_
 \subsubsection{Observation}
 \begin{figure}
     \centering
-    \includegraphics[trim=30mm 0mm 20mm 0mm,clip,scale=0.4]{Bilder/plots/toro/toro_pos.png}
-    \caption{Plots of actual and estimated values of the floating base}
+%    \includegraphics[height=0.5\textheight width=0.8\textwidth]{Bilder/plots/toro/toro_pos.png}
+    \includegraphics[trim=25mm 10mm 25mm 10mm,clip,scale=0.6]{Bilder/plots/toro/toro_pos.png}
+    \caption{Actual and estimated values of $p_x,p_z$ and $\theta_y$}
     \label{fig:toro_plotpos}
 \end{figure}
 \begin{figure}
     \centering
-    \includegraphics[trim=30mm 0mm 20mm 0mm,clip,scale=0.4]{Bilder/plots/toro/toro_pos.png}
-    \caption{Plots of actual and estimated values of the floating base}
+    \includegraphics[trim=25mm 10mm 25mm 10mm,clip,scale=0.55]{Bilder/plots/toro/toro_vel.png}
+    \caption{Actual and estimated values of $v_x,v_z$ and $\omega_y$}
     \label{fig:toro_plotvel}
 \end{figure}
 
 The robot tilts about the front and back edges of the foot. In other words it rotates about the $Y-axis$ of the spatial frame (world frame). A rotation of $\theta_y$ around $Y-axis$ will results in translation motions $p_x$ and $p_z$ along $X$ and $z$ axes. These three quantities are plotted in Figure \ref{fig:toro_plotpos}. The velocities of these quantities $\omega_y,v_x,v_z$ are plotted in Figure \ref{fig:toro_plotvel}.
-It can be seen in the Figures \ref{fig:toro_plotpos} and \ref{fig:toro_plotvel} that, the estimates converges quickly to the actual states. 
+
+In the the Figures \ref{fig:toro_plotpos} and \ref{fig:toro_plotvel} the time interval between 0 and 22 seconds denotes the \emph{initial phase},22 and 35 seconds denotes the \emph{tilting phase} and 35 to 39 seconds denotes the \emph{final phase}. We can see in the above figures that, the estimates converges quickly to the actual states. 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    Estimates &RMSE \\ \hline
+    $\hat p_x$ &0.0005 $m$\\
+    $\hat p_y$ &0.0001 $m$\\
+    $\hat p_z$ &0.0001 $m$\\
+    $\hat\theta_x$ &0.0001 $rad$\\
+    $\hat\theta_y$ &0.0006 $rad$\\
+    $\hat\theta_z$ &0.0001 $rad$\\ \hline
+    \end{tabular} \hspace{1cm}
+    \begin{tabular}{|c|c|}
+    \hline
+    Estimates &RMSE \\ \hline
+    $\hat v_x$ &0.0083 $m/s$\\
+    $\hat v_y$ &0.0017 $m/s$\\
+    $\hat v_z$ &0.0040 $m/s$\\
+    $\hat\omega_x$ &0.0013 $rad/s$\\
+    $\hat\omega_y$ &0.0042 $rad/s$\\
+    $\hat\omega_z$ &0.0060 $rad/s$\\ \hline
+    \end{tabular}
+    \caption{RMSE values of the position and velocity estimates of the floating base}
+    \label{tab:toro_rmse}
+\end{table}
+
+The RMSE values of the estimates in Table \ref{tab:toro_rmse} are small. This shows that EKF has a good performance for the given prediction system model. The joint angles $ \hat q \in \Re^{25}$ and velocities $\hat \dot q \in \Re^{25}$ are also well estimated by the EKF. Since we focus on estimating the motion parameters of floating base, the joint's motion parameters are not discussed.
+
+The time taken for 10 seconds of simulation of the EKF is $1290$ seconds. For each integration time step ($\Delta t = 0.001 s$) the EKF requires $0.129 s$ in real time for its execution. The high computation time is caused by the rigid body algorithm which has an execution time of $0.06s$. This algorithm is executed two times per time step.
+$$ \text{Time take for the execution of rigid body algorithm } = 2 \times 0.06 = 0.12 s.$$ This is approximately the execution time of the EKF for one time step.
+
 \subsection{Conclusion}
-The state estimation of under-actuated degrees of freedom is the main aim in this thesis. With the multibody dynamic model of \emph{Toro} it is possible to estimate more than the under-actuated degrees of freedom.
+The state estimation of motion parameters of under-actuated degrees of freedom is the main aim in this thesis. With the multibody dynamic model of \emph{Toro} it is possible to estimate more than the under-actuated degrees of freedom. 

@@ -1,6 +1,11 @@
 \subsection{Experiment}
-
+\begin{comment}
 \begin{figure}
 \input{Bilder/simp_exp_setup.tex}
 \caption{Experimental setup for the simple model}
 \end{figure}
+\end{comment}
+
+The experimental setup shown in Figure \ref{fig:toro_exp} is used for testing the EKF. An IMU that outputs the accelerations $a$ and angular velocity $\omega$ with respect to the body reference frame is simulated by the simulator. For instance when the IMU is attached to the hip (floating base), its outputs are defined with respect to the hip reference frame. The biases $b_a,b_\omega$ and noises $w_a,w_\omega$ are externally added to the IMU outputs. The following scenario is considered for this experiment. 
+
+At first the robot is pushed from the front and made to tilt around front and back edges as discussed in Subsection \ref{subsec:toro_exp}. A few seconds after the \emph{tilting phase} of the experiment in Subsection \ref{subsec:toro_exp}, another \emph{tilting phase} is carried out by applying external force from the right hand side so that the robot tilts about the side edges of the foot. 
