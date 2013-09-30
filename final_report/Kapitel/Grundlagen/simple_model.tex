@@ -1,9 +1,9 @@
 \chapter{Model based on Inertial Measurement Unit}
 \label{ch:simp_mdl}
-In this chapter a simplified dynamic model of motion equations is used in the prediction step of EKF. The model is based on the translational acceleration and angular velocity measured by IMU. The ODE's are formulated based on Equation \ref{eq:newton_motion}.
+The multibody approach in the previous chapter is computationally demanding. It cannot be implemented on real time. The bottleneck in the multibody approach is the execution time of the rigid body algorithm. In this chapter a simple dynamic model of motion equations is used in the prediction step of EKF. The model is based on the translational acceleration and angular velocity measured by IMU. The ODE's are formulated based on Equation \ref{eq:newton_motion}.
 
 \section{Simplified motion model}
-IMU \emph{MTi-100 \footnote{xsens technologies \url{http://www.xsens.com/en/general/mti-100-series} }} consists of accelerometer and gyroscope. The accelerometer measures accelerations $a_x,a_y,a_z$ acting along the three Cartesian axes. Likewise gyroscope measures the angular rate $\omega_x,\omega_y,\omega_z$ along the respective axes. IMU measures the acceleration and angular rate with respect to the body frame with which it is attached. The acceleration measured by accelerometer is 
+The IMU \emph{MTi-100 \footnote{xsens technologies \url{http://www.xsens.com/en/general/mti-100-series} }} consists of accelerometer and gyroscope. It measures the acceleration and angular rate with respect to the coordinate frame of the body with which it is attached. The acceleration measured by accelerometer is \citep{bloe12}
 \begin{figure}
 \begin{center}
 %\includegraphics[trim= 10mm 80mm 10mm 80mm,scale=0.75]{Bilder/model_biped.pdf}
@@ -14,26 +14,24 @@ IMU \emph{MTi-100 \footnote{xsens technologies \url{http://www.xsens.com/en/gene
 \end{figure}
 \begin{equation}
     \label{eq:imu_acc}
-    a = R(a_{abs} - g)
+    a = R(a_{abs} - g),
 \end{equation}
-\begin{itemize}
-    \item $a_{abs} $ is the absolute acceleration of the body with respect to world(spatial frame).
-    \item \emph{g} is the term acceleration due to gravity $\begin{bmatrix}0 \\ 0 \\ -9.81\end{bmatrix}$.
-\end{itemize}
-In addition to the external accelerations, IMU also measures the acceleration due to gravity \emph{g}. The compensation for the acceleration due to gravity is given in Equation \ref{eq:imu_acc}. The measurement from the IMU is noisy. In addition to the noise there can be bias acting on the measurements. The stochastic model of the IMU is 
+where $a_{abs} $ is the absolute acceleration of the body with respect to spatial frame (world frame) and \emph{g} denotes the acceleration due to gravity $[0,0,-9.81]^T$.
+
+The measurement from the IMU are noisy. In addition to the noise there can be bias acting on the measurements. The stochastic model of the IMU is 
 \begin{equation}
 \label{eq:imu_noise}
 \begin{split}
 \tilde{a} &= a + b_a + w_a \\
 \dot{b}_a &= w_{ba} \\
 \tilde{\omega} &= \omega + b_\omega + w_\omega \\
-\dot{b}_\omega &= w_{b\omega}
+\dot{b}_\omega &= w_{b\omega},
 \end{split}
 \end{equation}
-$\tilde{a}$ is the measured acceleration from the IMU. It is composed of true acceleration \emph{a}, bias in the acceleration measurements $b_a$ and the sensor noise $w_a$. $\tilde{\omega}$ is the angular velocity measured, which comprises of true angular velocity $\omega$, bias $b_{\omega}$ and sensor noise $w_\omega$. The sensor noises $w_a$ and $w_\omega$ are modelled as zero mean Gaussian white noise. The bias in acceleration measurement is $b_a$ and that of angular velocity measurement is $b_\omega$. The bias terms are also time varying quantities but they have very slow dynamics. Bias dynamics $\dot{b}_a$ and $\dot{b}_\omega$ are modelled as first order Markov process. $w_{b\omega}$ and $w_{bf}$ are the Gaussian white noise associated with the bias. 
+where $\tilde{a}$ is the acceleration measured by the IMU. It is composed of true acceleration \emph{a}, bias $b_a$ and the sensor noise $w_a$. The measured angular velocity is $\tilde{\omega}$, true angular velocity $\omega$, bias $b_{\omega}$ and sensor noise $w_\omega$. The sensor noises $w_a$ and $w_\omega$ are modelled as zero mean Gaussian white noise. The biases $b_a$ and $b_\omega$ are dynamical quantities but they have very slow dynamics. The bias dynamics $\dot{b}_a$ and $\dot{b}_\omega$ are modelled as first order Markov process. The bias is driven by zero mean Gaussian white noises $w_{b\omega}$ and $w_{bf}$.
 
 \subsection{State space representation}
-The state space formulation of the dynamic model is based on Equation \ref{eq:newton_motion}. Rearranging the Equation \ref{eq:imu_noise} in terms of true acceleration and true angular velocity and substituting Equation \ref{eq:imu_acc} in \ref{eq:imu_noise} leads to state space dynamic model. 
+The state space formulation of the dynamic model is based on Equation \ref{eq:fwdyn_ode}. Rearranging the Equation \ref{eq:imu_noise} in terms of true acceleration and true angular velocity and substituting Equation \ref{eq:imu_acc} in \ref{eq:imu_noise} leads to state space dynamic model. 
 \begin{equation}
     \label{eq:dyn_imu}
     \begin{split}
