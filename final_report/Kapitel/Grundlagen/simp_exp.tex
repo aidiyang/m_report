@@ -8,4 +8,19 @@
 
 The experimental setup shown in Figure \ref{fig:toro_exp} is used for testing the EKF. An IMU that outputs the accelerations $a$ and angular velocity $\omega$ with respect to the body reference frame is simulated by the simulator. For instance when the IMU is attached to the hip (floating base), its outputs are defined with respect to the hip reference frame. The biases $b_a,b_\omega$ and noises $w_a,w_\omega$ are externally added to the IMU outputs. The following scenario is considered for this experiment. 
 
-At first the robot is pushed from the front and made to tilt around front and back edges as discussed in Subsection \ref{subsec:toro_exp}. A few seconds after the \emph{tilting phase} of the experiment in Subsection \ref{subsec:toro_exp}, another \emph{tilting phase} is carried out by applying external force from the right hand side so that the robot tilts about the side edges of the foot. 
+The same experimental scenario described in \ref{subsec:toro_exp} is used for testing the EKF. The following noise and bias values are used in simulations:
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|}
+	\hline
+	Name of the sensor &Noise variance \\ \hline
+	Accelerometer ($w_a$) & $8 \cdot {10}^{-3}$ \\
+	Gyroscope ($w_\omega$) & $5 \cdot {10}^{-3}$ \\ \hline	
+	\end{tabular}
+	\caption{Variances of sensor noise used in simulation}
+	\label{tab:simp_noise}
+\end{table}
+
+The process noise $Q$ is set with the values of the variances of the noise given in Table \ref{tab:simp_noise} $$ Q = diag([ 8 \cdot {10}^{-3} \textbf{1}_{3,1}, 5 \cdot {10}^{-3} \textbf{1}_{3,1}]). $$
+The contact measurements are highly accurate. So we set the measurement covariance $R$ matrix with very low values $$R = diag(1 \cdot {10}^{-12} \textbf{1}_{24,1}).$$
