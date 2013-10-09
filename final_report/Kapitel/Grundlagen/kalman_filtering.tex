@@ -120,7 +120,7 @@ The continuous time EKF algorithm is given by \citep{gel74}
 \end{equation}
 where $$A(t) = \dfdx{f}{x}(\hat x(t), u(t)), \hspace{2cm} H(t) = \dfdx{h}{x} (\hat x(t), u(t))$$ are the Jacobian of the state and measurement equation. The continuous time EKF is applied for the inverted double pendulum system in Chapter \ref{ch:multi_mdl}.
 
-\subsubsection{Tuning rules:}
+\subsubsection{Tuning rules}
 \label{subsec:tune_ekf}
 Tuning of the EKF involves setting the values of the noise covariance matrices $Q,R$. When the measurements $y$ are noisy then the emphasis is laid on the prediction model. In other words the prediction model is relied more. This is achieved by setting the covariances $Q<R$. On the other hand if the estimated process is noisy due to unmodelled dynamics or model mismatch then the measurements are relied more. This is achieved by setting $Q>R$.
 

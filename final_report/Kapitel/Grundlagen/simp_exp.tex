@@ -10,7 +10,7 @@ The experimental setup shown in Figure \ref{fig:toro_exp} is used for testing th
 
 The same experimental scenario described in \ref{subsec:toro_exp} is used for testing the EKF. The following noise and bias values are used in simulations:
 
-\begin{table}
+\begin{table}[H]
 	\centering
 	\begin{tabular}{|c|c|}
 	\hline
@@ -22,5 +22,48 @@ The same experimental scenario described in \ref{subsec:toro_exp} is used for te
 	\label{tab:simp_noise}
 \end{table}
 
-The process noise $Q$ is set with the values of the variances of the noise given in Table \ref{tab:simp_noise} $$ Q = diag([ 8 \cdot {10}^{-3} \textbf{1}_{3,1}, 5 \cdot {10}^{-3} \textbf{1}_{3,1}]). $$
-The contact measurements are highly accurate. So we set the measurement covariance $R$ matrix with very low values $$R = diag(1 \cdot {10}^{-12} \textbf{1}_{24,1}).$$
+The hand tuned values of process noise covariance matrix $Q$ is 
+$$ Q = diag([ 1 \cdot {10}^{-3} \textbf{1}_{3,1}, 1 \cdot {10}^{-8} \textbf{1}_{3,1}, 1 \cdot {10}^{-15} \textbf{1}_{6,1}]). $$
+The contact measurements are highly accurate. The hand tuned values of measurement covariance matrix $R$ is $$R = diag(1 \cdot {10}^{-12} \textbf{1}_{24,1}).$$
+
+\subsubsection{Observation}
+\begin{figure}
+    \centering
+    \includegraphics[trim=20mm 10mm 25mm 10mm,clip,scale=0.55]{Bilder/plots/simple_model/pos.png}
+    \caption{Actual and estimated values of $p_x,p_z$ and $\theta_y$}
+    \label{fig:simp_plotpos}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[trim=20mm 10mm 25mm 10mm,clip,scale=0.55]{Bilder/plots/simple_model/vel.png}
+    \caption{Actual and estimated values of $v_x$ and $v_z$}
+    \label{fig:simp_plotvel}
+\end{figure}
+It can be seen in the Figures \ref{fig:simp_plotpos} and \ref{fig:simp_plotvel} the estimates follows the actual states. 
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    Estimates &RMSE \\ \hline
+    $\hat p_x$ &0.0005 $m$\\
+    $\hat p_y$ &0.0001 $m$\\
+    $\hat p_z$ &0.0002 $m$\\
+    $\hat\theta_x$ &0.0001 $rad$\\
+    $\hat\theta_y$ &0.0005 $rad$\\
+    $\hat\theta_z$ &0.0003 $rad$\\ 
+    $\hat v_x$ &0.0051 $m/s$\\
+    $\hat v_y$ &0.0018 $m/s$\\
+    $\hat v_z$ &0.0090 $m/s$\\\hline
+    \end{tabular} \hspace{1cm}
+    \caption{RMSE values of position and velocity estimates}
+    \label{tab:simp_rmse}
+\end{table}
+
+The biases $b_a$ and $b_\omega$ are correctly estimated. The computational time of this model is less than a millisecond. This filter is also tested successfully on \emph{Toro}. 
+
+Even though the angular velocity $\omega$ is not estimated it can be obtained by subtracting the estimated gyro bias $\hat b_\omega$ from the output as
+$$ \omega = \tilde{\omega} - b_\omega - w_\omega.$$ 
+The noise $w_\omega$ can be filtered using a low pass filter.
+
+\subsection{Conclusion}
+The RMSE values in the Table \ref{tab:simp_rmse} are very low. This shows that EKF performs better with the simplified model for the given measurements. The smaller computational time makes the model implementable on the robot. The modeling effort is lesser than the multibody model of \emph{Toro} discussed in previous chapter. 

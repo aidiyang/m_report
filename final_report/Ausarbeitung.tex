@@ -89,7 +89,6 @@
 %\usepackage{bibgerm}
 
 %\usepackage{abstract}
-
 % Algorithmen
 
 \usepackage{float}
@@ -148,20 +147,18 @@
 \hyphenation{De-zi-mal-trenn-zeichen In-stal-la-ti-ons-as-sis-tent Ist-Schwer-punkt-po-si-tion}
 
 \newcommand{\modelica}[3]{\vspace*{.75cm}
-													\begin{addmargin}[0.5cm]{0.5cm} 
-														\begin{minipage}{\linewidth}
-															\noindent\rule[1ex]{\textwidth}{1pt}\\
-															\noindent{\textbf{#1}\hfill\footnotesize(\textit{Modelica}-Quelltext - Auszug aus \ref{#2} auf Seite \pageref{#2})\normalsize}\\
-															\noindent\rule[1ex]{\textwidth}{1pt}														
-															\begin{flushleft}
-																\hangindent=0.5cm #3	\\
-															\end{flushleft}															
-															\noindent\rule[1ex]{\textwidth}{1pt}\\
-														
-														\end{minipage}
-													\end{addmargin}
-													%\vspace*{.75cm}
-												 }
+\begin{addmargin}[0.5cm]{0.5cm} 
+	\begin{minipage}{\linewidth}
+		\noindent\rule[1ex]{\textwidth}{1pt}\\																	\noindent{\textbf{#1}\hfill\footnotesize(\textit{Modelica}-Quelltext - Auszug aus \ref{#2} auf Seite \pageref{#2})\normalsize}\\
+		\noindent\rule[1ex]{\textwidth}{1pt}														
+		\begin{flushleft}
+			\hangindent=0.5cm #3	\\
+		\end{flushleft}															
+		\noindent\rule[1ex]{\textwidth}{1pt}\\												
+	\end{minipage}
+\end{addmargin}
+%\vspace*{.75cm}
+}
 
 \begin{document} 
 %\raggedbottom
@@ -186,6 +183,12 @@
  \begin{minipage}{0.48\linewidth}
   \includegraphics[width=1.0\textwidth]{Bilder/tud_logo_rgb}
  \end{minipage}
+ %\begin{comment}
+ \hspace{4cm}
+ \begin{minipage}{0.2\linewidth}
+ \includegraphics[scale=0.1]{Bilder/irf_logo} 
+ \end{minipage}
+ %\end{comment}
  
  \vspace*{5.7cm}
  %\begin{center}
@@ -222,37 +225,37 @@
   % empty
  \end{minipage}
  \begin{minipage}{0.55\linewidth}
-% \vspace{2.0cm}
+ \vspace{2.0cm}
+	 Supervisors:  \newline
+	 Dr.-Ing. Christian Ott, \newline
+	 Dipl.-Inf. Florian Steidle, \newline
+	 Institute of Robotics and Mechatronics,\newline
+	 DLR Oberpfaffenhofen.
 %  \hrulefill
  \end{minipage}
 % \end{center}
  %\vspace*{2cm}
 
- \vfill
- 			\rmfamily
- 			\changefont{ppl}{m}{n}
- 			\begin{table} [H]
-				\centering
-				\normalsize
-				\begin{tabular}{p{0.53\textwidth}p{0.41\textwidth}}
-					Examiner: & \\
-					Name of first examiner & Name of second examiner\\
-			  	&\\	
-			  	Abteilung Informationstechnik\newline Institut f\"{u}r Roboterforschung  & Lehrstuhl des Zweitgutachters\newline Fakult\"{a}t f\"{u}r Informatik\\
-
-			  \end{tabular}
-			 \end{table}
-			 
-				\rmfamily
- 				\changefont{ppl}{m}{n}
+\vfill
+\rmfamily
+\changefont{ppl}{m}{n}
+\begin{table} [H]
+	\centering
+	\normalsize
+	\begin{tabular}{p{0.53\textwidth}p{0.41\textwidth}}
+	Examiner: & \\
+	Prof. Dr.-Ing. Uwe Schwiegelshohn & Dipl.-Inf. Oliver Urbann\\
+	&\\	
+	Abteilung Informationstechnik\newline Institut f\"{u}r Roboterforschung  & Abteilung Informationstechnik\newline Institut f\"{u}r Roboterforschung\\
+	\end{tabular}
+	\end{table}		 
+	\rmfamily
+	\changefont{ppl}{m}{n}
 
  \end{titlepage}
  
     %Schriftart wieder zur\"{u}ck auf pazo
     \changefont{ppl}{m}{n}
-
-
-
     \blankpage
     \newpage
     \tableofcontents

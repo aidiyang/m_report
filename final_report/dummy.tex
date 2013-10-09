@@ -7,7 +7,12 @@
 \newcommand{\mx}[1]{\mathbf{\bm{#1}}} % Matrix command
 \newcommand{\vc}[1]{\mathbf{\bm{#1}}} % Vector command
 
+% We need layers to draw the block diagram
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
 \begin{document}
 \pagestyle{empty}
-\input{Bilder/toro_exp_setup.tex}
+\input{Bilder/walking_ctrl.tex}
 \end{document}

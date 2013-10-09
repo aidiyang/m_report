@@ -1,0 +1,20 @@
+% Define a few styles and constants
+\tikzstyle{smallbox}=[draw, top color=white, bottom color=blue!20, text width=5em,text centered, minimum height=2.5em]
+\tikzstyle{relationship} = [diamond,top color=white,bottom color=red!20,draw=red!50!black!100]
+
+\centering
+\begin{tikzpicture}[node distance=2cm]
+	% Define the nodes in the picture
+	\node (fts) {FTS};
+	\node (contact_detect) [relationship,below of=fts]{Case $\alpha$};
+	\node (LF) [smallbox,below of=contact_detect]{Left foot support};
+	\node (RF) [smallbox,left of=LF,node distance= 3cm]{Right foot support};
+	\node (DS) [smallbox,right of=LF,node distance= 3cm]{Double support};
+	
+	% Define edges
+	\draw [->] (fts) --node{}(contact_detect);
+	\draw [->] (contact_detect.west) -|node[above]{$\alpha\approx1$}(RF.north);
+	\draw [->] (contact_detect.south) --node[left]{$\alpha\approx0$}(LF.north);
+	\draw [->] (contact_detect.east) -|node[above]{$\alpha\approx0.5$}(DS.north);
+	
+\end{tikzpicture}

@@ -36,7 +36,7 @@ mI_3 & \textbf{0}_3 \\ \textbf{0}_3 &\Im
 \end{bmatrix}
 = W^b.\\
 \end{equation}
-In the above equation, \emph{m} is the mass of the rigid body, $\Im$ is the moment of inertia of the rigid body. $I_3$ represents the $3 \times 3$ identity matrix and $ \textbf{0}_3$ represents the  $3 \times 3$ zero matrix. $[{v}^b,{\omega}^b]$ are the translational velocity and angular velocity represented in body coordinate frame. $W^b$ is the body wrench applied to the center of mass of body. The body wrench represents a force/moment pair acting on the body. It is represented by vector in $\Re^6$ as \citep{mur94}
+In the above equation, \emph{m} is the mass of the rigid body, $\Im$ is the moment of inertia of the rigid body. $I_3$ represents the $3 \times 3$ identity matrix and $ \textbf{0}_3$ represents the  $3 \times 3$ zero matrix. The translation velocity and angular velocity represented in body coordinate frame are ${v}^b$ and $\omega^b$. $W^b$ is the body wrench applied to the center of mass of body. The body wrench represents a force/moment pair acting on the body. It is represented by vector in $\Re^6$ as \citep{mur94}
 $$ W^b = \begin{bmatrix} F \\ \tau \end{bmatrix}, $$ where $F \in \Re^3$ is the linear component and $\tau \in \Re^3$ is the rotational component of the generalized force.
 
 To be consistent with the multibody system dynamics formulation in Equation \ref{eq:dyn_mul_bdy} Newton Euler Equation \ref{eq:dyn_rig_bdy} is reformulated as
@@ -141,14 +141,121 @@ where $T(\theta)$ is the transformation matrix [Appendix \ref{sec:avel_trfm}].
 	\dot{q}\\
 	M^{-1}(-C\dot{y} - g + J_r^{T}(W_{r}+w_{W_r}) +J_l^{T}(W_{l}+w_{W_l}) + (\tau+w_\tau))	
 	\end{bmatrix}.
-\end{equation}	
-\begin{comment}
+\end{equation}
+The measurements of \emph{Toro} are Cartesian accelerations($acc^b$) of the hip measured by accelerometer, angular velocity($\omega^b$) of the hip measured by the gyroscope, joint angles($q_j$) and joint velocities($\dot{q_j}$) measured by joint encoders.
+\begin{equation}
+    \label{eq:y_sens}
+     y_{sens} = \begin{bmatrix} acc^b \\ \omega^b \\ q_j \\ \dot{q}_j \end{bmatrix} 
+\end{equation}
 \begin{itemize}
-\item $$ y = \begin{bmatrix} p \\ \theta \\ q \end{bmatrix} = \begin{bmatrix} x_f \\ q \end{bmatrix}, \dot{y} = \begin{bmatrix} V^b \\ \dot{q}\end{bmatrix}, x = \begin{bmatrix}y \\ \dot{y}\end{bmatrix} $$  $x_f,q$ are the parameters of the floating base and joints as described in \ref{eq:motion}. $V^b$ is the body velocity as defined in \ref{eq:body_vel} and $\dot{q}$ is the velocities of the joints of the robot. \emph{x} is the vector of system states.
-\item $T(\theta_{f})$ is the matrix that transforms the angular velocity $\omega_{f}^{b}$ to the time derivative of Euler angles $\dot{\theta}_{f}$. i.e $\omega_{f}^{b}=T(\theta_{f}) \dot{\theta}_{f}$. 
-\item R is the rotation matrix which describes the rotation of floating base with respect to spatial frame. $ R = R_x(\theta_x) R_y(\theta_y) R_z(\theta_z)$
+    \item The simplified model of $IMU_{acc}$ is $$ acc^b= \begin{bmatrix} acc^b_x \\ acc^b_y \\ acc^b_z \end{bmatrix} =  \begin{bmatrix}\ddot{p}_x^b \\ \ddot{p}_y^b \\ \ddot{p}_z^b \end{bmatrix} - R^T \begin{bmatrix}0 \\0 \\-9.81 \end{bmatrix}$$ \emph{R} is the rotational matrix that transforms a vector in body coordinate frame to spatial frame.
+    \item $\ddot{p}^b$ is computed from the forward dynamic equation \ref{eq:motion} using the predicted values of the state
+    \item $\omega_{f}^{b} $ is the vector of angular rates of the hip(floating base) measured by gyroscope. The measurements are in the frame attached to the hip. 
 \end{itemize}
-\end{comment}
+\begin{figure}
+    \begin{center}
+    %trim option's parameter order: left bottom right top
+    \includegraphics[trim= 20mm 150mm 20mm 50mm,scale=0.80]{Bilder/foot_topview.pdf}
+    \caption{Toro feet viewed from top}
+    \label{fig:biped_feet}
+    \end{center}
+\end{figure}
+Along with the sensor measurements kinematic constraints can also be introduced as measurements \citep{atk12}. The kinematic constraint that is considered as measurement is the position constraint. For instance when the robot is tilting around an edge, the position of the points that are lying on that edge does not change with respect to the spatial frame (world frame). 
+ 
+ Figure \ref{fig:biped_feet} shows the contact points considered for measurements. The corner points of each foot are measured with respect to spatial frame \emph{S}. The measuremnt equation of these contact points are
+\begin{equation}
+    \label{eq:y_kin}
+    y_{kin} = s_{contact} = \begin{bmatrix}s_{r}\\ s_{l}\end{bmatrix},
+\end{equation} where
+$s_{r},s_{l}$ are the vectors of contact points in right foot and left foot defined with respect to spatial frame. They are given as
+\begin{equation}
+	\label{eq:y_cnt}
+    \begin{split}
+    s_{r} &= \begin{bmatrix} s_{A,r}\\ s_{B,r}\\ s_{C,r}\\ s_{D,r}\end{bmatrix}= \begin{bmatrix} {H}_{r}s_{A}\\  {H}_{r}s_{B}\\  {H}_{r}s_{C}\\  {H}_{r}s_{D}\end{bmatrix} \\
+    s_{l} &= \begin{bmatrix} s_{A,l}\\ s_{B,l}\\ s_{C,l}\\ s_{D,l}\end{bmatrix}= \begin{bmatrix} {H}_{l}s_{A}\\  {H}_{l}s_{B}\\  {H}_{l}s_{C}\\  {H}_{l}s_{D}\end{bmatrix} \\
+    \end{split}
+\end{equation}
+where ${H}_{r},{H}_{l}$ are the homogeneous transformation matrices of the right and left foot with respect to spatial frame [Appendix \ref{sec:htm}]
+ In Figure \ref{fig:biped_feet} $s_A,s_B,s_C,s_D$ are constant with resptect to the foot coordinate frames \emph{RF,LF}. They are given as 
+ $$ s_A = \begin{bmatrix} 0.13 \\ 0.0475 \\ 0 \end{bmatrix} , 
+    s_B = \begin{bmatrix} 0.13 \\ -0.0475 \\ 0 \end{bmatrix},
+    s_C = \begin{bmatrix} -0.06 \\ -0.0475 \\ 0 \end{bmatrix} \text{ and }
+    s_D = \begin{bmatrix} -0.06 \\ 0.0475 \\ 0 \end{bmatrix}.$$
+
+\paragraph{Contact switching:} The measurement of the contact points $s_{cnt}$\footnote{$s_{cnt}$ is the short form of $s_{contact}$ in Equation \ref{eq:y_kin}} with respect to the spatial frame (world coordinate frame) are made before starting the experiment. These measurements are made under the circumstance where the feet of the robot make surface contact with the ground. For instance when the robot is standing on one foot then the contact measurements from the other foot are not valid. A parameter $\alpha$, that makes use of the vertical reaction force $F_z$ measured by Force Torque Sensor (FTS) on each foot to determine the support case \citep{atk12}:$$ \alpha = \frac{F_{z,r} + F_{z,l}}{F_{z,r}}.$$ 
+
+\begin{figure}[H]
+	\input{Bilder/tilt_cases.tex}
+	\caption{Foot support cases determined using parameter $\alpha$}
+	\label{fig:support_cases}
+\end{figure}
+
+The valid contact points are chosen based on the support case in Figure \ref{fig:support_cases}. The validity of the contact measurements can also change based on the type of contact the robot makes with the ground. For instance let us consider the robot is standing on its right leg. When the robot is tilting about the back edge of the foot, the front edge lifts off the ground which implies the contact changes from surface to line. The robot is only supported by the back edge of the foot. In this case the measurements of points $s_{C,r}$ and $s_{D,r}$ are valid, but $s_{A,r}$ and $s_B,r$ are invalid. So it is important to determine the state of contact of the robot with ground (surface or line). 
+
+The Zero moment point (ZMP) is an useful criteria for detecting the state of contact. The coordinates of ZMP = $[{zmp}_{x},{zmp}_{y}]^T$ are defined with respect to the foot coordinate frame. As long as the ZMP is inside the support polygon\footnote{The support polygon refers to the surface of the foot that is in contact with the ground} the robot will be in surface contact. The ZMP cannot be outside the support polygon (foot) \citep{mio04}. When the ZMP is located at the boundary of the support polygon then the robot changes from surface to line contact. In this case the contact will be about the line where the ZMP is located. Figure \ref{fig:biped_feet} shows the support polygons of right and left foot of \emph{Toro}. For instance when the ZMP is located at the back edge of a right foot's support in Figure \ref{fig:biped_feet}, then the contact is about the line (CD\footnote{From here on the line joining the points $s_X$ and $s_Y$ will be represented by XY}) joining points $s_C$ and $s_D$. In this case the robot starts tilting about the line CD.
+ 
+\begin{figure}[H]
+	\input{Bilder/zmp_cases.tex}
+	\caption{Line contacts of left foot in Figure \ref{fig:biped_feet} determined by \emph{ZMP}}
+	\label{fig:zmp_cases}
+\end{figure}
+
+Each tilting case in Figure \ref{fig:zmp_cases} have different sets of contact points. The Algorithm \ref{alg:cnt_switch} is useful in making the decision about the contact points $s_{cnt}$ based on number of support and state of contact.
+\begin{algorithm}
+    \caption{Selection of contact measurements}
+    \label{alg:cnt_switch}
+    \begin{algorithmic}
+    %\REQUIRE  $s_{cnt}$
+    %\ENSURE $FOO$
+    \IF {$\alpha = 0.5$}
+    \STATE {Double support}
+        \IF {$ {zmp}_x \geq 0.12$}
+        \STATE Contact along line AB
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{A,r} &s_{B,r} &s_{A,l} &s_{B,l} \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_x \leq -0.05$}
+        \STATE Contact along line CD
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{C,r} &s_{D,r} &s_{C,l} &s_{D,l} \end{bmatrix}^T$ 
+        \ENDIF
+    \ELSIF {$\alpha = 1$}
+    \STATE Right foot support
+        \IF {$ {zmp}_x \geq 0.12$}
+        \STATE {Contact along line AB}
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{A,r} &s_{B,r}  \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_x \leq -0.05$}
+        \STATE Contact along line CD
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{C,r} &s_{D,r}  \end{bmatrix}^T$ 
+        \ELSIF {$ {zmp}_y \geq 0.04$}
+        \STATE Contact along line AD
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{A,r} &s_{D,r}  \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_y \leq -0.04$}
+        \STATE Contact along line BC
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{B,r} &s_{C,r}  \end{bmatrix}^T$ 
+        \ENDIF
+    \ELSIF {$\alpha = 0$}
+    \STATE Support left foot
+        \IF {$ {zmp}_x \geq 0.12$}
+        \STATE Contact along line AB
+        \RETURN $ s_{cnt}= \begin{bmatrix} s_{A,l} &s_{B,l} \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_x \leq -0.05$}
+        \STATE Contact along line CD
+        \RETURN $ s_{cnt}= \begin{bmatrix} s_{C,l} &s_{D,l} \end{bmatrix}^T$ 
+        \ELSIF {$ {zmp}_y \geq 0.04$}
+        \STATE Contact along line AD 
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{A,r} &s_{D,r}  \end{bmatrix}^T$ 
+        \ELSIF {${zmp}_y \leq -0.04$}
+        \STATE Contact along line BC 
+        \RETURN $ s_{cnt}= \begin{bmatrix}s_{B,r} &s_{C,r}  \end{bmatrix}^T$ 
+        \ENDIF
+    \ENDIF
+    \end{algorithmic}
+\end{algorithm}
+
+
+The full measurement equations of the system is obtained by combining Equations \ref{eq:y_sens} and \ref{eq:y_kin}. The discretized form of measurement equations is
+\begin{equation}
+    \label{eq:y_msr}
+    y_{k+1} = \begin{bmatrix} y_{sens,k+1} \\ y_{kin,k+1} \end{bmatrix}= \begin{bmatrix} acc^b_{k+1} \\ \omega^b_{k+1} \\ q_{k+1} \\ \dot q_{k+1} \\ s_{cnt,k+1} \end{bmatrix}.
+\end{equation}
 
 %\section{Prediction step}
 \input{Kapitel/Grundlagen/toro_predict.tex}

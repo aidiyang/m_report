@@ -73,8 +73,7 @@ The initial value of the covariance matrix $P_0$ is $$ P_0 = I_{62},$$ where $I_
 \subsubsection{Observation}
 \begin{figure}
     \centering
-%    \includegraphics[height=0.5\textheight width=0.8\textwidth]{Bilder/plots/toro/toro_pos.png}
-    \includegraphics[trim=25mm 10mm 25mm 10mm,clip,scale=0.6]{Bilder/plots/toro/toro_pos.png}
+    \includegraphics[trim=25mm 10mm 25mm 10mm,clip,scale=0.55]{Bilder/plots/toro/toro_pos.png}
     \caption{Actual and estimated values of $p_x,p_z$ and $\theta_y$}
     \label{fig:toro_plotpos}
 \end{figure}
@@ -88,7 +87,7 @@ The initial value of the covariance matrix $P_0$ is $$ P_0 = I_{62},$$ where $I_
 The robot tilts about the front and back edges of the foot. In other words it rotates about the $Y-axis$ of the spatial frame (world frame). A rotation of $\theta_y$ around $Y-axis$ will results in translation motions $p_x$ and $p_z$ along $X$ and $z$ axes. These three quantities are plotted in Figure \ref{fig:toro_plotpos}. The velocities of these quantities $\omega_y,v_x,v_z$ are plotted in Figure \ref{fig:toro_plotvel}.
 
 In the the Figures \ref{fig:toro_plotpos} and \ref{fig:toro_plotvel} the time interval between $0-22s$ denotes the \emph{initial phase}, $22s-35s$ denotes the \emph{tilting phase} and $35s-39s$ denotes the \emph{final phase}. We can see in the above figures that, the estimates converges quickly to the actual states. 
-\begin{table}[H]
+\begin{table}
     \centering
     \begin{tabular}{|c|c|}
     \hline
@@ -114,10 +113,10 @@ In the the Figures \ref{fig:toro_plotpos} and \ref{fig:toro_plotvel} the time in
     \label{tab:toro_rmse}
 \end{table}
 
-The RMSE values of the estimates in Table \ref{tab:toro_rmse} are small. This shows that EKF has a good performance for the given prediction system model. The joint angles $ \hat q \in \Re^{25}$ and velocities $\hat \dot q \in \Re^{25}$ are also well estimated by the EKF. Since we focus on estimating the motion parameters of floating base, the joint's motion parameters are not discussed.
+The RMSE values of the estimates in Table \ref{tab:toro_rmse} are small. This shows that EKF has a good performance for the given system model. The joint angles $ \hat q \in \Re^{25}$ and velocities $\hat \dot q \in \Re^{25}$ are also well estimated by the EKF. Since we focus on estimating the motion parameters of floating base, the joint's motion parameters are not discussed.
 
 The time taken for 10 seconds of simulation of the EKF is $1290$ seconds. For each integration time step ($\Delta t = 0.001 s$) the EKF requires $0.129 s$ in real time for its execution. The high computation time is caused by the rigid body algorithm which has an execution time of $0.06s$. This algorithm is executed two times per time step.
 $$ \text{Time take for the execution of rigid body algorithm } = 2 \times 0.06 = 0.12 s.$$ This is approximately the execution time of the EKF for one time step.
 
 \subsection{Conclusion}
-The state estimation of motion parameters of under-actuated degrees of freedom is the main aim in this thesis. With the multibody dynamic model of \emph{Toro} it is possible to estimate more than the under-actuated degrees of freedom. 
+ With the multibody dynamic model of \emph{Toro} it is possible to estimate more than the under-actuated motion parameters. For example the joint velocity $\dot{q}$ can also be estimated. Although we have an advantage of estimating more motion parameters ($q, \dot{q}$), the main drawback is the computation time. A lot of effort is needed to setup the Jacobian matrices $A$ and $C$ for \emph{Toro} model. 

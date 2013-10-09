@@ -1,8 +1,8 @@
 \chapter{Model based on Inertial Measurement Unit}
 \label{ch:simp_mdl}
-The multibody approach in the previous chapter is computationally demanding. It cannot be implemented on real time. The bottleneck in the multibody approach is the execution time of the rigid body algorithm. In this chapter a simple dynamic model of motion equations is used in the prediction step of EKF. The model is based on the translational acceleration and angular velocity measured by IMU. The ODE's are formulated based on Equation \ref{eq:newton_motion}.
+The multibody approach in the previous chapter is computationally demanding. It cannot be implemented on real time. The bottleneck in the multibody approach is the execution time of the rigid body algorithm. In this chapter the EKF is formulated with a simple dynamic model that can run on real time is discussed. The model is based on the translational acceleration and angular velocity measured by IMU. 
 
-\section{Simplified motion model}
+\section{Mathematical model of IMU}
 The IMU \emph{MTi-100 \footnote{xsens technologies \url{http://www.xsens.com/en/general/mti-100-series} }} consists of accelerometer and gyroscope. It measures the acceleration and angular rate with respect to the coordinate frame of the body with which it is attached. The acceleration measured by accelerometer is \citep{bloe12}
 \begin{figure}
 \begin{center}
@@ -31,7 +31,7 @@ The measurement from the IMU are noisy. In addition to the noise there can be bi
 where $\tilde{a}$ is the acceleration measured by the IMU. It is composed of true acceleration \emph{a}, bias $b_a$ and the sensor noise $w_a$. The measured angular velocity is $\tilde{\omega}$, true angular velocity $\omega$, bias $b_{\omega}$ and sensor noise $w_\omega$. The sensor noises $w_a$ and $w_\omega$ are modelled as zero mean Gaussian white noise. The biases $b_a$ and $b_\omega$ are dynamical quantities but they have very slow dynamics. The bias dynamics $\dot{b}_a$ and $\dot{b}_\omega$ are modelled as first order Markov process. The bias is driven by zero mean Gaussian white noises $w_{b\omega}$ and $w_{bf}$.
 
 \subsection{State space representation}
-The state space formulation of the dynamic model is based on Equation \ref{eq:fwdyn_ode}. Rearranging the Equation \ref{eq:imu_noise} in terms of true acceleration and true angular velocity and substituting Equation \ref{eq:imu_acc} in \ref{eq:imu_noise} leads to state space dynamic model. 
+The state space formulation of the dynamic model is based on Equation \ref{eq:fwdyn_ode}. Rearranging the Equation \ref{eq:imu_noise} in terms of true acceleration and true angular velocity and substituting Equation \ref{eq:imu_acc} in \ref{eq:imu_noise} leads to state space dynamic model: 
 \begin{equation}
     \label{eq:dyn_imu}
     \begin{split}
@@ -43,22 +43,53 @@ The state space formulation of the dynamic model is based on Equation \ref{eq:fw
     \end{split}
 \end{equation}
 \begin{itemize}
-    \item $ r = \begin{bmatrix} p_x \\ p_y \\ p_z \end{bmatrix}$ is the position of IMU measurement frame with respect to spatial frame.
-    \item $ v = \begin{bmatrix} v_x \\ v_y \\ v_z \end{bmatrix} = \begin{bmatrix} \dfdx{p_x}{t} \\ \dfdx{p_y}{t} \\ \dfdx{p_z}{t} \end{bmatrix}$ is the velocity of IMU measurement frame with respect to spatial frame.
-    \item $ \theta = \begin{bmatrix} \theta_x \\ \theta_y \\ \theta_z \end{bmatrix}$ is the orientation of the IMU frame with respect to spatial frame. Orientation of IMU is parametrized as RPY Euler angles. $R=R(\theta)$ is the rotation matrix that rotates a vector in body coordinate frame to spatial coordinate frame. [Appendix \ref{sec:rot_mat}].
-    \item $T=T(\theta)$ is the matrix that transforms angular rate $\dot{\theta}$ to angular velocity in the body frame $\omega$ [Appendix \ref{sec:avel_trfm}].
+    \item $ p = \begin{bmatrix} p_x \\ p_y \\ p_z \end{bmatrix}$ is the position of IMU measurement frame with respect to spatial frame
+    \item $ v = \begin{bmatrix} v_x \\ v_y \\ v_z \end{bmatrix} = \begin{bmatrix} \dfdx{p_x}{t} \\ \dfdx{p_y}{t} \\ \dfdx{p_z}{t} \end{bmatrix}$ is the velocity of IMU with respect to spatial frame
+    \item $ \theta = \begin{bmatrix} \theta_x \\ \theta_y \\ \theta_z \end{bmatrix}$ is the orientation of the IMU frame with respect to spatial frame. The rotation matrix $R=R(\theta)$ transforms a vector in body coordinate frame to spatial coordinate frame (world coordinate frame). It is parametrized as RPY Euler angles [Appendix \ref{sec:rot_mat}]
+    \item $T=T(\theta)$ is the matrix that transforms Euler rate $\dot{\theta}$ to angular velocity $\omega$ in the body coordinate frame [Appendix \ref{sec:avel_trfm}].
 \end{itemize}
+The states of the system are
 \begin{equation}
-x = \begin{bmatrix} p \\ v \\ \theta \\ b_a \\ b_{b\omega} \end{bmatrix} \in \Re^{15}
+x = \begin{bmatrix} p \\ v \\ \theta \\ b_a \\ b_{\omega} \end{bmatrix} \in \Re^{15}.
 \end{equation}
+The contact points in Equation \ref{eq:y_kin} are the only measurements considered in this model:
+\begin{equation}
+    \label{eq:y_simp}
+    y = s_{cnt} = \begin{bmatrix}s_{r}\\ s_{l}\end{bmatrix},
+\end{equation}
+The formulation of the measurement equation is also similar to Equation \ref{eq:y_cnt}. But the homogeneous transformation of the feet $H_r$ and $H_l$ are 
+$$\begin{aligned}
+H_r &= H_{hip}^{s}H^{hip}_{r} \\
+H_l &= H_{hip}^{s}H^{hip}_{l},
+\end{aligned}$$
+\begin{itemize}
+    \item $H_{hip}^{s}$ is the homogeneous transformation matrix of the frame attached to the IMU and the spatial frame [Appendix \ref{sec:htm}]
+    \item $H^{hip}_r$ and $H^{hip}_l$ are the transformation of foot relative to hip. It is computed by the kinematics \emph{Toro}, which is a function of joint angles \emph{q}. The joint angles are measured by joint encoders.
+\end{itemize}
+\paragraph{Filter switching} The contact switching in Algorithm \ref{alg:cnt_switch} should be used in this model for dealing with the line and surface contacts. The system in Equation \ref{eq:dyn_imu} is observable for surface contact but unobservable for line contact. This is due to the fact that the measurements during line contact are linearly dependent. To solve the system under these circumstances, the estimation is done only on the following states:
+\begin{equation}
+\label{eq:dyn_imu_red}
+x=\begin{bmatrix}
+p \\ v\\ \theta
+\end{bmatrix} \in \Re^9.
+\end{equation} The biases $b_a$ and $b_\omega$ are assumed to be constant. 
+
+The state estimation will consist of two EKF's, one estimating the full state system in Equation \ref{eq:dyn_imu} and the other estimating the reduced state in Equation \ref{eq:dyn_imu_red}. The selection of the filter is based on the ZMP. When switching between the filters, the new filter's state $\hat{x}_0$ and covariance $P_0$ are initialized with the estimated values of old filter in previous time step. The active filter's output should be taken as the of the filter.
+
+\begin{figure}
+	\centering
+	\input{Bilder/ekf_switch.tex}
+	\caption{Swithing model of EKF}
+	\label{fig:ekf_switch}
+\end{figure}
 
 \subsection{Prediction step}
-The prediction equations of EKF are given in Equation \ref{eq:ekf_predict}. For the sake of simplicity we assume the process noise acting on the model is uncorrelated. i.e The noise acting on each state is independent $$W_k = I_n$$. $n$ is the number of states. Substituting the value of $W_k$ in Equation \ref{eq:ekf_predict}
+The prediction equations of EKF are given in Equation \ref{eq:ekf_predict}. 
 \begin{equation}
 \label{eq:imu_predict}
 \begin{split}
 \hat{x}_{k+1}^- &= f(\hat{x}_{k},u_{k+1},0)\\
-P_{k+1}^- &= A_kP_{k}A_k^T + Q_{k}\\
+P_{k+1}^- &= A_kP_{k}A_k^T + W_kQ_{k}W_k^T\\
 \end{split}
 \end{equation}
 The model is discretized for the implementation of EKF. Since the time step for integration is very small $\Delta t = 1ms$ forward Euler discretization method is used to discretize the continuous time model in \ref{eq:dyn_imu}.
@@ -84,7 +115,7 @@ The system matrix is obtained by computing the Jacobian of the discretized syste
 \end{equation}
 
 \subsection{Update step}
-The update equation of the EKF is given in Equation \ref{eq:ekf_correct}. The measurement equation of the system is given by $$\hat{y}_{k+1} = h(\hat{x}_{k+1}^-,u_{k+1},0)$$.For the sake of simplicity let us assume the measurement of noise are independent. $$V_k = I_3$$. Substituting the assumption in \ref{eq:ekf_correct}
+The update equation of the EKF is given in Equation \ref{eq:ekf_correct}. The measurement equation of the system is given by $$\hat{y}_{k+1} = h(\hat{x}_{k+1}^-,u_{k+1},0).$$For the sake of simplicity let us assume the measurement of noise are independent. $$V_k = I_3.$$ Substituting the assumption in Equation \ref{eq:ekf_correct} leads to the following filter equations:
 \begin{equation}
 \label{eq:imu_correct}
 \begin{split}
@@ -93,26 +124,17 @@ K_{k+1} &= P_{k+1}^-\hat{C}_{k+1}^{T}(\hat{C}_{k+1}P_{k+1}^-\hat{C}_{k+1}^{T} + 
 P_{k+1} &= (I- K_{k+1}\hat{C}_{k+1})P_{k+1}^-
 \end{split}
 \end{equation}
-The contact points are the only measurements that are considered for the update step. Figure \ref{fig:biped_feet} shows the contact points. The Force torque sensor (FTS) measurement is used to compute the ZMP[Appendix \underline{Zero moment point}] of the foot and also to determine the foot that is in contact with the ground. The measurement equation is same as Equation \ref{eq:y_kin} of the multi body system model. $H_{RF} \text{ and } H_{LF} $ are formed as the composition of $H_{hip}^s H_{RF}^{hip}$ and $H_{hip}^s H_{RF}^{hip}$ respectively.
-\begin{equation}
-    \label{eq:imu_msr}
-    \begin{split}
-    y_{i,j} &= H(r,\theta) kin_j(q)p_i \hspace{2cm} \forall i=\{A,B,C,D\} \text{ and } j=\{RF,LF\} \\
-    &= H_{hip}^s H_{foot}^{hip}p_i \\
-    &= H p_{foot,i}^{hip}
-    \end{split}
-\end{equation}
-\begin{itemize}
-    \item $H(r,\theta)$ is the homogeneous transformation matrix of the frame attached to the IMU and the spatial frame [Appendix \ref{sec:htm}]
-    \item $kin_j(q)$ computes the homogeneous transformation matrix of foot relative to hip. \emph{q} represents joint angles measured by encoders.
-\end{itemize}
+
 The measurement sensitivity matrix is computed by taking the Jacobian of the measurement equation.
 \begin{equation}
-        \hat{C}_{k+1} = \dfdx{\hat{y}_{k+1}}{x} = \dfdx{\hat{H}_{k+1}}{x} kin_j(q_{k+1}) p_i \hspace{1cm} \forall i=\{A,B,C,D\} \text{ and } j=\{RF,LF\} 
+        \hat{C}_{k+1} = \dfdx{\hat{y}_{k+1}}{x} = 
+	\begin{bmatrix}		        
+        \dfdx{\hat{H}^{s}_{hip,k+1}}{x} H_{hip}^r p_i\\
+		\dfdx{\hat{H}^{s}_{hip,k+1}}{x} H_{hip}^l p_i\\
+    \end{bmatrix}
+         \hspace{1cm} \forall i=\{A,B,C,D\} 
 \end{equation}
-\begin{itemize}
-    \item $\dfdx{\hat{H}_{k+1}}{x}$ is the partial derivative of homogeneous transformation matrix with respect to system states. [Appendix \ref{sec:htm}]
-\end{itemize}
+where $\dfdx{\hat{H}^s_{hip,k+1}}{x}$ is the partial derivative of homogeneous transformation matrix $H_{hip,k+1}^s$ with respect to system states. [Appendix \ref{sec:htm}]
 
 % Experiments
 \input{Kapitel/Grundlagen/simp_exp.tex}
