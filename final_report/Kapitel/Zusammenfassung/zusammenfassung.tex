@@ -1,2 +1,10 @@
 \chapter{Conclusion}
-\label{chap:conclusion}
+\label{ch:conclusion}
+
+Filter Comparison:
+
+In this thesis the state estimation problem is approached with two different filters and two different models. The UKF is easy to tune for system with few states (inverted double pendulum) but for larger models (\emph{Toro}) it is difficult to tune. The modeling effort required for the UKF is lesser compared to the EKF, since we have to formulate the Jacobian matrices for the model. With the best hand tuned values the UKF preforms same as the EKF as we can see in Tables \ref{tab:idp_rmse_ekf} and \ref{tab:idp_rmse_ukf}. The computation time of UKF is higher than the EKF. The UKF is very hard to tune and not applicable for real time.
+
+Models Comparison:
+The performance of EKF for the multibody system model in Chapter \ref{ch:multi_mdl} and the simple model of IMU \ref{ch:simp_mdl} are similar. This can be seen from the RMSE values of the estimates. The IMU model is sufficient for estimating the underactuated motion parameters. Moreover the IMU model having low computational time makes it runnable on the real time. On the otherhand the multibody system model is not suitable because of the high computational time. 
+%Even though it have an advantage of estimating more states ($q$ and $\dot{q}$) the 

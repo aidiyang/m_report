@@ -70,6 +70,10 @@ The initial values of the system $x_0$ and estimator $\hat x_0$ are
 $$ \begin{aligned} x_0 &= [0,0,1.164,\textbf{0}_{1,59}]^T \\ \hat x_0 &= \textbf{0}_{62,1}, \end{aligned} $$  where $\textbf{0}_{62,1}$ is the zero matrix of dimensions $62 \times 1$ [Appendix \ref{sec:symbols}].
 The initial value of the covariance matrix $P_0$ is $$ P_0 = I_{62},$$ where $I_{62}$ respresents the identity matrix of dimensions $62\times62$. 
 
+The following set of tuning parameters are set for the UKF:
+$$ \begin{aligned} \alpha =1\cdot {10}^{-3} \\ \beta =2 \\ \kappa=0.  \end{aligned} $$
+
+
 \subsubsection{Observation}
 \begin{figure}
     \centering
@@ -84,7 +88,7 @@ The initial value of the covariance matrix $P_0$ is $$ P_0 = I_{62},$$ where $I_
     \label{fig:toro_plotvel}
 \end{figure}
 
-The robot tilts about the front and back edges of the foot. In other words it rotates about the $Y-axis$ of the spatial frame (world frame). A rotation of $\theta_y$ around $Y-axis$ will results in translation motions $p_x$ and $p_z$ along $X$ and $z$ axes. These three quantities are plotted in Figure \ref{fig:toro_plotpos}. The velocities of these quantities $\omega_y,v_x,v_z$ are plotted in Figure \ref{fig:toro_plotvel}.
+The results of EKF are shown as plots in the Figures \ref{fig:toro_plotpos} and \ref{fig:toro_plotvel}. When the robot is pushed, it tilts about the front and back edges of the foot. In other words it rotates about the $Y-axis$ of the spatial frame (world frame). A rotation of $\theta_y$ around $Y-axis$ will results in translation motions $p_x$ and $p_z$ along $X$ and $z$ axes. These three quantities are plotted in Figure \ref{fig:toro_plotpos}. The velocities of these quantities $\omega_y,v_x,v_z$ are plotted in Figure \ref{fig:toro_plotvel}. 
 
 In the the Figures \ref{fig:toro_plotpos} and \ref{fig:toro_plotvel} the time interval between $0-22s$ denotes the \emph{initial phase}, $22s-35s$ denotes the \emph{tilting phase} and $35s-39s$ denotes the \emph{final phase}. We can see in the above figures that, the estimates converges quickly to the actual states. 
 \begin{table}
@@ -118,5 +122,21 @@ The RMSE values of the estimates in Table \ref{tab:toro_rmse} are small. This sh
 The time taken for 10 seconds of simulation of the EKF is $1290$ seconds. For each integration time step ($\Delta t = 0.001 s$) the EKF requires $0.129 s$ in real time for its execution. The high computation time is caused by the rigid body algorithm which has an execution time of $0.06s$. This algorithm is executed two times per time step.
 $$ \text{Time take for the execution of rigid body algorithm } = 2 \times 0.06 = 0.12 s.$$ This is approximately the execution time of the EKF for one time step.
 
+\begin{comment}
+The UKF did not work well in estimating the states for the given tuning parameters. The estimates did not converge to the actual states. It does not mean the UKF wont work for the given model. It is harder to find the correct set of tuning parameters for larger systems. To verify this claim the following experiment is made. 
+
+The double pendulum system is extended with an additional joint and link as shown in Figure \textbf{foo}. The states of the system are 
+\begin{equation}
+	x =
+	\begin{bmatrix}
+	q_1 \\ q_2 \\ q_3 \\ \dot q_1 \\ \dot q_2 \\ \dot q_3
+	\end{bmatrix}.
+\end{equation}
+ The tuning parameters of the UKF used in the double pendulum system are used for this experiment. 
+ \begin{figure}
+ 	\includegraphics[scale=0.5]{Bilder/plots/plot_ukf6}
+ 	\caption{Plots of actual and estimated states}
+\end{figure}  
+\end{comment}
 \subsection{Conclusion}
- With the multibody dynamic model of \emph{Toro} it is possible to estimate more than the under-actuated motion parameters. For example the joint velocity $\dot{q}$ can also be estimated. Although we have an advantage of estimating more motion parameters ($q, \dot{q}$), the main drawback is the computation time. A lot of effort is needed to setup the Jacobian matrices $A$ and $C$ for \emph{Toro} model. 
+ With the multibody fomulation it is possible to estimate more than the underactuated motion parameters. For example the with the \emph{Toro} model it is possible to estimate the motion parameters of the joints $q$ and $\dot{q}$. Although we have an advantage of estimating additional motion parameters, the main drawback with this model is the computation time. Setting up the Jacobian matrices $A$ and $C$ for requires lot of effort. 

@@ -1,32 +1,59 @@
 \section{Kalman Filter}
-Kalman filter is a statistical state estimation algorithm which estimates the internal state of the system from the noisy measurements. It was designed by Rudolph E. Kalman in 1960 for discrete time linear systems. It is basically a predictor-corrector type estimator that is optimal in the sense that it minimizes the estimated error covariance. Kalman filters provides good estimates in presence of modelling errors in system. Since the measurements occur and the states are estimated at discrete points of time, it is easily implementable in digital computers. Kalman filters are extensively used in the area of autonomous and guided navigation.
+The Kalman filter is a statistical state estimation algorithm that estimates the internal state of the system from the noisy measurements. It was designed by Rudolph E. Kalman in 1960 for discrete time linear systems. It is basically a predictor-corrector type estimator that is optimal in the sense that it minimizes the estimated error covariance. The Kalman filters produces good estimates in presence of modeling errors in system. Since the measurements and the states estimation occur at discrete points of time, it is easily implementable in digital computers. The Kalman filters are extensively used in the area of autonomous and guided navigation \citep{gre01}.
 
-\subsection{Kalman gain}
-A discrete time linear system affected by random noise is
+%\subsection{Kalman gain}
+The state space representation of discrete time linear system affected by random noise is
 \begin{equation}
     \begin{split}
         \label{eq:lin_ss}
-        x_{k} &= Ax_{k-1} + Bu_k + w_{k-1}\\
-        y_k &= Cx_k + v_k,
+        x_{k} &= Ax_{k-1} + Bu_k + w_{k-1} \in \Re^{n}\\
+        y_k &= Cx_k + v_k \in \Re^{p},
     \end{split}
 \end{equation}
-where the random variables $w_k$,$v_k$ represent the process and measurement noise. Both the random variables are assumed to be zero mean Gaussian white noises. Let $Q,R$ be the covariance of process and measurement noise. The error between the actual and predicted value of the state is \citep{gre01}
-\begin{equation}\label{eq:kf_err}
-e_k^ = x_k - \hat{x}_k,
-\end{equation} 
-where $x_k$ represents the true states of the system and $\hat x_k$ \footnote{ The estimated states are represented by hat symbol at the top, inorder to differentiate them from the true states of the system. For example $\hat x_k$ represents the estimated states} represents the estimated states.
-The covariance of the error equation or the process covariance is 
-\begin{equation}\label{eq:kf_P}
-P_k^ = E[e_k {e_k}^T].
-\end{equation} Kalman filter corrects its estimate based on the predicted state and measured output data by 
-\begin{equation} \label{eq:kf_correct}
-\hat{x_k} = \hat{x}_k + K(y_k - H\hat x_k).
+where the random variables $w_k$,$v_k$ represent the process and measurement noise. Both the random variables are assumed to be zero mean Gaussian white noises. Let $Q,R$ be the covariance of process and measurement noise. The system matrix $A$ relates the present state $x_k$ and the state at previous time step $x_{k-1}$, the input matrix $B$ relates the inputs $u_k$ and the state $x_k$, the measurement sensitivity matrix $C$ relates the present state $x_k$ and the output $y_k$. The number of states and measurement are given by $n$ and $p$.
+
+The conceptual derivation of the Kalman gain is as follows \citep{gre01} :
+
+The a priori error $e_k$ between actual $x_k$ and estimates $\hat x_k^{-}$ \footnote{The priori state estimates are indicated by the $-$ sign in the superscript of the symbol. For example $\hat x_k^-$ represents a priori state estimate.} projected ahead of time is
+ \begin{equation}
+	e_k^{-} = x_k - \hat{x}_k^{-},
+	\label{eq:kf_err}
 \end{equation}
-Kalman gain is computed by substituting Equation \ref{eq:kf_correct} in Equation \ref{eq:kf_err} to compute the $e_k^-$. Computed $e_k^-$ is substituted in Equation \ref{eq:kf_P} and the expected values are computed to find the error covariance $P_k^-$. Finally \emph{K} is computed by taking the derivative of trace of $P_k^-$ and equating it to zero $$ \dfdx{trace(P_k^-)}{K} = 0 $$ solving the above equation for \emph{K}. One form of \emph{K} that minimizes Equation \ref{eq:kf_correct}
+its covariance is
+\begin{equation}
+	P_k^{-} = E[e_k^{-} \cdot e_K^{-T}].
+	\label{eq:kf_P}
+\end{equation}
+
+The estimates of states $\hat x_k^-$ and the covariance matirx $P_k^{-}$ projected ahead of time of the system in \ref{eq:lin_ss} is
+\begin{equation}
+	\begin{split}
+	\hat{x}_k^{-} &= A \hat x_{k-1} + B u_k \\
+	P_k^- &= A P_{k-1} A^{T} + Q .
+	\end{split}
+\end{equation}
+The posteriori estimates of state $\hat x_k$ and covariance $P_k$ is
+\begin{equation} 
+	\label{eq:kf_correct}
+	\begin{split}
+	\hat{x}_k &= \hat{x}_k^{-} + K_k(y_k - C\hat x_k^{-})\\
+    {P}_{k} &= (I - {K}_k {C}) {P}_{k}^{-} (I - {K}_k {C})^{T} + {K}_k {R} {K}_k^{T},
+	\end{split}
+\end{equation}
+where $I$ represents the identity matrix of size $n \times n$.
+
+Substituting Equation \ref{eq:kf_correct} in Equation \ref{eq:kf_err} gives
+\begin{equation}
+	e_k^- =  K_k(y_k - C\hat x_k^-).
+\end{equation}
+
+The error covariance $P_k^-$ of the above equation is obtained by substituting it in Equation \ref{eq:kf_P}. The gain $K_k$\footnote{The Kalman gain $K_k$ given in Equation \ref{eq:kf_gain} is one of the solution that minimizes the error. It can be algebraically manipulated.} that minimizes the \emph{trace}\footnote{The trace of a square matrix is the sum of the main diagonal entries of the matrix} of $P_k^-$ is given by
+%and equating it to zero $$ \dfdx{trace(P_k^-)}{K} = 0 $$ solving the above equation for \emph{K}. One form of \emph{K} that minimizes Equation \ref{eq:kf_correct}
 \begin{equation} \label{eq:kf_gain}
- K_k = P_k^- C^T(C P_k^- C^T + R)^{-1}
+ K_k = P_k^- C^T(C P_k^- C^T + R)^{-1}.
     \end{equation}
-From the Equation \ref{eq:kf_gain} as measurement covariance \emph{R} approaches zero, Kalman gain \emph{K} lays more trust on actual measurement $y_k$. On the other hand if $P_k^-$ approaches zero, predicted measurement $C\hat{x_k}^-$ is trusted more.
+
+%In the Equation \ref{eq:kf_gain} as measurement covariance \emph{R} approaches zero, Kalman gain \emph{K} lays more trust on actual measurement $y_k$. On the other hand if $P_k^-$ approaches zero, predicted measurement $C\hat{x_k}^-$ is trusted more.
 
 \subsection{Extended Kalman filter}
 Most of the real world estimation scenarios are non linear in nature. Kalman filter algorithm  being a linear state estimation algorithm cannot be applied to the non linear systems. \emph{NASA Ames} devised a method to apply Kalman filter for non linear systems which is called the Extended Kalman filter(EKF) \citep{ekf85}. In EKF the non linear system is linearised by multivariate Taylor series expansion of the non linear function. 
@@ -35,30 +62,63 @@ The discrete time non linear system in state space representation is
 \begin{equation}
 \label{eq:nl_disc}
 \begin{split}
-x_{k} &= f(x_{k-1},u_k,w_{k-1})\\
-y_k &= h(x_k,u_k,v_k),
+x_{k} &= f(x_{k-1},u_k,w_{k-1}) \in \Re^{n}\\
+y_k &= h(x_k,u_k,v_k) \in \Re^{p},
 \end{split}
 \end{equation}
-\emph{x,y} denotes the vector of system's state and output. \emph{w,v} represents the process and measurement covariance noise. The non linear function that relates the previous state to the present state is  $f(x_{k-1},u_k,w_{k-1})$ and $h(x_k,u_k,v_k$) is the non linear function that relates the output and state. 
+where $x_k,y_k$ denotes the system's state and output. The process and measurement noises are represented by $w_{k-1},v_k$. The nonlinear function $f(x_{k-1},u_k,w_{k-1})$ relates the previous state $x_k$ to the present state $x_{k-1}$ and the nonlinear function $h(x_k,u_k,v_k)$ relates the state $x_k$ and the output $y_k$. 
 
-In practice the individual values of noise $w_k$ and $v_k$ at each time step \emph{k} is not known. So one can compute the approximated state and measurement vector without them as 
+The prediction and correction phases of the EKF is given as follows:
+\begin{itemize}
+\item \textbf{Time update or Predict}
+\begin{enumerate}
+\item The priori state estimates $\hat x_k^{-}$ is
+%In practice the individual values of noise $w_k$ and $v_k$ at each time step \emph{k} is not known. So one can compute the approximated state and measurement vector without them as 
 \begin{equation}
-\begin{split}
-\label{eq:ekf_priori}
-\hat{x}_k^- &= f(\hat{x}_{k-1},u_{k},0)\\
-\hat{y}_k &= h(\hat{x}_k^-,u_{k},0),
-\end{split}
+	\begin{split}
+	\label{eq:ekf_priori}
+	\hat{x}_k^- &= f(\hat{x}_{k-1},u_{k},0).\\
+	%\hat{y}_k &= h(\hat{x}_k^-,u_{k},0),
+	\end{split}
 \end{equation}
-where $\hat{x}_k^-$\footnote{The priori state estimates are indicated by the $-$ sign in the superscript of the symbol. For example $\hat x_k^-$ represents the prori state estimate.} is the called the priori state estimate. The priori state estimate is used to compute the measurement $\hat{y}_k$ at time step \emph{k}. For the computation of Kalman gain $K$ in Equation \ref{eq:kf_gain}, $P_k$ and $C_k$  have to be computed. The state covariance matrix $P_k$ is $$P_k = A_k P_{k-1} A_k^T + W_k Q_{k-1} W_k^T. $$ 
-    $A_k$ and $C_k$  are the Jacobian matrices that results by taking partial derivative of $\hat x_k^-$ and $\hat y_k$ in Equation \ref{eq:nl_disc} with respect to \emph{x}  at time instant \emph{k}. The $A_k$ and $C_k$ are the linear equivalent of state and measurement matrices of non linear system described in Equation \ref{eq:nl_disc}. $W_k$ and $V_k$ are the noise correlation matrix of process and measurements. They are computed by taking  Jacobian of $\hat x_k^-$  with respect to \emph{w} and and $\hat y_k$ with respect to \emph{v} in Equation \ref{eq:nl_disc}.
+\item The priori covariance matrix is $P_k^-$ is
+\begin{equation} P_k^- = A_kP_{k-1}A_k^T + W_kQ_{k-1}W_k^T \end{equation}
+%where $\hat{x}_k^-$ is the called the priori state estimate The priori state estimate is used to compute the measurement $\hat{y}_k$ at time step \emph{k}. For the computation of Kalman gain $K$ in Equation \ref{eq:kf_gain}, $P_k$ and $C_k$  have to be computed. The state covariance matrix $P_k$ is $$P_k = A_k P_{k-1} A_k^T + W_k Q_{k-1} W_k^T. $$ 
+where $A_k$ and $W_k$ are the system and process noise correlation matrix. They are obtained by computing the Jacobian matrix of the function $f(x_{k-1},u_k,w_{k-1})$ with respect state $x$ and noise $w$. They are
 \begin{equation}
-\begin{split}
-A_k(i,j) &= \dfdx{f_i}{x_j}(\hat{x}_{k-1},u_k,w_{k-1})\\
-C_k(i,j) &= \dfdx{h_i}{x_j}(\hat{x}_k^-,u_k,v_k)\\
-W_k(i,j) &= \dfdx{f_i}{w_j}(\hat{x}_{k-1},u_k,w_{k-1})\\
-V_k(i,j) &= \dfdx{h_i}{v_j}(\hat{x}_k^-,u_k,v_k)\\
-\end{split}
+	\begin{split}
+	A_k(i,j) &= \left. \dfdx{f_i}{x_j}\right \vert_{\hat{x}_{k-1},u_k,0}  \\
+	W_k(i,j) &= \left. \dfdx{f_i}{w_j}\right \vert_{\hat{x}_{k-1},u_k,0}.
+   % {\color{Red}\boldsymbol{F}_{k-1}} = \left . \frac{\partial f}{\partial \boldsymbol{x} }    \right \vert _{\hat{\boldsymbol{x}}_{k-1|k-1},\boldsymbol{u}_{k-1}} 
+	\end{split}
 \end{equation}
+\end{enumerate}
+\item \textbf{Measurement update or Correct} 
+\begin{enumerate}
+	\item The Kalman gain $K_k$ is 
+		$$K_k = P_k^-C^T(C_kP_k^-C_k^T + V_kR_kV_k^T)^{-1},$$
+		where $C_k$ and $V_k$ are the measurement sensitivity and measurement noise correlation matrix. They are obtained by computing the Jacobian matrix of the function $h(x_k,u_k,v_k)$ with respect to states $x$ and the measurements noise $v$. They are 
+		\begin{equation}
+		\begin{split}
+		C_k(i,j) &= \left. \dfdx{h_i}{x_j}\right \vert_{(\hat{x}_k^-,u_k,0)} \\
+		V_k(i,j) &= \left. \dfdx{h_i}{v_j}\right \vert_{(\hat{x}_k^-,u_k,0)}.
+		\end{split}
+		\end{equation}
+	\item The posteriori state estimate $\hat x_k$ is
+		$$\hat{x}_k = \hat{x}_k^- + K_k(y_k-h(\hat{x}_k^-,u_k,0)).$$
+	\item The posteriori state covariance matrix $P_k$ is
+			$${P}_{k} = (I - {K}_k {C}) {P}_{k}^{-} (I - {K}_k {C})^{T} + {K}_k {R} {K}_k^{T}.$$
+\end{enumerate}
+\end{itemize}
+\begin{figure}  
+\input{Bilder/ekf_work.tex}
+\caption{Recursive formulation of EKF}
+\label{fig:ekf_blk}
+\end{figure}
+
+%The $A_k$ and $C_k$ are the linear equivalent of state and measurement matrices of non linear system described in Equation \ref{eq:nl_disc}. $W_k$ and $V_k$ are the noise correlation matrix of process and measurements. They are computed by taking  Jacobian of $\hat x_k^-$  with respect to \emph{w} and and $\hat y_k$ with respect to \emph{v} in Equation \ref{eq:nl_disc}.
+
+\begin{comment}
 The priori state estimates in Equation \ref{eq:ekf_priori} are corrected according to Equation \ref{eq:kf_correct}. The corrected estimate is called the posteriori state estimate. It is given by
 \begin{equation}
     \hat{x}_k = \hat{x}_k^- + K_k(y_k-h(\hat{x}_k^-,u_k,0)).
@@ -69,12 +129,6 @@ P_k = (I- K_kC_k)P_k^-.
 \end{equation}
 
 \subsubsection{Algorithm}
-\begin{figure}  
-\input{Bilder/ekf_work.tex}
-\caption{Recursive formulation of EKF}
-\label{fig:ekf_blk}
-\end{figure}
-
     The recursive formulation of the discrete time EKF is shown in Figure \ref{fig:ekf_blk}.  For every time step \emph{k}, the time update stage projects the current state estimates ahead of time. The measurement update stage corrects the projected estimate. For the next time step $k+1$ the posteriori estimates are time step $k$ from measurement update sage is used to project the state and its error covariance estimates.
 
 The algorithm for discrete time EKF can be given as two steps.
@@ -106,10 +160,11 @@ The algorithm for discrete time EKF can be given as two steps.
 \end{split}
 \end{equation}
 \end{itemize}
-
+\end{comment}
 The EKF algorithm is applied for the multi body system model of \emph{Toro} in Chapter \ref{ch:multi_mdl} and for the simplified model of IMU in Chapter \ref{ch:simp_mdl}.
 
-The continuous time EKF algorithm is given by \citep{gel74}
+\paragraph{Continuous time EKF}
+The discrete time EKF is the most common form used in many practical applications. Sometimes it is be difficult to discretize the continuous time dynamic model of the system. For these applications a continuous time formulation of EKF is necessary. It is given by \citep{gel74}
 \begin{equation}
     \label{eq:ekf_con}
     \begin{split}
@@ -122,18 +177,18 @@ where $$A(t) = \dfdx{f}{x}(\hat x(t), u(t)), \hspace{2cm} H(t) = \dfdx{h}{x} (\h
 
 \subsubsection{Tuning rules}
 \label{subsec:tune_ekf}
-Tuning of the EKF involves setting the values of the noise covariance matrices $Q,R$. When the measurements $y$ are noisy then the emphasis is laid on the prediction model. In other words the prediction model is relied more. This is achieved by setting the covariances $Q<R$. On the other hand if the estimated process is noisy due to unmodelled dynamics or model mismatch then the measurements are relied more. This is achieved by setting $Q>R$.
+Tuning of the EKF involves setting the values of the noise covariance matrices $Q,R$. When the measurements noise $v_k$ is bigger than the process noise $w_k$ then the emphasis is laid on the prediction model. On the other hand if the process noise $w_k$ is bigger than the measurement noise $v_k$ then the emphasis is laid on measurements. For instance let us consider a system with one state and one measurement. The EKF can be made to rely on the prediction model by setting the covariance $Q<R$ or the measurements by setting $Q>R$.
 
 The initial convergence of the filter depends upon the initial values of the estimator's state $\hat x_0$ and covariance $P_0$. If a states of the estimated system is not known at the beginning then the initial state covariance $P_0$ is set to very high value to achieve the fast convergence to actual value.
 
 \subsection{Unscented Kalman filter}
-The unscented Kalman filter is a new class filter for nonlinear systems. It was first addressed by Julier et.al in 1997 \citep{jul97} as an alternative to EKF. This filter introduces unscented transformation(UT) to propagate mean and covariance information through non linear transformations.
+The unscented Kalman filter is a new class filter for nonlinear systems. It was first addressed by Julier et.al in 1997 \citep{jul97} as an alternative to EKF. This filter introduces the concept called the unscented transformation(UT). The UT is a method to determine the statistics of a random variable after undergoing non linear transformations.
 %This leads to a differnt method to compute the error covairance matrix $P_k^-$.
 
 \subsubsection{Unscented transform}
-The basic idea behind the UT was founded on the intuition that it is easier to approximate a probability distribution than it is to approximate an arbitrary nonlinear function \citep{jul04}. A set of sigma points are chosen so that their mean and covariance are $\bar x$ and $\Sigma_x$. The sigma points are applied to a non linear function which in turn yield set of transformed points. The statistics computed from the transformed points forms the estimate of nonlinearly transformed mean and covariance. This method is similar to the one used by particle filters. The main difference is this method uses deterministic way to choose the sigma points based on the specific properties. 
+The basic idea behind the UT is that it is easier to approximate a probability distribution of a random variable transformed by an arbitrary nonlinear function than it to approximate the nonlinear function \citep{jul04}. A set of sigma points are chosen so that their mean and covariance are $\bar x$ and $\Sigma_x$. The sigma points are propogated through a nonlinear function which in turn yield set of transformed points. The statistics computed from the transformed points forms the estimate of nonlinearly transformed mean and covariance. This method is similar to the one used by particle filters. The main difference is this method uses deterministic way to choose the sigma points based on the specific properties.
 
-The set $S$ consists of vectors of length $2n+1$ of sigma points $x_i$ and weights associated with the mean and covariance $W_i^m, W_i^c $. It is given by \citep{sim07} 
+The set $X$ consists of sigma points $x_i$ of length $2n+1$ and weights associated with the mean and covariance $W_i^m, W_i^c $. It is given by \citep{sim07} 
 \begin{equation} 
     \label{eq:ut_sigma}
     \begin{split}
@@ -144,7 +199,7 @@ The set $S$ consists of vectors of length $2n+1$ of sigma points $x_i$ and weigh
     \end{split}
 \end{equation}
 The matrix square root of a positive definite matrix $\Sigma_x$ is computed using Cholesky factorisation. 
-
+a new method to transform the statistics of a random variable
 The weights associated to the sigma points are given by 
 \begin{equation}
     \label{eq:ut_weights}
@@ -167,6 +222,25 @@ The sigma points $x_i$ are applied to the non linear function $$y= f(x).$$ The m
     \end{split}
 \end{equation}
 
+The matrix form of the UT equations \ref{eq:ut_sigma},\ref{eq:ut_weights} and \ref{eq:ut_mean_cov} is as follows:
+\begin{equation}
+        \begin{split}
+            X &= [ \bar x \hspace{5mm} \cdots \hspace{5mm} \bar x ]+ \sqrt c [ 0 \hspace{5mm} \sqrt \Sigma_x \hspace{5mm} - \sqrt \Sigma_x ]\\
+            Y &= f(X) \\
+            \bar y &= Y w_m\\
+            \Sigma_y &= Y W Y^T \\
+            \Sigma_{xy} &= X W Y^T,
+        \end{split}
+    \end{equation}
+    where $X$ is the matrix of sigma points. $c=\alpha^2(n+\kappa)$, the vector $w_m$ and matrix $W$ are given by
+    \begin{equation}
+        \begin{split}
+        w_m &= [W_m^0 \hspace{5mm} \cdots \hspace{5mm} W_m^{2n} ]\\
+        W &= (I-[w_m \hspace{2mm} \cdots \hspace{2mm} w_m])diag(W_c^0 \hspace{2mm} \cdots \hspace{2mm} W_c^{2n}) (I-[w_m \hspace{2mm} \cdots \hspace{2mm} w_m])^T.
+        \end{split}
+    \end{equation}
+
+\begin{comment}
 The UKF have all the steps as in the Kalman Filter. The continuous time non linear system with additive white noises $v(t),w(t)$ is as follows \citep{sim07}:
 \begin{equation}
     \label{eq:ukf_nlsys}
@@ -185,8 +259,9 @@ $$  \begin{aligned}
     P_k &= P_k^- - K_k \Sigma_{y,k} K_k^T.
     \end{aligned}
     $$
-\subsubsection{Algorithm}
-The UKF algorithm in matrix form is given in \citep{sim07}. The matrix from UKF is chosen as it is easy to implement in Matlab.
+\end{comment}
+%\subsubsection{Algorithm}
+The UKF algorithm in matrix form is given in \citep{sim07}. The prediction and correction phases of the UKF is given as follows:
 \begin{figure}[H] 
     \centering
     \input{Bilder/ukf_work.tex}
@@ -195,6 +270,7 @@ The UKF algorithm in matrix form is given in \citep{sim07}. The matrix from UKF 
 \end{figure}
 
 \begin{itemize}
+	\begin{comment}
     \item \textbf{Unscented transform}
     \begin{equation}
         \begin{split}
@@ -212,68 +288,70 @@ The UKF algorithm in matrix form is given in \citep{sim07}. The matrix from UKF 
         W &= (I-[w_m \hspace{2mm} \cdots \hspace{2mm} w_m])diag(W_c^0 \hspace{2mm} \cdots \hspace{2mm} W_c^{2n}) (I-[w_m \hspace{2mm} \cdots \hspace{2mm} w_m])^T.
         \end{split}
     \end{equation} 
-    
-    \item \textbf{Time update:} Project the state mean state mean $\hat{\bar x}^-_k$ and covariance ${\bar P}^-_k$ ahed of time. The time update is performed by the following steps:
+    \end{comment}
+    \item \textbf{Time update or Predict:} 
+	%\begin{enumerate}
+	 The priori state $\hat{\bar x}^-_k$ and covariance ${\bar P}^-_k$ estimates are computed by projecting them ahead of time. For this purpose a set of sigma points has to be propagated through the nonlinear state projection function $f(x,u,t)$. 
     \begin{itemize}
-        \item \textbf{Sigma points:} Compute the sigma points from the posteriori state estimates from the previous time step.
+        \item \textbf{Sigma points:} The sigma points $X_{k-1}$ of the posteriori state estimates $\hat x_{k-1}$ and $P_{k-1}$ from the previous time step is
         \begin{equation}
-        X_{k-1} = [ \hat{\bar{x}}_k \hspace{5mm} \cdots \hspace{5mm} \hat{\bar{x}}_k]+ \sqrt c [ 0 \hspace{5mm} \sqrt{P_{k-1}} \hspace{5mm} - \sqrt{P_{k-1}} ]
+        X_{k-1} = [ \hat{\bar{x}}_k \hspace{5mm} \cdots \hspace{5mm} \hat{\bar{x}}_k]+ \sqrt c [ 0 \hspace{5mm} \sqrt{P_{k-1}} \hspace{5mm} - \sqrt{P_{k-1}} ].
         \end{equation}
 
-        \item \textbf{Unscented transform:} Propagate the sigma points through the non linear state projection function and compute their statistics.
+        \item \textbf{Unscented transform:} The sigma points are propagated through the nonlinear state projection function:
         \begin{equation}
         \begin{split}
-            &\hat X_k = f(X_{k-1},u_k,k-1) \\
-            &\text{Mean of the transformed points }\\
-            &\hat{\bar x}^-_k = \hat X_k w_m \\
+            \hat X_k = f(X_{k-1},u_k,k-1). \\
         \end{split}
         \end{equation}
-
-        \item \textbf{Estimate projection:} Compute the state covariance matrix from the projected estimates.
+        The mean $\hat{\bar x}^-_k$ and covariance $\hat{\bar P}^-_k$ of the transformed sigma points $X_k$ is 
         \begin{equation}
-            \hat{\bar P}^-_k = \hat X_k W \hat X_k^T + Q_{k-1}
+        	\begin{split}
+            \hat{\bar P}^-_k &= \hat X_k W \hat X_k^T + Q_{k-1} \\
+            \hat{\bar x}^-_k &= \hat X_k w_m, \\
+            \end{split}
         \end{equation}
-
     \end{itemize}
         
-    \item \textbf{Measurement update:} The updated state mean $\hat{\bar x}_k$ and covariance ${\bar P}_k$. The measurement update is performed in the follwoing steps:
+    \item \textbf{Measurement update or Correct:} The posteriori state $\hat{\bar x}_k$ and covariance ${\bar P}_k$ are obtained by updating the priori estimates $\hat{\bar x}^-_k$ and $\hat{\bar P}^-_k$. The measurement update is performed in the following steps:
     \begin{itemize}
-        \item \textbf{Sigma points:} Compute the sigma points from priori state estimates.
+        \item \textbf{Sigma points:} The sigma points from priori state estimates is
         \begin{equation}
-        X_k^- = [ \hat{\bar{x}}_k^- \hspace{5mm} \cdots \hspace{5mm} \hat{\bar{x}}_k^-]+ \sqrt c [ 0 \hspace{5mm} \sqrt{P_k^-} \hspace{5mm} - \sqrt{P_k^-} ]
+        X_k^- = [ \hat{\bar{x}}_k^- \hspace{5mm} \cdots \hspace{5mm} \hat{\bar{x}}_k^-]+ \sqrt c [ 0 \hspace{5mm} \sqrt{P_k^-} \hspace{5mm} - \sqrt{P_k^-} ].
         \end{equation}
 
-        \item \textbf{Unscented transform:} Propagate the sigma points through the measurement function and compute their statistics.
+        \item \textbf{Unscented transform:} The sigma points $X_k^-$ are propagated through the nonlinear measurement function:
+        \begin{equation}
+        \hat Y_k = h(X_{k}^-,u_k,k) 
+        \end{equation}
+        The following statistics are computed from the transformed sigma points $Y_k$:
         \begin{equation}
         \begin{split}
-        &\hat Y_k = h(X_{k}^-,u_k,k) \\
-        &\text{Mean of the transfromed points}\\
         &\hat{\bar y}_k = \hat Y_k w_m \\
-        &\text{Covariance of the transfromed points}\\
         &\Sigma_{\hat y_k} = \hat Y_k W \hat Y_k^T + R_k \\
-        &\text{Cross covariance of the transformed points}\\
-        &\Sigma_{\hat x_k^- \hat y_k} = \hat X_k^- W \hat Y_k^T \\
+        &\Sigma_{\hat x_k^- \hat y_k} = \hat X_k^- W \hat Y_k^T, \\
         \end{split}
         \end{equation}
-
-        \item \textbf{Estimate Correction:} Compute the Kalman gain and update the priori estimates.
+		where $\hat{\bar y}_k$ ,$\Sigma_{\hat y_k}$, $\Sigma_{\hat x_k^- \hat y_k}$ represents the mean, covariance and cross covariance of the transformed sigma points $Y_k$. The Kalman gain $K_k$ is given by
+  	\begin{equation}
+  		 K_k = \Sigma_{\hat{\bar x}_k^- \hat y_k} \Sigma_{\hat y_k}^{-1}.
+  	\end{equation}
+  	The posteriori state $\hat{\bar x}_k$ and covariance ${\bar P}_k$ estimates is computed as follows:
         \begin{equation}
-        \begin{split}
-        &\text{Compute Kalman gain}\\
-        &K_k = \Sigma_{\hat{\bar x}_k^- \hat y_k} \Sigma_{\hat y_k}^{-1}\\
-        &\text{Update the priori state estimates}\\
-        &\hat{\bar{x}}_k = \hat{\bar{x}}_k^- + K_k(y_k - \hat{\bar y}_k)\\
-        &P_k = P_k^- - K_k \Sigma_{y,k} K_k^T
+        \begin{split}       
+        \hat{\bar{x}}_k &= \hat{\bar{x}}_k^- + K_k(y_k - \hat{\bar y}_k)\\
+        P_k &= P_k^- - K_k \Sigma_{y,k} K_k^T
         \end{split}
         \end{equation}
     \end{itemize}
 \end{itemize}
 
 The tuning parameters of UKF are $Q,R,\alpha,\beta,\kappa$. The covariance matrices $Q$ and $R$ is set according to tuning rules for EKF in \ref{subsec:tune_ekf}.
-\section{Root mean square error (RMSE)}
-Root mean square error (RMSE) is a measure of difference between the estimates and the true values observed \citep{hyn06}. It is computed for $n$ different predictions as the square root of mean of the square of difference between original value and estimates.
+\section{Root mean square error}
+The Root mean square error (RMSE) is a method to evaluate the performance of the state estimators. It is a measure of difference between the estimates and the true values observed \citep{hyn06}. It is computed for $n$ different predictions as the square root of mean of the square of difference between original value and estimates.
 \begin{equation}
     \label{eq:rmse}
     RMSE = \sqrt{\frac{\sum_{i=1}^n (x_i - \hat x_i)^2}{n}}.
 \end{equation}
-Lower the RMSE values better the performance of the estimator.
+
+The states are estimated using different estimators. The RMSE values are the state estimates determines the performance of an estimator. For instance let us consider two estimators $est1$ and $est2$ for estimating the state $x$. If $$ {RMSE}_{est1_{x}} < {RMSE}_{est2_{x}} $$ then the estimator $est1$ performs better in estimating the state x. Lower the RMSE value better the performance of the estimator.

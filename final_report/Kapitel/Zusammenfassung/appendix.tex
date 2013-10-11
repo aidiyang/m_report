@@ -250,8 +250,8 @@ f_x \\ f_y \\ f_z\\ \tau_x \\ \tau_y \\ \tau_z
 The computation of the ZMP is as follows:
 \begin{equation}
 	\begin{split}
-	p_x &= \frac{-\tau_y -(p_{sz}-p{z})f_x+p_{sx}f_z}{f_z}\\
-	p_y &= \frac{\tau_x -(p_{sz}-p{z})f_y+p_{sy}f_z}{f_z},
+	p_x &= \frac{-\tau_y -(p_{sz}-p_{z})f_x+p_{sx}f_z}{f_z}\\
+	p_y &= \frac{\tau_x -(p_{sz}-p_{z})f_y+p_{sy}f_z}{f_z},
 	\end{split}
 \end{equation}
 where $p_s = [p_{sx},p_{sy},p_{sz}]$ represents the coordinates of the FTS frame. The ZMP is used to determine the dynamic stability of the biped robot. For instance when the ZMP remains inside the support polygon (the foot surface) the robot will remain stable. On the other hand if the ZMP is located at an edge of the foot then the robot is tilting around that edge.

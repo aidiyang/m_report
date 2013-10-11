@@ -170,8 +170,8 @@ The initial convergence of the estimates is shown in Figure \ref{fig:idp_init_co
     \begin{tabular}{|c|c|}
     \hline
     Estimates &RMSE \\ \hline
-    $\hat q_1$   &0.0045 \\ \hline
-    $\hat {\dot q}_1$ & 0.0261 \\ \hline
+    $\hat q_1$   &0.0045 rad \\ \hline
+    $\hat {\dot q}_1$ & 0.0261 rad/s \\ \hline
     \end{tabular}
     \caption{RMSE values for EKF estimates}
     \label{tab:idp_rmse_ekf}
@@ -182,8 +182,8 @@ The initial convergence of the estimates is shown in Figure \ref{fig:idp_init_co
     \begin{tabular}{|c|c|}
     \hline
     Estimates &RMSE \\ \hline
-    $\hat q_1$   &0.0045 \\ \hline
-    $\hat {\dot q}_1$ & 0.0332 \\ \hline
+    $\hat q_1$   &0.0045 rad \\ \hline
+    $\hat {\dot q}_1$ & 0.0332 rad/s\\ \hline
     \end{tabular}
     \caption{RMSE values for UKF estimates}
     \label{tab:idp_rmse_ukf}
@@ -197,7 +197,7 @@ The initial convergence of the estimates is shown in Figure \ref{fig:idp_init_co
     $EKF$ &24 \\ \hline
     $UKF$ &30 \\ \hline
     \end{tabular}
-    \caption{Time taken for 10 seconds simulation}
+    \caption{Time taken for 10 seconds of simulation (simulated with 1ms time steps)}
     \label{tab:idp_sim_time}
 \end{table}
 The root mean square error (RMSE) value of the states $\hat q_1, \hat{\dot q}_1 $ estimated by EKF and UKF are given in Tables \ref{tab:idp_rmse_ekf} and \ref{tab:idp_rmse_ukf}. Both the UKF and EKF has the same performance in estimating $\hat q_1$ but EKF performs better in estimating $\hat{\dot q}_1$. The time taken for simulation of the EKF is lesser than UKF. The simulation time of UKF depends upon the number of states, as number of sigma points depends upon the number of states. $$\text{Number of sigma points}=2\times \text{Number of states} +1.$$  Moreover the UKF algorithm requries to propogate the sigma points through nonlinear functions twice. In this experiment UKF evaluates the state equations 9 times and the measurement equations 9 times for each time step. But the EKF algorithm evaluates the nonlinear system once per time step. This is the reason for EKF being faster than UKF. 
