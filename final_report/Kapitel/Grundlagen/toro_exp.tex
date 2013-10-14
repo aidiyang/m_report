@@ -159,7 +159,7 @@ The upper plot in Figure \ref{fig:ukf_msr} is the plot of the estimate $\hat q_1
 	\label{fig:ukf_nlmsr}
 \end{figure}
 \end{comment}
-The lower plot in Figure \ref{fig:ukf_msr} is the plot of the estimate $\hat q_1$ with the measurements $y_{set2}$.  The estimates do not converge to the actual states. The same set of tuning parameters does not work with the nonlinear measurements. The experiment with measurement set $y_{set2}$ is repeated few times with different values $\alpha, \beta$ and $\kappa$, but was not able to obtain any fruitful results. It is hard to find the tuning parameters for the system with more number of states and nonlinear measurements.
+The lower plot in Figure \ref{fig:ukf_msr} is the plot of the estimate $\hat q_1$ with the measurements $y_{set2}$.  These estimates do not converge to the actual states. The tuning parameters $\alpha,\beta$ and $\gamma$ does not work with the nonlinear measurements. The experiment with measurement set $y_{set2}$ is repeated few times with different values $\alpha, \beta$ and $\kappa$, but we are not able to obtain any fruitful results. So it is hard to find the tuning parameters for the system with more number of states and nonlinear measurements.
 
 
 \begin{comment}
@@ -193,4 +193,4 @@ The double pendulum system is extended with an additional joint and link as show
 \end{figure}  
 \end{comment}
 \subsection{Conclusion}
- With the multibody formulation it is possible to estimate more than the underactuated motion parameters. For example the with the \emph{Toro} model it is possible to estimate the motion parameters of the joints $q$ and $\dot{q}$. Although we have an advantage of estimating additional motion parameters, the main drawback with this model is the computation time. Setting up the Jacobian matrices $A$ and $C$ for requires lot of effort. This model is highly susceptible to modeling errors. The performance of the EKF degrades when there is a mismatch between the system and the estimator models.
+ With the multibody formulation it is possible to estimate more than the underactuated motion parameters. For example with the \emph{Toro} model it is possible to estimate the motion parameters of the joints $q$ and $\dot{q}$. Even though we have this advantage, the main drawback with this model is the computation time. Setting up the Jacobian matrices $A$ and $C$ for requires lot of effort. This model is highly susceptible to modeling errors. The performance of the EKF degrades when there is a mismatch between the system and the estimator models.

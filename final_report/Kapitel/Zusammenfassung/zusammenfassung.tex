@@ -2,7 +2,7 @@
 \label{ch:conclusion}
 
 %Filter Comparison:
- The state estimation problem is solved with EKF and UKF. The EKF involves more modeling than the UKF. For example modeling of the Jacobian matrices $A$ and $C$ for multibody model of \emph{Toro} in Chapter \ref{ch:multi_mdl}. The UKF is easier to tune for models with less number of states (IDP) than for the models with many states (\emph{toro}). The computation time of the UKF is higher than the EKF for all the models. 
+ The state estimation problem is solved with the EKF and the UKF. The EKF involves more modeling than the UKF. For example modeling of the Jacobian matrices $A$ and $C$ for multibody model of \emph{Toro} in Chapter \ref{ch:multi_mdl}. The UKF is easier to tune for models with less number of states (IDP) than for the models with many states (\emph{toro}). The computation time of the UKF is higher than the EKF for all the models. 
  \begin{table}[H]
 	\centering
 	\input{Bilder/thesis_conc_table.tex}
@@ -10,7 +10,7 @@
 	\label{tab:comp_ekf_ukf}
 \end{table}
 
-The smiley \footnote{Smiley image source:\url{http://www.clker.com/}.} on the left side of each cell in Table \ref{tab:comp_ekf_ukf} refers to the performance of EKF, whereas the one on the right side of refers to UKF. Since the UKF is not developed for the IMU model, the respective cells are left blank.
+The smiley \footnote{Smiley image source:\url{http://www.clker.com/}.} on the left side of each cell in Table \ref{tab:comp_ekf_ukf} refers to the performance of EKF, whereas the one on the right side of refers to UKF. Since the UKF was not developed for the IMU model the RMSE is left blank. 
 
 %Models Comparison:
 The state estimation problem is approached with multibody system model of \emph{Toro} and the model of IMU. The EKF has same performance with both models which can be inferred from the RMSE values of the estimates in Tables \ref{tab:toro_rmse} and \ref{tab:simp_rmse}. The computation time of EKF for the \emph{Toro} model is higher than the IMU model. This makes the \emph{Toro} model inapplicable for real time applications. Whereas the IMU model having low computation time is implemented on the real robot.
@@ -27,7 +27,7 @@ The state estimation problem is approached with multibody system model of \emph{
 	\caption{Comparison of qualitative performance of the models used in EKF }
 \end{table}
 
-The multibody model of \emph{Toro} is more descriptive and complicated than the IMU model. It is possible to estimate additional motion parameters like joint velocities $\dot q$ with this model, but it is computationally costly. This model is prone to modeling errors. The IMU model is computationally cheap. The formulation of the model is easier than \emph{Toro} model. This model have the same performance as the \emph{Toro} model.
+The multibody model of \emph{Toro} is more descriptive and complicated than the IMU model. It is possible to estimate additional motion parameters like joint velocities $\dot q$ with this model, but it is computationally costly. This model is prone to modeling errors. The IMU model is simpler than multibody model and computationally cheap. The formulation of the model is easier than \emph{Toro} model. This model have the same performance as the \emph{Toro} model.
 
 \subsection{Future works}
-Now the filter is aimed to be used in the controllers for balancing applications in \emph{Toro}. But this can be extended for walking applications in the future. The camera present at the head of \emph{Toro} provides measurements at lower frequency (100Hz) than the other sensors (1kHz). The could be incorporated as additional measurement \citep{vis12}.
+The filters designed in this thesis are aimed to be used in the controllers for balancing applications in \emph{Toro}. But this can be extended for walking applications in the future. The camera present at the head of \emph{Toro} provides measurements at lower frequency (100Hz) than the other sensors (1kHz). The could be incorporated as additional measurement \citep{vis12}.

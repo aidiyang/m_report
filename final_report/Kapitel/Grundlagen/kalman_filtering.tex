@@ -25,7 +25,7 @@ its covariance is
 	\label{eq:kf_P}
 \end{equation}
 
-The estimates of states $\hat x_k^-$ and the covariance matirx $P_k^{-}$ projected ahead of time of the system in \ref{eq:lin_ss} is
+The estimates of states $\hat x_k^-$ and the covariance matrix $P_k^{-}$ projected ahead of time of the system in \ref{eq:lin_ss} is
 \begin{equation}
 	\begin{split}
 	\hat{x}_k^{-} &= A \hat x_{k-1} + B u_k \\
@@ -59,7 +59,7 @@ The $K_k$ is the gain that results by assuming $x_k=\hat x_k$. This implies the 
 
 \subsection{Extended Kalman filter}
 \label{subsec:ekf}
-Most of the real world estimation scenarios are non linear in nature. Kalman filter algorithm  being a linear state estimation algorithm cannot be applied to the non linear systems. \emph{NASA Ames} devised a method to apply Kalman filter for non linear systems which is called the Extended Kalman filter(EKF) \citep{ekf85}. In EKF the non linear system is linearised by multivariate Taylor series expansion of the non linear function. 
+Most of the real world estimation scenarios are non linear in nature. Kalman filter algorithm  being a linear state estimation algorithm cannot be applied to the non linear systems. \emph{NASA Ames} devised a method to apply Kalman filter for non linear systems which is called the Extended Kalman filter(EKF) \citep{ekf85}. In EKF the non linear system is linearized by multivariate Taylor series expansion of the non linear function. 
 
 The discrete time non linear system in state space representation is
 \begin{equation}
@@ -189,7 +189,7 @@ The unscented Kalman filter is a new class filter for nonlinear systems. It was 
 %This leads to a differnt method to compute the error covairance matrix $P_k^-$.
 
 \subsubsection{Unscented transform}
-The basic idea behind the UT is that it is easier to approximate a probability distribution of a random variable transformed by an arbitrary nonlinear function than it to approximate the nonlinear function \citep{jul04}. A set of sigma points are chosen so that their mean and covariance are $\bar x$ and $\Sigma_x$. The sigma points are propogated through a nonlinear function which in turn yield set of transformed points. The statistics computed from the transformed points forms the estimate of nonlinearly transformed mean and covariance. This method is similar to the one used by particle filters. The main difference is this method uses deterministic way to choose the sigma points based on the specific properties.
+The basic idea behind the UT is that it is easier to approximate a probability distribution of a random variable transformed by an arbitrary nonlinear function than it to approximate the nonlinear function \citep{jul04}. A set of sigma points are chosen so that their mean and covariance are $\bar x$ and $\Sigma_x$. The sigma points are propagated through a nonlinear function which in turn yield set of transformed points. The statistics computed from the transformed points forms the estimate of nonlinearly transformed mean and covariance. This method is similar to the one used by particle filters. The main difference is this method uses deterministic way to choose the sigma points based on the specific properties.
 
 The set $X$ consists of sigma points $x_i$ of length $2n+1$ and weights associated with the mean and covariance $W_i^m, W_i^c $. It is given by \citep{sim07} 
 \begin{equation} 

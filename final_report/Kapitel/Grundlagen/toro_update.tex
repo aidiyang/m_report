@@ -10,7 +10,7 @@ P_{k+1} &= (I- K_{k+1}\hat{C}_{k+1}^-)P_{k+1}^-.
 \end{split}
 \end{equation}
 
-For the computation of Kalman gain $K_k$ and to update the error covariance matrix $P_k$ in Equation \ref{eq:correct}, the measurement sensitivity matrix $C_k$ have to be computed. The matrix $C_k$ determined by computing the Jacobian matrix of the measurement equation \ref{eq:y_msr}. The computation of $C_k$ matrix is as follows:
+For the computation of the Kalman gain $K_k$ and to update the error covariance matrix $P_k$ in Equation \ref{eq:correct}, the measurement sensitivity matrix $C_k$ have to be computed. The matrix $C_k$ determined by computing the Jacobian matrix of the measurement equation \ref{eq:y_msr}. The computation of $C_k$ matrix is as follows:
 \begin{enumerate}
 \item The measurement equation for acceleration measurements is  $$\hat{acc}^b_{k+1} = \dot{v}^{b-}_{k+1}-\hat{R}_{k+1}^{T-}\begin{bmatrix} 0 \\ 0 \\ -9,81 \end{bmatrix}.$$
 The Jacobian matrix is 

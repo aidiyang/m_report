@@ -101,7 +101,7 @@ The forward dynamics equation of \emph{Toro} is
 	\ddot{y} = M(y)^{-1}(-C(y,\dot{y})\dot{y} - g(y) + J_r(y)^{T}W_{r} +J_l(y)^{T}W_{l} + \tau). 
 \end{equation}
 
-The inputs $\tau, W_r and W_l$ acting on the system are measured by sensors. For instance the torques $\tau$ are measured by the joint torque sensors and ground reactional forces $W_r,W_l$ are measured by the Force torque sensors (FTS) located at the ankle joint of the robot. These sensor measurements are accompanied by noise. The noise acting on the inputs are $w_\tau,w_{W_r} \text{ and } w_{W_l}$. Incorporating the noise in the froward dynamics equation \ref{eq:motion} results in  
+The inputs $\tau, W_r and W_l$ acting on the system are measured by sensors. For instance the torques $\tau$ are measured by the joint torque sensors and ground reaction forces $W_r,W_l$ are measured by the Force torque sensors (FTS) located at the ankle joint of the robot. These sensor measurements are accompanied by noise. The noise acting on the inputs are $w_\tau,w_{W_r} \text{ and } w_{W_l}$. Incorporating the noise in the froward dynamics equation \ref{eq:motion} results in  
 \begin{equation}
 	\label{eq:motion_noise}
 	\ddot{y} = M(y)^{-1}(-C(y,\dot{y})\dot{y} - g(y) + J_r(y)^{T}(W_{r}+w_{W_r}) +J_l(y)^{T}(W_{l} +w_{W_l})+ (\tau+ w_\tau )). 
@@ -166,7 +166,7 @@ The measurements of \emph{Toro} are Cartesian accelerations($acc^b$) of the hip 
 \end{figure}
 Along with the sensor measurements kinematic constraints can also be introduced as measurements \citep{atk12}. The kinematic constraint that is considered as measurement is the position constraint. For instance when the robot is tilting around an edge, the position of the points that are lying on that edge does not change with respect to the spatial frame (world frame). 
  
- Figure \ref{fig:biped_feet} shows the contact points considered for measurements. The corner points of each foot are measured with respect to spatial frame \emph{S}. The measuremnt equation of these contact points are
+ Figure \ref{fig:biped_feet} shows the contact points considered for measurements. The corner points of each foot are measured with respect to spatial frame \emph{S}. The measurement equation of these contact points are
 \begin{equation}
     \label{eq:y_kin}
     y_{kin} = s_{contact} = \begin{bmatrix}s_{r}\\ s_{l}\end{bmatrix},
@@ -180,7 +180,7 @@ $s_{r},s_{l}$ are the vectors of contact points in right foot and left foot defi
     \end{split}
 \end{equation}
 where ${H}_{r},{H}_{l}$ are the homogeneous transformation matrices of the right and left foot with respect to spatial frame [Appendix \ref{sec:htm}]
- In Figure \ref{fig:biped_feet} $s_A,s_B,s_C,s_D$ are constant with resptect to the foot coordinate frames \emph{RF,LF}. They are given as 
+ In Figure \ref{fig:biped_feet} $s_A,s_B,s_C,s_D$ are constant with respect to the foot coordinate frames \emph{RF,LF}. They are given as 
  $$ s_A = \begin{bmatrix} 0.13 \\ 0.0475 \\ 0 \end{bmatrix} , 
     s_B = \begin{bmatrix} 0.13 \\ -0.0475 \\ 0 \end{bmatrix},
     s_C = \begin{bmatrix} -0.06 \\ -0.0475 \\ 0 \end{bmatrix} \text{ and }

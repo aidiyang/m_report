@@ -28,7 +28,7 @@ The measurement from the IMU are noisy. In addition to the noise there can be bi
 \dot{b}_\omega &= w_{b\omega},
 \end{split}
 \end{equation}
-where $\tilde{a}$ is the acceleration measured by the IMU. It is composed of true acceleration \emph{a}, bias $b_a$ and the sensor noise $w_a$. The measured angular velocity is $\tilde{\omega}$, true angular velocity $\omega$, bias $b_{\omega}$ and sensor noise $w_\omega$. The sensor noises $w_a$ and $w_\omega$ are modelled as zero mean Gaussian white noise. The biases $b_a$ and $b_\omega$ are dynamical quantities but they have very slow dynamics. The bias dynamics $\dot{b}_a$ and $\dot{b}_\omega$ are modelled as first order Markov process. The bias is driven by zero mean Gaussian white noises $w_{b\omega}$ and $w_{bf}$.
+where $\tilde{a}$ is the acceleration measured by the IMU. It is composed of true acceleration \emph{a}, bias $b_a$ and the sensor noise $w_a$. The measured angular velocity is $\tilde{\omega}$, true angular velocity $\omega$, bias $b_{\omega}$ and sensor noise $w_\omega$. The sensor noises $w_a$ and $w_\omega$ are modeled as zero mean Gaussian white noise. The biases $b_a$ and $b_\omega$ are dynamical quantities but they have very slow dynamics. The bias dynamics $\dot{b}_a$ and $\dot{b}_\omega$ are modeled as first order Markov process. The bias is driven by zero mean Gaussian white noises $w_{b\omega}$ and $w_{bf}$.
 
 \subsection{State space representation}
 The state space formulation of the dynamic model is based on Equation \ref{eq:fwdyn_ode}. Rearranging the Equation \ref{eq:imu_noise} in terms of true acceleration and true angular velocity and substituting Equation \ref{eq:imu_acc} in \ref{eq:imu_noise} leads to state space dynamic model: 
