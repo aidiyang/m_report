@@ -1,10 +1,33 @@
 \chapter{Conclusion}
 \label{ch:conclusion}
 
-Filter Comparison:
+%Filter Comparison:
+ The state estimation problem is solved with EKF and UKF. The EKF involves more modeling than the UKF. For example modeling of the Jacobian matrices $A$ and $C$ for multibody model of \emph{Toro} in Chapter \ref{ch:multi_mdl}. The UKF is easier to tune for models with less number of states (IDP) than for the models with many states (\emph{toro}). The computation time of the UKF is higher than the EKF for all the models. 
+ \begin{table}[H]
+	\centering
+	\input{Bilder/thesis_conc_table.tex}
+	\caption{Comparison of qualitative performance of EKF and UKF on the models}
+	\label{tab:comp_ekf_ukf}
+\end{table}
 
-In this thesis the state estimation problem is approached with two different filters and two different models. The UKF is easy to tune for system with few states (inverted double pendulum) but for larger models (\emph{Toro}) it is difficult to tune. The modeling effort required for the UKF is lesser compared to the EKF, since we have to formulate the Jacobian matrices for the model. With the best hand tuned values the UKF preforms same as the EKF as we can see in Tables \ref{tab:idp_rmse_ekf} and \ref{tab:idp_rmse_ukf}. The computation time of UKF is higher than the EKF. The UKF is very hard to tune and not applicable for real time.
+The smiley \footnote{Smiley image source:\url{http://www.clker.com/}.} on the left side of each cell in Table \ref{tab:comp_ekf_ukf} refers to the performance of EKF, whereas the one on the right side of refers to UKF. Since the UKF is not developed for the IMU model, the respective cells are left blank.
 
-Models Comparison:
-The performance of EKF for the multibody system model in Chapter \ref{ch:multi_mdl} and the simple model of IMU \ref{ch:simp_mdl} are similar. This can be seen from the RMSE values of the estimates. The IMU model is sufficient for estimating the underactuated motion parameters. Moreover the IMU model having low computational time makes it runnable on the real time. On the otherhand the multibody system model is not suitable because of the high computational time. 
-%Even though it have an advantage of estimating more states ($q$ and $\dot{q}$) the 
+%Models Comparison:
+The state estimation problem is approached with multibody system model of \emph{Toro} and the model of IMU. The EKF has same performance with both models which can be inferred from the RMSE values of the estimates in Tables \ref{tab:toro_rmse} and \ref{tab:simp_rmse}. The computation time of EKF for the \emph{Toro} model is higher than the IMU model. This makes the \emph{Toro} model inapplicable for real time applications. Whereas the IMU model having low computation time is implemented on the real robot.
+
+\begin{table}
+	\centering
+	%\setlength{\extrarowheight}{0.5cm}
+	%\begin{tabular}{|x{1cm}|x{2cm}|x{2cm}|}\hline
+	\begin{tabular}{|c|c|c|}\hline
+	&Toro&IMU \\ \hline	
+	RMSE &\includegraphics[scale=0.025]{Bilder/thumbs-up.png}&\includegraphics[scale=0.025]{Bilder/thumbs-up.png} \\ \hline
+	Computation time &\includegraphics{Bilder/thumbs-down.png} &\includegraphics[scale=0.025]{Bilder/thumbs-up.png} \\ \hline
+	\end{tabular}
+	\caption{Comparison of qualitative performance of the models used in EKF }
+\end{table}
+
+The multibody model of \emph{Toro} is more descriptive and complicated than the IMU model. It is possible to estimate additional motion parameters like joint velocities $\dot q$ with this model, but it is computationally costly. This model is prone to modeling errors. The IMU model is computationally cheap. The formulation of the model is easier than \emph{Toro} model. This model have the same performance as the \emph{Toro} model.
+
+\subsection{Future works}
+Now the filter is aimed to be used in the controllers for balancing applications in \emph{Toro}. But this can be extended for walking applications in the future. The camera present at the head of \emph{Toro} provides measurements at lower frequency (100Hz) than the other sensors (1kHz). The could be incorporated as additional measurement \citep{vis12}.

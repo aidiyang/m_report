@@ -1,6 +1,6 @@
 \subsection{Experiment}
 \label{subsec:toro_exp}
-The estimation problem is tested in Matlab Simulink. The experimental setup consists of the Open HRP3 simulator and the state estimator. The OpenHRP3 (Open Architecture Human-centred Robotics Platform version 3) is an integrated software platform for robot simulations and software developments \footnote{\url{http://www.openrtp.jp/openhrp3/en/about.html}}. It was developed as a cooperative work of University of Tokyo, General Robotix. Inc and National Institute of Advanced Industrial Science and Technology(AIST).
+The estimation problem is tested in Matlab Simulink. The experimental setup consists of the Open HRP3 simulator and the state estimator. The OpenHRP3 (Open Architecture Human-centered Robotics Platform version 3) is an integrated software platform for robot simulations and software developments \footnote{\url{http://www.openrtp.jp/openhrp3/en/about.html}}. It was developed as a cooperative work of University of Tokyo, General Robotix. Inc and National Institute of Advanced Industrial Science and Technology(AIST).
 
 \begin{figure}[H]
     \centering
@@ -60,7 +60,7 @@ The simulations and estimation are made with an integration time step of $\Delta
     \label{tab:toro_var}
 \end{table}
 
-The values of the process and measuremt covariance matrices $Q$ and $R$ are set with the variance of the noises from Table \ref{tab:toro_var}. They are 
+The values of the process and measurement covariance matrices $Q$ and $R$ are set with the variance of the noises from Table \ref{tab:toro_var}. They are 
 $$  \begin{aligned}
          Q &= diag([1\cdot{10}^{-2} \textbf{1}_{12,1}; 1\cdot{10}^{-4} \textbf{1}_{25,1}])  \\
          R &= diag([1\cdot{10}^{-6} \textbf{1}_{25,1}; 1\cdot{10}^{-4}\textbf{1}_{25,1}; 1\cdot{10}^{-2}\textbf{1}_{3,1};1\cdot{10}^{-4}\textbf{1}_{3,1}; 1\cdot{10}^{-12}\textbf{1}_{36,1} ]),
@@ -68,7 +68,7 @@ $$  \begin{aligned}
 where $\textbf{1}_{r,c}$ is the matrix of dimensions $r \times c$ with all the elements as 1 [Appendix \ref{sec:symbols}] and $diag(x)$ is a diagonal matrix where the main diagonal entries are the elements of vector $x$. 
 The initial values of the system $x_0$ and estimator $\hat x_0$ are
 $$ \begin{aligned} x_0 &= [0,0,1.164,\textbf{0}_{1,59}]^T \\ \hat x_0 &= \textbf{0}_{62,1}, \end{aligned} $$  where $\textbf{0}_{62,1}$ is the zero matrix of dimensions $62 \times 1$ [Appendix \ref{sec:symbols}].
-The initial value of the covariance matrix $P_0$ is $$ P_0 = I_{62},$$ where $I_{62}$ respresents the identity matrix of dimensions $62\times62$. 
+The initial value of the covariance matrix $P_0$ is $$ P_0 = I_{62},$$ where $I_{62}$ represents the identity matrix of dimensions $62\times62$. 
 
 The following set of tuning parameters are set for the UKF:
 $$ \begin{aligned} \alpha =1\cdot {10}^{-3} \\ \beta =2 \\ \kappa=0.  \end{aligned} $$
@@ -122,9 +122,63 @@ The RMSE values of the estimates in Table \ref{tab:toro_rmse} are small. This sh
 The time taken for 10 seconds of simulation of the EKF is $1290$ seconds. For each integration time step ($\Delta t = 0.001 s$) the EKF requires $0.129 s$ in real time for its execution. The high computation time is caused by the rigid body algorithm which has an execution time of $0.06s$. This algorithm is executed two times per time step.
 $$ \text{Time take for the execution of rigid body algorithm } = 2 \times 0.06 = 0.12 s.$$ This is approximately the execution time of the EKF for one time step.
 
-\begin{comment}
-The UKF did not work well in estimating the states for the given tuning parameters. The estimates did not converge to the actual states. It does not mean the UKF wont work for the given model. It is harder to find the correct set of tuning parameters for larger systems. To verify this claim the following experiment is made. 
+The estimates $\hat x$ produced by the UKF did on converge to the actual states $x$ because of the bad tuning parameters. It is hard to find the correct tuning parameters of UKF for this system. To illustrate the hardness in tuning the UKF a planar 3 DOF system is considered. This system is an extension of the inverted double pendulum (IDP) model with an additional joint and a link of length $l_3$ and mass $m_3$ are attached to the end of link 2 in Figure \ref{fig:exp_idp}. 
+The system equation is given by Equation \ref{eq:dyn_ss}, where the states given as 
+$$x=\begin{bmatrix}q \\ \dot{q}\end{bmatrix}\hspace{2cm} q=\begin{bmatrix} q_1 \\ q_2 \\ q_3 \end{bmatrix}.$$
 
+The system is tested with two sets of measurements. They are given as follows:
+$$y_{set1} = \begin{bmatrix} q_2 \\ q_2 \\ \dot q_1 \\ \dot q_2 \\ \omega \\ sin(q_1+q_2+q_3) \\ cos(q_1+q_2+q_3)  \end{bmatrix}
+\hspace{2cm} y_{set2}= \begin{bmatrix}
+q_2 \\ q_2 \\ \dot q_1 \\ \dot q_2 \\ \omega \\ acc_x \\ acc_y \end{bmatrix},
+ $$
+where $\omega = \dot q_1 + \dot q_2 + \dot q_3$ is the angular velocity and $acc_x, acc_y $ are the accelerations measured by IMU attached to the end of link 3. In $y_{set1}$ the measurements functions corresponding to the state $q_1$ are almost linear with respect to these states. In $y_{set2}$ the measurement functions relating the the state $q_1$ are the accelerations ${acc}_x$ and ${acc}_y$. These accelerations are nonlinear functions of state $q_1$. This can be seen from the acceleration equations of the IDP (2DOF) in Equation \ref{eq:idp_acc_imu}.
+
+The process and the measurement noises $Q$ and $R$ are set with the values in Table \ref{tab:idp_noise}. The following hand tuned values are set for the UKF tuning parameters:
+$$  \begin{aligned}
+    \alpha = 1 \\
+    \beta = 0\\
+    \kappa = -3 
+    \end{aligned} .$$ 
+
+The experiment is done separately for two set of measurements $y_{set1}$ and $_{set2}$.
+\begin{figure}
+	\centering
+	\includegraphics[height=0.48\textheight,width=\textwidth]{Bilder/plots/ukf_case/lin_msr.png}
+	\includegraphics[height=0.48\textheight,width=\textwidth]{Bilder/plots/ukf_case/nlin_msr.png}
+	\caption{ The actual and estimated values of $q_1$ plotted against time}
+	\label{fig:ukf_msr}
+\end{figure}
+
+The upper plot in Figure \ref{fig:ukf_msr} is the plot of the estimate $\hat q_1$ with the measurements $y_{set1}$. The estimates $\hat q_1$ follows to the actual states $q_1$. This implies that, the UKF works well with measurement set$y_{set1}$.
+
+\begin{comment}
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{Bilder/plots/ukf_case/nlin_msr.png}
+	\caption{ The actual and estimated values of $q_1$ plotted against time}
+	\label{fig:ukf_nlmsr}
+\end{figure}
+\end{comment}
+The lower plot in Figure \ref{fig:ukf_msr} is the plot of the estimate $\hat q_1$ with the measurements $y_{set2}$.  The estimates do not converge to the actual states. The same set of tuning parameters does not work with the nonlinear measurements. The experiment with measurement set $y_{set2}$ is repeated few times with different values $\alpha, \beta$ and $\kappa$, but was not able to obtain any fruitful results. It is hard to find the tuning parameters for the system with more number of states and nonlinear measurements.
+
+
+\begin{comment}
+$$  \begin{aligned}
+{acc}_x = -l_3c_{123}( \dot q_1 + \dot q_2 + \dot q_3)^2 - \ddot q_1l_1s_1
+       - l_2s_12(\ddot q_1 + \ddot q_2) - dq(1)^2l_1c_1
+       - l_3sin(q(1) + q(2) + q(3))(\ddot q_1 + \ddot q_2 + \ddot q_3) ...
+       - l_2cos(q(1) + q(2))(dq(1) + \dot q_2)^2;
+ {acc}_y = \ddot q_1l_1cos(q(1)) - l_3sin(q(1) + q(2) + q(3))(dq(1) + \dot q_2 + \dot q_3)^2 ...
+      + l_2cos(q(1) + q(2))(\ddot q_1 + \ddot q_2)  ...
+      + l_3cos(q(1) + q(2) + q(3))(\ddot q_1 + \ddot q_2 + \ddot q_3) ...
+      - dq(1)^2l_1sin(q(1)) - l_2sin(q(1) + q(2))(dq(1) + \dot q_2)^2; $$
+\end{comment}
+
+
+%The UKF did not work well in estimating the states for the given tuning parameters. The estimates did not converge to the actual states. 
+
+%It does not mean the UKF wont work for the given model. It is harder to find the correct set of tuning parameters for larger systems. To verify this claim the following experiment is made. 
+\begin{comment}
 The double pendulum system is extended with an additional joint and link as shown in Figure \textbf{foo}. The states of the system are 
 \begin{equation}
 	x =
@@ -139,4 +193,4 @@ The double pendulum system is extended with an additional joint and link as show
 \end{figure}  
 \end{comment}
 \subsection{Conclusion}
- With the multibody fomulation it is possible to estimate more than the underactuated motion parameters. For example the with the \emph{Toro} model it is possible to estimate the motion parameters of the joints $q$ and $\dot{q}$. Although we have an advantage of estimating additional motion parameters, the main drawback with this model is the computation time. Setting up the Jacobian matrices $A$ and $C$ for requires lot of effort. 
+ With the multibody formulation it is possible to estimate more than the underactuated motion parameters. For example the with the \emph{Toro} model it is possible to estimate the motion parameters of the joints $q$ and $\dot{q}$. Although we have an advantage of estimating additional motion parameters, the main drawback with this model is the computation time. Setting up the Jacobian matrices $A$ and $C$ for requires lot of effort. This model is highly susceptible to modeling errors. The performance of the EKF degrades when there is a mismatch between the system and the estimator models.

@@ -66,7 +66,9 @@ H_l &= H_{hip}^{s}H^{hip}_{l},
     \item $H_{hip}^{s}$ is the homogeneous transformation matrix of the frame attached to the IMU and the spatial frame [Appendix \ref{sec:htm}]
     \item $H^{hip}_r$ and $H^{hip}_l$ are the transformation of foot relative to hip. It is computed by the kinematics \emph{Toro}, which is a function of joint angles \emph{q}. The joint angles are measured by joint encoders.
 \end{itemize}
-\paragraph{Filter switching} The contact switching in Algorithm \ref{alg:cnt_switch} should be used in this model for dealing with the line and surface contacts. The system in Equation \ref{eq:dyn_imu} is observable for surface contact but unobservable for line contact. This is due to the fact that the measurements during line contact are linearly dependent. To solve the system under these circumstances, the estimation is done only on the following states:
+
+\paragraph{Filter switching} The contact switching in Algorithm \ref{alg:cnt_switch} should be used in this model for dealing with the line and surface contacts. A local observability test is done on the linearized system model. The linearized system is observable during the surface contacts and unobservable during line contacts situations. %The system in Equation \ref{eq:dyn_imu} is observable for surface contact but unobservable for line contact. 
+This is due to the fact that the measurements selected during the line contact are linearly dependent. To solve the system under these circumstances, the estimation is done only on the following states:
 \begin{equation}
 \label{eq:dyn_imu_red}
 x=\begin{bmatrix}
@@ -83,8 +85,9 @@ The state estimation will consist of two EKF's, one estimating the full state sy
 	\label{fig:ekf_switch}
 \end{figure}
 
-\subsection{Prediction step}
-The prediction equations of EKF are given in Equation \ref{eq:ekf_predict}. 
+\subsection{Filtering equations}
+\begin{comment}
+The prediction equations of EKF are 
 \begin{equation}
 \label{eq:imu_predict}
 \begin{split}
@@ -92,7 +95,8 @@ The prediction equations of EKF are given in Equation \ref{eq:ekf_predict}.
 P_{k+1}^- &= A_kP_{k}A_k^T + W_kQ_{k}W_k^T\\
 \end{split}
 \end{equation}
-The model is discretized for the implementation of EKF. Since the time step for integration is very small $\Delta t = 1ms$ forward Euler discretization method is used to discretize the continuous time model in \ref{eq:dyn_imu}.
+\end{comment}
+The model is discretized for the implementation of EKF. Since the time step for integration is very small $\Delta t = 1ms$, a forward Euler discretization method is used to discretize the continuous time model in \ref{eq:dyn_imu}.
 \begin{equation}
     \label{eq:dyn_imu_disc}
     \begin{split}
@@ -114,18 +118,22 @@ The system matrix is obtained by computing the Jacobian of the discretized syste
     \end{bmatrix}
 \end{equation}
 
+\begin{comment}
 \subsection{Update step}
-The update equation of the EKF is given in Equation \ref{eq:ekf_correct}. The measurement equation of the system is given by $$\hat{y}_{k+1} = h(\hat{x}_{k+1}^-,u_{k+1},0).$$For the sake of simplicity let us assume the measurement of noise are independent. $$V_k = I_3.$$ Substituting the assumption in Equation \ref{eq:ekf_correct} leads to the following filter equations:
+The update equations of EKF are
+%The update equation of the EKF is given in Equation \ref{eq:ekf_correct}. The measurement equation of the system is given by %
+%For the sake of simplicity let us assume the measurement of noise are independent. $$V_k = I_3.$$ Substituting the assumption in Equation \ref{eq:ekf_correct} leads to the following filter equations:
 \begin{equation}
 \label{eq:imu_correct}
 \begin{split}
+\hat{y}_{k+1} = h(\hat{x}_{k+1}^-,u_{k+1},0)\\
 K_{k+1} &= P_{k+1}^-\hat{C}_{k+1}^{T}(\hat{C}_{k+1}P_{k+1}^-\hat{C}_{k+1}^{T} + R_{k+1})^{-1}\\
 \hat{x}_{k+1} &= \hat{x}_{k+1}^- + K_{k+1}(y_{k+1}-\hat{y}_{k+1})\\
 P_{k+1} &= (I- K_{k+1}\hat{C}_{k+1})P_{k+1}^-
 \end{split}
 \end{equation}
-
-The measurement sensitivity matrix is computed by taking the Jacobian of the measurement equation.
+\end{comment}
+For computing the Kalman gain $K_k$, and correcting the priori estimates the measurement sensitivity matrix $C$ has to be computed. It is 
 \begin{equation}
         \hat{C}_{k+1} = \dfdx{\hat{y}_{k+1}}{x} = 
 	\begin{bmatrix}		        

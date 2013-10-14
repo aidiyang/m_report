@@ -4,24 +4,26 @@
 \begin{figure}
 \begin{center}
 \includegraphics[trim= 70mm 10mm 40mm 10mm,clip,scale=0.7]{Bilder/TORO_kinematic.pdf}
-\caption{Kinematic chain of \emph{Toro} \underline{Explain the joints symbols}}
+\caption[Kinematic chain of \emph{Toro}]{Kinematic chain of \emph{Toro} \footnotemark }
 \label{fig:toro_kin}
 \end{center}
 \end{figure}
-
-The generalized coordinates of \emph{Toro} are represented by a vector of joint angles $q$ and the coordinates of the base of robot $x^b$. Number of joints of a robot is the number of controllable degrees of freedom \cite[Chapter 2]{mur94}. The coordinates of the base $x^b$ are the under-actuated degrees of freedom of \emph{Toro}. 
+\footnotetext{ The joint symbols are explained in Appendix \ref{fig:joint}.}
+The generalized coordinates of \emph{Toro} are represented by a vector of joint angles $q$ and the coordinates of the base of robot $x^b$. The number of joints of a robot is the number of controllable degrees of freedom \cite[Chapter 2]{mur94}. The coordinates of the base $x^b$ are the under-actuated degrees of freedom of \emph{Toro}. 
 
 A rigid body in space has six degrees of freedom as shown in Figure \ref{fig:rbody}.
 %\begin{figure}
-\begin{figure}[H]
+\begin{figure}
 \begin{center}
-\includegraphics[trim= 30mm 100mm 10mm 120mm,scale=0.75]{Bilder/rbody_dof.pdf}
-\caption[Degrees of freedom of a rigid body]{Degrees of freedom of a rigid body \footnotemark[1]}
+%\includegraphics[trim= 30mm 100mm 10mm 120mm,scale=0.75]{Bilder/rbody_dof.pdf}
+\input{Bilder/rigbdy_fig.tex}
+\vspace{1cm}
+\caption{Degrees of freedom of a rigid body }
 \label{fig:rbody}
 \end{center}
 \end{figure}
-The translational and rotational degrees of freedom of the rigid body in Figure \ref{fig:rbody} are \emph{x,y,z} and \emph{roll,pitch,yaw}. The rotational degrees of freedom \emph{roll,pitch,yaw} corresponds to rotation of the body around \textbf{X,Y,Z} axes. The base of \emph{Toro} is assumed to be a free rigid body. Since the base has all the six degrees of freedom which corresponds to degrees of freedom of rigid body floating in three dimensional space, it is called floating base. The equation of motion of a single rigid body(floating base) is given by Newton-Euler equation of motion in body coordinates \cite[Chapter 4]{mur94}. 
-\footnotetext[1]{Image source:\url{http://www.cncexpo.com/Images/pitchyawroll.jpg}}
+The translational and rotational degrees of freedom of the rigid body in Figure \ref{fig:rbody} are \emph{x,y,z} and \emph{roll,pitch,yaw}. The rotational degrees of freedom \emph{roll,pitch,yaw} corresponds to rotation of the body around \textbf{X,Y,Z} axes. The base of \emph{Toro} is assumed to be a free rigid body. Since the base has all the six degrees of freedom which corresponds to degrees of freedom of rigid body floating in three dimensional space, it is called floating base. The equation of motion of a single rigid body(floating base) is given by Newton-Euler equation of motion in body coordinates \cite[Chapter 4]{mur94}:
+%\footnotetext[1]{Image source:\url{http://www.cncexpo.com/Images/pitchyawroll.jpg}}
 \begin{equation}
 \label{eq:dyn_rig_bdy}
 \begin{bmatrix}
@@ -34,10 +36,12 @@ mI_3 & \textbf{0}_3 \\ \textbf{0}_3 &\Im
 \omega^b \times mv^b \\ 
 \omega^b \times \Im w^b
 \end{bmatrix}
-= W^b.\\
+= W.\\
 \end{equation}
-In the above equation, \emph{m} is the mass of the rigid body, $\Im$ is the moment of inertia of the rigid body. $I_3$ represents the $3 \times 3$ identity matrix and $ \textbf{0}_3$ represents the  $3 \times 3$ zero matrix. The translation velocity and angular velocity represented in body coordinate frame are ${v}^b$ and $\omega^b$. $W^b$ is the body wrench applied to the center of mass of body. The body wrench represents a force/moment pair acting on the body. It is represented by vector in $\Re^6$ as \citep{mur94}
-$$ W^b = \begin{bmatrix} F \\ \tau \end{bmatrix}, $$ where $F \in \Re^3$ is the linear component and $\tau \in \Re^3$ is the rotational component of the generalized force.
+In the above equation, \emph{m} is the mass of the rigid body, $\Im$ is the moment of inertia of the rigid body. $I_3$ represents the $3 \times 3$ identity matrix and $ \textbf{0}_3$ represents the  $3 \times 3$ zero matrix. The translation velocity and angular velocity represented in body coordinate frame are ${v}^b$ and $\omega^b$. $W$ is the external wrench applied on the body. A wrench represents a force/moment pair. It is represented by vector in $\Re^6$ as \citep{mur94}
+$$ W = \begin{bmatrix} F \\ \tau \end{bmatrix}, $$ where $F \in \Re^3$ is the linear component and $\tau \in \Re^3$ is the rotational component of the generalized force.
+
+The external wrench $W$ acting on the body can be decomposed into wrench due to gravitational forces $g_x^b$ and wrench due to external forces $W^b$: $$ W = W^b - g_x^b.$$
 
 To be consistent with the multibody system dynamics formulation in Equation \ref{eq:dyn_mul_bdy} Newton Euler Equation \ref{eq:dyn_rig_bdy} is reformulated as
 \begin{equation}
@@ -56,9 +60,9 @@ v^b \\ \omega^b
 R^T \dot{p} \\ (R^T \dot{R})^\vee
 \end{bmatrix},
 \end{equation}
-where $\vee$ operator denotes the extraction of 3 dimensional vector from a skew symmetric matrix[Appendix \ref{sec:avel_trfm}]. The rotation matrix $R$ is the matrix dependent on parametrization of Euler angles [Appendix \ref{eq:rot_full}]. The acceleration $\dot{V}^b$ is the acceleration of the rigid body with respect to body frame. $M_x^b$ represents the inertia matrix of the rigid body in body coordinates. $C_x^b$ is the matrix representing the Coriolis and centrifugal forces acting on the system in body coordinates. $g_x^b$ is the vector representing the gravitational forces acting on the body in body coordinates. $W^b$ is the external force applied to the center of mass of the body. \footnote[2]{Inertia, Coriolis and gravity are assumed to be given with respect to the body coordinate frame for the rest of the report}.
+where $\vee$ operator denotes the extraction of 3 dimensional vector from a skew symmetric matrix[Appendix \ref{sec:avel_trfm}]. The rotation matrix $R$ is the matrix dependent on parametrization of Euler angles [Appendix \ref{eq:rot_full}]. The acceleration $\dot{V}^b$ is the acceleration of the rigid body with respect to body frame. $M_x^b$ represents the inertia matrix of the rigid body in body coordinates. $C_x^b$ is the matrix representing the Coriolis and centrifugal forces acting on the system in body coordinates. $g_x^b$ is the vector representing the gravitational forces acting on the body in body coordinates. $W^b$ is the external force applied to the center of mass of the body\footnote[2]{Inertia, Coriolis and gravity are assumed to be given with respect to the body coordinate frame for the rest of the report.}.
 
-The equations of motion of \emph{Toro} in Figure \ref{fig:toro_kin} is composed of equation of motion of the multibody system and equation of motion of single rigid body. The equation of motion of \emph{Toro} is formulated like the equation of motion for a floating base system as given in \cite{ott09}.
+The equations of motion of \emph{Toro} in Figure \ref{fig:toro_kin} are composed of equation of motion of the multibody system and equation of motion of single rigid body. The equation of motion of \emph{Toro} is formulated like the equation of motion for a floating base system as given in \cite{ott09}.
 \begin{equation} \label{eq:dyn_biped}
 \begin{bmatrix}
 M_x &M_{xq} \\ M_{qx} &M_q
@@ -182,7 +186,7 @@ where ${H}_{r},{H}_{l}$ are the homogeneous transformation matrices of the right
     s_C = \begin{bmatrix} -0.06 \\ -0.0475 \\ 0 \end{bmatrix} \text{ and }
     s_D = \begin{bmatrix} -0.06 \\ 0.0475 \\ 0 \end{bmatrix}.$$
 
-\paragraph{Contact switching:} The measurement of the contact points $s_{cnt}$\footnote{$s_{cnt}$ is the short form of $s_{contact}$ in Equation \ref{eq:y_kin}} with respect to the spatial frame (world coordinate frame) are made before starting the experiment. These measurements are made under the circumstance where the feet of the robot make surface contact with the ground. For instance when the robot is standing on one foot then the contact measurements from the other foot are not valid. A parameter $\alpha$, that makes use of the vertical reaction force $F_z$ measured by Force Torque Sensor (FTS) on each foot to determine the support case \citep{atk12}:$$ \alpha = \frac{F_{z,r} + F_{z,l}}{F_{z,r}}.$$ 
+\paragraph{Contact switching:} The measurement of the contact points $s_{cnt}$\footnote{$s_{cnt}$ is the short form of $s_{contact}$ in Equation \ref{eq:y_kin}.} with respect to the spatial frame (world coordinate frame) are made before starting the experiment. These measurements are made under the circumstance where the feet of the robot make surface contact with the ground. For instance when the robot is standing on one foot then the contact measurements from the other foot are not valid. A parameter $\alpha$, that makes use of the vertical reaction force $F_z$ measured by Force Torque Sensor (FTS) on each foot to determine the support case \citep{atk12}:$$ \alpha = \frac{F_{z,r} + F_{z,l}}{F_{z,r}}.$$ 
 
 \begin{figure}[H]
 	\input{Bilder/tilt_cases.tex}
@@ -192,7 +196,7 @@ where ${H}_{r},{H}_{l}$ are the homogeneous transformation matrices of the right
 
 The valid contact points are chosen based on the support case in Figure \ref{fig:support_cases}. The validity of the contact measurements can also change based on the type of contact the robot makes with the ground. For instance let us consider the robot is standing on its right leg. When the robot is tilting about the back edge of the foot, the front edge lifts off the ground which implies the contact changes from surface to line. The robot is only supported by the back edge of the foot. In this case the measurements of points $s_{C,r}$ and $s_{D,r}$ are valid, but $s_{A,r}$ and $s_B,r$ are invalid. So it is important to determine the state of contact of the robot with ground (surface or line). 
 
-The Zero moment point (ZMP) is an useful criteria for detecting the state of contact. The coordinates of ZMP = $[{zmp}_{x},{zmp}_{y}]^T$ are defined with respect to the foot coordinate frame. As long as the ZMP is inside the support polygon\footnote{The support polygon refers to the surface of the foot that is in contact with the ground} the robot will be in surface contact. The ZMP cannot be outside the support polygon (foot) \citep{mio04}. When the ZMP is located at the boundary of the support polygon then the robot changes from surface to line contact. In this case the contact will be about the line where the ZMP is located. Figure \ref{fig:biped_feet} shows the support polygons of right and left foot of \emph{Toro}. For instance when the ZMP is located at the back edge of a right foot's support in Figure \ref{fig:biped_feet}, then the contact is about the line (CD\footnote{From here on the line joining the points $s_X$ and $s_Y$ will be represented by XY}) joining points $s_C$ and $s_D$. In this case the robot starts tilting about the line CD.
+The Zero moment point (ZMP) is an useful criteria for detecting the state of contact. The coordinates of ZMP = $[{zmp}_{x},{zmp}_{y}]^T$ are defined with respect to the foot coordinate frame. As long as the ZMP is inside the support polygon\footnote{The support polygon refers to the surface of the foot that is in contact with the ground.} the robot will be in surface contact. The ZMP cannot be outside the support polygon (foot) \citep{mio04}. When the ZMP is located at the boundary of the support polygon then the robot changes from surface to line contact. In this case the contact will be about the line where the ZMP is located. Figure \ref{fig:biped_feet} shows the support polygons of right and left foot of \emph{Toro}. For instance when the ZMP is located at the back edge of a right foot's support in Figure \ref{fig:biped_feet}, then the contact is about the line (CD\footnote{From here on the line joining the points $s_X$ and $s_Y$ will be represented by XY.}) joining points $s_C$ and $s_D$. In this case the robot starts tilting about the line CD.
  
 \begin{figure}[H]
 	\input{Bilder/zmp_cases.tex}

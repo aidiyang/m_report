@@ -1,6 +1,6 @@
 \subsection{Prediction step}
 \label{subsec:toro_predict}
-The prediction equations of EKF given in Equation \ref{eq:ekf_predict} are as follows:
+The time update or prediction equations of EKF given in Section \ref{subsec:ekf}  are as follows:
 \begin{equation}
 \label{eq:predict}
 \begin{split}
@@ -26,11 +26,12 @@ $$ f(\hat{x}_k,u_{k+1})\footnotemark[1] =
 	\hat T_k^{-1} \hat \omega_k^b  \\
 	\hat{\dot{q}}_k\\
 	M(\hat{y}_{k})^{-1}(-C(\hat{y}_{k},\hat{\dot{y}}_{k})\hat{\dot{y}}_{k} -g(\hat{y}_{k}) +  J_r(\hat{y}_{k})^{T}W_{r,k+1} +J_l(\hat{y}_{k})^{T}W_{l,k+1} + \tau_{k+1})	
-	\end{bmatrix}  $$
-where $\hat{x}(t_k) = \hat{x}(k \Delta t) = \hat{x}_k$ represents the state x at \emph{kth} sampling instant. $\hat{x}_{k+1} = \hat{x}(k \Delta t + \Delta t)$ represents the state of the system at the next sampling instant. $u_{k+1}$ is the input at sampling instant $k+1$. The inputs $\tau, W_l, W_r$ remains constant in the interval between two sampling instant because of the zero order hold mechanism in the sensor. The above equation is used to predict the state $\hat{x}_k$ ahead of time in Equation \ref{eq:predict}. 
+	\end{bmatrix}. $$
+%where $\hat{x}(t_k) = \hat{x}(k \Delta t) = \hat{x}_k$ represents the state x at \emph{kth} sampling instant. $\hat{x}_{k+1} = \hat{x}(k \Delta t + \Delta t)$ represents the state of the system at the next sampling instant. $u_{k+1}$ is the input at sampling instant $k+1$. The inputs $\tau, W_l, W_r$ remains constant in the interval between two sampling instant because of the zero order hold mechanism in the sensor. The above equation is used to predict the state $\hat{x}_k$ ahead of time in Equation \ref{eq:predict}. 
 \footnotetext[1]{$\hat R_k, \hat T_k$ are the shorthand notations for $R(\hat \theta_k)$ and $T(\hat \theta_k)$ in the equation.}
 
-For the computation of state covariance matrix $P_k^-$ in Equation \ref{eq:predict}, the Jacobian matrix $A$ should be computed. The Jacobian matrix is the matrix of first order partial derivatives of a vector valued function \citep{wal76}.
+For the computation of state covariance matrix $P_k^-$ in Equation \ref{eq:predict}, the Jacobian matrix $A$ should be computed. 
+%The Jacobian matrix is the matrix of first order partial derivatives of a vector valued function \citep{wal76}.
 
 The Jacobian matrix computation of the prediction Equations \ref{eq:toro_dis} of EKF is as follows:
 \begin{enumerate}
@@ -46,7 +47,7 @@ The Jacobian matrix computation of the prediction Equations \ref{eq:toro_dis} of
    &\Delta t \dfdx{\hat R_k}{x_i} \hat v^b_k & \text{if }(3 < i \leq 6)\\
    &\textbf{0}_{3 \times 1} &\text{if }(6 < i \leq 31) \text{ or } (35 < i \leq 62) \\
    &col(\hat R_k,i-31) & \text{if } 31 < i \leq 34 \\
-  \end{aligned} \right.
+  \end{aligned} \right. ,
 \]where
 \begin{itemize}
 \item the subscript \emph{j} represents the row dimension and \emph{i} represents the column dimension of the Jacobian matrix,
@@ -65,12 +66,12 @@ The Jacobian matrix computation of the prediction Equations \ref{eq:toro_dis} of
   \!\begin{aligned}
    &\textbf{0}_{3 \times 1} &\text{if }(0 < i \leq 3) \text{ or }(6 < i \leq 31) \\
    &\hspace{2cm} &\text{ or } (35 < i \leq 62) \\
-   &e_{i-3} + \Delta t \dfdx{\hat T_k^{-1}}{x_i}\omega_k^b & \text{if}3< \text{i} \leq 6 \\
+   &e_{i-3} + \Delta t \dfdx{\hat T_k^{-1}}{x_i}\omega_k^b & \text{if }3< \text{i} \leq 6 \\
    &col(\hat T_k^{-1},i-34) & \text{if } 31 < i \leq 34 \\
-  \end{aligned} \right.
+  \end{aligned} \right. 
 \]where
 \begin{itemize}
-\item $\dfdx{\hat T_k^-}{x_i}$ is the partial derivative of inverse of transformation matrix with respect to state [Appendix \ref{sec:avel_trfm}].
+\item $\dfdx{\hat T_k^-}{x_i}$ is the partial derivative of inverse of the transformation matrix with respect to state [Appendix \ref{sec:avel_trfm}].
 \end{itemize}
 
 \item The prediction equation for the joint angles of multibody system is  $\hat{q}_{k+1}^- = \hat{q}_k + \Delta t \hat {\dot{q}}_k $. The Jacobian matrix of the equation is given by
@@ -90,11 +91,11 @@ The Jacobian matrix computation of the prediction Equations \ref{eq:toro_dis} of
 \end{itemize}
 
 \item The prediction equation for the velocities of the robot is $\hat{\dot{y}}_{k+1}^- = \hat{\dot{y}}_{k}+ \Delta t \Lambda $, where 
-$$\Lambda = M(\hat{y}_{k})^{-1}(-C(\hat{y}_{k},\hat{\dot{y}}_{k})\hat{\dot{y}}_{k} - g(\hat{y}_{k}) + J_r(\hat{y}_{k})^{T}W_{r,k+1} +J_l(\hat{y}_{k})^{T}W_{l,k+1} + \tau_{k+1})$$
+$$\Lambda = M(\hat{y}_{k})^{-1}(-C(\hat{y}_{k},\hat{\dot{y}}_{k})\hat{\dot{y}}_{k} - g(\hat{y}_{k}) + J_r(\hat{y}_{k})^{T}W_{r,k+1} +J_l(\hat{y}_{k})^{T}W_{l,k+1} + \tau_{k+1}).$$
 The Jacobian matrix of the equation is given by
  \begin{equation}
  \label{eq:dydx}
-\dfdx{\hat{\dot{y}}_{k+1}^-}{x} = \left(\dfdx{\hat{\dot{y}}_{k+1}^-}{x_{1}}, \dfdx{\hat{\dot{y}}_{k+1}^-}{x_{2}}, \cdots , \dfdx{\hat{\dot{y}}_{k+1}^-}{x_{62}}\right) \in \Re^{31 \times 62}
+\dfdx{\hat{\dot{y}}_{k+1}^-}{x} = \left(\dfdx{\hat{\dot{y}}_{k+1}^-}{x_{1}}, \dfdx{\hat{\dot{y}}_{k+1}^-}{x_{2}}, \cdots , \dfdx{\hat{\dot{y}}_{k+1}^-}{x_{62}}\right) \in \Re^{31 \times 62},
 \end{equation}
 where
 \[
@@ -110,10 +111,10 @@ where
     &M_k^{-1}\left(-\dfdx{C_k}{x_{i}}\hat{\dot{y}}_{k}- col(C_k,i-31)\right)     
     \end{aligned} \right\} & \text{if } i < 31  \\
 \end{aligned}
-\right.
+\right. 
 \]where
 \begin{itemize}
-\item the shorthand form symbols used are  $M_k= M(\hat{y}_{k}),C_k=C(\hat{y}_{k},\hat{\dot{y}}_k),J_{r,k}=J_r(\hat{y}_{k}),J_{l,k}=J_l(\hat{y}_{k})$
+\item the shorthand form symbols used are  $M_k= M(\hat{y}_{k}),C_k=C(\hat{y}_{k},\hat{\dot{y}}_k),J_{r,k}=J_r(\hat{y}_{k}),J_{l,k}=J_l(\hat{y}_{k})$.
 \end{itemize}
 \end{enumerate}
 The system matrix $A_k$ is formulated by combining Equations \ref{eq:dpdx},\ref{eq:dthetadx},\ref{eq:dqdx} and \ref{eq:dydx} as
@@ -126,7 +127,7 @@ A_k = \left(
 \dfdx{\hat{q}_{k+1}^-}{x}\\
 \dfdx{\hat{\dot{y}}_{k+1}^-}{x}
 \end{aligned} \right)
-\in \Re^{62 \times 62}
+\in \Re^{62 \times 62}.
 \end{equation}
 
 The noise correlation matrix $W_k$ is derived by discretizing the Equation \ref{eq:toro} and computing the Jacobian matrix of the discretized equation with respect to the noise $w$. Discretization of the Equation \ref{eq:toro} will result in a equation similar to \ref{eq:toro_dis}. The matrix $W_k$ is 

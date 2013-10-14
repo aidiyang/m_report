@@ -1,4 +1,7 @@
 *.bak
+*.lot
+*.ps
+*.odg
 *.bbl
 *.blg
 *.dvi

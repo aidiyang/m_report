@@ -6,15 +6,15 @@ The state space representation of discrete time linear system affected by random
 \begin{equation}
     \begin{split}
         \label{eq:lin_ss}
-        x_{k} &= Ax_{k-1} + Bu_k + w_{k-1} \in \Re^{n}\\
-        y_k &= Cx_k + v_k \in \Re^{p},
+        x_{k} &= Ax_{k-1} + Bu_k + Ww_{k-1} \in \Re^{n}\\
+        y_k &= Cx_k + Vv_k \in \Re^{p},
     \end{split}
 \end{equation}
-where the random variables $w_k$,$v_k$ represent the process and measurement noise. Both the random variables are assumed to be zero mean Gaussian white noises. Let $Q,R$ be the covariance of process and measurement noise. The system matrix $A$ relates the present state $x_k$ and the state at previous time step $x_{k-1}$, the input matrix $B$ relates the inputs $u_k$ and the state $x_k$, the measurement sensitivity matrix $C$ relates the present state $x_k$ and the output $y_k$. The number of states and measurement are given by $n$ and $p$.
+where the random variables $w_k$,$v_k$\footnote{ The subscript $k$ represents the discrete sampling instances. For example $\hat{x}(t_k) = \hat{x}(k \Delta t) = \hat{x}_k$ represents the state x at $k^{th}$ sampling instance and $\hat{x}_{k+1} = \hat{x}(k \Delta t + \Delta t)$ represents the state at the next $({k+1})^{th}$ sampling instant. $\Delta t$ represents the sampling time} represent the process and measurement noise. Both the random variables are assumed to be zero mean Gaussian white noises. Let $Q$ and $R$ be the covariance of process and measurement noise respectively. $A$ is the system matrix $B$ is the input matrix, $W$ is the process noise matrix, $C$ is the measurement sensitivity matrix and $V$ is the output or measurement noise matrix. The number of states and measurement are given by $n$ and $p$.
 
 The conceptual derivation of the Kalman gain is as follows \citep{gre01} :
 
-The a priori error $e_k$ between actual $x_k$ and estimates $\hat x_k^{-}$ \footnote{The priori state estimates are indicated by the $-$ sign in the superscript of the symbol. For example $\hat x_k^-$ represents a priori state estimate.} projected ahead of time is
+The priori error $e_k^{-}$ between actual $x_k$ and estimates $\hat x_k^{-}$ \footnote{The priori state estimates are indicated by the $-$ sign in the superscript of the symbol. For example $\hat x_k^-$ represents a priori state estimate.} projected ahead of time is
  \begin{equation}
 	e_k^{-} = x_k - \hat{x}_k^{-},
 	\label{eq:kf_err}
@@ -29,7 +29,7 @@ The estimates of states $\hat x_k^-$ and the covariance matirx $P_k^{-}$ project
 \begin{equation}
 	\begin{split}
 	\hat{x}_k^{-} &= A \hat x_{k-1} + B u_k \\
-	P_k^- &= A P_{k-1} A^{T} + Q .
+	P_k^- &= A P_{k-1} A^{T} + W Q W^T .
 	\end{split}
 \end{equation}
 The posteriori estimates of state $\hat x_k$ and covariance $P_k$ is
@@ -42,7 +42,8 @@ The posteriori estimates of state $\hat x_k$ and covariance $P_k$ is
 \end{equation}
 where $I$ represents the identity matrix of size $n \times n$.
 
-Substituting Equation \ref{eq:kf_correct} in Equation \ref{eq:kf_err} gives
+Let us assume the estimates $\hat x_k$ is equal to the actual states $x_k$, $$\hat{x}_k = x_k.$$. 
+Substituting $x_k$ in place of $\hat x_k$ in the Equation \ref{eq:kf_correct} and computing the priori error according to Equation \ref{eq:kf_err} gives
 \begin{equation}
 	e_k^- =  K_k(y_k - C\hat x_k^-).
 \end{equation}
@@ -50,12 +51,14 @@ Substituting Equation \ref{eq:kf_correct} in Equation \ref{eq:kf_err} gives
 The error covariance $P_k^-$ of the above equation is obtained by substituting it in Equation \ref{eq:kf_P}. The gain $K_k$\footnote{The Kalman gain $K_k$ given in Equation \ref{eq:kf_gain} is one of the solution that minimizes the error. It can be algebraically manipulated.} that minimizes the \emph{trace}\footnote{The trace of a square matrix is the sum of the main diagonal entries of the matrix} of $P_k^-$ is given by
 %and equating it to zero $$ \dfdx{trace(P_k^-)}{K} = 0 $$ solving the above equation for \emph{K}. One form of \emph{K} that minimizes Equation \ref{eq:kf_correct}
 \begin{equation} \label{eq:kf_gain}
- K_k = P_k^- C^T(C P_k^- C^T + R)^{-1}.
+ K_k = P_k^- C^T(C P_k^- C^T + V R V^T)^{-1}.
     \end{equation}
 
+The $K_k$ is the gain that results by assuming $x_k=\hat x_k$. This implies the estimates computed using this gain would be equal to the actual states in ideal case. This is the why the Kalman filter is called as optimal state estimator for linear systems.
 %In the Equation \ref{eq:kf_gain} as measurement covariance \emph{R} approaches zero, Kalman gain \emph{K} lays more trust on actual measurement $y_k$. On the other hand if $P_k^-$ approaches zero, predicted measurement $C\hat{x_k}^-$ is trusted more.
 
 \subsection{Extended Kalman filter}
+\label{subsec:ekf}
 Most of the real world estimation scenarios are non linear in nature. Kalman filter algorithm  being a linear state estimation algorithm cannot be applied to the non linear systems. \emph{NASA Ames} devised a method to apply Kalman filter for non linear systems which is called the Extended Kalman filter(EKF) \citep{ekf85}. In EKF the non linear system is linearised by multivariate Taylor series expansion of the non linear function. 
 
 The discrete time non linear system in state space representation is
@@ -84,7 +87,7 @@ The prediction and correction phases of the EKF is given as follows:
 \item The priori covariance matrix is $P_k^-$ is
 \begin{equation} P_k^- = A_kP_{k-1}A_k^T + W_kQ_{k-1}W_k^T \end{equation}
 %where $\hat{x}_k^-$ is the called the priori state estimate The priori state estimate is used to compute the measurement $\hat{y}_k$ at time step \emph{k}. For the computation of Kalman gain $K$ in Equation \ref{eq:kf_gain}, $P_k$ and $C_k$  have to be computed. The state covariance matrix $P_k$ is $$P_k = A_k P_{k-1} A_k^T + W_k Q_{k-1} W_k^T. $$ 
-where $A_k$ and $W_k$ are the system and process noise correlation matrix. They are obtained by computing the Jacobian matrix of the function $f(x_{k-1},u_k,w_{k-1})$ with respect state $x$ and noise $w$. They are
+where $A_k$ and $W_k$ are obtained by computing the Jacobian matrix of the function $f(x_{k-1},u_k,w_{k-1})$ with respect state $x$ and noise $w$. They are
 \begin{equation}
 	\begin{split}
 	A_k(i,j) &= \left. \dfdx{f_i}{x_j}\right \vert_{\hat{x}_{k-1},u_k,0}  \\
@@ -97,7 +100,7 @@ where $A_k$ and $W_k$ are the system and process noise correlation matrix. They 
 \begin{enumerate}
 	\item The Kalman gain $K_k$ is 
 		$$K_k = P_k^-C^T(C_kP_k^-C_k^T + V_kR_kV_k^T)^{-1},$$
-		where $C_k$ and $V_k$ are the measurement sensitivity and measurement noise correlation matrix. They are obtained by computing the Jacobian matrix of the function $h(x_k,u_k,v_k)$ with respect to states $x$ and the measurements noise $v$. They are 
+		where $C_k$ and $V_k$ are obtained by computing the Jacobian matrix of the function $h(x_k,u_k,v_k)$ with respect to states $x$ and the measurements noise $v$. They are 
 		\begin{equation}
 		\begin{split}
 		C_k(i,j) &= \left. \dfdx{h_i}{x_j}\right \vert_{(\hat{x}_k^-,u_k,0)} \\
@@ -210,7 +213,7 @@ The weights associated to the sigma points are given by
     W_i^c &= \frac{1}{2(n+\lambda)} \hspace{2cm} i = 1, \cdots, 2n ,
     \end{split}
 \end{equation} 
-where $\lambda$ is a scaling parameter given by $$ \lambda = \alpha^2(n+\kappa)-n. $$ The parameters $\alpha,\beta,\kappa$ are the tuning parameters of the UKF.
+where $\lambda$ is a scaling parameter given by $$ \lambda = \alpha^2(n+\kappa)-n. $$ The parameters $\alpha,\beta,\kappa$ are the tuning parameters of the UKF. $W_i^m$ and $W_i^c$ are the weights used for computing the mean and covariance of the random variable.
 %To obtain an unbiased estimate the weights $W_i$ must obey the condition $$ \sum \limits_{i=0}^n W_i = 1. $$
 The sigma points $x_i$ are applied to the non linear function $$y= f(x).$$ The mean $\bar y$, covariance $\Sigma_y$ and cross covariance $\Sigma_{xy}$ of the resulting sigma points are $y_i$ are given by
 \begin{equation}
@@ -304,6 +307,7 @@ The UKF algorithm in matrix form is given in \citep{sim07}. The prediction and c
             \hat X_k = f(X_{k-1},u_k,k-1). \\
         \end{split}
         \end{equation}
+        \item \textbf{Estimate projection:}
         The mean $\hat{\bar x}^-_k$ and covariance $\hat{\bar P}^-_k$ of the transformed sigma points $X_k$ is 
         \begin{equation}
         	\begin{split}
@@ -332,7 +336,8 @@ The UKF algorithm in matrix form is given in \citep{sim07}. The prediction and c
         &\Sigma_{\hat x_k^- \hat y_k} = \hat X_k^- W \hat Y_k^T, \\
         \end{split}
         \end{equation}
-		where $\hat{\bar y}_k$ ,$\Sigma_{\hat y_k}$, $\Sigma_{\hat x_k^- \hat y_k}$ represents the mean, covariance and cross covariance of the transformed sigma points $Y_k$. The Kalman gain $K_k$ is given by
+		where $\hat{\bar y}_k$ ,$\Sigma_{\hat y_k}$, $\Sigma_{\hat x_k^- \hat y_k}$ represents the mean, covariance and cross covariance of the transformed sigma points $Y_k$. 
+		\item \textbf{Estimate correction:}	The Kalman gain $K_k$ is given by
   	\begin{equation}
   		 K_k = \Sigma_{\hat{\bar x}_k^- \hat y_k} \Sigma_{\hat y_k}^{-1}.
   	\end{equation}
@@ -355,3 +360,5 @@ The Root mean square error (RMSE) is a method to evaluate the performance of the
 \end{equation}
 
 The states are estimated using different estimators. The RMSE values are the state estimates determines the performance of an estimator. For instance let us consider two estimators $est1$ and $est2$ for estimating the state $x$. If $$ {RMSE}_{est1_{x}} < {RMSE}_{est2_{x}} $$ then the estimator $est1$ performs better in estimating the state x. Lower the RMSE value better the performance of the estimator.
+
+In this thesis the RMSE is used to evaluate the performance of the EKF and UKF. It is also used to evaluate two different models that is suitable for the estimation.

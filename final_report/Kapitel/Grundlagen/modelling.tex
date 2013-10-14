@@ -1,11 +1,11 @@
 \chapter{Multi body system model}
 \label{ch:multi_mdl}
-A multibody system model describes the dynamics of the group of interconnected rigid bodies that exhibits translational and rotational displacement \citep{mur94}. In this chapter the multi body system models of an inverted double pendulum and \emph{Toro} is derived. These models are used in the filtering equations of EKF and UKF to predict the states ahead of time.
+A multibody system model describes the dynamics of the group of interconnected rigid bodies that exhibits translational and rotational displacement \citep{mur94}. In this chapter, the multi body system models of an inverted double pendulum and \emph{Toro} are derived. These models are used in the filtering equations of EKF and UKF to predict the states ahead of time.
 \section{Multi body system}
-The humanoid robots consists of group of rigid bodies(links) connected together by set of joints. Joints are mechanical components that connects two or more rigid bodies(links) and constraint their motion. Human beings are able to produce a motion with the help of the muscular system, where as the humanoids are driven by electric, hydraulic or pneumatic actuators, that apply torques to the joints of the robot which in turn produces the motion \cite[Chapter 2]{mur94}. The motion of bodies is described by their kinematic behaviour but the dynamic behaviour results from the equilibrium of applied forces and the rate of change of momentum. The dynamics of a robot describes how the robot moves in response to the actuator forces or torques. The dynamics of a multi body system(robot) is described by the equations of motion. In general there are several approaches in deriving equations of motion of rigid body dynamic system. One such approach is by deriving Lagrange equation. Lagrangian analysis relies on the energy properties of the mechanical system to derive the equations of motion. Lagrangian \emph{L} is defined as the difference between kinetic and potential energy of the system. Lagrangian \emph{L} is $$ L(q,\dot{q}) = T(q,\dot{q}) - V(q),$$ 
-where \emph{q} represents the vector of joint angles, $\dot{q}$ is the vector of angular velocities of the joints, the kinetic and potential energies are represented by \emph{T} and \emph{V}. The joint angles \emph{q} is called the generalized coordinates of the system as the joint angles uniquely determines the position of rigid bodies in the system.
+The humanoid robots consist of rigid bodies(links) connected together by a set of joints. The joints are mechanical components that connect two or more rigid bodies (links) and constraint their motion. Human beings are able to produce a motion with the help of the muscular system, where as the humanoids are driven by electric, hydraulic or pneumatic actuators, that apply torques to the joints of the robot which in turn produces the motion \cite[Chapter 2]{mur94}. The motion of bodies is described by their kinematic behavior but the dynamic behavior results from the equilibrium of applied forces and the rate of change of momentum. The dynamics of a robot describes how the robot moves in response to the actuator forces or torques. The dynamics of a multi body system (robot) is described by the equations of motion. In general there are several approaches in deriving equations of motion of rigid body dynamic system. One such approach is by deriving Lagrange equation. Lagrangian analysis relies on the energy properties of the mechanical system to derive the equations of motion. The Lagrangian \emph{L} is defined as the difference between kinetic and potential energy of the system. It is $$ L(q,\dot{q}) = T(q,\dot{q}) - V(q),$$ 
+where \emph{q} represents the vector of joint angles, $\dot{q}$ is the vector of angular velocities of the joints, the kinetic and potential energies are represented by \emph{T} and \emph{V}. The joint angles $q_i$ are called the generalized coordinates of the system as they uniquely determines the configuration of the system.
 
-The equations of motion for a rigid body system in generalized coordinates $q \in \Re^m $ is given by
+The equations of motion for a rigid body system in generalized coordinates $q \in \Re^m $ is 
 \begin{align}
 \label{eq:lagrange}
 \frac{d}{dt} &\dfdx{L}{\dot{q}_i} - \dfdx{L}{q_i} = \Gamma_i && i=1,....,m,
@@ -30,7 +30,7 @@ $$ \begin{aligned}
     p &=  \iint a \text{ or } \int v , 
     \end{aligned}$$ where $a = \ddot{q}$ represents the acceleration, $p$ represents the position and $v$ represents the velocity of the multibody system.
 
-The position and velocity are the parameters of interest for state estimation. Kalman filter algorithm requires a dynamic model to predict these parameters. To accommodate the Equation \ref{eq:fwdyn} as the prediction model, the forward dynamics equation of the multi body system is converted into system of ordinary differential equations(ODE). The ODE system is given by
+The position and velocity are the parameters of interest for state estimation. The Kalman filter algorithm requires a dynamic model to predict these parameters. To accommodate the Equation \ref{eq:fwdyn} as the prediction model, the forward dynamics equation of the multi body system is converted into system of ordinary differential equations (ODE). The ODE system is given by
 \begin{equation}
     \label{eq:fwdyn_ode}
     \begin{bmatrix} \frac{dp}{dt}  \\ \frac{dv}{dt} \end{bmatrix} = 
@@ -47,7 +47,7 @@ Substituting Equation \ref{eq:fwdyn} in \ref{eq:fwdyn_ode} gives,
     \begin{bmatrix}
     \dot q \\
     M(q)^{-1} \left( -C(q,\dot{q})\dot{q} - g(q) + \tau \right )
-    \end{bmatrix}
+    \end{bmatrix}.
 \end{equation}
 % Inverted Double pendulum model
 \input{Kapitel/Grundlagen/double_pendulum.tex}

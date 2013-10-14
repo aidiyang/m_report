@@ -47,7 +47,7 @@ y(t) &= g(x(t),u(t)),
 \end{split}
 \end{equation}
 
-where $t$ is a scalar representing time, $x(t)$ represents the vector of internal states, $u(t)$ represents the vector of inputs, $y(t)$ represents the vector of outputs of the system. The state $x(t)$,input $u(t)$ and output $y(t)$ depends on time $t$. The variable $x_0$ represents the vector of initial states $x(t=0)$ of the system. 
+where $t$ is a scalar representing time, $x(t)$ represents the state vector, $u(t)$ represents the input vector and $y(t)$ represents the output vector of the system. The state $x(t)$,input $u(t)$ and output $y(t)$ depends on time $t$. The variable $x_0$ represents the vector of initial states $x(t=0)$ of the system. 
 The state space equations of the state estimator is 
 \begin{equation}
 \begin{split}
@@ -62,4 +62,4 @@ where $\hat{x}(t)$ \footnote{ The estimated states are represented by hat symbol
 \item \textbf{Convergence property:} If $x_0 \neq \hat{x}_0$, then $x(t) - \hat{x}(t)$ tends to zero as $ t \rightarrow \infty $.
 \end{itemize}
 
-There are different methods for computing the estimator gain matrix $K$ in Equation \ref{eqn:est_sys}. The Luenberger observer has an deterministic way of computing the gain for linear systems. The sliding mode observer and Kalman filter determines the gain matrix by minimizing the error between the estimates $\hat{x}$ and actual states $x$ \citep{kha02}.
+There are different methods for computing the estimator gain matrix $K$ in Equation \ref{eqn:est_sys}. The Luenberger observer has a deterministic way of computing the gain for linear systems. The sliding mode observer and Kalman filter determines the gain matrix by minimizing the error between the estimates $\hat{x}$ and actual states $x$ \citep{kha02}.

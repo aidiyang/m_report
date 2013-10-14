@@ -5,32 +5,34 @@
 	\caption{A simplified humanoid robot standing on one foot}
 	\label{fig:idp_scene}
 \end{figure}
-At first to check the feasibility of solving the state estimation problem with the available measurements, a preliminary sub-problem is formulated. Since we are interested in estimating the under-actuated degrees of freedom, we have to consider the scenario where these under-actuated degrees of freedom are action on the robot. Let us consider the scenario where the robot is tilting around an edge of the foot by applying some external force as shown in Figure \ref{fig:idp_scene}.b. All the joints other that ankle joint of the robot are assumed to remain static(joints does not produce any motion) throughout the experiment. The kinematics of the robot is simplified to one joint on the ankle connecting the whole body with the foot as shown in \ref{fig:idp_scene}.a. The kinematics of \emph{Toro} is shown in Figure \ref{fig:toro_kin}. The mass block in the Figure \ref{fig:idp_scene} represents the inertia of upper-body. The inertia of leg is incorporated in the link connecting upperbody and foot. 
+At first to check the feasibility of solving the state estimation problem with the available measurements, a preliminary sub-problem is formulated. Since we are interested in estimating the under-actuated degrees of freedom, we have to consider the scenario where these under-actuated degrees of freedom are action on the robot. Let us consider the scenario where the robot is tilting around an edge of the foot by applying some external force as shown in Figure \ref{fig:idp_scene}.b. All the joints other than the ankle joint of the robot are assumed to remain static(joints does not produce any motion) throughout the experiment. The kinematics of \emph{Toro} is shown in Figure \ref{fig:toro_kin} is simplified to one joint on the ankle connecting the whole body with the foot as shown in \ref{fig:idp_scene}.a. The mass block in the Figure \ref{fig:idp_scene} represents the inertia of the upper body. The inertia of the leg is incorporated in the link connecting upperbody and foot. 
 
-When the robot is tilting around an edge of the foot as shown in Figure \ref{fig:idp_scene}.b, we assume there is an imaginary joint located at the edge of the foot around which the robot tilts. Figure \ref{fig:idp_scene}.b resmbles an inverted double pendulum in Figure \ref{fig:idp}.
+When the robot is tilting around an edge of the foot as shown in Figure \ref{fig:idp_scene}.b, we assume there is an imaginary joint located at the edge of the foot around which the robot tilts. Figure \ref{fig:idp_scene}.b resembles an inverted double pendulum in Figure \ref{fig:idp}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[trim= 0mm 150mm 0mm 0mm, scale=0.65]{Bilder/inv_db_pend.pdf}
-	\caption[Inverted Double Pendulum]{Inverted Double Pendulum \footnotemark}
+	\includegraphics[trim= 0mm 145mm 0mm 0mm,clip, scale=0.65]{Bilder/inv_db_pend.pdf}
+%	\includegraphics[scale=0.75]{Bilder/doublePendulum1.png}
+	\caption[Inverted Double Pendulum]{Inverted Double Pendulum}
 	\label{fig:idp}
 \end{figure}
-\footnotetext{Image source: A mathematical introduction to robotic manipulation \cite[Chapter 4, Page 164]{mur94}}
+%\footnotetext{Image source: A mathematical introduction to robotic manipulation \cite[Chapter 4, Page 164]{mur94}}
  The inverted double pendulum shown in Figure \ref{fig:idp} consists two links of length $l_1$ and $l_2$. The distance between center of mass of link 1 from the toe joint is $r_1$, $r_2$ is the distance between center of mass of link 2 from the ankle joint. In the inverted pendulum model the ankle joint is actuated but the toe joint is unactuated. The degrees of freedom of this model are toe and ankle. Toe is the under-actuated degree of freedom whose motion parameters such as angle $q_1$ and angular velocity $\dot{q}_1$ needs to be estimated. The motion parameters of the inverted double pendulum are 
 \begin{equation}
 	 q = 
-	\begin{pmatrix}
+	\begin{bmatrix}
 		q_{1}\\
 		q_{2}
-	\end{pmatrix}
+	\end{bmatrix}
+	\hspace{2cm}
 	 \dot{q} = 
-	\begin{pmatrix}
+	\begin{bmatrix}
 		\dot{q_{1}}\\
 		\dot{q_{2}}
-	\end{pmatrix},
+	\end{bmatrix},
 \end{equation}
 where \emph{q} is the vector of joint angles and $\dot{q}$ is the vector of joint angular velocities. The angle $q_1$ and angular velocity $\dot{q}_1$ are the motion parameters of toe joint. Likewise $q_2$ and $\dot{q}_2$ are the motion parameters of ankle joint. The control input or torque applied to the ankle joint is $\tau$. 
 
-The equation of motion of the inverted double pendulum is derived using Lagrange formulation given in Equation \ref{eq:lagrange}. The generalized coordinates of the system are $q_1$ and $q_2$, the velocities of the corresponding generalized coordinates are $\dot{q_1}$ and $\dot{q_2}$ as shown in Figure \ref{fig:idp}. The equation of motion of double pendulum written in general formulation of multi body system in Equation \ref{eq:dyn_mul_bdy} is, 
+The equation of motion of the inverted double pendulum is derived using Lagrange formulation given in Equation \ref{eq:lagrange}. The generalized coordinates of the system are $q_1$ and $q_2$, the velocities of the corresponding generalized coordinates are $\dot{q_1}$ and $\dot{q_2}$ as shown in Figure \ref{fig:idp}. The equation of motion of double pendulum written in general formulation of multi body system in Equation \ref{eq:dyn_mul_bdy} is
 \begin{equation}
    \label{eq:dyn_idp}
 	M(q_1,q_2)
@@ -80,15 +82,19 @@ The measurement equation of the ODE system are formulated with the set of availa
     \label{eq:y_idp}
 	y= \begin{bmatrix} q_2 \\ \dot q_2 \\ acc_x \\ acc_y \\ \omega \end{bmatrix},
 \end{equation}
-where $q_2, \dot{q}_2$ are  angle and velocity of ankle joint measured by encoders. $acc_{x},acc_{y} $ are the Cartesian accelerations along \emph{x and y axis} measured by accelerometer present in inertial measurement unit(IMU) that is located at the end of link 2 in Figure \ref{fig:idp}. The acceleration measurements can be written in terms of states of the system as,
-$$ 
+where $q_2, \dot{q}_2$ are  angle and velocity of ankle joint measured by encoders. $acc_{x},acc_{y} $ are the Cartesian accelerations along \emph{x and y axis} measured by accelerometer present in inertial measurement unit(IMU) that is located at the end of link 2 as in Figure \ref{fig:idp}. The acceleration measurements can be written in terms of states of the system as,
+\begin{equation} 
+	\label{eq:idp_acc_imu}
     \begin{aligned}
     acc_x &= -l_1 (\ddot q_1 sin(q_1) + \dot q_1^2 cos(q_1)) - ((\ddot q_1 + \ddot q_2) l_2 sin(q_1+q_2) + (\dot q_1 + \dot q_2)^2 l_2 cos(q_1+q_2)), \\
     acc_y &= l_1 (\ddot q_1 cos(q_1) - \dot q_1^2 sin(q_1)) + ((\ddot q_1 + \ddot q_2) l_2 cos(q_1+q_2) - (\dot q_1 + \dot q_2)^2 l_2 sin(q_1+q_2)), \\
     \end{aligned}
-$$
-where $\ddot q_1 , \ddot q_2 $ are the accelerations which is computed using forward dynamics equation. The angular velocity of the whole system $\omega$ is measured by the gyroscope present in IMU. The measurement equation of the gyroscope is $$ \omega = \dot q_1 + \dot q_2. $$ 
-The estimated states $$q_1, \dot{q_1}$$ are the angle and anglular velocity of the toe or the underactuated degrees of freedom of the system.
+\end{equation}
+where $\ddot q_1 , \ddot q_2 $ are the accelerations computed using the forward dynamics equation. The angular velocity of the whole system $\omega$ is measured by the gyroscope present in IMU. The measurement equation of the gyroscope is $$ \omega = \dot q_1 + \dot q_2. $$ 
+The estimated states $$q_1, \dot{q_1}$$ are the angle and angular velocity of the toe or the underactuated degrees of freedom of the system.
+
+The observability is a criteria that determines weather it is possible to estimate the unmeasured states from the given measurements \citep{gre01}. It is difficult to determine the observability of non linear systems. So the observability test is done by linearizing the system at an operating point. The linearized system is found to be locally observable around the operating point from the given measurements. 
+
 
 \subsection{Experiment}
 \begin{figure}[h]
@@ -103,22 +109,22 @@ The state estimation problem is tested using Matlab Simulink. The experimental s
     \label{eq:sim_idp}
     \begin{split}
     \dot x &= f(x,u) + n_w \\
-    y &= h(x,u) + n_v.
+    y &= h(x,u) + n_v,
     \end{split}
 \end{equation}
-Zero mean Gaussian white noise of covariance $n_w$ and $n_v$ are added to the process and measurements of inverted double pendulum system.The table below lists the variance of the process and measurement noises used in the experiment.
+where $n_w$ and $n_v$ are the process and measurement noise. The table below lists the variance of the process and measurement noises used in the experiment.
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|}
     \hline
     Name of the sensor &Noise variance\\ \hline
     \textbf{Process noise $w_n$:}&\hspace{2mm} \\
-    $\dot q_2$ &$1e^{-3}$ \\ \hline
+    $\dot q_2$ &$1\cdot{10}^{-3}$ \\ \hline
     \textbf{Measurement noise $v_n$:}&\hspace{2mm} \\
-     $acc$ &$1e^{-2}$ \\
-     $gyro$ &$1e^{-4}$ \\
-     $q_2$ &$1e^{-6}$\\ 
-     $\dot q_2$ &$1e^{-6}$ \\ \hline
+     $acc$ &$1\cdot{10}^{-2}$ \\
+     $gyro$ &$1\cdot{10}^{-4}$ \\
+     $q_2$ &$1\cdot{10}^{-6}$\\ 
+     $\dot q_2$ &$1\cdot{10}^{-6}$ \\ \hline
     \end{tabular}
     \caption{ Variance of the Gaussian white noise}
     \label{tab:idp_noise}
@@ -127,43 +133,46 @@ Zero mean Gaussian white noise of covariance $n_w$ and $n_v$ are added to the pr
 %\subsubsection{EKF}
  The equations of continuous time extended Kalman filter is given in Equation \ref{eq:ekf_con}. The non linear state space equation of the system is given in Equations \ref{eq:dyn_ss} and \ref{eq:y_idp}. The Jacobian matrices $A$ and $H$ are computed with the help of symbolic toolbox in Matlab.
 
-In Figure \ref{fig:exp_idp}, $x_0$ and $\hat x_0$ are the initial states of the system and estimator. The input $\tau$ applied is applied to the ankle joint. The system and estimator are initialized with different initial values. 
-$$ x_0 = \begin{bmatrix} 0.9575 \\ 0.9649\\ 0.1576\\ 0.9706 \end{bmatrix}, \hat x_0 = \begin{bmatrix} 0 \\ 0\\ 0\\ 0 \end{bmatrix}.$$  
-The initial values of the error covariance matrix $P$ is $$P_0 = I_4, $$ where $I_4$ is a $4 \times 4$ identity matrix.
+In Figure \ref{fig:exp_idp}, $x_0$ and $\hat x_0$ are the initial states of the system and estimator. The input $\tau$ applied is applied to the ankle joint. The initial values of the system are chosen at random. The initial values used in this expreriment is 
+$$ x_0 = \begin{bmatrix} 0.9575 \\ 0.9649\\ 0.1576\\ 0.9706 \end{bmatrix}.$$  
+The initial values of the state $\hat x_0$ and the covariance matrix $P_0$ is $$P_0 = I_4, \hspace{2cm} \hat x_0 = \textbf{0}_{4,1}$$ where $I_4$ is a $4 \times 4$ identity matrix and $\textbf{0}_{4,1}$ is a column vector of length 4 with all elements as zeros.
 
 
-The process covariance $Q$ and measurement covariance $R$ matrices of the EKF are assigned with the corresponding values of measurement and process noise variance's in Table \ref{tab:idp_noise}. This is due to the fact that if the system and estimator does not have any model mismatch then setting the variances of the noises for the respective covariance matrix gives the best estimates \citep{gre01}. They are 
+The values of the  process covariance $Q$ and measurement covariance $R$ matrices of the EKF are tuned by hand. They are 
 
 $$  \begin{aligned}
-    Q&=diag([0; 0; 0; 1e^{-3}]) \\
-    R&=diag([1e^{-2}; 1e^{-4}; 1e^{-6}; 1e^{-6}]). \\
+    Q&=diag([0; 0; 0; 1\cdot{10}^{-3}]) \\
+    R&=diag([1\cdot{10}^{-2}; 1\cdot{10}^{-4}; 1\cdot{10}^{-6}; 1\cdot{10}^{-6}]). \\
     \end{aligned}
     $$
 
-The following tuning parameters are set for UKF:
+The hand tuned values of the tuning parameters of UKF are 
 $$  \begin{aligned}
     \alpha = 1 \\
     \beta = 0\\
     \kappa = -1 
     \end{aligned} $$ 
 % Make a plot of the noise and actual measurement data here %
-The whole system is simulated for 10 seconds with time step of 1 millisecond.
+The whole system is simulated for 10 seconds with in 1 millisecond time steps ($\Delta t)$.
 \subsubsection{Observation}
 \begin{figure}
 	\centering
-	\includegraphics[angle=90,scale=0.5]{Bilder/plots/idp/idp_plot.pdf}
-	\caption{ Plots of estimated state $\hat x$ and true state $x$ vs time}
+	\includegraphics[width=\textwidth, height=0.5\textheight]{Bilder/plots/idp/plot}
+%	\includegraphics[scale=0.5]{Bilder/plots/idp/plot}
+	\caption{ Plots of estimated states $\hat x$ and actual states $x$ vs time}
 	\label{fig:idp_plot}
 \end{figure}
 
-From the plots in Figure \ref{fig:idp_plot} it can be seen that the actual states and estimates converges to same value after some time. This implies the system is observable for the given measurements. 
+The estimates $\hat x$ computed by the EKF are plotted in Figures \ref{fig:idp_plot} and \ref{fig:idp_init_conv}. The UKF also produces the estimates similar to EKF. From the plots in Figure \ref{fig:idp_plot} it can be seen that the actual states and estimates converges to same value after some time. 
 \begin{figure}
     \centering
-    \includegraphics[trim= 30mm 0mm 30mm 0mm,clip,width=\linewidth]{Bilder/plots/idp/init_beh.pdf}
-    \caption{ Convergence of the estimates to actual states }
+       \includegraphics[width=\textwidth, height=0.5\textheight]{Bilder/plots/idp/init_beh}
+ %   \includegraphics[scale=0.5]{Bilder/plots/idp/init_beh}
+    \caption{ Convergence of the estimates $\hat q_1$ and $\hat q_2$ to actual states}
     \label{fig:idp_init_conv}
 \end{figure}
-The initial convergence of the estimates is shown in Figure \ref{fig:idp_init_conv}. Filter converges in $0.6 sec$ for the given setting of $P_0=I_4$. When the initial error covariance is decreased to $\frac{1}{2}P_0$ the the time taken for convergence increases to $2 sec$. 
+
+The initial convergence of the estimates is shown in Figure \ref{fig:idp_init_conv}. Filter converges in $10ms$ for the given setting of $P_0=I_4$. When the initial error covariance is decreased to $\frac{1}{2}P_0$ the the time taken for convergence increases to $2 sec$. 
 
 \begin{table}[H]
     \centering

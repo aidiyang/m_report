@@ -1,7 +1,10 @@
 \documentclass{article}
+
+%\usepackage{fontspec}
 \usepackage{verbatim}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
 \usepackage{amsmath,bm,times}
 \usepackage{epstopdf}
 \newcommand{\mx}[1]{\mathbf{\bm{#1}}} % Matrix command
@@ -12,9 +15,30 @@
 \pgfdeclarelayer{foreground}
 \pgfsetlayers{background,main,foreground}
 
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{makecell}
+\newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1}}
+\usepackage{tikz}
+\newcommand\diag[4]{%
+  \multicolumn{1}{p{#2}|}{\hskip-\tabcolsep
+  $\vcenter{\begin{tikzpicture}[baseline=0,anchor=south west,inner sep=#1]
+  \path[use as bounding box] (0,0) rectangle (#2+2\tabcolsep,\baselineskip);
+  \node[minimum width={#2+2\tabcolsep},minimum height=\baselineskip+\extrarowheight] (box) {};
+  \draw (box.north west) -- (box.south east);
+  \node[anchor=south west] at (box.south west) {#3};
+  \node[anchor=north east] at (box.north east) {#4};
+ \end{tikzpicture}}$\hskip-\tabcolsep}}
+
+%\newfontfamily\DejaSans{DejaVu Sans}
+%\newcommand\good{{\color{green}\DejaSans ☺}}
+%\newcommand\neutral{{\color{blue}\DejaSans 😐}}
+%\newcommand\bad{{\color{red}\DejaSans ☹}}
+ 
 \begin{document}
 \pagestyle{empty}
-\input{Bilder/walking_ctrl.tex}
+\input{Bilder/thesis_conc_table.tex}
+
 \begin{equation}
 	\begin{split}
 	%A_k(i,j) &= \frac{f_i}{x_j}\right \vert _{\hat{x}_{k-1},u_k,0}  \\
@@ -22,4 +46,6 @@
  %  {\boldsymbol{F}_{k-1}} = \left . \frac{\partial f}{\partial \boldsymbol{x} } \right \vert _{\hat{\boldsymbol{x}}_{k-1|k-1},\boldsymbol{u}_{k-1}} 
 	\end{split}
 \end{equation}
+$$\ddot\smile$$
+$$\ddot\frown$$
 \end{document}

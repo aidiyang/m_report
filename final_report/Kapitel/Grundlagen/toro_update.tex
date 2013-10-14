@@ -1,6 +1,6 @@
 \subsection{Update step}
 \label{subsec:toro_update}
-The update equation of the EKF is given in Equation \ref{eq:ekf_correct}. The measurement equation of the system is given by $$\hat{y}_{k+1} = h(\hat{x}_{k+1}^-,u_{k+1},0).$$ For the sake of simplicity let us assume the measurement of noise uncorrelated. That is the noise acting on a measurement does not depend on the noise acting on all other measurements. $$V_k = I_3.$$ Substituting the assumption in Equation \ref{eq:ekf_correct} gives
+The Kalman gain $K_k$ and the measurement update equations of the EKF given in Section \ref{subsec:ekf} are as follows: $$\hat{y}_{k+1} = h(\hat{x}_{k+1}^-,u_{k+1},0).$$ 
 \begin{equation}
 \label{eq:correct}
 \begin{split}
@@ -12,14 +12,14 @@ P_{k+1} &= (I- K_{k+1}\hat{C}_{k+1}^-)P_{k+1}^-.
 
 For the computation of Kalman gain $K_k$ and to update the error covariance matrix $P_k$ in Equation \ref{eq:correct}, the measurement sensitivity matrix $C_k$ have to be computed. The matrix $C_k$ determined by computing the Jacobian matrix of the measurement equation \ref{eq:y_msr}. The computation of $C_k$ matrix is as follows:
 \begin{enumerate}
-\item The measurement equation for acceleration measurements is  $$\hat{acc}^b_{k+1} = \dot{v}^{b-}_{k+1}-\hat{R}_{k+1}^{T-}\begin{bmatrix} 0 \\ 0 \\ -9,81 \end{bmatrix}$$.
+\item The measurement equation for acceleration measurements is  $$\hat{acc}^b_{k+1} = \dot{v}^{b-}_{k+1}-\hat{R}_{k+1}^{T-}\begin{bmatrix} 0 \\ 0 \\ -9,81 \end{bmatrix}.$$
 The Jacobian matrix is 
 \begin{equation}
     \label{eq:dacc_msrdx}
-    \dfdx{\hat{acc}_{k+1}^{b-}}{x} = \dfdx{\hat{\dot{v}}_{k+1}^{b-}}{x} - \dfdx{\hat{R}^{T-}_{k+1}}{x}\begin{bmatrix} 0 \\ 0 \\ -9,81 \end{bmatrix}  \in \Re^{3 \times 62}
+    \dfdx{\hat{acc}_{k+1}^{b-}}{x} = \dfdx{\hat{\dot{v}}_{k+1}^{b-}}{x} - \dfdx{\hat{R}^{T-}_{k+1}}{x}\begin{bmatrix} 0 \\ 0 \\ -9,81 \end{bmatrix}  \in \Re^{3 \times 62}.
 \end{equation}where
 \begin{itemize}
-    \item $\dfdx{\hat{\dot{v}}_{k+1}^b}{x}$ is Jacobian matrix obtained by evaluating Equation \ref{eq:dydx} with the values $\hat x_{k+1}^-, u_{k+1}$ and picking the rows corresponding to the linear acceleration. For instance in Equation \ref{eq:dydx} the first three rows of the Jacobian matrix corresponds to the linear acceleration.
+    \item $\dfdx{\hat{\dot{v}}_{k+1}^b}{x}$ is Jacobian matrix obtained by evaluating Equation \ref{eq:dydx} with the values $\hat x_{k+1}^-, u_{k+1}$ and picking the rows corresponding to the linear acceleration. For instance in Equation \ref{eq:dydx} the first three rows of the Jacobian matrix corresponds to the linear acceleration
     \item $\dfdx{\hat{R}^T_{k+1}}{x}$ is partial derivative of Rotation matrix [Appendix \ref{sec:rot_mat}].
 \end{itemize}
 
@@ -31,11 +31,11 @@ The Jacobian matrix is
 \[ \dfdx{\hat{\omega}^{b-}_{k+1}}{x} = 
     \begin{cases}
     l_{3,i-34} & \text{if } 34 < i \leq 37 \\
-    \textbf{0}_{3,1} &\text{otherwise}.
+    \textbf{0}_{3,1} &\text{otherwise}
     \end{cases}
  \]where 
  \begin{itemize}  
- \item $l_{x,y}$ is a zero vector of length $x$ with 1 at the $y^{th}$ position.
+ \item $l_{x,y}$ is a zero vector of length $x$ with 1 at the $y^{th}$ position
  \item $\textbf{0}_{m,n}$ is the zero matrix of dimensions $m$ and $n$.
  \end{itemize}
 
@@ -48,7 +48,7 @@ The Jacobian matrix is
  \dfdx{\hat{q}_{k+1}^-}{x_{i}} =
  \begin{cases}
  l_{25,i-6} & \text{if } 6 < i \leq 31 \\
- \textbf{0}_{25,1} & \text{otherwise}.
+ \textbf{0}_{25,1} & \text{otherwise}
  \end{cases}
  \]
 
@@ -61,7 +61,7 @@ The Jacobian matrix is
  \dfdx{\hat{\dot{q}}_{k+1}^-}{x_{i}} =
  \begin{cases}
  l_{25,i-37} & \text{if } 37 < i \leq 62 \\
- \textbf{0}_{25,1} & \text{otherwise}.
+ \textbf{0}_{25,1} & \text{otherwise}
  \end{cases}
  \]
 
@@ -72,7 +72,7 @@ The Jacobian matrix is
  \end{bmatrix} 
  = \begin{bmatrix}
  \hat{H}_{r,k+1}^- s  \\ \hat{H}_{l,k+1}^- s
-   \end{bmatrix}
+   \end{bmatrix},
 	$$ 
 where $s$ can be zero or more points in the set $ \lbrace s_A,s_B,s_C,s_D \rbrace$. The points in contact $s$ is determined by the Algorithm \ref{alg:cnt_switch}. 
 
@@ -88,7 +88,7 @@ where $s$ can be zero or more points in the set $ \lbrace s_A,s_B,s_C,s_D \rbrac
     \dfdx{\hat{H}_{r,k+1}^-}{x}s \\ \dfdx{\hat{H}_{l,k+1}^-}{x}s 
     \end{aligned}\right]
  \\ \vspace{5mm} \\
-     \dfdx{\hat{H}_{f,k+1}^-}{x} = &\left( \dfdx{\hat{H}_{f,k+1}^-}{x_1}, \dfdx{\hat{H}_{f,k+1}^-}{x_2},\cdots, \dfdx{\hat{H}_{f,k+1}^-}{x_{62}} \right) \hspace{5mm} f \in \{r,l\}
+     \dfdx{\hat{H}_{f,k+1}^-}{x} = &\left( \dfdx{\hat{H}_{f,k+1}^-}{x_1}, \dfdx{\hat{H}_{f,k+1}^-}{x_2},\cdots, \dfdx{\hat{H}_{f,k+1}^-}{x_{62}} \right) \hspace{5mm} f \in \{r,l\},
      \end{split}
 \end{equation}
 where $\dfdx{\hat{H}_{f,k+1}^-}{x}$ is the partial derivative of homogeneous transformation matrix of a foot with respect to the system states [Appendix \ref{sec:htm}].
@@ -107,6 +107,7 @@ The measurement sensitivity matrix $\hat{C}_{k+1}^-$ of the system is given by E
 	 \right) \in \Re^{80 \times 62}.
 \end{equation}
 
+An observability test similar to the IDP is made on the multibody system. The linearized system is found to be observable from the given measurements.
 \begin{comment}
 \paragraph{Observability:}
 State space representation of a linear system is,
@@ -119,7 +120,7 @@ y &= Cx + Du.
 \end{equation}
 where, $x \in \Re^{n}$ is the vector representing the states of the system. $u \in \Re^{p}$ is the vector of inputs, $y \in \Re^{m}$ is the vector of outputs of the system. $A \in \Re^{n \times n}$ is the system matrix. $B \in \Re^{n \times p}$ is the matrix relating state and input, $C \in \Re^{m \times n}$ is the measurement matrix relating output and state, $D \in \Re^{m \times p}$ is the matrix relating input and output of the system.
 
-Linearising a nonlinear system in Equation \ref{eqn:nl_sys} at some operating point will lead to linear system of form Eq. \ref{eq:dyn_l}. For a linear system to be observable, it should satisfy
+Linearizing a nonlinear system in Equation \ref{eqn:nl_sys} at some operating point will lead to linear system of form Eq. \ref{eq:dyn_l}. For a linear system to be observable, it should satisfy
 \begin{equation}
 obs =
 \begin{pmatrix}

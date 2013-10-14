@@ -10,7 +10,7 @@ The experimental setup shown in Figure \ref{fig:toro_exp} is used for testing th
 
 The same experimental scenario described in \ref{subsec:toro_exp} is used for testing the EKF. The following noise and bias values are used in simulations:
 
-\begin{table}[H]
+\begin{table}
 	\centering
 	\begin{tabular}{|c|c|}
 	\hline
@@ -66,4 +66,4 @@ $$ \omega = \tilde{\omega} - b_\omega - w_\omega.$$
 The noise $w_\omega$ can be filtered using a low pass filter.
 
 \subsection{Conclusion}
-The RMSE values in the Table \ref{tab:simp_rmse} are very low. This shows that EKF performs better with the simplified model for the given measurements. The smaller computational time makes the model implementable on the robot. The modeling effort is lesser than the multibody model of \emph{Toro} discussed in previous chapter. 
+The RMSE values in the Table \ref{tab:simp_rmse} are very low. This shows that EKF performs better with the simplified model for the given measurements. The smaller computational time makes the model implementable on the robot. The modeling effort is lesser than the multibody model of \emph{Toro} discussed in previous chapter. This model is intentionally developed to run on real time. The UKF for this model involves iterating the state and the measurement equations $2*(2n+1)=2*(2*15+1)=62$ times per time step (1ms). The computation time for each time step is greater than the time step itself. Since the UKF is not implementable on real time, it is not developed for this model.
